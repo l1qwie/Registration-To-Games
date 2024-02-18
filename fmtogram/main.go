@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"registrationtogames/bot"
+	"registrationtogames/bot/testdatabase"
 	"registrationtogames/fmtogram/executer"
 	"registrationtogames/fmtogram/formatter"
 	"registrationtogames/fmtogram/helper"
@@ -87,8 +88,8 @@ func StartTests() {
 	var responses chan *types.TelegramResponse
 	var requests chan *formatter.Formatter
 
-	responses = make(chan *types.TelegramResponse)
-	requests = make(chan *formatter.Formatter)
+	responses = make(chan *types.TelegramResponse, 1)
+	requests = make(chan *formatter.Formatter, 1)
 	responses <- &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
@@ -101,19 +102,23 @@ func StartTests() {
 						Name:     "John",
 						LastName: "Doe",
 						Username: "johndoe",
+						Language: "ru",
 					},
-					Text: "/keyboard",
+					Text: "/start",
 				},
 			},
 		},
 	}
-
-	close(responses)
+	testdatabase.UpdateLanguage("ru", 456)
+	testdatabase.UpdateAction("registration", 456)
+	testdatabase.UpdateLevel(0, 456)
+	worker(responses, requests)
 	r := <-requests
-	r.AssertString("Hello! It's just a keyboard for a test, Jonh", true)
+	r.AssertString("Добро пожаловать в нашего бота! Этот бот предназначен для регистрации на спортивные игры в Стамбуле, но для начала вам нужно зарегистрироваться у нас!", true)
 	r.AssertChatId(456, true)
-	r.AssertInlineKeyboard([]int{1, 1}, []string{"I will send you a photo", "I will send you a video"}, []string{"/photo", "/video"}, []string{"cmd", "cmd"}, true)
-	r.AssertPhoto("AgACAgQAAxkDAAIJRGW3rwaLqri1BkTdVQm1VFA8tE4HAAJeszEbEAABvFHW3MOANm9QFQEAAwIAA20AAzQE", true)
-	r.AssertVideo("BAACAgIAAxkDAAIJW2W3sTguaruPGvo722qeKTcOPwvxAAIzPQACy-DASekiOEg76qGiNAQ", true)
+	r.AssertInlineKeyboard([]int{1}, []string{"Зарегистрироваться"}, []string{"GoReg"}, []string{"cmd"}, true)
+	//r.AssertPhoto("AgACAgQAAxkDAAIJRGW3rwaLqri1BkTdVQm1VFA8tE4HAAJeszEbEAABvFHW3MOANm9QFQEAAwIAA20AAzQE", true)
+	//r.AssertVideo("BAACAgIAAxkDAAIJW2W3sTguaruPGvo722qeKTcOPwvxAAIzPQACy-DASekiOEg76qGiNAQ", true)
+	//close(requests)
 	fmt.Print("All was alright!")
 }

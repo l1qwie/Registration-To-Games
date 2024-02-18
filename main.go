@@ -8,6 +8,6 @@ import "registrationtogames/fmtogram"
 func main() {
 	//async.Main()
 	//err := database.FirstConnect()
-	fmtogram.StartWithTelegram()
-	//byogram.StartTests()
+	//fmtogram.StartWithTelegram()
+	fmtogram.StartTests()
 }

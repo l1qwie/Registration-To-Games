@@ -3,12 +3,14 @@ package routine
 import (
 	"database/sql"
 	"log"
+	"registrationtogames/bot/bottypes"
 	"registrationtogames/fmtogram/types"
+	"runtime"
 
 	_ "github.com/lib/pq"
 )
 
-func (user *User) find() (detected bool) {
+func find(user *bottypes.User) (detected bool) {
 	var (
 		db      *sql.DB
 		rows    *sql.Rows
@@ -19,17 +21,20 @@ func (user *User) find() (detected bool) {
 
 	db, err = sql.Open("postgres", types.ConnectTo())
 	if err != nil {
-		log.Fatal(err)
+		_, file, line, _ := runtime.Caller(0)
+		log.Fatalf("Error at %s:%d: %v", file, line, err)
 	}
-	request = `SELECT COUNT(*)FROM Users WHERE user_id = $1`
+	request = `SELECT COUNT(*)FROM Users WHERE userId = $1`
 	rows, err = db.Query(request, user.Id)
 	if err != nil {
-		log.Fatal(err)
+		_, file, line, _ := runtime.Caller(0)
+		log.Fatalf("Error at %s:%d: %v", file, line, err)
 	}
 	for rows.Next() {
 		err = rows.Scan(&counter)
 		if err != nil {
-			log.Fatal(err)
+			_, file, line, _ := runtime.Caller(0)
+			log.Fatalf("Error at %s:%d: %v", file, line, err)
 		}
 	}
 	if counter > 0 {
@@ -38,18 +43,18 @@ func (user *User) find() (detected bool) {
 	return detected
 }
 
-func (user *User) createUser() (err error) {
+func createUser(user *bottypes.User) (err error) {
 	var db *sql.DB
 	db, err = sql.Open("postgres", types.ConnectTo())
 	if err == nil {
-		_, err = db.Exec("INSERT INTO Users (user_id, action, language, level) VALUES ($1, $2, $3, $4)", user.Id, "registration", user.Language, 0)
+		_, err = db.Exec("INSERT INTO Users (userId, action, language, level) VALUES ($1, $2, $3, $4)", user.Id, "registration", user.Language, 0)
 	}
 	db.Close()
 
 	return err
 }
 
-func (user *User) dbRetrieveUser() (err error) {
+func dbRetrieveUser(user *bottypes.User) (err error) {
 	var (
 		db      *sql.DB
 		rows    *sql.Rows
@@ -60,12 +65,12 @@ func (user *User) dbRetrieveUser() (err error) {
 	db, err = sql.Open("postgres", types.ConnectTo())
 	if err == nil {
 		request = `
-        SELECT userId, language, gameId, launchPoint, action, level
+        SELECT userId, language, gameId, launchPoint, action, level,
         sport, seats, payment, 
-		timeInterval, direction, limit, mediagroupId, mediagoupCounter, 
-		changeable, actGame, willChangeable, newPay,
-        FROM Users
-        WHERE user_id = $1`
+		timeInterval, direction, mlimit, mediagroupId, mediagoupCounter, 
+		changeable, actGame, willChangeable, newPay
+        FROM users
+        WHERE userId = $1`
 		rows, err = db.Query(request, user.Id)
 	}
 
@@ -76,7 +81,8 @@ func (user *User) dbRetrieveUser() (err error) {
 				&user.Media.Interval, &user.Media.Direcrion, &user.Media.Limit, &user.Media.Id, &user.Media.Counter,
 				&user.UserRec.Changeable, &user.UserRec.ActGame, &user.UserRec.WillChangeable, &user.UserRec.NewPay)
 			if err != nil {
-				log.Fatal(err)
+				_, file, line, _ := runtime.Caller(0)
+				log.Fatalf("Error at %s:%d: %v", file, line, err)
 			}
 		}
 		//if level, act, id and etc. {user.Reg.GameId = gameId || user.Media.DelGameId = gameId || user.UserRec.GameId = gameId }
@@ -86,17 +92,17 @@ func (user *User) dbRetrieveUser() (err error) {
 	return err
 }
 
-func (user *User) dbRetainUser() (err error) {
+func dbRetainUser(user *bottypes.User) (err error) {
 	var (
 		db      *sql.DB
 		request string
 		gameId  int
 	)
 	db, err = sql.Open("postgres", types.ConnectTo())
-	request = `UPDATE Users SET userId = $1, language = $2, gameId = $3, launchPoint = $4, action = $5, level = $6
+	request = `UPDATE Users SET userId = $1, language = $2, gameId = $3, launchPoint = $4, action = $5, level = $6,
 	sport = $7, seats = $8, payment = $9, 
-	timeInterval = $10, direction = $11, limit = $12, mediagroupId = $13, mediagoupCounter = $14, 
-	changeable = $15, actGame = $16, willChangeable = $17, newPay = $18 WHERE user_id = $19`
+	timeInterval = $10, direction = $11, mlimit = $12, mediagroupId = $13, mediagoupCounter = $14, 
+	changeable = $15, actGame = $16, willChangeable = $17, newPay = $18 WHERE userId = $1`
 	//if level, act, id and etc. {gameId = user.Reg.GameId || gameId = user.Media.DelGameId || gameId = user.UserRec.GameId }
 	if err == nil {
 		_, err = db.Exec(request, user.Id, user.Language, gameId, user.LaunchPoint, user.Act, user.Level,

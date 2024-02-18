@@ -6,6 +6,7 @@ import (
 	"registrationtogames/bot/bottypes"
 	"registrationtogames/bot/welcome"
 	"registrationtogames/fmtogram/formatter"
+	"runtime"
 )
 
 const (
@@ -21,51 +22,39 @@ const (
 	LEVEL8  = 8
 )
 
-type User struct {
-	Id          int
-	Request     string
-	Language    string
-	LaunchPoint int
-	Act         string
-	Level       int
-	Reg         bottypes.RegToGames
-	Media       bottypes.Media
-	UserRec     bottypes.UserRec
-}
-
-func (user *User) retrieveUser() {
+func retrieveUser(user *bottypes.User) {
 	var err error
-	if user.find() {
-		err = user.dbRetrieveUser()
+	if find(user) {
+		err = dbRetrieveUser(user)
 	} else {
-		err = user.createUser()
+		err = createUser(user)
 	}
 
 	if err != nil {
-		log.Fatal(err)
+		_, file, line, _ := runtime.Caller(0)
+		log.Fatalf("Error at %s:%d: %v", file, line, err)
 	}
 }
 
-func (user *User) retainUser() {
-	err := user.dbRetainUser()
+func retainUser(user *bottypes.User) {
+	err := dbRetainUser(user)
 	if err != nil {
-		log.Fatal(err)
+		_, file, line, _ := runtime.Caller(0)
+		log.Fatalf("Error at %s:%d: %v", file, line, err)
 	}
 }
 
-func (user *User) Welcome() {
-	var welcome *welcome.User
-	welcome = user
+func Welcome(user *bottypes.User, fm *formatter.Formatter) {
 	if user.Level == START {
-		welcome.GreetingsToUser()
+		welcome.GreetingsToUser(user, fm)
 	}
 }
 
-func (user *User) DispatcherPhrase(fm *formatter.Formatter) {
-	user.retrieveUser()
+func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
+	retrieveUser(user)
 	fmt.Println("level =", user.Level, "phrase =", user.Request, "action =", user.Act)
 	if user.Act == "registration" {
-		user.Welcome()
+		Welcome(user, fm)
 	}
-	user.retainUser()
+	retainUser(user)
 }

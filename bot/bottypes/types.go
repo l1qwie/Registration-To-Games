@@ -23,3 +23,15 @@ type UserRec struct {
 	WillChangeable string
 	NewPay         string
 }
+
+type User struct {
+	Id          int
+	Request     string
+	Language    string
+	LaunchPoint int
+	Act         string
+	Level       int
+	Reg         RegToGames
+	Media       Media
+	UserRec     UserRec
+}
