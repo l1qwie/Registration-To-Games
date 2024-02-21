@@ -39,11 +39,11 @@ func Find(id int) (detected bool) {
 	return detected
 }
 
-func CreateUser(user *bottypes.User) (err error) {
+func CreateUser(userId int, language string) (err error) {
 	var db *sql.DB
 	db, err = sql.Open("postgres", types.ConnectTo())
 	if err == nil {
-		_, err = db.Exec("INSERT INTO Users (userId, action, language, level) VALUES ($1, $2, $3, $4)", user.Id, "registration", user.Language, 0)
+		_, err = db.Exec("INSERT INTO Users (userId, action, language, level) VALUES ($1, $2, $3, $4)", userId, "registration", language, 0)
 	}
 	db.Close()
 

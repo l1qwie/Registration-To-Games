@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"log"
 	"registrationtogames/bot"
+	"registrationtogames/fmtogram/errors"
 	"registrationtogames/fmtogram/executer"
 	"registrationtogames/fmtogram/formatter"
 	"registrationtogames/fmtogram/helper"
 	"registrationtogames/fmtogram/types"
 	"registrationtogames/tests"
+	"registrationtogames/tests/routine"
+	"registrationtogames/tests/welcome"
 	"time"
 )
 
@@ -85,33 +88,33 @@ func StartWithTelegram() {
 }
 
 func StartTests() {
-	var responses chan *types.TelegramResponse
-	var requests chan *formatter.Formatter
+	var (
+		counter   int
+		responses chan *types.TelegramResponse
+		requests  chan *formatter.Formatter
+	)
+	responses = make(chan *types.TelegramResponse, 3)
+	requests = make(chan *formatter.Formatter, 3)
 
-	responses = make(chan *types.TelegramResponse, 1)
-	requests = make(chan *formatter.Formatter, 1)
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   456,
-						IsBot:    false,
-						Name:     "John",
-						LastName: "Doe",
-						Username: "johndoe",
-						Language: "ru",
-					},
-					Text: "/start",
-				},
-			},
-		},
+	defer errors.MakeIntestines()
+	for counter < 3 {
+		if counter == 0 {
+			welcome.Start(responses)
+		} else if counter == 1 {
+			welcome.QueryForShowRules(responses)
+			routine.DeleteUser(456)
+		} else if counter == 2 {
+			welcome.QueryForWelcomeToMainMenu(responses)
+			routine.DeleteUser(456)
+		}
+
+		tests.DataPreparation(counter)
+		worker(responses, requests)
+		r := <-requests
+		tests.AcceptanceOfResults(r, counter)
+		counter++
+
+		fmt.Println("Test $1 has been completed", counter)
 	}
-	tests.DataPreparation()
-	worker(responses, requests)
-	r := <-requests
-	tests.AcceptanceOfResults(r)
 	fmt.Print("All was alright!")
 }

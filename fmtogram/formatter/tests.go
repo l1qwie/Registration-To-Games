@@ -2,7 +2,6 @@ package formatter
 
 import (
 	"fmt"
-	"log"
 	"registrationtogames/fmtogram/errors"
 )
 
@@ -20,7 +19,7 @@ func (tfm *Formatter) AssertPhoto(path string, condition bool) (err error) {
 	}
 	if condition {
 		if err != nil {
-			log.Fatal(err)
+			panic(err)
 		}
 	}
 	return err
@@ -40,7 +39,7 @@ func (tfm *Formatter) AssertVideo(path string, condition bool) (err error) {
 	}
 	if condition {
 		if err != nil {
-			log.Fatal(err)
+			panic(err)
 		}
 	}
 	return err
@@ -60,7 +59,7 @@ func (tfm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, type
 			if testdim[i] != dim[i] {
 				err = errors.AssertTest(fmt.Sprint(dim), "SetIkbdDim", fmt.Sprint(testdim), "AssertInlineKeyboard")
 				if condition {
-					log.Fatal(err)
+					panic(err)
 				}
 			}
 		}
@@ -70,17 +69,17 @@ func (tfm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, type
 					if tfm.Keyboard.Keyboard[i][j].Label != kbNames[i+j] {
 						err = errors.AssertTest(fmt.Sprint("name of buttons is ", tfm.Keyboard.Keyboard[i][j].Label), "WriteInlineButtonUrl/WriteInlineButtonCmd", fmt.Sprint("name of buttons is ", kbNames[i]), "AssertInlineKeyboard")
 						if condition {
-							log.Fatal(err)
+							panic(err)
 						}
 					} else if typeofbuttons[i] == "url" && tfm.Keyboard.Keyboard[i][j].Url != kbDatas[i+j] {
 						err = errors.AssertTest(fmt.Sprint("url of button is ", tfm.Keyboard.Keyboard[i][j].Url), "WriteInlineButtonUrl", fmt.Sprint("url of button is ", kbDatas[i]), "AssertInlineKeyboard")
 						if condition {
-							log.Fatal(err)
+							panic(err)
 						}
 					} else if typeofbuttons[i] == "cmd" && tfm.Keyboard.Keyboard[i][j].Cmd != kbDatas[i+j] {
 						err = errors.AssertTest(fmt.Sprint("cmd of button is ", tfm.Keyboard.Keyboard[i][j].Cmd), "WriteInlineButtonCmd", fmt.Sprint("cmd of button is ", kbDatas[i]), "AssertInlineKeyboard")
 						if condition {
-							log.Fatal(err)
+							panic(err)
 						}
 					}
 				}
@@ -88,13 +87,13 @@ func (tfm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, type
 		} else if err == nil {
 			err = errors.JustError()
 			if condition {
-				log.Fatal(err)
+				panic(err)
 			}
 		}
 	} else {
 		err = errors.AssertTest(fmt.Sprint("length of slice is ", len(testdim)), "SetIkbdDim", fmt.Sprint("length of slice is ", len(dim)), "AssertInlineKeyboard")
 		if condition {
-			log.Fatal(err)
+			panic(err)
 		}
 	}
 
@@ -107,7 +106,7 @@ func (tfm *Formatter) AssertString(lineoftext string, condition bool) (err error
 	}
 	if condition {
 		if err != nil {
-			log.Fatal(err)
+			panic(err)
 		}
 	}
 
@@ -120,7 +119,7 @@ func (tfm *Formatter) AssertChatId(chatID int, condition bool) (err error) {
 	}
 	if condition {
 		if err != nil {
-			log.Fatal(err)
+			panic(err)
 		}
 	}
 	return err

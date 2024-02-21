@@ -27,7 +27,7 @@ func retrieveUser(user *bottypes.User) {
 	if Find(user.Id) {
 		err = DbRetrieveUser(user)
 	} else {
-		err = CreateUser(user)
+		err = CreateUser(user.Id, user.Language)
 	}
 
 	if err != nil {
@@ -47,6 +47,10 @@ func retainUser(user *bottypes.User) {
 func Welcome(user *bottypes.User, fm *formatter.Formatter) {
 	if user.Level == START {
 		welcome.GreetingsToUser(user, fm)
+	} else if user.Level == LEVEL1 {
+		welcome.ShowRules(user, fm)
+	} else if user.Level == LEVEL2 {
+		welcome.WelcomeToMainMenu(user, fm)
 	}
 }
 

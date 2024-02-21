@@ -27,7 +27,7 @@ func UpdatesMisstakes(part string) (err error) {
 	return err
 }
 
-func CreateIntestines() {
+func MakeIntestines() {
 	if r := recover(); r != nil {
 		fmt.Println("Recovered from panic:", r)
 		debug.PrintStack()
