@@ -24,10 +24,10 @@ const (
 
 func retrieveUser(user *bottypes.User) {
 	var err error
-	if find(user) {
-		err = dbRetrieveUser(user)
+	if Find(user.Id) {
+		err = DbRetrieveUser(user)
 	} else {
-		err = createUser(user)
+		err = CreateUser(user)
 	}
 
 	if err != nil {
@@ -37,7 +37,7 @@ func retrieveUser(user *bottypes.User) {
 }
 
 func retainUser(user *bottypes.User) {
-	err := dbRetainUser(user)
+	err := DbRetainUser(user)
 	if err != nil {
 		_, file, line, _ := runtime.Caller(0)
 		log.Fatalf("Error at %s:%d: %v", file, line, err)

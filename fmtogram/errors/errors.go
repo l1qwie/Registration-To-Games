@@ -1,6 +1,10 @@
 package errors
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"runtime/debug"
+)
 
 var head string = "\n\nAnswer from byogram: "
 
@@ -21,4 +25,12 @@ func UpdatesMisstakes(part string) (err error) {
 	err = fmt.Errorf(body)
 
 	return err
+}
+
+func CreateIntestines() {
+	if r := recover(); r != nil {
+		fmt.Println("Recovered from panic:", r)
+		debug.PrintStack()
+		os.Exit(1)
+	}
 }

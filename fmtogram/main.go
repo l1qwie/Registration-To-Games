@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 	"registrationtogames/bot"
-	"registrationtogames/bot/testdatabase"
 	"registrationtogames/fmtogram/executer"
 	"registrationtogames/fmtogram/formatter"
 	"registrationtogames/fmtogram/helper"
 	"registrationtogames/fmtogram/types"
+	"registrationtogames/tests"
 	"time"
 )
 
@@ -109,16 +109,9 @@ func StartTests() {
 			},
 		},
 	}
-	testdatabase.UpdateLanguage("ru", 456)
-	testdatabase.UpdateAction("registration", 456)
-	testdatabase.UpdateLevel(0, 456)
+	tests.DataPreparation()
 	worker(responses, requests)
 	r := <-requests
-	r.AssertString("Добро пожаловать в нашего бота! Этот бот предназначен для регистрации на спортивные игры в Стамбуле, но для начала вам нужно зарегистрироваться у нас!", true)
-	r.AssertChatId(456, true)
-	r.AssertInlineKeyboard([]int{1}, []string{"Зарегистрироваться"}, []string{"GoReg"}, []string{"cmd"}, true)
-	//r.AssertPhoto("AgACAgQAAxkDAAIJRGW3rwaLqri1BkTdVQm1VFA8tE4HAAJeszEbEAABvFHW3MOANm9QFQEAAwIAA20AAzQE", true)
-	//r.AssertVideo("BAACAgIAAxkDAAIJW2W3sTguaruPGvo722qeKTcOPwvxAAIzPQACy-DASekiOEg76qGiNAQ", true)
-	//close(requests)
+	tests.AcceptanceOfResults(r)
 	fmt.Print("All was alright!")
 }

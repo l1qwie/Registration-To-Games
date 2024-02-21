@@ -10,7 +10,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func find(user *bottypes.User) (detected bool) {
+func Find(id int) (detected bool) {
 	var (
 		db      *sql.DB
 		rows    *sql.Rows
@@ -18,23 +18,19 @@ func find(user *bottypes.User) (detected bool) {
 		request string
 		counter int
 	)
-
 	db, err = sql.Open("postgres", types.ConnectTo())
 	if err != nil {
-		_, file, line, _ := runtime.Caller(0)
-		log.Fatalf("Error at %s:%d: %v", file, line, err)
+		panic(err)
 	}
-	request = `SELECT COUNT(*)FROM Users WHERE userId = $1`
-	rows, err = db.Query(request, user.Id)
+	request = `SELECT COUNT(*) FROM Users WHERE userId = $1`
+	rows, err = db.Query(request, id)
 	if err != nil {
-		_, file, line, _ := runtime.Caller(0)
-		log.Fatalf("Error at %s:%d: %v", file, line, err)
+		panic(err)
 	}
 	for rows.Next() {
 		err = rows.Scan(&counter)
 		if err != nil {
-			_, file, line, _ := runtime.Caller(0)
-			log.Fatalf("Error at %s:%d: %v", file, line, err)
+			panic(err)
 		}
 	}
 	if counter > 0 {
@@ -43,7 +39,7 @@ func find(user *bottypes.User) (detected bool) {
 	return detected
 }
 
-func createUser(user *bottypes.User) (err error) {
+func CreateUser(user *bottypes.User) (err error) {
 	var db *sql.DB
 	db, err = sql.Open("postgres", types.ConnectTo())
 	if err == nil {
@@ -54,14 +50,13 @@ func createUser(user *bottypes.User) (err error) {
 	return err
 }
 
-func dbRetrieveUser(user *bottypes.User) (err error) {
+func DbRetrieveUser(user *bottypes.User) (err error) {
 	var (
 		db      *sql.DB
 		rows    *sql.Rows
 		gameId  int
 		request string
 	)
-	//Don't forget to change your database for this before you start testing
 	db, err = sql.Open("postgres", types.ConnectTo())
 	if err == nil {
 		request = `
@@ -92,7 +87,7 @@ func dbRetrieveUser(user *bottypes.User) (err error) {
 	return err
 }
 
-func dbRetainUser(user *bottypes.User) (err error) {
+func DbRetainUser(user *bottypes.User) (err error) {
 	var (
 		db      *sql.DB
 		request string
