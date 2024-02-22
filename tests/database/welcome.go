@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"registrationtogames/bot/bottypes"
 	"registrationtogames/bot/routine"
 )
@@ -17,7 +16,6 @@ func AfterGreetingsToUserCheckDb(userId int) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(user.Id, "#@~!!@#!@")
 
 	if user.Id != 456 {
 		panic("user.Id != 456")

@@ -10,7 +10,7 @@ import (
 	"registrationtogames/fmtogram/helper"
 	"registrationtogames/fmtogram/types"
 	"registrationtogames/tests"
-	"registrationtogames/tests/routine"
+	preparationdata "registrationtogames/tests/preparationData"
 	"registrationtogames/tests/welcome"
 	"time"
 )
@@ -54,7 +54,6 @@ func pollResponse(output chan<- *formatter.Formatter, reg *executer.RegTable) {
 }
 
 func worker(input <-chan *types.TelegramResponse, output chan<- *formatter.Formatter) {
-	fmt.Println("In worker")
 	for len(input) > 0 {
 		fm := bot.Receiving(<-input)
 		fm.Complete()
@@ -93,25 +92,34 @@ func StartTests() {
 		responses chan *types.TelegramResponse
 		requests  chan *formatter.Formatter
 	)
-	responses = make(chan *types.TelegramResponse, 3)
-	requests = make(chan *formatter.Formatter, 3)
+	responses = make(chan *types.TelegramResponse, 8)
+	requests = make(chan *formatter.Formatter, 8)
 
 	defer errors.MakeIntestines()
-	for counter < 3 {
-		if counter == 0 {
-			welcome.Start(responses)
-		} else if counter == 1 {
-			welcome.QueryForShowRules(responses)
-			routine.DeleteUser(456)
-		} else if counter == 2 {
-			welcome.QueryForWelcomeToMainMenu(responses)
-			routine.DeleteUser(456)
+	for counter < 8 {
+		for i := 0; i < 3; i++ {
+			if counter == 0 {
+				welcome.Start(responses)
+			} else if counter == 1 {
+				preparationdata.PreparationToShowRules(i, responses)
+			} else if counter == 2 {
+				preparationdata.WelcomeToMainMenu(i, responses)
+			} else if counter == 3 {
+				preparationdata.PresentationScheduele(i, responses)
+			} else if counter == 4 {
+				preparationdata.ChooseGame(i, responses)
+			} else if counter == 5 {
+				preparationdata.ChooseSeats(i, responses)
+			} else if counter == 6 {
+				preparationdata.ChoosePayment(i, responses)
+			} else if counter == 7 {
+				preparationdata.BestWishes(i, responses)
+			}
+			tests.PreparationDatabase(counter)
+			worker(responses, requests)
+			r := <-requests
+			tests.AcceptanceOfResults(r, counter, i)
 		}
-
-		tests.DataPreparation(counter)
-		worker(responses, requests)
-		r := <-requests
-		tests.AcceptanceOfResults(r, counter)
 		counter++
 
 		fmt.Println("Test $1 has been completed", counter)

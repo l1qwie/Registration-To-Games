@@ -1,4 +1,4 @@
-package welcome
+package registration
 
 import "registrationtogames/fmtogram/types"
 
@@ -17,7 +17,7 @@ func JustTrash(responses chan *types.TelegramResponse) {
 						Username: "johndoe",
 						Language: "ru",
 					},
-					Text: "Hello World ma booooooooy",
+					Text: "O, I want to registrait myself to game!",
 				},
 			},
 		},
@@ -39,14 +39,14 @@ func JustTrash2(responses chan *types.TelegramResponse) {
 						Username: "johndoe",
 						Language: "ru",
 					},
-					Text: "Owww, nooo, you are the best human in the world!",
+					Text: "!#!@#QWESASED#!#!#$%#3123e1",
 				},
 			},
 		},
 	}
 }
 
-func Start(responses chan *types.TelegramResponse) {
+func QueryForPresentationScheduele(responses chan *types.TelegramResponse) {
 	responses <- &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
@@ -61,14 +61,14 @@ func Start(responses chan *types.TelegramResponse) {
 						Username: "johndoe",
 						Language: "ru",
 					},
-					Text: "/start",
+					Text: "I don't want to type anything",
 				},
 			},
 		},
 	}
 }
 
-func QueryForShowRules(responses chan *types.TelegramResponse) {
+func QueryForChooseGame(responses chan *types.TelegramResponse) {
 	responses <- &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
@@ -83,14 +83,14 @@ func QueryForShowRules(responses chan *types.TelegramResponse) {
 						Username: "johndoe",
 						Language: "ru",
 					},
-					Text: "GoReg",
+					Text: "2",
 				},
 			},
 		},
 	}
 }
 
-func QueryForWelcomeToMainMenu(responses chan *types.TelegramResponse) {
+func QueryForChooseSeats(responses chan *types.TelegramResponse) {
 	responses <- &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
@@ -105,7 +105,51 @@ func QueryForWelcomeToMainMenu(responses chan *types.TelegramResponse) {
 						Username: "johndoe",
 						Language: "ru",
 					},
-					Text: "GoNext",
+					Text: "2",
+				},
+			},
+		},
+	}
+}
+
+func QueryForChoosePayment(responses chan *types.TelegramResponse) {
+	responses <- &types.TelegramResponse{
+		Ok: true,
+		Result: []types.TelegramUpdate{
+			{
+				UpdateID: 123,
+				Message: types.InfMessage{
+					TypeFrom: types.User{
+						UserID:   456,
+						IsBot:    false,
+						Name:     "John",
+						LastName: "Doe",
+						Username: "johndoe",
+						Language: "ru",
+					},
+					Text: "card",
+				},
+			},
+		},
+	}
+}
+
+func QueryForBestWishes(responses chan *types.TelegramResponse) {
+	responses <- &types.TelegramResponse{
+		Ok: true,
+		Result: []types.TelegramUpdate{
+			{
+				UpdateID: 123,
+				Message: types.InfMessage{
+					TypeFrom: types.User{
+						UserID:   456,
+						IsBot:    false,
+						Name:     "John",
+						LastName: "Doe",
+						Username: "johndoe",
+						Language: "ru",
+					},
+					Text: "card",
 				},
 			},
 		},

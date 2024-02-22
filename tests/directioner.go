@@ -9,7 +9,7 @@ import (
 	"registrationtogames/tests/welcome"
 )
 
-func DataPreparation(counter int) {
+func PreparationDatabase(counter int) {
 	if !root.Find(456) {
 		err := root.CreateUser(456, "ru")
 		if err != nil {
@@ -36,7 +36,7 @@ func def() {
 	routine.TestRetainUser()
 }
 
-func AcceptanceOfResults(output *formatter.Formatter, counter int) {
+func AcceptanceOfResults(output *formatter.Formatter, counter, i int) {
 	if output == nil {
 		log.Fatal()
 	}
@@ -45,11 +45,21 @@ func AcceptanceOfResults(output *formatter.Formatter, counter int) {
 		welcome.TestGreetingsToUser(output)
 		database.AfterGreetingsToUserCheckDb(456)
 	} else if counter == 1 {
-		welcome.TestShowRules(output)
-		database.AfterShowRulesCheckDb(456)
+		if i < 2 {
+			welcome.TestGreetingsToUser(output)
+			database.AfterGreetingsToUserCheckDb(456)
+		} else {
+			welcome.TestShowRules(output)
+			database.AfterShowRulesCheckDb(456)
+		}
 	} else if counter == 2 {
-		welcome.TestWelcomeToMainMenu(output)
-		database.AfterWelcomeToMainMenuCheckDb(456)
+		if i < 2 {
+			welcome.TestShowRules(output)
+			database.AfterShowRulesCheckDb(456)
+		} else {
+			welcome.TestWelcomeToMainMenu(output)
+			database.AfterWelcomeToMainMenuCheckDb(456)
+		}
 	}
 
 	//out.AssertString("Добро пожаловать в нашего бота! Этот бот предназначен для регистрации на спортивные игры в Стамбуле, но для начала вам нужно зарегистрироваться у нас!", true)

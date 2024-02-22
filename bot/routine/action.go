@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"log"
 	"registrationtogames/bot/bottypes"
+	"registrationtogames/bot/registration"
 	"registrationtogames/bot/welcome"
 	"registrationtogames/fmtogram/formatter"
 	"runtime"
+	"strconv"
 )
 
 const (
@@ -54,11 +56,30 @@ func Welcome(user *bottypes.User, fm *formatter.Formatter) {
 	}
 }
 
+func RegToGames(user *bottypes.User, fm *formatter.Formatter) {
+	if user.Level == START {
+		registration.PresentationScheduele(user, fm)
+	} else if user.Level == LEVEL1 {
+		registration.ChooseGame(user, fm, true)
+	} else if user.Level == LEVEL2 {
+		registration.ChooseSeats(user, fm)
+	} else if user.Level == LEVEL3 {
+		registration.ChoosePayment(user, fm)
+	} else if user.Level == LEVEL4 {
+		registration.BestWishes(user, fm)
+	} else if user.Level == LEVEL5 {
+		user.Request = strconv.Itoa(user.Reg.GameId)
+		registration.ChooseGame(user, fm, true)
+	}
+}
+
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	retrieveUser(user)
 	fmt.Println("level =", user.Level, "phrase =", user.Request, "action =", user.Act)
 	if user.Act == "registration" {
 		Welcome(user, fm)
+	} else if user.Act == "reg to games" {
+		RegToGames(user, fm)
 	}
 	retainUser(user)
 }
