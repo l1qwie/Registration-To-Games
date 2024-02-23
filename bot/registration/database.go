@@ -27,7 +27,8 @@ func selectTheSchedule(limit, offset int, language string) (schedule []*Game) {
 		panic(err)
 	}
 	for rows.Next() {
-		err = rows.Scan(&schedule[i].id, &sport, &schedule[i].date, &schedule[i].time, &schedule[i].seats)
+		schedule = append(schedule, &Game{})
+		err = rows.Scan(&schedule[i].id, &sport, &date, &time, &schedule[i].seats)
 		if err != nil {
 			panic(err)
 		}
@@ -125,7 +126,44 @@ func howManyIsLeft(gameId int, wishfulseats int) (thereArePlaces bool) {
 	return thereArePlaces
 }
 
-func selectDetailOfGame(gameId int) (details *Game) {
+func completeRegistration(userId, gameId, seats int, payment string) (err error) {
+	var db *sql.DB
+	db, err = sql.Open("postgres", types.ConnectTo())
+	if err == nil {
+		_, err = db.Exec("INSERT INTO GamesWithUsers (userId, gameId, seats, payment) VALUES ($1, $2, $3, $4)", userId, gameId, seats, payment)
+	}
+	db.Close()
 
+	return err
+}
+
+func selectDetailOfGame(gameId int, language string) (details *Game) {
+	var (
+		db         *sql.DB
+		rows       *sql.Rows
+		err        error
+		request    string
+		date, time int
+	)
+	db, err = sql.Open("postgres", types.ConnectTo())
+	if err != nil {
+		panic(err)
+	}
+	details = new(Game)
+	request = `SELECT gameId, sport, date, time, seats, latitude, longitude, address, price, currency FROM Schedule WHERE gameId = $1`
+	rows, err = db.Query(request, gameId)
+	if err != nil {
+		panic(err)
+	}
+	//Try to delete for below
+	for rows.Next() {
+		err = rows.Scan(&details.id, &details.sport, &date, &time, &details.seats, &details.lattitude, &details.longitude, &details.address, &details.price, &details.currency)
+		if err != nil {
+			panic(err)
+		}
+		details.sport = dictionary.Dictionary[language][details.sport]
+		details.date = forall.FromIntToStrDate(date)
+		details.time = forall.FromIntToStrTime(time)
+	}
 	return details
 }

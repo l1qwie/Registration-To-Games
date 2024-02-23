@@ -1,7 +1,6 @@
 package routine
 
 import (
-	"fmt"
 	"log"
 	"registrationtogames/bot/bottypes"
 	"registrationtogames/bot/registration"
@@ -12,16 +11,16 @@ import (
 )
 
 const (
-	START   = 0
-	LEVEL1  = 1
-	LEVEL2  = 2
-	LEVEL3  = 3
-	OPTIONS = 3
-	LEVEL4  = 4
-	LEVEL5  = 5
-	LEVEL6  = 6
-	LEVEL7  = 7
-	LEVEL8  = 8
+	START   int = 0
+	LEVEL1  int = 1
+	LEVEL2  int = 2
+	LEVEL3  int = 3
+	OPTIONS int = 3
+	LEVEL4  int = 4
+	LEVEL5  int = 5
+	LEVEL6  int = 6
+	LEVEL7  int = 7
+	LEVEL8  int = 8
 )
 
 func retrieveUser(user *bottypes.User) {
@@ -75,7 +74,7 @@ func RegToGames(user *bottypes.User, fm *formatter.Formatter) {
 
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	retrieveUser(user)
-	fmt.Println("level =", user.Level, "phrase =", user.Request, "action =", user.Act)
+	//fmt.Println("level =", user.Level, "phrase =", user.Request, "action =", user.Act)
 	if user.Act == "registration" {
 		Welcome(user, fm)
 	} else if user.Act == "reg to games" {

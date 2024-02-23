@@ -149,7 +149,7 @@ func QueryForBestWishes(responses chan *types.TelegramResponse) {
 						Username: "johndoe",
 						Language: "ru",
 					},
-					Text: "card",
+					Text: "Next",
 				},
 			},
 		},

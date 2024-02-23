@@ -69,9 +69,6 @@ func TestRetrevenUser() {
 	if user.Level != 0 {
 		panic("user.Level != 0")
 	}
-	if user.Reg.Sport != "" {
-		panic("user.Reg.Sport != ``")
-	}
 	if user.Reg.Seats != 0 {
 		panic("user.Reg.Seats != 0")
 	}
@@ -84,8 +81,8 @@ func TestRetrevenUser() {
 	if user.Media.Direcrion != "" {
 		panic("user.Media.Direcrion != ``")
 	}
-	if user.Media.Limit != 0 {
-		panic("user.Media.Limit != 0")
+	if user.Media.Limit != 7 {
+		panic("user.Media.Limit != 7")
 	}
 	if user.Media.Id != "" {
 		panic("user.Media.Id != ``")
@@ -119,7 +116,6 @@ func TestRetainUser() {
 	user.Act = "registration"
 	user.LaunchPoint = 18
 	user.UserRec.Changeable = "seats"
-	user.Reg.Sport = "hockey"
 
 	defer func() {
 		if routine.Find(user.Id) {
@@ -157,9 +153,6 @@ func TestRetainUser() {
 	if user.Level != 0 {
 		panic("user.Level != 0")
 	}
-	if user.Reg.Sport != "hockey" {
-		panic("user.Reg.Sport != ``")
-	}
 	if user.Reg.Seats != 0 {
 		panic("user.Reg.Seats != 0")
 	}
@@ -172,8 +165,8 @@ func TestRetainUser() {
 	if user.Media.Direcrion != "" {
 		panic("user.Media.Direcrion != ``")
 	}
-	if user.Media.Limit != 0 {
-		panic("user.Media.Limit != 0")
+	if user.Media.Limit != 7 {
+		panic("user.Media.Limit != 7")
 	}
 	if user.Media.Id != "" {
 		panic("user.Media.Id != ``")

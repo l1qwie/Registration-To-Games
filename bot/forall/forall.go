@@ -17,19 +17,19 @@ func FromIntToStrDate(numberDate int) (date string) {
 	day = (numberDate - (year * 10000) - (month * 100))
 
 	if month <= 10 {
-		monthString = fmt.Sprint(0, month)
+		monthString = fmt.Sprintf("%d%d", 0, month)
 	}
 	if day <= 10 {
-		dayString = fmt.Sprint(0, day)
+		dayString = fmt.Sprintf("%d%d", 0, day)
 	}
 	if monthString != "" && dayString != "" {
-		date = fmt.Sprint(dayString, monthString, year)
+		date = fmt.Sprintf("%s-%s-%d", dayString, monthString, year)
 	} else if monthString != "" && dayString == "" {
-		date = fmt.Sprint(day, monthString, year)
+		date = fmt.Sprintf("%d-%s-%d", day, monthString, year)
 	} else if monthString == "" && dayString != "" {
-		date = fmt.Sprint(dayString, month, year)
+		date = fmt.Sprintf("%s-%d-%d", dayString, month, year)
 	} else {
-		date = fmt.Sprint(day, month, year)
+		date = fmt.Sprintf("%d-%d-%d", day, month, year)
 	}
 
 	return date
@@ -44,20 +44,20 @@ func FromIntToStrTime(numberTime int) (time string) {
 	minute = (numberTime - (hour * 100))
 
 	if hour <= 10 {
-		hourString = fmt.Sprint(0, hour)
+		hourString = fmt.Sprintf("%d%d", 0, hour)
 	}
 	if minute <= 10 {
-		minuteString = fmt.Sprint(0, minute)
+		minuteString = fmt.Sprintf("%d%d", 0, minute)
 	}
 
 	if hourString != "" && minuteString != "" {
-		time = fmt.Sprint(hourString, minuteString)
+		time = fmt.Sprintf("%s:%s", hourString, minuteString)
 	} else if hourString != "" && minuteString == "" {
-		time = fmt.Sprint(hourString, minute)
+		time = fmt.Sprintf("%s:%d", hourString, minute)
 	} else if hourString == "" && minuteString != "" {
-		time = fmt.Sprint(hour, minuteString)
+		time = fmt.Sprintf("%d:%s", hour, minuteString)
 	} else if hourString == "" && minuteString == "" {
-		time = fmt.Sprint(hour, minute)
+		time = fmt.Sprintf("%d:%d", hour, minute)
 	}
 
 	return time
@@ -66,7 +66,7 @@ func FromIntToStrTime(numberTime int) (time string) {
 func IntCheck(numS string) (detected bool, num int) {
 	var err error
 	num, err = strconv.Atoi(numS)
-	if err != nil {
+	if err == nil {
 		detected = true
 	}
 

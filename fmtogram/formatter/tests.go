@@ -47,13 +47,13 @@ func (tfm *Formatter) AssertVideo(path string, condition bool) (err error) {
 
 func (tfm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, typeofbuttons []string, condition bool) (err error) {
 	var (
-		dim []int
+		dim     []int
+		counter int
 	)
 
 	for i := 0; i < len(tfm.Keyboard.Keyboard); i++ {
 		dim = append(dim, len(tfm.Keyboard.Keyboard[i]))
 	}
-
 	if len(testdim) == len(dim) {
 		for i := 0; i < len(dim); i++ {
 			if testdim[i] != dim[i] {
@@ -66,22 +66,23 @@ func (tfm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, type
 		if len(kbNames) == len(kbDatas) && len(kbNames) == len(typeofbuttons) && err == nil {
 			for i := 0; i < len(testdim); i++ {
 				for j := 0; j < testdim[i]; j++ {
-					if tfm.Keyboard.Keyboard[i][j].Label != kbNames[i+j] {
-						err = errors.AssertTest(fmt.Sprint("name of buttons is ", tfm.Keyboard.Keyboard[i][j].Label), "WriteInlineButtonUrl/WriteInlineButtonCmd", fmt.Sprint("name of buttons is ", kbNames[i]), "AssertInlineKeyboard")
+					if tfm.Keyboard.Keyboard[i][j].Label != kbNames[counter] {
+						err = errors.AssertTest(fmt.Sprint("name of buttons is ", tfm.Keyboard.Keyboard[i][j].Label), "WriteInlineButtonUrl/WriteInlineButtonCmd", fmt.Sprint("name of buttons is ", kbNames[counter]), "AssertInlineKeyboard")
 						if condition {
 							panic(err)
 						}
-					} else if typeofbuttons[i] == "url" && tfm.Keyboard.Keyboard[i][j].Url != kbDatas[i+j] {
-						err = errors.AssertTest(fmt.Sprint("url of button is ", tfm.Keyboard.Keyboard[i][j].Url), "WriteInlineButtonUrl", fmt.Sprint("url of button is ", kbDatas[i]), "AssertInlineKeyboard")
+					} else if typeofbuttons[i] == "url" && tfm.Keyboard.Keyboard[i][j].Url != kbDatas[counter] {
+						err = errors.AssertTest(fmt.Sprint("url of button is ", tfm.Keyboard.Keyboard[i][j].Url), "WriteInlineButtonUrl", fmt.Sprint("url of button is ", kbDatas[counter]), "AssertInlineKeyboard")
 						if condition {
 							panic(err)
 						}
-					} else if typeofbuttons[i] == "cmd" && tfm.Keyboard.Keyboard[i][j].Cmd != kbDatas[i+j] {
-						err = errors.AssertTest(fmt.Sprint("cmd of button is ", tfm.Keyboard.Keyboard[i][j].Cmd), "WriteInlineButtonCmd", fmt.Sprint("cmd of button is ", kbDatas[i]), "AssertInlineKeyboard")
+					} else if typeofbuttons[i] == "cmd" && tfm.Keyboard.Keyboard[i][j].Cmd != kbDatas[counter] {
+						err = errors.AssertTest(fmt.Sprint("cmd of button is ", tfm.Keyboard.Keyboard[i][j].Cmd), "WriteInlineButtonCmd", fmt.Sprint("cmd of button is ", kbDatas[counter]), "AssertInlineKeyboard")
 						if condition {
 							panic(err)
 						}
 					}
+					counter++
 				}
 			}
 		} else if err == nil {
@@ -91,7 +92,7 @@ func (tfm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, type
 			}
 		}
 	} else {
-		err = errors.AssertTest(fmt.Sprint("length of slice is ", len(testdim)), "SetIkbdDim", fmt.Sprint("length of slice is ", len(dim)), "AssertInlineKeyboard")
+		err = errors.AssertTest(fmt.Sprint("length of slice is ", len(dim)), "SetIkbdDim", fmt.Sprint("length of slice is ", len(testdim)), "AssertInlineKeyboard")
 		if condition {
 			panic(err)
 		}

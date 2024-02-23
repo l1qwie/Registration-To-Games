@@ -61,7 +61,7 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 	if err == nil {
 		request = `
         SELECT userId, language, gameId, launchPoint, action, level,
-        sport, seats, payment, 
+        seats, payment, 
 		timeInterval, direction, mlimit, mediagroupId, mediagoupCounter, 
 		changeable, actGame, willChangeable, newPay
         FROM users
@@ -72,13 +72,16 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 	if err == nil {
 		for rows.Next() {
 			err = rows.Scan(&user.Id, &user.Language, &gameId, &user.LaunchPoint, &user.Act, &user.Level,
-				&user.Reg.Sport, &user.Reg.Seats, &user.Reg.Payment,
+				&user.Reg.Seats, &user.Reg.Payment,
 				&user.Media.Interval, &user.Media.Direcrion, &user.Media.Limit, &user.Media.Id, &user.Media.Counter,
 				&user.UserRec.Changeable, &user.UserRec.ActGame, &user.UserRec.WillChangeable, &user.UserRec.NewPay)
 			if err != nil {
 				_, file, line, _ := runtime.Caller(0)
 				log.Fatalf("Error at %s:%d: %v", file, line, err)
 			}
+		}
+		if user.Act == "reg to games" {
+			user.Reg.GameId = gameId
 		}
 		//if level, act, id and etc. {user.Reg.GameId = gameId || user.Media.DelGameId = gameId || user.UserRec.GameId = gameId }
 	}
@@ -95,13 +98,16 @@ func DbRetainUser(user *bottypes.User) (err error) {
 	)
 	db, err = sql.Open("postgres", types.ConnectTo())
 	request = `UPDATE Users SET userId = $1, language = $2, gameId = $3, launchPoint = $4, action = $5, level = $6,
-	sport = $7, seats = $8, payment = $9, 
-	timeInterval = $10, direction = $11, mlimit = $12, mediagroupId = $13, mediagoupCounter = $14, 
-	changeable = $15, actGame = $16, willChangeable = $17, newPay = $18 WHERE userId = $1`
+	seats = $7, payment = $8, 
+	timeInterval = $9, direction = $10, mlimit = $11, mediagroupId = $12, mediagoupCounter = $13, 
+	changeable = $14, actGame = $15, willChangeable = $16, newPay = $17 WHERE userId = $1`
+	if user.Act == "reg to games" {
+		gameId = user.Reg.GameId
+	}
 	//if level, act, id and etc. {gameId = user.Reg.GameId || gameId = user.Media.DelGameId || gameId = user.UserRec.GameId }
 	if err == nil {
 		_, err = db.Exec(request, user.Id, user.Language, gameId, user.LaunchPoint, user.Act, user.Level,
-			user.Reg.Sport, user.Reg.Seats, user.Reg.Payment,
+			user.Reg.Seats, user.Reg.Payment,
 			user.Media.Interval, user.Media.Direcrion, user.Media.Limit, user.Media.Id, user.Media.Counter,
 			user.UserRec.Changeable, user.UserRec.ActGame, user.UserRec.WillChangeable, user.UserRec.NewPay)
 	}

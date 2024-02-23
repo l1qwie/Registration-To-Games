@@ -10,4 +10,5 @@ func main() {
 	//err := database.FirstConnect()
 	//fmtogram.StartWithTelegram()
 	fmtogram.StartTests()
+	//fmtogram.JustOtherTests()
 }

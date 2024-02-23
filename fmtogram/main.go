@@ -10,8 +10,8 @@ import (
 	"registrationtogames/fmtogram/helper"
 	"registrationtogames/fmtogram/types"
 	"registrationtogames/tests"
+	"registrationtogames/tests/othertests"
 	preparationdata "registrationtogames/tests/preparationData"
-	"registrationtogames/tests/welcome"
 	"time"
 )
 
@@ -98,31 +98,30 @@ func StartTests() {
 	defer errors.MakeIntestines()
 	for counter < 8 {
 		for i := 0; i < 3; i++ {
-			if counter == 0 {
-				welcome.Start(responses)
-			} else if counter == 1 {
-				preparationdata.PreparationToShowRules(i, responses)
-			} else if counter == 2 {
-				preparationdata.WelcomeToMainMenu(i, responses)
-			} else if counter == 3 {
-				preparationdata.PresentationScheduele(i, responses)
-			} else if counter == 4 {
-				preparationdata.ChooseGame(i, responses)
-			} else if counter == 5 {
-				preparationdata.ChooseSeats(i, responses)
-			} else if counter == 6 {
-				preparationdata.ChoosePayment(i, responses)
-			} else if counter == 7 {
-				preparationdata.BestWishes(i, responses)
+			if counter < 3 {
+				preparationdata.WelcomeAct(counter, i, responses)
+			} else if counter >= 3 && counter < 8 {
+				preparationdata.RegToGamesAct(counter, i, responses)
 			}
 			tests.PreparationDatabase(counter)
 			worker(responses, requests)
 			r := <-requests
 			tests.AcceptanceOfResults(r, counter, i)
 		}
+		fmt.Printf("Test %d by counter: %d has been completed\n", counter+1, counter)
 		counter++
-
-		fmt.Println("Test $1 has been completed", counter)
 	}
 	fmt.Print("All was alright!")
+}
+
+func JustOtherTests() {
+	defer errors.MakeIntestines()
+	if !othertests.TestFromIntToStrDate() {
+		panic("Date isn't a date")
+	}
+	fmt.Println("Date is correct")
+	if !othertests.TestFromIntToStrTime() {
+		panic("Time isn't a time")
+	}
+	fmt.Println("Time is correct")
 }

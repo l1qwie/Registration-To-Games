@@ -3,6 +3,8 @@ package dictionary
 var Dictionary map[string]map[string]string
 
 func ru(dict map[string]string) {
+	dict["volleyball"] = "Волейбол"
+	dict["football"] = "Футбол"
 	dict["WelcomeToBot"] = "Добро пожаловать в нашего бота! Этот бот предназначен для регистрации на спортивные игры в Стамбуле, но для начала вам нужно зарегистрироваться у нас!"
 	dict["reg"] = "Зарегистрироваться"
 	dict["BotRules"] = `Добро Пожаловать в нашу дружную компанию! Далее я вам напишу некоторые правила, и рекомендации как пользоваться ботом:\n1. Просмотр расписания.\n     
@@ -24,9 +26,9 @@ func ru(dict map[string]string) {
 	dict["previous"] = "<<"
 	dict["ChooseSeats"] = "Выберите или введите желаемое количество мест. Прошу обратить ваше внимание на то, что цена за одно место на эту игру составляет %d %s"
 	dict["NoMoreSeats"] = "К сожалению, вы ввели либо слишком большое количество свободных мест для игры, которых не существует"
-	dict["1"] = "1"
-	dict["2"] = "2"
-	dict["3"] = "3"
+	dict["1"] = "Я буду один"
+	dict["2"] = "Нас будет двое"
+	dict["3"] = "Нас будет трое"
 	dict["ChoosePaymethod"] = "Выберите способ оплаты"
 	dict["payByCard"] = "Онлайн оплата"
 	dict["payByCash"] = "Наличкой администратору"
@@ -39,14 +41,14 @@ func ru(dict map[string]string) {
 	2. Дата: <b>%s</b>\n
 	3. Время: <b>%s</b>\n
 	4. Вы записали <b>%d</b> персон на эту игру\n
-	5. Оплата: <b>%s</b>\n
+	5. Оплата: <b>by %s</b>\n
 	6. Ваша стоимость посещения: <b>%d %s</b>\n\n
 	
 	***Вы можете изменить некоторые данные Вашей записи\n
 	или же удалить ее в Главном Меню нажав на <b>"Настройки | Мои игры"</b>***\n\n
 	
 	❤️❤️❤️Ждем вас по адресу: %s\n
-	https://www.google.com/maps?q=%s,%s`
+	https://www.google.com/maps?q=%f,%f`
 	dict["SeatsAreFull"] = "Упс! Похоже, места, на которые вы рассчитывали, уже заняты! Мне очень жаль. У нас осталось мест: %s.\n"
 	dict["Review"] = "Хотите пересмотреть свои планы?"
 	dict["go-ahead"] = "Да, хочу"
@@ -54,6 +56,8 @@ func ru(dict map[string]string) {
 }
 
 func en(dict map[string]string) {
+	dict["volleyball"] = "Volleyball"
+	dict["football"] = "Football"
 	dict["WelcomeToBot"] = "Welcome to our bot! This bot is designed for registration for sports games in Istanbul, but first, you need to register with us!"
 	dict["reg"] = "Register"
 	dict["BotRules"] = `Welcome to our friendly company! Next, I will write you some rules and recommendations on how to use the bot:
@@ -82,9 +86,9 @@ func en(dict map[string]string) {
 	dict["previous"] = "<<"
 	dict["ChooseSeats"] = "Choose or enter the desired number of seats. Please note that the price for one seat for this game is %d %s"
 	dict["NoMoreSeats"] = "Unfortunately, you entered either too many available seats for the game that do not exist"
-	dict["1"] = "1"
-	dict["2"] = "2"
-	dict["3"] = "3"
+	dict["1"] = "I will be alone"
+	dict["2"] = "There will be two of us"
+	dict["3"] = "There will be three of us"
 	dict["ChoosePaymethod"] = "Choose a payment method"
 	dict["payByCard"] = "Pay by card"
 	dict["payByCash"] = "Pay by cash"
@@ -112,6 +116,8 @@ func en(dict map[string]string) {
 }
 
 func tur(dict map[string]string) {
+	dict["volleyball"] = "Voleybol"
+	dict["football"] = "Futbol"
 	dict["WelcomeToBot"] = "Botumuza hoş geldiniz! Bu bot, İstanbul'daki spor oyunlarına kaydolmak için tasarlanmıştır, ancak önce bizimle kayıt olmanız gerekiyor!"
 	dict["reg"] = "Kayıt Ol"
 	dict["BotRules"] = `Hoş geldiniz! Arkadaşça bir şirkete hoş geldiniz! Aşağıda size bazı kurallar ve botu nasıl kullanacağınıza dair öneriler yazacağım:
@@ -140,9 +146,9 @@ func tur(dict map[string]string) {
 	dict["previous"] = "<<"
 	dict["ChooseSeats"] = "İstenilen koltuk sayısını seçin veya girin. Lütfen unutmayın ki bu oyun için bir koltuk fiyatı %d %s'dir"
 	dict["NoMoreSeats"] = "Maalesef, var olmayan oyun için fazla sayıda boş koltuk girdiniz"
-	dict["1"] = "1"
-	dict["2"] = "2"
-	dict["3"] = "3"
+	dict["1"] = "Ben yalnız olacağım"
+	dict["2"] = "İkimiz olacağız"
+	dict["3"] = "Üç kişi olacağız"
 	dict["ChoosePaymethod"] = "Ödeme yöntemi seçin"
 	dict["payByCard"] = "Online ödeme"
 	dict["payByCash"] = "Nakit, yöneticiye"

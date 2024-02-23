@@ -1,7 +1,6 @@
 package welcome
 
 import (
-	"fmt"
 	"registrationtogames/bot/bottypes"
 	"registrationtogames/bot/dictionary"
 	"registrationtogames/fmtogram/formatter"
@@ -65,7 +64,6 @@ func WelcomeToMainMenu(user *bottypes.User, fm *formatter.Formatter) {
 			coordinates = []int{1, 1, 1, 1}
 			fm.SetIkbdDim(coordinates)
 			for i := 0; i < len(kbName); i++ {
-				fmt.Println(kbName[i], kbData[i])
 				fm.WriteInlineButtonCmd(kbName[i], kbData[i])
 			}
 			fm.WriteString(dict["WelcomeToMainMenu"])

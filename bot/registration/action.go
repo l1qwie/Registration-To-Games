@@ -34,7 +34,7 @@ func SeatsAreFull(user *bottypes.User, fm *formatter.Formatter) {
 	kbData = []string{"Go-ahead", "MainMenu"}
 	coordinates = []int{1, 1}
 	forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
-	fm.WriteString(fmt.Sprint(dict["SeatsAreFull"], dict["Review"]))
+	fm.WriteString(fmt.Sprintf(dict["SeatsAreFull"], dict["Review"]))
 	fm.WriteChatId(user.Id)
 }
 
@@ -50,13 +50,15 @@ func PresentationScheduele(user *bottypes.User, fm *formatter.Formatter) {
 	schedule = selectTheSchedule(user.Media.Limit, user.LaunchPoint, user.Language)
 	for i := 0; i < len(schedule); i++ {
 		coordinates = append(coordinates, 1)
-		kbName = append(kbName, fmt.Sprint(schedule[i].sport, schedule[i].date, schedule[i].time, dict["freeSpace"], schedule[i].seats))
+		kbName = append(kbName, fmt.Sprintf("%s %s %s %s %d", schedule[i].sport, schedule[i].date, schedule[i].time, dict["freeSpace"], schedule[i].seats))
 		kbData = append(kbData, strconv.Itoa(schedule[i].id))
 	}
 	coordinates = append(coordinates, 2)
+	coordinates = append(coordinates, 1)
 	forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
-	fm.WriteInlineButtonCmd(dict["next"], "next page")
 	fm.WriteInlineButtonCmd(dict["previous"], "previous page")
+	fm.WriteInlineButtonCmd(dict["next"], "next page")
+	fm.WriteInlineButtonCmd(dict["MainMenu"], "MainMenu")
 	fm.WriteString(dict["ChooseAnyGame"])
 	fm.WriteChatId(user.Id)
 }
@@ -77,16 +79,16 @@ func ChooseGame(user *bottypes.User, fm *formatter.Formatter, seatsStatus bool) 
 			user.Reg.GameId = gameId
 			user.Level = 2
 			price, space, currency = selectThePrice(gameId)
-			for i := 0; i < space; i++ {
+			for i := 0; i < space && i < 3; i++ {
 				coordinates = append(coordinates, 1)
-				kbName = append(kbName, dict[strconv.Itoa(i)])
-				kbData = append(kbData, dict[strconv.Itoa(i)])
+				kbName = append(kbName, dict[strconv.Itoa(i+1)])
+				kbData = append(kbData, strconv.Itoa(i+1))
 			}
 			forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
 			if seatsStatus {
-				fm.WriteString(fmt.Sprint(dict["ChooseSeats"], price, currency))
+				fm.WriteString(fmt.Sprintf(dict["ChooseSeats"], price, currency))
 			} else {
-				fm.WriteString(fmt.Sprint(dict["NoMoreSeats"], dict["ChooseSeats"], price, currency))
+				fm.WriteString(fmt.Sprintf(dict["NoMoreSeats"], dict["ChooseSeats"], price, currency))
 			}
 			fm.WriteChatId(user.Id)
 		} else {
@@ -144,11 +146,12 @@ func ChoosePayment(user *bottypes.User, fm *formatter.Formatter) {
 				user.Level = 4
 				price, _, currency = selectThePrice(user.Reg.GameId)
 				cost = price * user.Reg.Seats
-				fm.SetIkbdDim([]int{1, 1})
+				fm.SetIkbdDim([]int{1, 1, 1})
 				fm.WriteInlineButtonUrl(dict["pay"], "https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3")
-				fm.WriteInlineButtonCmd(dict["next"], "Next")
+				fm.WriteInlineButtonCmd(dict["GoNext"], "Next")
+				fm.WriteInlineButtonCmd(dict["MainMenu"], "MainMenu")
 				fm.AddPhotoFromStorage("qr.jpg")
-				fm.WriteString(fmt.Sprint(dict["WaitForYourMoney"], cost, currency))
+				fm.WriteString(fmt.Sprintf(dict["WaitForYourMoney"], cost, currency))
 				fm.WriteChatId(user.Id)
 			} else {
 				BestWishes(user, fm)
@@ -171,19 +174,27 @@ func BestWishes(user *bottypes.User, fm *formatter.Formatter) {
 		cost           int
 	)
 	dict = dictionary.Dictionary[user.Language]
-	if howManyIsLeft(user.Reg.GameId, user.Reg.Seats) {
-		user.Level = 3
-		user.Act = "divarication"
-		details = new(Game)
-		details = selectDetailOfGame(user.Reg.GameId)
-		cost = details.price * user.Reg.Seats
-		kbName = []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}
-		kbData = []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}
-		coordinates = []int{1, 1, 1, 1}
-		forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
-		fm.WriteString(fmt.Sprint(dict["RegistrationCompleted"], details.sport, details.date, details.time, user.Reg.Seats, cost, details.currency, details.address, details.lattitude, details.longitude))
-		fm.WriteChatId(user.Id)
+	if user.Request == "cash" || user.Request == "Next" {
+		if howManyIsLeft(user.Reg.GameId, user.Reg.Seats) {
+			completeRegistration(user.Id, user.Reg.GameId, user.Reg.Seats, user.Reg.Payment)
+			user.Level = 3
+			user.Act = "divarication"
+			details = new(Game)
+			details = selectDetailOfGame(user.Reg.GameId, user.Language)
+
+			cost = details.price * user.Reg.Seats
+			kbName = []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}
+			kbData = []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}
+			coordinates = []int{1, 1, 1, 1}
+			forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
+			res := fmt.Sprintf(dict["RegistrationCompleted"], details.sport, details.date, details.time, user.Reg.Seats, user.Reg.Payment, cost, details.currency, details.address, details.lattitude, details.longitude)
+			fm.WriteString(res)
+			fm.WriteChatId(user.Id)
+		} else {
+			SeatsAreFull(user, fm)
+		}
 	} else {
-		SeatsAreFull(user, fm)
+		user.Request = user.Reg.Payment
+		ChoosePayment(user, fm)
 	}
 }
