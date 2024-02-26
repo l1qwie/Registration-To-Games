@@ -35,6 +35,10 @@ func (fm *Formatter) WriteChatId(chatID int) {
 	fm.Message.ChatID = chatID
 }
 
+func (fm *Formatter) WriteParseMode(mode string) {
+	fm.Message.ParseMode = mode
+}
+
 func (fm *Formatter) Complete() {
 
 }

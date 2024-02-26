@@ -53,6 +53,7 @@ func ru(dict map[string]string) {
 	dict["Review"] = "Хотите пересмотреть свои планы?"
 	dict["go-ahead"] = "Да, хочу"
 	dict["no-deleteAll"] = "Нет, не хочу"
+	dict["Can'tUnderstend"] = "К сожалению, я вас не понимаю. Выберите опцию"
 }
 
 func en(dict map[string]string) {
@@ -113,6 +114,7 @@ func en(dict map[string]string) {
 	dict["Review"] = "Would you like to reconsider your plans?"
 	dict["go-ahead"] = "Yes, I want"
 	dict["no-deleteAll"] = "No, I don't want"
+	dict["Can'tUnderstend"] = "Unfortunately, I don't understand you. Please choose an option"
 }
 
 func tur(dict map[string]string) {
@@ -173,6 +175,7 @@ func tur(dict map[string]string) {
 	dict["Review"] = "Planlarınızı tekrar düşünmek ister misiniz?"
 	dict["go-ahead"] = "Evet, istiyorum"
 	dict["no-deleteAll"] = "Hayır, istemiyorum"
+	dict["Can'tUnderstend"] = "Üzgünüm, sizi anlamıyorum. Lütfen bir seçenek seçin"
 }
 
 func init() {

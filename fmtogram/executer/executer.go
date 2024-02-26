@@ -51,8 +51,8 @@ func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (err e
 	}
 	defer response.Body.Close()
 
-	body, _ := io.ReadAll(response.Body)
-	fmt.Println(string(body))
+	//body, _ := io.ReadAll(response.Body)
+	//fmt.Println(string(body))
 
 	return err
 }

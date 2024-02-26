@@ -127,10 +127,32 @@ func howManyIsLeft(gameId int, wishfulseats int) (thereArePlaces bool) {
 }
 
 func completeRegistration(userId, gameId, seats int, payment string) (err error) {
-	var db *sql.DB
+	var (
+		db        *sql.DB
+		rows      *sql.Rows
+		gameSeats int
+	)
 	db, err = sql.Open("postgres", types.ConnectTo())
 	if err == nil {
 		_, err = db.Exec("INSERT INTO GamesWithUsers (userId, gameId, seats, payment) VALUES ($1, $2, $3, $4)", userId, gameId, seats, payment)
+	}
+	if err == nil {
+		rows, err = db.Query("SELECT seats FROM Schedule WHERE gameId = $1", gameId)
+	}
+	if err == nil {
+		for rows.Next() {
+			err = rows.Scan(&gameSeats)
+			if err != nil {
+				panic(err)
+			}
+		}
+	}
+	if err == nil {
+		_, err = db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", gameSeats-seats, gameId)
+	}
+
+	if err != nil {
+		panic(err)
 	}
 	db.Close()
 

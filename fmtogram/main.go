@@ -31,21 +31,20 @@ func pollResponse(output chan<- *formatter.Formatter, reg *executer.RegTable) {
 	for {
 		telegramResponse = new(types.TelegramResponse)
 		err = executer.Updates(&offset, telegramResponse)
+		fmt.Println(telegramResponse.Result)
 		if len(telegramResponse.Result) != 0 && err == nil {
 			chatID = helper.ReturnChatId(telegramResponse)
-
 			index = reg.Seeker(chatID)
 			if index != executer.None {
+				fmt.Println(index, "!")
 				reg.Reg[index].Ch <- telegramResponse
 			} else {
 				index = reg.NewIndex()
 				reg.Reg[index].UserId = chatID
 				reg.Reg[index].Ch = make(chan *types.TelegramResponse, 10)
-				fmt.Println("help1", index)
 				reg.Reg[index].Ch <- telegramResponse
-				fmt.Println("help2")
-				go worker(reg.Reg[index].Ch, output)
 			}
+			go worker(reg.Reg[index].Ch, output)
 			offset = offset + 1
 		} else if err != nil {
 			log.Fatal(err)

@@ -1,8 +1,11 @@
 package routine
 
 import (
+	"fmt"
 	"log"
 	"registrationtogames/bot/bottypes"
+	"registrationtogames/bot/dictionary"
+	"registrationtogames/bot/forall"
 	"registrationtogames/bot/registration"
 	"registrationtogames/bot/welcome"
 	"registrationtogames/fmtogram/formatter"
@@ -72,13 +75,42 @@ func RegToGames(user *bottypes.User, fm *formatter.Formatter) {
 	}
 }
 
+func MainMenu(user *bottypes.User, fm *formatter.Formatter) {
+	var (
+		kbName, kbData []string
+		coordinates    []int
+		dict           map[string]string
+	)
+	dict = dictionary.Dictionary[user.Language]
+	kbName = []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}
+	kbData = []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}
+	coordinates = []int{1, 1, 1, 1}
+	forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
+	fm.WriteString(dict["Can'tUnderstend"])
+	fm.WriteChatId(user.Id)
+}
+
+func Options(user *bottypes.User, fm *formatter.Formatter) {
+	if user.Request == "Reg to games" {
+		user.Level = 0
+		user.Act = "reg to games"
+		RegToGames(user, fm)
+	} else {
+		MainMenu(user, fm)
+	}
+}
+
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	retrieveUser(user)
-	//fmt.Println("level =", user.Level, "phrase =", user.Request, "action =", user.Act)
-	if user.Act == "registration" {
+	fmt.Println("level =", user.Level, "phrase =", user.Request, "action =", user.Act)
+	if user.Request == "MainMenu" {
+		MainMenu(user, fm)
+	} else if user.Act == "registration" {
 		Welcome(user, fm)
 	} else if user.Act == "reg to games" {
 		RegToGames(user, fm)
+	} else if user.Act == "divarication" {
+		Options(user, fm)
 	}
 	retainUser(user)
 }

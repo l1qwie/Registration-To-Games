@@ -4,8 +4,11 @@ import "fmt"
 
 const HttpsRequest = "https://api.telegram.org/"
 
-/*
- */
+const (
+	Markdown string = "Markdown"
+	HTML     string = "HTML"
+)
+
 type InfMessage struct {
 	TypeFrom User   `json:"from"`
 	Text     string `json:"text"`
@@ -57,6 +60,7 @@ type SendMessagePayload struct {
 	ReplyMarkup string `json:"reply_markup"`
 	Photo       string `json:"photo"`
 	Video       string `json:"video"`
+	ParseMode   string `json:"parse_mode"`
 }
 
 type FMTRS interface {

@@ -6,6 +6,7 @@ import (
 	"registrationtogames/bot/dictionary"
 	"registrationtogames/bot/forall"
 	"registrationtogames/fmtogram/formatter"
+	"registrationtogames/fmtogram/types"
 	"strconv"
 )
 
@@ -181,7 +182,6 @@ func BestWishes(user *bottypes.User, fm *formatter.Formatter) {
 			user.Act = "divarication"
 			details = new(Game)
 			details = selectDetailOfGame(user.Reg.GameId, user.Language)
-
 			cost = details.price * user.Reg.Seats
 			kbName = []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}
 			kbData = []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}
@@ -189,6 +189,7 @@ func BestWishes(user *bottypes.User, fm *formatter.Formatter) {
 			forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
 			res := fmt.Sprintf(dict["RegistrationCompleted"], details.sport, details.date, details.time, user.Reg.Seats, user.Reg.Payment, cost, details.currency, details.address, details.lattitude, details.longitude)
 			fm.WriteString(res)
+			fm.WriteParseMode(types.HTML)
 			fm.WriteChatId(user.Id)
 		} else {
 			SeatsAreFull(user, fm)

@@ -74,6 +74,12 @@ func (fm *Formatter) PrepareMedia(buf *bytes.Buffer) (string, error) {
 		err = writer.WriteField("caption", fm.Message.Text)
 	}
 	if err == nil {
+		err = writer.WriteField("reply_markup", fm.Message.ReplyMarkup)
+	}
+	if err == nil {
+		err = writer.WriteField("parse_mode", fm.Message.ParseMode)
+	}
+	if err == nil {
 		err = writer.Close()
 	}
 	file.Close()
