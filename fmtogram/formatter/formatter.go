@@ -3,7 +3,6 @@ package formatter
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"registrationtogames/fmtogram/executer"
 	"registrationtogames/fmtogram/types"
 )
@@ -44,6 +43,10 @@ func (fm *Formatter) WriteDeleteMesId(mesId int) {
 	fm.DeleteMessage.MessageId = mesId
 }
 
+func (fm *Formatter) WriteEditMesId(mesId int) {
+	fm.Message.MessageId = mesId
+}
+
 func (fm *Formatter) Complete() {
 
 }
@@ -54,9 +57,7 @@ func (fm *Formatter) CheckDelete() (err error) {
 		jsonMessage []byte
 		finalBuffer *bytes.Buffer
 	)
-	fmt.Println(fm.DeleteMessage.MessageId, "HELLO BEFORE")
 	if fm.DeleteMessage.MessageId != 0 {
-		fmt.Println("HELLO!")
 		function = "deleteMessage"
 		fm.DeleteMessage.ChatId = fm.Message.ChatID
 		jsonMessage, err = json.Marshal(fm.DeleteMessage)
@@ -73,10 +74,13 @@ func (fm *Formatter) CheckDelete() (err error) {
 
 func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 	var (
-		jsonMessage  []byte
-		jsonKeyboard []byte
-		finalBuffer  *bytes.Buffer
-		function     string
+		jsonMessage   []byte
+		jsonKeyboard  []byte
+		slicebyte     []byte
+		finalBuffer   *bytes.Buffer
+		interBuf      *bytes.Buffer
+		function      string
+		marshalstatus bool
 	)
 
 	err = fm.CheckDelete()
@@ -91,22 +95,46 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 
 	if err == nil {
 		if fm.Message.Photo == "" && fm.Message.Video == "" {
-			function = "sendMessage"
+			if fm.Message.MessageId == 0 {
+				marshalstatus = true
+				function = "sendMessage"
+			} else {
+				function = "editMessageText"
+			}
 			jsonMessage, err = json.Marshal(fm.Message)
 			if err == nil {
 				fm.contenttype = "application/json"
 				finalBuffer = bytes.NewBuffer(jsonMessage)
 			}
 		} else if fm.Message.Video != "" || fm.Message.Photo != "" {
-			if fm.mediatype == "photo" {
-				function = "sendPhoto"
-			} else if fm.mediatype == "video" {
-				function = "sendVideo"
+			if fm.Message.MessageId == 0 {
+				marshalstatus = true
+				if fm.mediatype == "photo" {
+					function = "sendPhoto"
+				} else if fm.mediatype == "video" {
+					function = "sendVideo"
+				}
+			} else {
+				function = "editMessageMedia"
 			}
-
 			if fm.kindofmedia == fromStorage {
 				finalBuffer = bytes.NewBuffer(nil)
-				fm.contenttype, err = fm.PrepareMedia(finalBuffer)
+				if fm.Message.MessageId == 0 {
+					fm.contenttype, err = fm.PrepareMedia(finalBuffer)
+				} else {
+					interBuf = bytes.NewBuffer(nil)
+					fm.contenttype, err = fm.PrepareMediaForEdit(interBuf)
+					if err != nil {
+						panic(err)
+					}
+					slicebyte = interBuf.Bytes()
+					jsonMessage, err = json.Marshal(fm.Message)
+					if err != nil {
+						panic(err)
+					}
+					finalBuffer.Write(jsonMessage)
+					finalBuffer.Write(slicebyte)
+				}
 			} else {
 				jsonMessage, err = json.Marshal(fm.Message)
 				if err == nil {
@@ -118,7 +146,7 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 
 	}
 	if err == nil {
-		mes = executer.Send(finalBuffer, function, fm.contenttype, true)
+		mes = executer.Send(finalBuffer, function, fm.contenttype, marshalstatus)
 	}
 	fm.Reset()
 

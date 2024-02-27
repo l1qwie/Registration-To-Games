@@ -31,7 +31,6 @@ func pollResponse(output chan<- *formatter.Formatter, reg *executer.RegTable) {
 	for {
 		telegramResponse = new(types.TelegramResponse)
 		err = executer.Updates(&offset, telegramResponse)
-		fmt.Println(telegramResponse.Result)
 		if len(telegramResponse.Result) != 0 && err == nil {
 			chatID = helper.ReturnChatId(telegramResponse)
 			index = reg.Seeker(chatID)
@@ -83,9 +82,11 @@ func pushRequest(requests <-chan *formatter.Formatter, reg *executer.RegTable) {
 		if err != nil {
 			panic(err)
 		}
-		index := reg.Seeker(mes.Result.Chat.Id)
-		reg.Reg[index].Chb = make(chan *types.MessageResponse, 10)
-		reg.Reg[index].Chb <- mes
+		if mes.Ok {
+			index := reg.Seeker(mes.Result.Chat.Id)
+			reg.Reg[index].Chb = make(chan *types.MessageResponse, 10)
+			reg.Reg[index].Chb <- mes
+		}
 	}
 }
 

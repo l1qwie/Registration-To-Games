@@ -62,6 +62,8 @@ type SendMessagePayload struct {
 	Photo       string `json:"photo"`
 	Video       string `json:"video"`
 	ParseMode   string `json:"parse_mode"`
+	MessageId   int    `json:"message_id"`
+	InputMedia  string
 }
 
 type DelMessage struct {

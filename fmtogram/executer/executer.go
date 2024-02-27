@@ -74,9 +74,20 @@ func Send(buf *bytes.Buffer, function, contenttype string, unmarshal bool) (mes 
 	)
 	url = fmt.Sprintf("%sbot%s/%s", types.HttpsRequest, types.TelebotToken, function)
 	body, err = GetpostRequest(url, buf, contenttype)
+	fmt.Println(string(body))
 	if err == nil && unmarshal {
 		mes = new(types.MessageResponse)
 		err = heandlerMessage(body, mes)
+	} else if !unmarshal {
+		mes = &types.MessageResponse{
+			Ok: false,
+			Result: types.Message{
+				MessageId: 0,
+				Chat: types.Chat{
+					Id: 0,
+				},
+			},
+		}
 	}
 	if err != nil {
 		panic(err)

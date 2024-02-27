@@ -23,9 +23,9 @@ const (
 	bCmd btnKind = 1
 	bUrl btnKind = 2
 
-	fromStorage  = 0
-	fromTelegram = 1
-	fromInternet = 2
+	fromStorage  int = 0
+	fromTelegram int = 1
+	fromInternet int = 2
 )
 
 type btn struct {

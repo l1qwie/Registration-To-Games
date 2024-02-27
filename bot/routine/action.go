@@ -109,14 +109,38 @@ func Schedule(user *bottypes.User, fm *formatter.Formatter) {
 	}
 }
 
+func Edit(user *bottypes.User, fm *formatter.Formatter) {
+	var (
+		exMessageId int
+		err         error
+	)
+	if user.ExMessageId == 0 {
+		fmt.Println("SELECT")
+		exMessageId, err = selectExMessageId(user.Id)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		fmt.Println("UPDATE")
+		exMessageId = user.ExMessageId
+		err = updateExMessageId(exMessageId, user.Id)
+		if err != nil {
+			panic(err)
+		}
+	}
+	fm.WriteEditMesId(exMessageId)
+}
+
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	retrieveUser(user)
-	fm.WriteDeleteMesId(user.ExMessageId)
-	fm.WriteChatId(user.Id)
+	//fm.WriteDeleteMesId(user.ExMessageId)
+	//fm.WriteChatId(user.Id)
+	Edit(user, fm)
 	fmt.Println("level =", user.Level, fmt.Sprintf(`phrase = "%s"`, user.Request), fmt.Sprintf(`action = "%s"`, user.Act), "user.Id =", user.Id)
 	if user.Request == "MainMenu" {
 		user.Act = "divarication"
 		user.Level = OPTIONS
+		fm.AddPhotoFromStorage("qr.jpg")
 		MainMenu(user, fm)
 	} else if user.Act == "registration" {
 		Welcome(user, fm)
