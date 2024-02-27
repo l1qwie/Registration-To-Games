@@ -6,6 +6,19 @@ import (
 	"strconv"
 )
 
+type Game struct {
+	Id        int
+	Sport     string
+	Date      string
+	Time      string
+	Seats     int
+	Price     int
+	Currency  string
+	Address   string
+	Lattitude float32
+	Longitude float32
+}
+
 func FromIntToStrDate(numberDate int) (date string) {
 	var (
 		year, month, day       int

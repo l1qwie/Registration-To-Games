@@ -21,8 +21,8 @@ func AfterPresentationSchedueleCheckDb(userId int) {
 		panic(err)
 	}
 
-	if user.Id != 456 {
-		panic("user.Id != 456")
+	if user.Id != 477 {
+		panic("user.Id != 477")
 	}
 	if user.Language != "ru" {
 		panic("user.Language != `ru`")
@@ -86,8 +86,8 @@ func AfterChooseGameCheckDb(userId int) {
 		panic(err)
 	}
 
-	if user.Id != 456 {
-		panic("user.Id != 456")
+	if user.Id != 477 {
+		panic("user.Id != 477")
 	}
 	if user.Language != "ru" {
 		panic("user.Language != `ru`")
@@ -151,8 +151,8 @@ func AfterChooseSeatsCheckDb(userId int) {
 		panic(err)
 	}
 
-	if user.Id != 456 {
-		panic("user.Id != 456")
+	if user.Id != 477 {
+		panic("user.Id != 477")
 	}
 	if user.Language != "ru" {
 		panic("user.Language != `ru`")
@@ -216,8 +216,8 @@ func AfterChoosePaymentCheckDb(userId int) {
 		panic(err)
 	}
 
-	if user.Id != 456 {
-		panic("user.Id != 456")
+	if user.Id != 477 {
+		panic("user.Id != 477")
 	}
 	if user.Language != "ru" {
 		panic("user.Language != `ru`")
@@ -329,8 +329,8 @@ func AfterBestWishes(userId int) {
 	if !checkGamesWithUsersTable(user.Id, 2, user.Reg.Seats, user.Reg.Payment) {
 		panic("user doesn't exist in table GamesWithUsers")
 	}
-	if user.Id != 456 {
-		panic("user.Id != 456")
+	if user.Id != 477 {
+		panic("user.Id != 477")
 	}
 	if user.Language != "ru" {
 		panic("user.Language != `ru`")

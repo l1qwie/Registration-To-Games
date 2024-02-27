@@ -8,7 +8,7 @@ import (
 	"registrationtogames/fmtogram/types"
 )
 
-func Receiving(tr *types.TelegramResponse) *formatter.Formatter {
+func Receiving(tr *types.TelegramResponse, mes *types.MessageResponse) *formatter.Formatter {
 	var (
 		fm   *formatter.Formatter
 		user *bottypes.User
@@ -18,6 +18,7 @@ func Receiving(tr *types.TelegramResponse) *formatter.Formatter {
 	user.Request = helper.ReturnText(tr)
 	user.Id = helper.ReturnChatId(tr)
 	user.Language = helper.ReturnLanguage(tr)
+	user.ExMessageId, _ = helper.MessageId(mes)
 
 	routine.DispatcherPhrase(user, fm)
 

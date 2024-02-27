@@ -117,6 +117,74 @@ func CreateGame() (err error) {
 	return err
 }
 
+func CreateSchedule() (err error) {
+	var (
+		db      *sql.DB
+		request string
+	)
+	db, err = sql.Open("postgres", types.ConnectTo())
+	if err == nil {
+		for i := 0; i < 4; i++ {
+			if i == 0 {
+				request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+				VALUES (0, 'volleyball', 20250212, 1200, 44, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'POUNDS', 1)`
+			} else if i == 1 {
+				request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+				VALUES (1, 'volleyball', 20260212, 1100, 34, 36.893445, 30.709591, 'Кладбище в Анталии', 10, 'POUNDS', 1)`
+			} else if i == 2 {
+				request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+				VALUES (2, 'football', 20250412, 1800, 14, 36.893445, 30.709591, 'Кладбище в Анталии', 1000, 'USD', 1)`
+			} else if i == 3 {
+				request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+				VALUES (3, 'volleyball', 20250202, 0800, 77, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'RUB', 1)`
+			}
+			_, err = db.Exec(request)
+			if err != nil {
+				panic(err)
+			}
+		}
+	}
+	if err != nil {
+		panic(err)
+	}
+	db.Close()
+
+	return err
+}
+
+func FoundGame(gameId int) (detected bool) {
+	var (
+		db      *sql.DB
+		rows    *sql.Rows
+		err     error
+		request string
+		counter int
+	)
+	db, err = sql.Open("postgres", types.ConnectTo())
+	if err != nil {
+		panic(err)
+	}
+	request = `SELECT COUNT(*) FROM Schedule WHERE gameId = $1`
+	rows, err = db.Query(request, gameId)
+	if err != nil {
+		panic(err)
+	}
+	for rows.Next() {
+		err = rows.Scan(&counter)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if err != nil {
+		panic(err)
+	}
+	if counter > 0 {
+		detected = true
+	}
+
+	return detected
+}
+
 func DeleteGame(gameId int) {
 	var (
 		db  *sql.DB

@@ -12,7 +12,7 @@ import (
 	"registrationtogames/fmtogram/types"
 )
 
-const None = -1
+const None int = -1
 
 type Telegram struct {
 	Url string
@@ -24,14 +24,15 @@ type TelegramTest struct {
 
 type Entry struct {
 	UserId int
-	Ch     chan *types.TelegramResponse
+	Chu    chan *types.TelegramResponse
+	Chb    chan *types.MessageResponse
 }
 
 type RegTable struct {
 	Reg []Entry
 }
 
-func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (err error) {
+func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (body []byte, err error) {
 	var (
 		request  *http.Request
 		response *http.Response
@@ -50,24 +51,38 @@ func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (err e
 		log.Fatal(err)
 	}
 	defer response.Body.Close()
+	return io.ReadAll(response.Body)
+}
 
-	//body, _ := io.ReadAll(response.Body)
-	//fmt.Println(string(body))
-
+func heandlerMessage(response []byte, mes *types.MessageResponse) (err error) {
+	err = json.Unmarshal(response, &mes)
+	fmt.Println(mes)
+	/*
+		if err == nil {
+			if !mes.Ok {
+				err = fmt.Errorf(fmt.Sprintf("telegram responsed badly: %s", err))
+			}
+		}
+	*/
 	return err
 }
 
-func Send(buf *bytes.Buffer, function, contenttype string) {
+func Send(buf *bytes.Buffer, function, contenttype string) (mes *types.MessageResponse) {
 	var (
-		err error
-		url string
+		err  error
+		url  string
+		body []byte
 	)
 	url = fmt.Sprintf("%sbot%s/%s", types.HttpsRequest, types.TelebotToken, function)
-	err = GetpostRequest(url, buf, contenttype)
-
-	if err != nil {
-		log.Fatal(err)
+	body, err = GetpostRequest(url, buf, contenttype)
+	if err == nil {
+		mes = new(types.MessageResponse)
+		err = heandlerMessage(body, mes)
 	}
+	if err != nil {
+		panic(err)
+	}
+	return mes
 }
 
 func Updates(offset *int, telegramResponse *types.TelegramResponse) (err error) {

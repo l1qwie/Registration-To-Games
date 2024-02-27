@@ -54,6 +54,7 @@ func ru(dict map[string]string) {
 	dict["go-ahead"] = "Да, хочу"
 	dict["no-deleteAll"] = "Нет, не хочу"
 	dict["Can'tUnderstend"] = "К сожалению, я вас не понимаю. Выберите опцию"
+	dict["Schedule"] = "<b>%d.</b> <em>Спорт:</em> <b>%s</b>, <em>Дата:</em> <b>%s</b>, <em>Время:</em> <b>%s</b>, <em>Осталось свободных мест:</em> <b>%d</b>, <em>Цена за одно место:</em> <b>%d %s</b>\n\n\n"
 }
 
 func en(dict map[string]string) {
@@ -115,6 +116,7 @@ func en(dict map[string]string) {
 	dict["go-ahead"] = "Yes, I want"
 	dict["no-deleteAll"] = "No, I don't want"
 	dict["Can'tUnderstend"] = "Unfortunately, I don't understand you. Please choose an option"
+	dict["Schedule"] = "<b>%d.</b> <em>Sport:</em> <b>%s</b>, <em>Date:</em> <b>%s</b>, <em>Time:</em> <b>%s</b>, <em>Remaining seats:</em> <b>%d</b>, <em>Price per seat:</em> <b>%d %s</b>\n\n\n"
 }
 
 func tur(dict map[string]string) {
@@ -176,6 +178,7 @@ func tur(dict map[string]string) {
 	dict["go-ahead"] = "Evet, istiyorum"
 	dict["no-deleteAll"] = "Hayır, istemiyorum"
 	dict["Can'tUnderstend"] = "Üzgünüm, sizi anlamıyorum. Lütfen bir seçenek seçin"
+	dict["Schedule"] = "<b>%d.</b> <em>Spor:</em> <b>%s</b>, <em>Tarih:</em> <b>%s</b>, <em>Saat:</em> <b>%s</b>, <em>Kalan boş yerler:</em> <b>%d</b>, <em>Bir koltuk için fiyat:</em> <b>%d %s</b>\n\n\n"
 }
 
 func init() {

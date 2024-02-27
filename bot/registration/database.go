@@ -9,7 +9,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func selectTheSchedule(limit, offset int, language string) (schedule []*Game) {
+func selectTheSchedule(limit, offset int, language string) (schedule []*forall.Game) {
 	var (
 		db             *sql.DB
 		rows           *sql.Rows
@@ -27,14 +27,14 @@ func selectTheSchedule(limit, offset int, language string) (schedule []*Game) {
 		panic(err)
 	}
 	for rows.Next() {
-		schedule = append(schedule, &Game{})
-		err = rows.Scan(&schedule[i].id, &sport, &date, &time, &schedule[i].seats)
+		schedule = append(schedule, &forall.Game{})
+		err = rows.Scan(&schedule[i].Id, &sport, &date, &time, &schedule[i].Seats)
 		if err != nil {
 			panic(err)
 		}
-		schedule[i].sport = dictionary.Dictionary[language][sport]
-		schedule[i].date = forall.FromIntToStrDate(date)
-		schedule[i].time = forall.FromIntToStrTime(time)
+		schedule[i].Sport = dictionary.Dictionary[language][sport]
+		schedule[i].Date = forall.FromIntToStrDate(date)
+		schedule[i].Time = forall.FromIntToStrTime(time)
 		i++
 	}
 	return schedule
@@ -159,7 +159,7 @@ func completeRegistration(userId, gameId, seats int, payment string) (err error)
 	return err
 }
 
-func selectDetailOfGame(gameId int, language string) (details *Game) {
+func selectDetailOfGame(gameId int, language string) (details *forall.Game) {
 	var (
 		db         *sql.DB
 		rows       *sql.Rows
@@ -171,7 +171,7 @@ func selectDetailOfGame(gameId int, language string) (details *Game) {
 	if err != nil {
 		panic(err)
 	}
-	details = new(Game)
+	details = new(forall.Game)
 	request = `SELECT gameId, sport, date, time, seats, latitude, longitude, address, price, currency FROM Schedule WHERE gameId = $1`
 	rows, err = db.Query(request, gameId)
 	if err != nil {
@@ -179,13 +179,13 @@ func selectDetailOfGame(gameId int, language string) (details *Game) {
 	}
 	//Try to delete for below
 	for rows.Next() {
-		err = rows.Scan(&details.id, &details.sport, &date, &time, &details.seats, &details.lattitude, &details.longitude, &details.address, &details.price, &details.currency)
+		err = rows.Scan(&details.Id, &details.Sport, &date, &time, &details.Seats, &details.Lattitude, &details.Longitude, &details.Address, &details.Price, &details.Currency)
 		if err != nil {
 			panic(err)
 		}
-		details.sport = dictionary.Dictionary[language][details.sport]
-		details.date = forall.FromIntToStrDate(date)
-		details.time = forall.FromIntToStrTime(time)
+		details.Sport = dictionary.Dictionary[language][details.Sport]
+		details.Date = forall.FromIntToStrDate(date)
+		details.Time = forall.FromIntToStrTime(time)
 	}
 	return details
 }

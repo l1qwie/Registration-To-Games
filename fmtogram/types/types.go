@@ -24,9 +24,10 @@ type User struct {
 }
 
 type TelegramUpdate struct {
-	UpdateID int        `json:"update_id"`
-	Message  InfMessage `json:"message"`
-	Query    Callback   `json:"callback_query"`
+	UpdateID  int        `json:"update_id"`
+	MessageId int        `json:"message_id"`
+	Message   InfMessage `json:"message"`
+	Query     Callback   `json:"callback_query"`
 }
 
 type Callback struct {
@@ -61,6 +62,20 @@ type SendMessagePayload struct {
 	Photo       string `json:"photo"`
 	Video       string `json:"video"`
 	ParseMode   string `json:"parse_mode"`
+}
+
+type Chat struct {
+	Id int `json:"id"`
+}
+
+type Message struct {
+	MessageId int  `json:"message_id"`
+	Chat      Chat `json:"chat"`
+}
+
+type MessageResponse struct {
+	Ok     bool    `json:"ok"`
+	Result Message `json:"result"`
 }
 
 type FMTRS interface {

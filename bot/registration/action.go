@@ -10,19 +10,6 @@ import (
 	"strconv"
 )
 
-type Game struct {
-	id        int
-	sport     string
-	date      string
-	time      string
-	seats     int
-	price     int
-	currency  string
-	address   string
-	lattitude float32
-	longitude float32
-}
-
 func SeatsAreFull(user *bottypes.User, fm *formatter.Formatter) {
 	var (
 		coordinates    []int
@@ -41,7 +28,7 @@ func SeatsAreFull(user *bottypes.User, fm *formatter.Formatter) {
 
 func PresentationScheduele(user *bottypes.User, fm *formatter.Formatter) {
 	var (
-		schedule       []*Game
+		schedule       []*forall.Game
 		coordinates    []int
 		kbName, kbData []string
 		dict           map[string]string
@@ -51,8 +38,8 @@ func PresentationScheduele(user *bottypes.User, fm *formatter.Formatter) {
 	schedule = selectTheSchedule(user.Media.Limit, user.LaunchPoint, user.Language)
 	for i := 0; i < len(schedule); i++ {
 		coordinates = append(coordinates, 1)
-		kbName = append(kbName, fmt.Sprintf("%s %s %s %s %d", schedule[i].sport, schedule[i].date, schedule[i].time, dict["freeSpace"], schedule[i].seats))
-		kbData = append(kbData, strconv.Itoa(schedule[i].id))
+		kbName = append(kbName, fmt.Sprintf("%s %s %s %s %d", schedule[i].Sport, schedule[i].Date, schedule[i].Time, dict["freeSpace"], schedule[i].Seats))
+		kbData = append(kbData, strconv.Itoa(schedule[i].Id))
 	}
 	coordinates = append(coordinates, 2)
 	coordinates = append(coordinates, 1)
@@ -168,7 +155,7 @@ func ChoosePayment(user *bottypes.User, fm *formatter.Formatter) {
 
 func BestWishes(user *bottypes.User, fm *formatter.Formatter) {
 	var (
-		details        *Game
+		details        *forall.Game
 		coordinates    []int
 		kbName, kbData []string
 		dict           map[string]string
@@ -180,14 +167,14 @@ func BestWishes(user *bottypes.User, fm *formatter.Formatter) {
 			completeRegistration(user.Id, user.Reg.GameId, user.Reg.Seats, user.Reg.Payment)
 			user.Level = 3
 			user.Act = "divarication"
-			details = new(Game)
+			details = new(forall.Game)
 			details = selectDetailOfGame(user.Reg.GameId, user.Language)
-			cost = details.price * user.Reg.Seats
+			cost = details.Price * user.Reg.Seats
 			kbName = []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}
 			kbData = []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}
 			coordinates = []int{1, 1, 1, 1}
 			forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
-			res := fmt.Sprintf(dict["RegistrationCompleted"], details.sport, details.date, details.time, user.Reg.Seats, user.Reg.Payment, cost, details.currency, details.address, details.lattitude, details.longitude)
+			res := fmt.Sprintf(dict["RegistrationCompleted"], details.Sport, details.Date, details.Time, user.Reg.Seats, user.Reg.Payment, cost, details.Currency, details.Address, details.Lattitude, details.Longitude)
 			fm.WriteString(res)
 			fm.WriteParseMode(types.HTML)
 			fm.WriteChatId(user.Id)

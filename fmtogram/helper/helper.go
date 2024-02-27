@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"fmt"
 	"registrationtogames/fmtogram/types"
 )
 
@@ -69,4 +70,18 @@ func ReturnBotStatus(telegramResponse *types.TelegramResponse) (botstatus bool) 
 		botstatus = true
 	}
 	return botstatus
+}
+
+func MessageId(message *types.MessageResponse) (messageId int, err error) {
+	/*if len(message.Result) != 0 {
+		messageId = message.Result[0].Chat.Id
+	} else {
+		err = fmt.Errorf("Don't have message Id")
+	}*/
+	if message.Ok {
+		messageId = message.Result.MessageId
+	} else {
+		err = fmt.Errorf("Don't have message Id")
+	}
+	return messageId, err
 }

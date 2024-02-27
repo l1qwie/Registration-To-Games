@@ -2,14 +2,13 @@ package routine
 
 import (
 	"fmt"
-	"log"
 	"registrationtogames/bot/bottypes"
 	"registrationtogames/bot/dictionary"
 	"registrationtogames/bot/forall"
 	"registrationtogames/bot/registration"
+	"registrationtogames/bot/schedule"
 	"registrationtogames/bot/welcome"
 	"registrationtogames/fmtogram/formatter"
-	"runtime"
 	"strconv"
 )
 
@@ -35,16 +34,14 @@ func retrieveUser(user *bottypes.User) {
 	}
 
 	if err != nil {
-		_, file, line, _ := runtime.Caller(0)
-		log.Fatalf("Error at %s:%d: %v", file, line, err)
+		panic(err)
 	}
 }
 
 func retainUser(user *bottypes.User) {
 	err := DbRetainUser(user)
 	if err != nil {
-		_, file, line, _ := runtime.Caller(0)
-		log.Fatalf("Error at %s:%d: %v", file, line, err)
+		panic(err)
 	}
 }
 
@@ -92,18 +89,33 @@ func MainMenu(user *bottypes.User, fm *formatter.Formatter) {
 
 func Options(user *bottypes.User, fm *formatter.Formatter) {
 	if user.Request == "Reg to games" {
-		user.Level = 0
+		user.Level = START
 		user.Act = "reg to games"
 		RegToGames(user, fm)
+	} else if user.Request == "Looking Schedule" {
+		user.Level = START
+		user.Act = "see schedule"
+		Schedule(user, fm)
 	} else {
+		user.Act = "divarication"
+		user.Level = OPTIONS
 		MainMenu(user, fm)
+	}
+}
+
+func Schedule(user *bottypes.User, fm *formatter.Formatter) {
+	if user.Level == START {
+		schedule.ShowTheSchedule(user, fm)
 	}
 }
 
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	retrieveUser(user)
-	fmt.Println("level =", user.Level, "phrase =", user.Request, "action =", user.Act)
+	fmt.Println(user.ExMessageId)
+	fmt.Println("level =", user.Level, fmt.Sprintf(`phrase = "%s"`, user.Request), fmt.Sprintf(`action = "%s"`, user.Act), "user.Id =", user.Id)
 	if user.Request == "MainMenu" {
+		user.Act = "divarication"
+		user.Level = OPTIONS
 		MainMenu(user, fm)
 	} else if user.Act == "registration" {
 		Welcome(user, fm)
@@ -111,6 +123,8 @@ func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 		RegToGames(user, fm)
 	} else if user.Act == "divarication" {
 		Options(user, fm)
+	} else if user.Act == "see schedule" {
+		Schedule(user, fm)
 	}
 	retainUser(user)
 }

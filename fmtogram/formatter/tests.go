@@ -125,3 +125,15 @@ func (tfm *Formatter) AssertChatId(chatID int, condition bool) (err error) {
 	}
 	return err
 }
+
+func (tfm *Formatter) AssertParseMode(parseMode string, condition bool) (err error) {
+	if tfm.Message.ParseMode != parseMode {
+		err = errors.AssertTest(fmt.Sprintf(tfm.Message.ParseMode), "WriteParseMode", fmt.Sprint(parseMode), "AssertParseMode")
+	}
+	if condition {
+		if err != nil {
+			panic(err)
+		}
+	}
+	return err
+}

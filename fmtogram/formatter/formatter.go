@@ -43,11 +43,10 @@ func (fm *Formatter) Complete() {
 
 }
 
-func (fm *Formatter) Send() error {
+func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 	var (
 		jsonMessage  []byte
 		jsonKeyboard []byte
-		err          error
 		finalBuffer  *bytes.Buffer
 		function     string
 	)
@@ -86,11 +85,10 @@ func (fm *Formatter) Send() error {
 			}
 		}
 	}
-	//fmt.Print("There is a list", fmt.Sprint(finalBuffer.String()))
 	if err == nil {
-		executer.Send(finalBuffer, function, fm.contenttype)
+		mes = executer.Send(finalBuffer, function, fm.contenttype)
 	}
 	fm.Reset()
 
-	return err
+	return mes, err
 }
