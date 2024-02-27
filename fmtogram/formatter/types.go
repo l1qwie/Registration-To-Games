@@ -3,11 +3,12 @@ package formatter
 import "registrationtogames/fmtogram/types"
 
 type Formatter struct {
-	Message     types.SendMessagePayload
-	Keyboard    InlineKeyboard
-	contenttype string
-	kindofmedia int
-	mediatype   string
+	Message       types.SendMessagePayload
+	Keyboard      InlineKeyboard
+	DeleteMessage types.DelMessage
+	contenttype   string
+	kindofmedia   int
+	mediatype     string
 }
 
 type InlineKeyboard struct {

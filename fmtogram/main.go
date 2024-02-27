@@ -71,15 +71,6 @@ func worker(input <-chan *types.TelegramResponse, mesoutput <-chan *types.Messag
 					},
 				},
 			}
-
-			/*
-				mes = &types.MessageResponse{
-					MessageId: 0,
-					Chat: types.Chat{
-						Id: 0,
-					},
-				}
-			*/
 		}
 		fm = bot.Receiving(userstruct, mes)
 		fm.Complete()
@@ -93,6 +84,7 @@ func pushRequest(requests <-chan *formatter.Formatter, reg *executer.RegTable) {
 			panic(err)
 		}
 		index := reg.Seeker(mes.Result.Chat.Id)
+		reg.Reg[index].Chb = make(chan *types.MessageResponse, 10)
 		reg.Reg[index].Chb <- mes
 	}
 }

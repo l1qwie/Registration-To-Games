@@ -56,7 +56,6 @@ func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (body 
 
 func heandlerMessage(response []byte, mes *types.MessageResponse) (err error) {
 	err = json.Unmarshal(response, &mes)
-	fmt.Println(mes)
 	/*
 		if err == nil {
 			if !mes.Ok {
@@ -67,7 +66,7 @@ func heandlerMessage(response []byte, mes *types.MessageResponse) (err error) {
 	return err
 }
 
-func Send(buf *bytes.Buffer, function, contenttype string) (mes *types.MessageResponse) {
+func Send(buf *bytes.Buffer, function, contenttype string, unmarshal bool) (mes *types.MessageResponse) {
 	var (
 		err  error
 		url  string
@@ -75,7 +74,7 @@ func Send(buf *bytes.Buffer, function, contenttype string) (mes *types.MessageRe
 	)
 	url = fmt.Sprintf("%sbot%s/%s", types.HttpsRequest, types.TelebotToken, function)
 	body, err = GetpostRequest(url, buf, contenttype)
-	if err == nil {
+	if err == nil && unmarshal {
 		mes = new(types.MessageResponse)
 		err = heandlerMessage(body, mes)
 	}

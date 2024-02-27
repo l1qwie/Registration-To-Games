@@ -64,6 +64,11 @@ type SendMessagePayload struct {
 	ParseMode   string `json:"parse_mode"`
 }
 
+type DelMessage struct {
+	ChatId    int `json:"chat_id"`
+	MessageId int `json:"message_id"`
+}
+
 type Chat struct {
 	Id int `json:"id"`
 }
@@ -81,6 +86,8 @@ type MessageResponse struct {
 type FMTRS interface {
 	WriteString(string)
 	WriteChatId(int)
+	WriteDeleteMesId(int)
+	WriteEditMesId(int)
 	AddPhotoFromStorage(string)
 	AddPhotoFromTG(string)
 	AddPhotoFromInternet(string)

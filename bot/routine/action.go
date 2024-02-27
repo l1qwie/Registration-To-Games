@@ -111,7 +111,8 @@ func Schedule(user *bottypes.User, fm *formatter.Formatter) {
 
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	retrieveUser(user)
-	fmt.Println(user.ExMessageId)
+	fm.WriteDeleteMesId(user.ExMessageId)
+	fm.WriteChatId(user.Id)
 	fmt.Println("level =", user.Level, fmt.Sprintf(`phrase = "%s"`, user.Request), fmt.Sprintf(`action = "%s"`, user.Act), "user.Id =", user.Id)
 	if user.Request == "MainMenu" {
 		user.Act = "divarication"

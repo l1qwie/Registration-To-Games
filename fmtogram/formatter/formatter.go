@@ -3,6 +3,7 @@ package formatter
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"registrationtogames/fmtogram/executer"
 	"registrationtogames/fmtogram/types"
 )
@@ -39,8 +40,35 @@ func (fm *Formatter) WriteParseMode(mode string) {
 	fm.Message.ParseMode = mode
 }
 
+func (fm *Formatter) WriteDeleteMesId(mesId int) {
+	fm.DeleteMessage.MessageId = mesId
+}
+
 func (fm *Formatter) Complete() {
 
+}
+
+func (fm *Formatter) CheckDelete() (err error) {
+	var (
+		function    string
+		jsonMessage []byte
+		finalBuffer *bytes.Buffer
+	)
+	fmt.Println(fm.DeleteMessage.MessageId, "HELLO BEFORE")
+	if fm.DeleteMessage.MessageId != 0 {
+		fmt.Println("HELLO!")
+		function = "deleteMessage"
+		fm.DeleteMessage.ChatId = fm.Message.ChatID
+		jsonMessage, err = json.Marshal(fm.DeleteMessage)
+		if err == nil {
+			fm.contenttype = "application/json"
+			finalBuffer = bytes.NewBuffer(jsonMessage)
+		}
+		if err == nil {
+			_ = executer.Send(finalBuffer, function, fm.contenttype, false)
+		}
+	}
+	return err
 }
 
 func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
@@ -51,10 +79,13 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 		function     string
 	)
 
-	if fm.Keyboard.Keyboard != nil {
-		jsonKeyboard, err = json.Marshal(fm.Keyboard)
-		if err == nil {
-			fm.Message.ReplyMarkup = string(jsonKeyboard)
+	err = fm.CheckDelete()
+	if err == nil {
+		if fm.Keyboard.Keyboard != nil {
+			jsonKeyboard, err = json.Marshal(fm.Keyboard)
+			if err == nil {
+				fm.Message.ReplyMarkup = string(jsonKeyboard)
+			}
 		}
 	}
 
@@ -84,9 +115,10 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 				}
 			}
 		}
+
 	}
 	if err == nil {
-		mes = executer.Send(finalBuffer, function, fm.contenttype)
+		mes = executer.Send(finalBuffer, function, fm.contenttype, true)
 	}
 	fm.Reset()
 

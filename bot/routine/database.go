@@ -60,7 +60,7 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 	db, err = sql.Open("postgres", types.ConnectTo())
 	if err == nil {
 		request = `
-        SELECT userId, language, gameId, ExMessageId, launchPoint, action, level,
+        SELECT userId, language, gameId, launchPoint, action, level,
         seats, payment, 
 		timeInterval, direction, mlimit, mediagroupId, mediagoupCounter, 
 		changeable, actGame, willChangeable, newPay
@@ -71,7 +71,7 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 
 	if err == nil {
 		for rows.Next() {
-			err = rows.Scan(&user.Id, &user.Language, &gameId, &user.ExMessageId, &user.LaunchPoint, &user.Act, &user.Level,
+			err = rows.Scan(&user.Id, &user.Language, &gameId, &user.LaunchPoint, &user.Act, &user.Level,
 				&user.Reg.Seats, &user.Reg.Payment,
 				&user.Media.Interval, &user.Media.Direcrion, &user.Media.Limit, &user.Media.Id, &user.Media.Counter,
 				&user.UserRec.Changeable, &user.UserRec.ActGame, &user.UserRec.WillChangeable, &user.UserRec.NewPay)

@@ -81,7 +81,8 @@ func MessageId(message *types.MessageResponse) (messageId int, err error) {
 	if message.Ok {
 		messageId = message.Result.MessageId
 	} else {
-		err = fmt.Errorf("Don't have message Id")
+		err = fmt.Errorf("we don't have message id")
 	}
+	fmt.Println("messageId =", messageId)
 	return messageId, err
 }
