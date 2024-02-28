@@ -25,110 +25,110 @@ const (
 	schSTART int = 8
 )
 
-func PreparationToShowRules(counter int, responses chan *types.TelegramResponse) {
+func PreparationToShowRules(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
-		welcome.JustTrash(responses)
+		welcome.JustTrash(responses, output)
 	} else if counter == 1 {
-		welcome.JustTrash2(responses)
+		welcome.JustTrash2(responses, output)
 	} else if counter == 2 {
-		welcome.QueryForShowRules(responses)
+		welcome.QueryForShowRules(responses, output)
 	}
 	routine.DeleteUser(userIdT1)
 }
 
-func WelcomeToMainMenu(counter int, responses chan *types.TelegramResponse) {
+func WelcomeToMainMenu(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
-		welcome.JustTrash(responses)
+		welcome.JustTrash(responses, output)
 	} else if counter == 1 {
-		welcome.JustTrash2(responses)
+		welcome.JustTrash2(responses, output)
 	} else if counter == 2 {
-		welcome.QueryForWelcomeToMainMenu(responses)
+		welcome.QueryForWelcomeToMainMenu(responses, output)
 	}
 	routine.DeleteUser(userIdT1)
 }
 
-func ChooseGame(counter int, responses chan *types.TelegramResponse) {
+func ChooseGame(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
-		registration.JustTrash(responses)
+		registration.JustTrash(responses, output)
 	} else if counter == 1 {
-		registration.JustTrash2(responses)
+		registration.JustTrash2(responses, output)
 	} else if counter == 2 {
-		registration.QueryForChooseGame(responses)
+		registration.QueryForChooseGame(responses, output)
 	}
 	routine.DeleteUser(userIdT2)
 	database.DeleteGame(gameId)
 }
 
-func ChooseSeats(counter int, responses chan *types.TelegramResponse) {
+func ChooseSeats(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
-		registration.JustTrash(responses)
+		registration.JustTrash(responses, output)
 	} else if counter == 1 {
-		registration.JustTrash2(responses)
+		registration.JustTrash2(responses, output)
 	} else if counter == 2 {
-		registration.QueryForChooseSeats(responses)
+		registration.QueryForChooseSeats(responses, output)
 	}
 	routine.DeleteUser(userIdT2)
 	database.DeleteGame(gameId)
 }
 
-func ChoosePayment(counter int, responses chan *types.TelegramResponse) {
+func ChoosePayment(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
-		registration.JustTrash(responses)
+		registration.JustTrash(responses, output)
 	} else if counter == 1 {
-		registration.JustTrash2(responses)
+		registration.JustTrash2(responses, output)
 	} else if counter == 2 {
-		registration.QueryForChoosePayment(responses)
+		registration.QueryForChoosePayment(responses, output)
 	}
 	routine.DeleteUser(userIdT2)
 	database.DeleteGame(gameId)
 }
 
-func BestWishes(counter int, responses chan *types.TelegramResponse) {
+func BestWishes(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
-		registration.JustTrash(responses)
+		registration.JustTrash(responses, output)
 	} else if counter == 1 {
-		registration.JustTrash2(responses)
+		registration.JustTrash2(responses, output)
 	} else if counter == 2 {
-		registration.QueryForBestWishes(responses)
+		registration.QueryForBestWishes(responses, output)
 	}
 	routine.DeleteUser(userIdT2)
 	database.DeleteGame(gameId)
 }
 
-func WelcomeAct(counter, i int, responses chan *types.TelegramResponse) {
+func WelcomeAct(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == wSTART {
-		welcome.Start(responses)
+		welcome.Start(responses, output)
 		routine.DeleteUser(userIdT1)
 	} else if counter == wLEVEL1 {
-		PreparationToShowRules(i, responses)
+		PreparationToShowRules(i, responses, output)
 	} else if counter == wLEVEL2 {
-		WelcomeToMainMenu(i, responses)
+		WelcomeToMainMenu(i, responses, output)
 	}
 }
 
-func SeeTheSchedule(counter int, responses chan *types.TelegramResponse) {
+func SeeTheSchedule(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == schSTART {
 		for i := 0; i < 4; i++ {
 			if database.FoundGame(i) {
 				database.DeleteGame(i)
 			}
 		}
-		schedule.QueryForSeeSchedule(responses)
+		schedule.QueryForSeeSchedule(responses, output)
 	}
 }
 
-func RegToGamesAct(counter, i int, responses chan *types.TelegramResponse) {
+func RegToGamesAct(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == rSTART {
-		registration.QueryForPresentationScheduele(responses)
+		registration.QueryForPresentationScheduele(responses, output)
 		routine.DeleteUser(userIdT2)
 		database.DeleteGame(gameId)
 	} else if counter == rLEVEL1 {
-		ChooseGame(i, responses)
+		ChooseGame(i, responses, output)
 	} else if counter == rLEVEL2 {
-		ChooseSeats(i, responses)
+		ChooseSeats(i, responses, output)
 	} else if counter == rLEVEL3 {
-		ChoosePayment(i, responses)
+		ChoosePayment(i, responses, output)
 	} else if counter == rLEVEL4 {
-		BestWishes(i, responses)
+		BestWishes(i, responses, output)
 	}
 }

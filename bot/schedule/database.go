@@ -11,18 +11,13 @@ import (
 
 func selectSchedule(language string) (schedule []*forall.Game) {
 	var (
-		db             *sql.DB
 		rows           *sql.Rows
 		err            error
 		request, sport string
 		i, date, time  int
 	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err != nil {
-		panic(err)
-	}
 	request = `SELECT gameId, sport, date, time, seats, price, currency FROM Schedule WHERE status != -1`
-	rows, err = db.Query(request)
+	rows, err = types.Db.Query(request)
 	if err != nil {
 		panic(err)
 	}

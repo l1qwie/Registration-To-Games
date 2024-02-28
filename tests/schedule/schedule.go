@@ -14,4 +14,5 @@ func ShowTheSchedule(fm *formatter.Formatter) {
 	fm.AssertParseMode("HTML", true)
 	fm.AssertString(mes, true)
 	fm.AssertInlineKeyboard([]int{1}, []string{"Главное Меню"}, []string{"MainMenu"}, []string{"cmd"}, true)
+	fm.AssertEditMessageId(9999, true)
 }

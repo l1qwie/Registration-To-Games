@@ -113,7 +113,7 @@ func Edit(user *bottypes.User, fm *formatter.Formatter) (exMessageId int) {
 	var err error
 	if user.ExMessageId == 0 {
 		fmt.Println("SELECT")
-		exMessageId, err = selectExMessageId(user.Id)
+		exMessageId, err = SelectExMessageId(user.Id)
 		if err != nil {
 			panic(err)
 		}
@@ -126,9 +126,11 @@ func Edit(user *bottypes.User, fm *formatter.Formatter) (exMessageId int) {
 		}
 	}
 	if user.PhotoFileId == "" {
+		fmt.Println("Edit", exMessageId)
 		fm.WriteEditMesId(exMessageId)
 	} else {
-		fm.WriteDeleteMesId(user.ExMessageId)
+		fmt.Println("Delete", exMessageId)
+		fm.WriteDeleteMesId(exMessageId)
 	}
 	return exMessageId
 }
@@ -142,8 +144,8 @@ func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	if user.Request == "MainMenu" {
 		user.Act = "divarication"
 		user.Level = OPTIONS
-		fm.WriteDeleteMesId(user.ExMessageId)
-		fm.AddPhotoFromStorage("qr.jpg")
+		//fm.WriteDeleteMesId(user.ExMessageId)
+		//fm.AddPhotoFromStorage("qr.jpg")
 		MainMenu(user, fm)
 	} else if user.Act == "registration" {
 		Welcome(user, fm)

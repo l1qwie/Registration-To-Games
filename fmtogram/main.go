@@ -113,21 +113,21 @@ func StartTests() {
 		counter   int
 		responses chan *types.TelegramResponse
 		requests  chan *formatter.Formatter
-		mes       chan *types.MessageResponse
+		output    chan *types.MessageResponse
 	)
 	responses = make(chan *types.TelegramResponse, 8)
 	requests = make(chan *formatter.Formatter, 8)
-
+	output = make(chan *types.MessageResponse, 8)
 	defer errors.MakeIntestines()
 	for counter < 8 {
 		for i := 0; i < 3; i++ {
 			if counter < 3 {
-				preparationdata.WelcomeAct(counter, i, responses)
+				preparationdata.WelcomeAct(counter, i, responses, output)
 			} else if counter >= 3 && counter < 8 {
-				preparationdata.RegToGamesAct(counter, i, responses)
+				preparationdata.RegToGamesAct(counter, i, responses, output)
 			}
 			tests.PreparationDatabase(counter)
-			worker(responses, mes, requests)
+			worker(responses, output, requests)
 			r := <-requests
 			tests.AcceptanceOfResults(r, counter, i)
 		}
@@ -142,16 +142,17 @@ func RegToGames() {
 		counter   int
 		responses chan *types.TelegramResponse
 		requests  chan *formatter.Formatter
-		mes       chan *types.MessageResponse
+		output    chan *types.MessageResponse
 	)
 	responses = make(chan *types.TelegramResponse, 4)
 	requests = make(chan *formatter.Formatter, 4)
+	output = make(chan *types.MessageResponse, 4)
 	counter = 3
 	for counter < 8 {
 		for i := 0; i < 3; i++ {
-			preparationdata.RegToGamesAct(counter, i, responses)
+			preparationdata.RegToGamesAct(counter, i, responses, output)
 			tests.PreparationDatabaseForRegToGames(counter)
-			worker(responses, mes, requests)
+			worker(responses, output, requests)
 			r := <-requests
 			tests.AcceptanceOfResOfRegToGames(r, counter, i)
 		}
@@ -166,16 +167,17 @@ func Welcome() {
 		counter   int
 		responses chan *types.TelegramResponse
 		requests  chan *formatter.Formatter
-		mes       chan *types.MessageResponse
+		output    chan *types.MessageResponse
 	)
 	responses = make(chan *types.TelegramResponse, 2)
 	requests = make(chan *formatter.Formatter, 2)
+	output = make(chan *types.MessageResponse, 2)
 	defer errors.MakeIntestines()
 	for counter < 3 {
 		for i := 0; i < 3; i++ {
-			preparationdata.WelcomeAct(counter, i, responses)
+			preparationdata.WelcomeAct(counter, i, responses, output)
 			tests.PreparationDatabaseForWelcome(counter)
-			worker(responses, mes, requests)
+			worker(responses, output, requests)
 			r := <-requests
 			tests.AcceptanceOfResOfWelcome(r, counter, i)
 		}
@@ -190,15 +192,16 @@ func SeeTheSchedule() {
 		counter   int
 		responses chan *types.TelegramResponse
 		requests  chan *formatter.Formatter
-		mes       chan *types.MessageResponse
+		output    chan *types.MessageResponse
 	)
 	counter = 8
 	responses = make(chan *types.TelegramResponse, 1)
 	requests = make(chan *formatter.Formatter, 1)
+	output = make(chan *types.MessageResponse, 1)
 	defer errors.MakeIntestines()
-	preparationdata.SeeTheSchedule(counter, responses)
+	preparationdata.SeeTheSchedule(counter, responses, output)
 	tests.PreparationDatabaseForSchedule(counter)
-	worker(responses, mes, requests)
+	worker(responses, output, requests)
 	r := <-requests
 	tests.AcceptanceOfResOfSchedule(r, counter)
 	fmt.Printf("SeeTheSchedule %d by counter: %d has been completed\n", counter+1, counter)

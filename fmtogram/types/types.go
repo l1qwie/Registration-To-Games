@@ -1,13 +1,29 @@
 package types
 
-import "fmt"
+import (
+	"database/sql"
+	"fmt"
+)
 
 const HttpsRequest = "https://api.telegram.org/"
+
+var (
+	//ConnectTot func() *sql.DB = connect
+	Db *sql.DB
+)
 
 const (
 	Markdown string = "Markdown"
 	HTML     string = "HTML"
 )
+
+func ConnectToDatabase() (db *sql.DB) {
+	db, err := sql.Open("postgres", connectData())
+	if err != nil {
+		panic(err)
+	}
+	return db
+}
 
 type InfMessage struct {
 	TypeFrom User   `json:"from"`
@@ -117,6 +133,10 @@ type Responser interface {
 	Updates(string, *int, *TelegramResponse) error
 }
 
-func ConnectTo() (body string) {
+func connectData() (body string) {
 	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, sslmode)
+}
+
+func ConnectTo() string {
+	return "#!@#!@#!@#"
 }

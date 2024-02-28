@@ -137,3 +137,27 @@ func (tfm *Formatter) AssertParseMode(parseMode string, condition bool) (err err
 	}
 	return err
 }
+
+func (tfm *Formatter) AssertEditMessageId(messageId int, condition bool) (err error) {
+	if tfm.Message.MessageId != messageId {
+		err = errors.AssertTest(fmt.Sprint(tfm.Message.MessageId), "WriteEditMesId", fmt.Sprint(messageId), "AssertEditMessageId")
+	}
+	if condition {
+		if err != nil {
+			panic(err)
+		}
+	}
+	return err
+}
+
+func (tfm *Formatter) AssertDeleteMessageId(messageId int, condition bool) (err error) {
+	if tfm.DeleteMessage.MessageId != messageId {
+		err = errors.AssertTest(fmt.Sprint(tfm.DeleteMessage.MessageId), "WriteDeleteMesId", fmt.Sprint(messageId), "AssertDeleteMessageId")
+	}
+	if condition {
+		if err != nil {
+			panic(err)
+		}
+	}
+	return err
+}

@@ -141,6 +141,7 @@ func ChoosePayment(user *bottypes.User, fm *formatter.Formatter) {
 				fm.AddPhotoFromStorage("qr.jpg")
 				fm.WriteString(fmt.Sprintf(dict["WaitForYourMoney"], cost, currency))
 				fm.WriteChatId(user.Id)
+				fm.WriteDeleteMesId(user.ExMessageId)
 			} else {
 				BestWishes(user, fm)
 			}

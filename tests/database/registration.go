@@ -20,7 +20,13 @@ func AfterPresentationSchedueleCheckDb(userId int) {
 	if err != nil {
 		panic(err)
 	}
-
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	if err != nil {
+		panic(err)
+	}
+	if user.ExMessageId != 8883 {
+		panic("ser.ExMessageId != 8883")
+	}
 	if user.Id != 477 {
 		panic("user.Id != 477")
 	}
@@ -85,7 +91,13 @@ func AfterChooseGameCheckDb(userId int) {
 	if err != nil {
 		panic(err)
 	}
-
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	if err != nil {
+		panic(err)
+	}
+	if user.ExMessageId != 8883 {
+		panic("ser.ExMessageId != 8883")
+	}
 	if user.Id != 477 {
 		panic("user.Id != 477")
 	}
@@ -150,7 +162,13 @@ func AfterChooseSeatsCheckDb(userId int) {
 	if err != nil {
 		panic(err)
 	}
-
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	if err != nil {
+		panic(err)
+	}
+	if user.ExMessageId != 8883 {
+		panic("ser.ExMessageId != 8883")
+	}
 	if user.Id != 477 {
 		panic("user.Id != 477")
 	}
@@ -215,7 +233,13 @@ func AfterChoosePaymentCheckDb(userId int) {
 	if err != nil {
 		panic(err)
 	}
-
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	if err != nil {
+		panic(err)
+	}
+	if user.ExMessageId != 8883 {
+		panic("ser.ExMessageId != 8883")
+	}
 	if user.Id != 477 {
 		panic("user.Id != 477")
 	}
@@ -271,47 +295,25 @@ func AfterChoosePaymentCheckDb(userId int) {
 
 func checkGamesWithUsersTable(userId, gameId, seats int, payment string) (detected bool) {
 	var (
-		db      *sql.DB
 		rows    *sql.Rows
 		err     error
 		request string
 		counter int
 	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err != nil {
-		panic(err)
-	}
 	request = `SELECT COUNT(*) FROM GamesWithUsers WHERE userId = $1 AND gameId = $2 AND seats = $3 AND payment = $4` //AND statuspayment = 0 AND status = 0
-	rows, err = db.Query(request, userId, gameId, seats, payment)
+	rows, err = types.Db.Query(request, userId, gameId, seats, payment)
 	if err != nil {
 		panic(err)
 	}
-	//Try to delete for below
-	for rows.Next() {
-		err = rows.Scan(&counter)
-		if err != nil {
-			panic(err)
-		}
+	rows.Next()
+	err = rows.Scan(&counter)
+	if err != nil {
+		panic(err)
 	}
 	if counter > 0 {
 		detected = true
 	}
 	return detected
-}
-
-func deleteUserFromGamesWithUsers(userId int) {
-	var (
-		db  *sql.DB
-		err error
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		_, err = db.Exec("DELETE FROM GamesWithUsers WHERE userId = $1", userId)
-	}
-	if err != nil {
-		panic(err)
-	}
-	db.Close()
 }
 
 func AfterBestWishes(userId int) {
@@ -325,6 +327,13 @@ func AfterBestWishes(userId int) {
 	err = routine.DbRetrieveUser(user)
 	if err != nil {
 		panic(err)
+	}
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	if err != nil {
+		panic(err)
+	}
+	if user.ExMessageId != 8883 {
+		panic("ser.ExMessageId != 8883")
 	}
 	if !checkGamesWithUsersTable(user.Id, 2, user.Reg.Seats, user.Reg.Payment) {
 		panic("user doesn't exist in table GamesWithUsers")

@@ -10,171 +10,95 @@ import (
 )
 
 func UpdateLanguage(language string, userId int) {
-	var (
-		db  *sql.DB
-		err error
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		_, err = db.Exec("UPDATE Users SET language = $1 WHERE userId = $2", language, userId)
-	}
+	_, err := types.Db.Exec("UPDATE Users SET language = $1 WHERE userId = $2", language, userId)
 	if err != nil {
 		panic(err)
 	}
-	db.Close()
-
 }
 
 func UpdateAction(action string, userId int) {
-	var (
-		db  *sql.DB
-		err error
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		_, err = db.Exec("UPDATE Users SET action = $1 WHERE userId = $2", action, userId)
-	}
+	_, err := types.Db.Exec("UPDATE Users SET action = $1 WHERE userId = $2", action, userId)
 	if err != nil {
 		panic(err)
 	}
-	db.Close()
-
 }
 
 func UpdateLevel(level, userId int) {
-	var (
-		db  *sql.DB
-		err error
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		_, err = db.Exec("UPDATE Users SET level = $1 WHERE userId = $2", level, userId)
-	}
+	_, err := types.Db.Exec("UPDATE Users SET level = $1 WHERE userId = $2", level, userId)
 	if err != nil {
 		panic(err)
 	}
-	db.Close()
 
 }
 
 func InsertGameId(gameId, userId int) {
-	var (
-		db  *sql.DB
-		err error
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		_, err = db.Exec("UPDATE Users SET gameId = $1 WHERE userId = $2", gameId, userId)
-	}
+	_, err := types.Db.Exec("UPDATE Users SET gameId = $1 WHERE userId = $2", gameId, userId)
 	if err != nil {
 		panic(err)
 	}
-	db.Close()
 }
 
 func InsertSeats(seats, userId int) {
-	var (
-		db  *sql.DB
-		err error
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		_, err = db.Exec("UPDATE Users SET seats = $1 WHERE userId = $2", seats, userId)
-	}
+	_, err := types.Db.Exec("UPDATE Users SET seats = $1 WHERE userId = $2", seats, userId)
 	if err != nil {
 		panic(err)
 	}
-	db.Close()
 }
 
 func InsertPayment(payment string, userId int) {
-	var (
-		db  *sql.DB
-		err error
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		_, err = db.Exec("UPDATE Users SET payment = $1 WHERE userId = $2", payment, userId)
-	}
+	_, err := types.Db.Exec("UPDATE Users SET payment = $1 WHERE userId = $2", payment, userId)
 	if err != nil {
 		panic(err)
 	}
-	db.Close()
 }
 
 func CreateGame() (err error) {
-	var db *sql.DB
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		_, err = db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	_, err = types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
 		VALUES (2, 'volleyball', 20250212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', 1)`)
-	}
 	if err != nil {
 		panic(err)
 	}
-	db.Close()
-
 	return err
 }
 
 func CreateSchedule() (err error) {
-	var (
-		db      *sql.DB
-		request string
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		for i := 0; i < 4; i++ {
-			if i == 0 {
-				request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	var request string
+	for i := 0; i < 4; i++ {
+		if i == 0 {
+			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
 				VALUES (0, 'volleyball', 20250212, 1200, 44, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'POUNDS', 1)`
-			} else if i == 1 {
-				request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+		} else if i == 1 {
+			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
 				VALUES (1, 'volleyball', 20260212, 1100, 34, 36.893445, 30.709591, 'Кладбище в Анталии', 10, 'POUNDS', 1)`
-			} else if i == 2 {
-				request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+		} else if i == 2 {
+			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
 				VALUES (2, 'football', 20250412, 1800, 14, 36.893445, 30.709591, 'Кладбище в Анталии', 1000, 'USD', 1)`
-			} else if i == 3 {
-				request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+		} else if i == 3 {
+			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
 				VALUES (3, 'volleyball', 20250202, 0800, 77, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'RUB', 1)`
-			}
-			_, err = db.Exec(request)
-			if err != nil {
-				panic(err)
-			}
+		}
+		_, err = types.Db.Exec(request)
+		if err != nil {
+			panic(err)
 		}
 	}
-	if err != nil {
-		panic(err)
-	}
-	db.Close()
-
 	return err
 }
 
 func FoundGame(gameId int) (detected bool) {
 	var (
-		db      *sql.DB
 		rows    *sql.Rows
 		err     error
 		request string
 		counter int
 	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err != nil {
-		panic(err)
-	}
 	request = `SELECT COUNT(*) FROM Schedule WHERE gameId = $1`
-	rows, err = db.Query(request, gameId)
+	rows, err = types.Db.Query(request, gameId)
 	if err != nil {
 		panic(err)
 	}
-	for rows.Next() {
-		err = rows.Scan(&counter)
-		if err != nil {
-			panic(err)
-		}
-	}
+	rows.Next()
+	err = rows.Scan(&counter)
 	if err != nil {
 		panic(err)
 	}
@@ -186,18 +110,10 @@ func FoundGame(gameId int) (detected bool) {
 }
 
 func DeleteGame(gameId int) {
-	var (
-		db  *sql.DB
-		err error
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
-	if err == nil {
-		_, err = db.Exec("DELETE FROM Schedule WHERE gameId = $1", gameId)
-	}
+	_, err := types.Db.Exec("DELETE FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
 		panic(err)
 	}
-	db.Close()
 }
 
 func AfterMainMenuCheckDb(userId int) {
@@ -211,14 +127,21 @@ func AfterMainMenuCheckDb(userId int) {
 	if err != nil {
 		panic(err)
 	}
-
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	if err != nil {
+		panic(err)
+	}
+	if user.ExMessageId != 8888 {
+		panic("user.ExMessageId != 8888")
+	}
 	if user.Id != 456 {
 		panic("user.Id != 456")
-	} else if user.Language != "ru" {
+	}
+	if user.Language != "ru" {
 		panic("user.Language != `ru`")
-		//Change it in the future!!
-		//} else if gameId != 0 {
-		//panic("gameId != 0")
+	}
+	if user.Reg.GameId != 0 {
+		panic("user.Reg.GameId != 0")
 	}
 	if user.LaunchPoint != 0 {
 		panic("user.LaunchPoint != 0")

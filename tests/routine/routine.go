@@ -1,7 +1,6 @@
 package routine
 
 import (
-	"database/sql"
 	"registrationtogames/bot/bottypes"
 	"registrationtogames/bot/routine"
 	"registrationtogames/fmtogram/types"
@@ -10,20 +9,10 @@ import (
 )
 
 func DeleteUser(id int) {
-	var (
-		db  *sql.DB
-		err error
-	)
-	db, err = sql.Open("postgres", types.ConnectTo())
+	_, err := types.Db.Exec("DELETE FROM Users WHERE userId = $1", id)
 	if err != nil {
 		panic(err)
 	}
-	_, err = db.Exec("DELETE FROM Users WHERE userId = $1", id)
-	if err != nil {
-		panic(err)
-	}
-
-	db.Close()
 }
 
 func TestRetrevenUser() {

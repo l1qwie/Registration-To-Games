@@ -16,9 +16,16 @@ func AfterShowTheSchedule(userId int) {
 	if err != nil {
 		panic(err)
 	}
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	if err != nil {
+		panic(err)
+	}
 
 	if user.Id != 488 {
 		panic("user.Id != 488")
+	}
+	if user.ExMessageId != 9999 {
+		panic("user.ExMessageId != 9999")
 	}
 	if user.Language != "ru" {
 		panic("user.Language != `ru`")
@@ -27,7 +34,7 @@ func AfterShowTheSchedule(userId int) {
 		panic("user.LaunchPoint != 0")
 	}
 	if user.Act != "see schedule" {
-		panic("user.Act != `reg to games`")
+		panic("user.Act != `see schedule`")
 	}
 	if user.Level != 0 {
 		panic("user.Level != 0")

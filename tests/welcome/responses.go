@@ -2,7 +2,7 @@ package welcome
 
 import "registrationtogames/fmtogram/types"
 
-func JustTrash(responses chan *types.TelegramResponse) {
+func JustTrash(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
 	responses <- &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
@@ -22,9 +22,21 @@ func JustTrash(responses chan *types.TelegramResponse) {
 			},
 		},
 	}
+	output <- &types.MessageResponse{
+		Ok: true,
+		Result: types.Message{
+			MessageId: 8888,
+			Chat: types.Chat{
+				Id: 456,
+			},
+			Photo: []types.Photo{{
+				FileId: "",
+			}},
+		},
+	}
 }
 
-func JustTrash2(responses chan *types.TelegramResponse) {
+func JustTrash2(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
 	responses <- &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
@@ -44,9 +56,21 @@ func JustTrash2(responses chan *types.TelegramResponse) {
 			},
 		},
 	}
+	output <- &types.MessageResponse{
+		Ok: true,
+		Result: types.Message{
+			MessageId: 8888,
+			Chat: types.Chat{
+				Id: 456,
+			},
+			Photo: []types.Photo{{
+				FileId: "",
+			}},
+		},
+	}
 }
 
-func Start(responses chan *types.TelegramResponse) {
+func Start(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
 	responses <- &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
@@ -66,9 +90,21 @@ func Start(responses chan *types.TelegramResponse) {
 			},
 		},
 	}
+	output <- &types.MessageResponse{
+		Ok: true,
+		Result: types.Message{
+			MessageId: 8888,
+			Chat: types.Chat{
+				Id: 456,
+			},
+			Photo: []types.Photo{{
+				FileId: "",
+			}},
+		},
+	}
 }
 
-func QueryForShowRules(responses chan *types.TelegramResponse) {
+func QueryForShowRules(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
 	responses <- &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
@@ -88,9 +124,21 @@ func QueryForShowRules(responses chan *types.TelegramResponse) {
 			},
 		},
 	}
+	output <- &types.MessageResponse{
+		Ok: true,
+		Result: types.Message{
+			MessageId: 8888,
+			Chat: types.Chat{
+				Id: 456,
+			},
+			Photo: []types.Photo{{
+				FileId: "",
+			}},
+		},
+	}
 }
 
-func QueryForWelcomeToMainMenu(responses chan *types.TelegramResponse) {
+func QueryForWelcomeToMainMenu(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
 	responses <- &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
@@ -108,6 +156,18 @@ func QueryForWelcomeToMainMenu(responses chan *types.TelegramResponse) {
 					Text: "GoNext",
 				},
 			},
+		},
+	}
+	output <- &types.MessageResponse{
+		Ok: true,
+		Result: types.Message{
+			MessageId: 8888,
+			Chat: types.Chat{
+				Id: 456,
+			},
+			Photo: []types.Photo{{
+				FileId: "",
+			}},
 		},
 	}
 }

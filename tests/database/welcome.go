@@ -16,14 +16,18 @@ func AfterGreetingsToUserCheckDb(userId int) {
 	if err != nil {
 		panic(err)
 	}
-
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	if err != nil {
+		panic(err)
+	}
 	if user.Id != 456 {
 		panic("user.Id != 456")
-	} else if user.Language != "ru" {
+	}
+	if user.ExMessageId != 8888 {
+		panic("user.ExMessageId != 8888")
+	}
+	if user.Language != "ru" {
 		panic("user.Language != `ru`")
-		//Change it in the future!!
-		//} else if gameId != 0 {
-		//panic("gameId != 0")
 	}
 	if user.LaunchPoint != 0 {
 		panic("user.LaunchPoint != 0")
@@ -33,6 +37,9 @@ func AfterGreetingsToUserCheckDb(userId int) {
 	}
 	if user.Level != 1 {
 		panic("user.Level != 1")
+	}
+	if user.Reg.GameId != 0 {
+		panic("user.Reg.GameId != 0")
 	}
 	if user.Reg.Seats != 0 {
 		panic("user.Reg.Seats != 0")
@@ -80,14 +87,21 @@ func AfterShowRulesCheckDb(userId int) {
 	if err != nil {
 		panic(err)
 	}
-
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	if err != nil {
+		panic(err)
+	}
+	if user.ExMessageId != 8888 {
+		panic("user.ExMessageId != 8888")
+	}
 	if user.Id != 456 {
 		panic("user.Id != 456")
-	} else if user.Language != "ru" {
+	}
+	if user.Language != "ru" {
 		panic("user.Language != `ru`")
-		//Change it in the future!!
-		//} else if gameId != 0 {
-		//panic("gameId != 0")
+	}
+	if user.Reg.GameId != 0 {
+		panic("user.Reg.GameId != 0")
 	}
 	if user.LaunchPoint != 0 {
 		panic("user.LaunchPoint != 0")

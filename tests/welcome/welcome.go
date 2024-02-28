@@ -8,6 +8,7 @@ func TestGreetingsToUser(fm *formatter.Formatter) {
 	fm.AssertChatId(456, true)
 	fm.AssertString("Добро пожаловать в нашего бота! Этот бот предназначен для регистрации на спортивные игры в Стамбуле, но для начала вам нужно зарегистрироваться у нас!", true)
 	fm.AssertInlineKeyboard([]int{1}, []string{"Зарегистрироваться"}, []string{"GoReg"}, []string{"cmd"}, true)
+	fm.AssertEditMessageId(8888, true)
 }
 
 func TestShowRules(fm *formatter.Formatter) {
@@ -20,6 +21,7 @@ func TestShowRules(fm *formatter.Formatter) {
 	P.S. Если что, то у бота есть волшебная команда /menu. Эта команда всегда сможет вас вернуть в главное меню. 
 	Естесвенно, если вы пришлете ее, когда у вас есть какой то незаконченный процес в боте, то прогресс не сохраниться`, true)
 	fm.AssertInlineKeyboard([]int{1}, []string{"Все понятно!"}, []string{"GoNext"}, []string{"cmd"}, true)
+	fm.AssertEditMessageId(8888, true)
 }
 
 func TestWelcomeToMainMenu(fm *formatter.Formatter) {
@@ -27,5 +29,6 @@ func TestWelcomeToMainMenu(fm *formatter.Formatter) {
 	fm.AssertString("Добро пожаловать в гланое меню", true)
 	fm.AssertInlineKeyboard([]int{1, 1, 1, 1}, []string{"Просмотр расписания", "Регистрация на игру", "Наши фото и видео", "Настройки | Мои игры"},
 		[]string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}, []string{"cmd", "cmd", "cmd", "cmd"}, true)
+	fm.AssertEditMessageId(8888, true)
 
 }
