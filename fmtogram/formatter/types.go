@@ -2,6 +2,23 @@ package formatter
 
 import "registrationtogames/fmtogram/types"
 
+type InlineKeyboard struct {
+	Keyboard [][]btn `json:"inline_keyboard"`
+	x        int
+	y        int
+}
+
+type InputMediaPhoto struct {
+	Type      string `json:"type"`
+	Media     string `json:"media"`
+	Caption   string `json:"caption"`
+	ParseMode string `json:"parse_mode"`
+}
+
+type InputMedia struct {
+	InputMediaPhoto InputMediaPhoto `json:"InputMediaPhoto"`
+}
+
 type Formatter struct {
 	Message       types.SendMessagePayload
 	Keyboard      InlineKeyboard
@@ -9,12 +26,6 @@ type Formatter struct {
 	contenttype   string
 	kindofmedia   int
 	mediatype     string
-}
-
-type InlineKeyboard struct {
-	Keyboard [][]btn `json:"inline_keyboard"`
-	x        int
-	y        int
 }
 
 type btnKind int

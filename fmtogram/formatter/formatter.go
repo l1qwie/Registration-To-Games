@@ -76,9 +76,7 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 	var (
 		jsonMessage   []byte
 		jsonKeyboard  []byte
-		slicebyte     []byte
 		finalBuffer   *bytes.Buffer
-		interBuf      *bytes.Buffer
 		function      string
 		marshalstatus bool
 	)
@@ -107,34 +105,15 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 				finalBuffer = bytes.NewBuffer(jsonMessage)
 			}
 		} else if fm.Message.Video != "" || fm.Message.Photo != "" {
-			if fm.Message.MessageId == 0 {
-				marshalstatus = true
-				if fm.mediatype == "photo" {
-					function = "sendPhoto"
-				} else if fm.mediatype == "video" {
-					function = "sendVideo"
-				}
-			} else {
-				function = "editMessageMedia"
+			marshalstatus = true
+			if fm.mediatype == "photo" {
+				function = "sendPhoto"
+			} else if fm.mediatype == "video" {
+				function = "sendVideo"
 			}
 			if fm.kindofmedia == fromStorage {
 				finalBuffer = bytes.NewBuffer(nil)
-				if fm.Message.MessageId == 0 {
-					fm.contenttype, err = fm.PrepareMedia(finalBuffer)
-				} else {
-					interBuf = bytes.NewBuffer(nil)
-					fm.contenttype, err = fm.PrepareMediaForEdit(interBuf)
-					if err != nil {
-						panic(err)
-					}
-					slicebyte = interBuf.Bytes()
-					jsonMessage, err = json.Marshal(fm.Message)
-					if err != nil {
-						panic(err)
-					}
-					finalBuffer.Write(jsonMessage)
-					finalBuffer.Write(slicebyte)
-				}
+				fm.contenttype, err = fm.PrepareMedia(finalBuffer)
 			} else {
 				jsonMessage, err = json.Marshal(fm.Message)
 				if err == nil {

@@ -105,7 +105,7 @@ func (fm *Formatter) PrepareMediaForEdit(buf *bytes.Buffer) (string, error) {
 
 	file, err = os.Open(media)
 	if err == nil {
-		part, err = writer.CreateFormFile("media", media)
+		part, err = writer.CreateFormFile(fm.mediatype, media)
 	}
 	if err == nil {
 		_, err = io.Copy(part, file)

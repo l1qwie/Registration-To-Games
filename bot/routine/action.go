@@ -109,11 +109,8 @@ func Schedule(user *bottypes.User, fm *formatter.Formatter) {
 	}
 }
 
-func Edit(user *bottypes.User, fm *formatter.Formatter) {
-	var (
-		exMessageId int
-		err         error
-	)
+func Edit(user *bottypes.User, fm *formatter.Formatter) (exMessageId int) {
+	var err error
 	if user.ExMessageId == 0 {
 		fmt.Println("SELECT")
 		exMessageId, err = selectExMessageId(user.Id)
@@ -128,18 +125,24 @@ func Edit(user *bottypes.User, fm *formatter.Formatter) {
 			panic(err)
 		}
 	}
-	fm.WriteEditMesId(exMessageId)
+	if user.PhotoFileId == "" {
+		fm.WriteEditMesId(exMessageId)
+	} else {
+		fm.WriteDeleteMesId(user.ExMessageId)
+	}
+	return exMessageId
 }
 
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	retrieveUser(user)
 	//fm.WriteDeleteMesId(user.ExMessageId)
 	//fm.WriteChatId(user.Id)
-	Edit(user, fm)
+	user.ExMessageId = Edit(user, fm)
 	fmt.Println("level =", user.Level, fmt.Sprintf(`phrase = "%s"`, user.Request), fmt.Sprintf(`action = "%s"`, user.Act), "user.Id =", user.Id)
 	if user.Request == "MainMenu" {
 		user.Act = "divarication"
 		user.Level = OPTIONS
+		fm.WriteDeleteMesId(user.ExMessageId)
 		fm.AddPhotoFromStorage("qr.jpg")
 		MainMenu(user, fm)
 	} else if user.Act == "registration" {

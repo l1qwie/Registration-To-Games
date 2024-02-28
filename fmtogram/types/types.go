@@ -63,7 +63,7 @@ type SendMessagePayload struct {
 	Video       string `json:"video"`
 	ParseMode   string `json:"parse_mode"`
 	MessageId   int    `json:"message_id"`
-	InputMedia  string
+	InputMedia  string `json:"media"`
 }
 
 type DelMessage struct {
@@ -75,9 +75,19 @@ type Chat struct {
 	Id int `json:"id"`
 }
 
+type Photo struct {
+	FileId string `json:"file_id"`
+}
+
+type Video struct {
+	FileId string `json:"file_id"`
+}
+
 type Message struct {
-	MessageId int  `json:"message_id"`
-	Chat      Chat `json:"chat"`
+	MessageId int     `json:"message_id"`
+	Chat      Chat    `json:"chat"`
+	Photo     []Photo `json:"photo"`
+	Video     []Video `json:"video"`
 }
 
 type MessageResponse struct {

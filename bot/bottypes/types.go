@@ -27,6 +27,7 @@ type UserRec struct {
 type User struct {
 	Id          int
 	ExMessageId int
+	PhotoFileId string
 	Request     string
 	Language    string
 	LaunchPoint int

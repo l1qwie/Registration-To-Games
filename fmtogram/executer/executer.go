@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"registrationtogames/fmtogram/errors"
@@ -41,14 +40,14 @@ func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (body 
 
 	request, err = http.NewRequest("POST", url, Buffer)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	request.Header.Set("Content-Type", contenttype)
 	client = &http.Client{}
 	response, err = client.Do(request)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	defer response.Body.Close()
 	return io.ReadAll(response.Body)

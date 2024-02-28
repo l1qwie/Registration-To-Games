@@ -68,6 +68,9 @@ func worker(input <-chan *types.TelegramResponse, mesoutput <-chan *types.Messag
 					Chat: types.Chat{
 						Id: 0,
 					},
+					Photo: []types.Photo{{
+						FileId: "",
+					}},
 				},
 			}
 		}

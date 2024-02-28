@@ -72,7 +72,7 @@ func ReturnBotStatus(telegramResponse *types.TelegramResponse) (botstatus bool) 
 	return botstatus
 }
 
-func MessageId(message *types.MessageResponse) (messageId int, err error) {
+func ReturnMessageId(message *types.MessageResponse) (messageId int, err error) {
 	/*if len(message.Result) != 0 {
 		messageId = message.Result[0].Chat.Id
 	} else {
@@ -81,7 +81,25 @@ func MessageId(message *types.MessageResponse) (messageId int, err error) {
 	if message.Ok {
 		messageId = message.Result.MessageId
 	} else {
-		err = fmt.Errorf("we don't have message id")
+		err = fmt.Errorf("we don't have a message id")
 	}
 	return messageId, err
+}
+
+func ReturnPhotoFileId(message *types.MessageResponse) (fileId string, err error) {
+	if len(message.Result.Photo) > 0 {
+		fileId = message.Result.Photo[0].FileId
+	} else {
+		err = fmt.Errorf("we don't have a Photo fileId")
+	}
+	return fileId, err
+}
+
+func ReturnVideo(message *types.MessageResponse) (fileId string, err error) {
+	if len(message.Result.Video) > 0 {
+		fileId = message.Result.Video[0].FileId
+	} else {
+		err = fmt.Errorf("we don't have a Video fileId")
+	}
+	return fileId, err
 }
