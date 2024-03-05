@@ -52,12 +52,28 @@ func InsertPayment(payment string, userId int) {
 	}
 }
 
-func CreateGame() (err error) {
+func CreateGame(gameId int) (err error) {
 	_, err = types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-		VALUES (2, 'volleyball', 20250212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', 1)`)
+		VALUES ($1, 'volleyball', 20250212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', 1)`, gameId)
 	if err != nil {
 		panic(err)
 	}
+	return err
+}
+
+func CreateNotFullMediaGame(gameId int) (err error) {
+	_, err = types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	VALUES ($1, 'football', 20240212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', -1)`, gameId)
+	if err == nil {
+		_, err = types.Db.Exec(`INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
+			VALUES ($1, 499, '!@#IOJSIOJE!@#**()!@#$*()SIOPE!@()#', 'photo', 0, 1)`, gameId)
+	}
+	return err
+}
+
+func CreateEmptyMediaGame(gameId int) (err error) {
+	_, err = types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	VALUES ($1, 'volleyball', 20240212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', -1)`, gameId)
 	return err
 }
 
@@ -111,6 +127,13 @@ func FoundGame(gameId int) (detected bool) {
 
 func DeleteGame(gameId int) {
 	_, err := types.Db.Exec("DELETE FROM Schedule WHERE gameId = $1", gameId)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func DeleteMedia(gameId int) {
+	_, err := types.Db.Exec("DELETE FROM MediaRepository WHERE gameId = $1", gameId)
 	if err != nil {
 		panic(err)
 	}

@@ -35,7 +35,7 @@ func selectTheSchedule(limit, offset int, language string) (schedule []*forall.G
 	return schedule
 }
 
-func findAGame(gameId int) (detected bool) {
+func FindAGame(gameId int) (detected bool) {
 	var (
 		rows    *sql.Rows
 		err     error
@@ -47,13 +47,12 @@ func findAGame(gameId int) (detected bool) {
 	if err != nil {
 		panic(err)
 	}
-	//Try to delete for below
-	for rows.Next() {
-		err = rows.Scan(&counter)
-		if err != nil {
-			panic(err)
-		}
+	rows.Next()
+	err = rows.Scan(&counter)
+	if err != nil {
+		panic(err)
 	}
+
 	if counter > 0 {
 		detected = true
 	}
@@ -71,13 +70,12 @@ func selectThePrice(gameId int) (price, space int, currency string) {
 	if err != nil {
 		panic(err)
 	}
-	//Try to delete for below
-	for rows.Next() {
-		err = rows.Scan(&price, &space, &currency)
-		if err != nil {
-			panic(err)
-		}
+	rows.Next()
+	err = rows.Scan(&price, &space, &currency)
+	if err != nil {
+		panic(err)
 	}
+
 	return price, space, currency
 }
 
@@ -93,13 +91,12 @@ func howManyIsLeft(gameId int, wishfulseats int) (thereArePlaces bool) {
 	if err != nil {
 		panic(err)
 	}
-	//Try to delete for below
-	for rows.Next() {
-		err = rows.Scan(&seats)
-		if err != nil {
-			panic(err)
-		}
+	rows.Next()
+	err = rows.Scan(&seats)
+	if err != nil {
+		panic(err)
 	}
+
 	if wishfulseats < seats {
 		thereArePlaces = true
 	}

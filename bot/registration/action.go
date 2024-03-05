@@ -63,7 +63,7 @@ func ChooseGame(user *bottypes.User, fm *formatter.Formatter, seatsStatus bool) 
 	dict = dictionary.Dictionary[user.Language]
 	detected, gameId = forall.IntCheck(user.Request)
 	if detected {
-		if findAGame(gameId) {
+		if FindAGame(gameId) {
 			user.Reg.GameId = gameId
 			user.Level = 2
 			price, space, currency = selectThePrice(gameId)

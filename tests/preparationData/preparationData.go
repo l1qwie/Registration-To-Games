@@ -3,6 +3,7 @@ package preparationdata
 import (
 	"registrationtogames/fmtogram/types"
 	"registrationtogames/tests/database"
+	"registrationtogames/tests/media"
 	"registrationtogames/tests/registration"
 	"registrationtogames/tests/routine"
 	"registrationtogames/tests/schedule"
@@ -10,22 +11,30 @@ import (
 )
 
 const (
-	userIdT1 int = 456
-	userIdT2 int = 477
-	userIdT3 int = 488
-	gameId   int = 2
-	wSTART   int = 0
-	wLEVEL1  int = 1
-	wLEVEL2  int = 2
-	rSTART   int = 3
-	rLEVEL1  int = 4
-	rLEVEL2  int = 5
-	rLEVEL3  int = 6
-	rLEVEL4  int = 7
-	schSTART int = 8
+	userIdT1   int  = 456
+	userIdT2   int  = 477
+	userIdT3   int  = 488
+	userIdT4   int  = 499
+	gameId     int  = 2
+	pastgameId int  = 10
+	wSTART     int  = 0
+	wLEVEL1    int  = 1
+	wLEVEL2    int  = 2
+	rSTART     int  = 3
+	rLEVEL1    int  = 4
+	rLEVEL2    int  = 5
+	rLEVEL3    int  = 6
+	rLEVEL4    int  = 7
+	schSTART   int  = 8
+	mStart     int  = 9
+	mLEVEL1    int  = 10
+	mLEVEL2    int  = 11
+	mLEVEL3    int  = 12
+	Unload     bool = true
+	Upload     bool = false
 )
 
-func PreparationToShowRules(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func preparationToShowRules(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
 		welcome.JustTrash(responses, output)
 	} else if counter == 1 {
@@ -36,7 +45,7 @@ func PreparationToShowRules(counter int, responses chan *types.TelegramResponse,
 	routine.DeleteUser(userIdT1)
 }
 
-func WelcomeToMainMenu(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func welcomeToMainMenu(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
 		welcome.JustTrash(responses, output)
 	} else if counter == 1 {
@@ -47,7 +56,7 @@ func WelcomeToMainMenu(counter int, responses chan *types.TelegramResponse, outp
 	routine.DeleteUser(userIdT1)
 }
 
-func ChooseGame(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func chooseGame(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
 		registration.JustTrash(responses, output)
 	} else if counter == 1 {
@@ -59,7 +68,7 @@ func ChooseGame(counter int, responses chan *types.TelegramResponse, output chan
 	database.DeleteGame(gameId)
 }
 
-func ChooseSeats(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func chooseSeats(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
 		registration.JustTrash(responses, output)
 	} else if counter == 1 {
@@ -71,7 +80,7 @@ func ChooseSeats(counter int, responses chan *types.TelegramResponse, output cha
 	database.DeleteGame(gameId)
 }
 
-func ChoosePayment(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func choosePayment(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
 		registration.JustTrash(responses, output)
 	} else if counter == 1 {
@@ -83,7 +92,7 @@ func ChoosePayment(counter int, responses chan *types.TelegramResponse, output c
 	database.DeleteGame(gameId)
 }
 
-func BestWishes(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func bestWishes(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
 		registration.JustTrash(responses, output)
 	} else if counter == 1 {
@@ -95,14 +104,58 @@ func BestWishes(counter int, responses chan *types.TelegramResponse, output chan
 	database.DeleteGame(gameId)
 }
 
+func chooseMediaGame(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse, direction bool) {
+	if counter == 0 {
+		media.JustTrash(responses, output)
+	} else if counter == 1 {
+		media.JustTrash2(responses, output)
+	} else if counter == 2 {
+		if direction {
+			media.QueryForChooseMediaGameUnload(responses, output)
+		} else {
+			media.QueryForChooseMediaGameUpload(responses, output)
+		}
+	}
+}
+
+func waitingYourMedia(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == 0 {
+		media.JustTrash(responses, output)
+	} else if counter == 1 {
+		media.JustTrash2(responses, output)
+	} else if counter == 2 {
+		media.QueryForWaitingYourMedia(responses, output)
+	}
+}
+
+func unload(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == 0 {
+		media.JustTrash(responses, output)
+	} else if counter == 1 {
+		media.JustTrash2(responses, output)
+	} else if counter == 2 {
+		media.QueryForUnload(responses, output)
+	}
+}
+
+func upload(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == 0 {
+		media.JustTrash(responses, output)
+	} else if counter == 1 {
+		media.JustTrash2(responses, output)
+	} else if counter == 2 {
+		media.QueryForUpload(responses, output)
+	}
+}
+
 func WelcomeAct(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == wSTART {
 		welcome.Start(responses, output)
 		routine.DeleteUser(userIdT1)
 	} else if counter == wLEVEL1 {
-		PreparationToShowRules(i, responses, output)
+		preparationToShowRules(i, responses, output)
 	} else if counter == wLEVEL2 {
-		WelcomeToMainMenu(i, responses, output)
+		welcomeToMainMenu(i, responses, output)
 	}
 }
 
@@ -123,12 +176,40 @@ func RegToGamesAct(counter, i int, responses chan *types.TelegramResponse, outpu
 		routine.DeleteUser(userIdT2)
 		database.DeleteGame(gameId)
 	} else if counter == rLEVEL1 {
-		ChooseGame(i, responses, output)
+		chooseGame(i, responses, output)
 	} else if counter == rLEVEL2 {
-		ChooseSeats(i, responses, output)
+		chooseSeats(i, responses, output)
 	} else if counter == rLEVEL3 {
-		ChoosePayment(i, responses, output)
+		choosePayment(i, responses, output)
 	} else if counter == rLEVEL4 {
-		BestWishes(i, responses, output)
+		bestWishes(i, responses, output)
+	}
+}
+
+func MediaUnload(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == mStart {
+		media.QueryForChooseDirection(responses, output)
+		routine.DeleteUser(userIdT2)
+		database.DeleteMedia(pastgameId)
+		database.DeleteGame(pastgameId)
+	} else if counter == mLEVEL1 {
+		chooseMediaGame(i, responses, output, Unload)
+	} else if counter == mLEVEL2 {
+		unload(i, responses, output)
+	}
+}
+
+func MediaUpload(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == mStart {
+		media.QueryForChooseDirection(responses, output)
+		routine.DeleteUser(userIdT4)
+		database.DeleteMedia(pastgameId)
+		database.DeleteGame(pastgameId)
+	} else if counter == mLEVEL1 {
+		chooseMediaGame(i, responses, output, Upload)
+	} else if counter == mLEVEL2 {
+		waitingYourMedia(i, responses, output)
+	} else if counter == mLEVEL3 {
+		upload(i, responses, output)
 	}
 }

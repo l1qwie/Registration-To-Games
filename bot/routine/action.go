@@ -5,6 +5,7 @@ import (
 	"registrationtogames/bot/bottypes"
 	"registrationtogames/bot/dictionary"
 	"registrationtogames/bot/forall"
+	"registrationtogames/bot/media"
 	"registrationtogames/bot/registration"
 	"registrationtogames/bot/schedule"
 	"registrationtogames/bot/welcome"
@@ -87,25 +88,23 @@ func MainMenu(user *bottypes.User, fm *formatter.Formatter) {
 	fm.WriteChatId(user.Id)
 }
 
-func Options(user *bottypes.User, fm *formatter.Formatter) {
-	if user.Request == "Reg to games" {
-		user.Level = START
-		user.Act = "reg to games"
-		RegToGames(user, fm)
-	} else if user.Request == "Looking Schedule" {
-		user.Level = START
-		user.Act = "see schedule"
-		Schedule(user, fm)
-	} else {
-		user.Act = "divarication"
-		user.Level = OPTIONS
-		MainMenu(user, fm)
-	}
-}
-
 func Schedule(user *bottypes.User, fm *formatter.Formatter) {
 	if user.Level == START {
 		schedule.ShowTheSchedule(user, fm)
+	}
+}
+
+func Media(user *bottypes.User, fm *formatter.Formatter) {
+	if user.Level == START {
+		media.ChooseDirection(user, fm)
+	} else if user.Level == LEVEL1 {
+		media.ChooseMediaGame(user, fm)
+	} else if user.Level == LEVEL2 {
+		media.WaitingYourMedia(user, fm)
+	} else if user.Level == LEVEL3 {
+		media.UnloadAndUnload(user, fm)
+	} else if user.Level == LEVEL4 {
+		media.CheckUpload(user, fm)
 	}
 }
 
@@ -135,6 +134,26 @@ func Edit(user *bottypes.User, fm *formatter.Formatter) (exMessageId int) {
 	return exMessageId
 }
 
+func Options(user *bottypes.User, fm *formatter.Formatter) {
+	if user.Request == "Reg to games" {
+		user.Level = START
+		user.Act = "reg to games"
+		RegToGames(user, fm)
+	} else if user.Request == "Looking Schedule" {
+		user.Level = START
+		user.Act = "see schedule"
+		Schedule(user, fm)
+	} else if user.Request == "Photo&Video" {
+		user.Level = START
+		user.Act = "photos and videos"
+		Media(user, fm)
+	} else {
+		user.Act = "divarication"
+		user.Level = OPTIONS
+		MainMenu(user, fm)
+	}
+}
+
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	retrieveUser(user)
 	//fm.WriteDeleteMesId(user.ExMessageId)
@@ -155,6 +174,8 @@ func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 		Options(user, fm)
 	} else if user.Act == "see schedule" {
 		Schedule(user, fm)
+	} else if user.Act == "photos and videos" {
+		Media(user, fm)
 	}
 	retainUser(user)
 }

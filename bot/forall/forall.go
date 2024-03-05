@@ -2,6 +2,8 @@ package forall
 
 import (
 	"fmt"
+	"registrationtogames/bot/bottypes"
+	"registrationtogames/bot/dictionary"
 	"registrationtogames/fmtogram/formatter"
 	"strconv"
 )
@@ -101,4 +103,29 @@ func IncreaseLaunchPoit(phrase string) (launchPoint int) {
 	}
 
 	return launchPoint
+}
+
+func GoToMainMenu(user *bottypes.User, fm *formatter.Formatter, textresponse string) {
+	var (
+		dict           map[string]string
+		kbName, kbData []string
+		coordinates    []int
+	)
+	user.Level = 3
+	user.Act = "divarication"
+	dict = dictionary.Dictionary[user.Language]
+	kbName = []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}
+	kbData = []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}
+	coordinates = []int{1, 1, 1, 1}
+	SetTheKeyboard(fm, coordinates, kbName, kbData)
+	fm.WriteString(fmt.Sprintf(textresponse, dict["Main Menu"]))
+	fm.WriteChatId(user.Id)
+}
+
+func CheckPages(req string, lp int) {
+	if req == "next page" {
+		lp = lp + 7
+	} else if req == "previuos page" {
+		lp = lp - 7
+	}
 }

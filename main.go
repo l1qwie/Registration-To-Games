@@ -1,8 +1,8 @@
 package main
 
 import (
-	"registrationtogames/fmtogram"
 	"registrationtogames/fmtogram/types"
+	"registrationtogames/tests"
 )
 
 // executer.TelegramTest
@@ -14,10 +14,11 @@ func main() {
 	//err := database.FirstConnect()
 	//database.CreateSchedule()
 	//fmtogram.StartWithTelegram()
-	//fmtogram.StartTests()
-	//fmtogram.JustOtherTests()
-	fmtogram.Welcome()
-	fmtogram.RegToGames()
-	fmtogram.SeeTheSchedule()
+	//tests.GlobalTest()
+	tests.MediaTest()
+	//tests.JustOtherTests()
+	//tests.Welcome()
+	//tests.RegToGames()
+	//tests.SeeTheSchedule()
 	types.Db.Close()
 }

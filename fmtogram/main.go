@@ -1,17 +1,12 @@
 package fmtogram
 
 import (
-	"fmt"
 	"log"
 	"registrationtogames/bot"
-	"registrationtogames/fmtogram/errors"
 	"registrationtogames/fmtogram/executer"
 	"registrationtogames/fmtogram/formatter"
 	"registrationtogames/fmtogram/helper"
 	"registrationtogames/fmtogram/types"
-	"registrationtogames/tests"
-	"registrationtogames/tests/othertests"
-	preparationdata "registrationtogames/tests/preparationData"
 	"time"
 )
 
@@ -42,7 +37,7 @@ func pollResponse(output chan<- *formatter.Formatter, reg *executer.RegTable) {
 				reg.Reg[index].Chu = make(chan *types.TelegramResponse, 10)
 				reg.Reg[index].Chu <- telegramResponse
 			}
-			go worker(reg.Reg[index].Chu, reg.Reg[index].Chb, output)
+			go Worker(reg.Reg[index].Chu, reg.Reg[index].Chb, output)
 			offset = offset + 1
 		} else if err != nil {
 			log.Fatal(err)
@@ -50,7 +45,7 @@ func pollResponse(output chan<- *formatter.Formatter, reg *executer.RegTable) {
 	}
 }
 
-func worker(input <-chan *types.TelegramResponse, mesoutput <-chan *types.MessageResponse, output chan<- *formatter.Formatter) {
+func Worker(input <-chan *types.TelegramResponse, mesoutput <-chan *types.MessageResponse, output chan<- *formatter.Formatter) {
 	var (
 		fm         *formatter.Formatter
 		userstruct *types.TelegramResponse
@@ -106,117 +101,4 @@ func StartWithTelegram() {
 	for {
 		time.Sleep(time.Second)
 	}
-}
-
-func StartTests() {
-	var (
-		counter   int
-		responses chan *types.TelegramResponse
-		requests  chan *formatter.Formatter
-		output    chan *types.MessageResponse
-	)
-	responses = make(chan *types.TelegramResponse, 8)
-	requests = make(chan *formatter.Formatter, 8)
-	output = make(chan *types.MessageResponse, 8)
-	defer errors.MakeIntestines()
-	for counter < 8 {
-		for i := 0; i < 3; i++ {
-			if counter < 3 {
-				preparationdata.WelcomeAct(counter, i, responses, output)
-			} else if counter >= 3 && counter < 8 {
-				preparationdata.RegToGamesAct(counter, i, responses, output)
-			}
-			tests.PreparationDatabase(counter)
-			worker(responses, output, requests)
-			r := <-requests
-			tests.AcceptanceOfResults(r, counter, i)
-		}
-		fmt.Printf("Global Test %d by counter: %d has been completed\n", counter+1, counter)
-		counter++
-	}
-	fmt.Print("Global Test was alright!\n")
-}
-
-func RegToGames() {
-	var (
-		counter   int
-		responses chan *types.TelegramResponse
-		requests  chan *formatter.Formatter
-		output    chan *types.MessageResponse
-	)
-	responses = make(chan *types.TelegramResponse, 4)
-	requests = make(chan *formatter.Formatter, 4)
-	output = make(chan *types.MessageResponse, 4)
-	counter = 3
-	for counter < 8 {
-		for i := 0; i < 3; i++ {
-			preparationdata.RegToGamesAct(counter, i, responses, output)
-			tests.PreparationDatabaseForRegToGames(counter)
-			worker(responses, output, requests)
-			r := <-requests
-			tests.AcceptanceOfResOfRegToGames(r, counter, i)
-		}
-		fmt.Printf("RegToGamesTest %d by counter: %d has been completed\n", counter+1, counter)
-		counter++
-	}
-	fmt.Print("RegToGamesTest was alright!\n")
-}
-
-func Welcome() {
-	var (
-		counter   int
-		responses chan *types.TelegramResponse
-		requests  chan *formatter.Formatter
-		output    chan *types.MessageResponse
-	)
-	responses = make(chan *types.TelegramResponse, 2)
-	requests = make(chan *formatter.Formatter, 2)
-	output = make(chan *types.MessageResponse, 2)
-	defer errors.MakeIntestines()
-	for counter < 3 {
-		for i := 0; i < 3; i++ {
-			preparationdata.WelcomeAct(counter, i, responses, output)
-			tests.PreparationDatabaseForWelcome(counter)
-			worker(responses, output, requests)
-			r := <-requests
-			tests.AcceptanceOfResOfWelcome(r, counter, i)
-		}
-		fmt.Printf("WelcomeTest %d by counter: %d has been completed\n", counter+1, counter)
-		counter++
-	}
-	fmt.Print("WelcomeTest was alright!\n")
-}
-
-func SeeTheSchedule() {
-	var (
-		counter   int
-		responses chan *types.TelegramResponse
-		requests  chan *formatter.Formatter
-		output    chan *types.MessageResponse
-	)
-	counter = 8
-	responses = make(chan *types.TelegramResponse, 1)
-	requests = make(chan *formatter.Formatter, 1)
-	output = make(chan *types.MessageResponse, 1)
-	defer errors.MakeIntestines()
-	preparationdata.SeeTheSchedule(counter, responses, output)
-	tests.PreparationDatabaseForSchedule(counter)
-	worker(responses, output, requests)
-	r := <-requests
-	tests.AcceptanceOfResOfSchedule(r, counter)
-	fmt.Printf("SeeTheSchedule %d by counter: %d has been completed\n", counter+1, counter)
-	counter++
-	fmt.Print("SeeTheSchedule was alright!\n")
-}
-
-func JustOtherTests() {
-	defer errors.MakeIntestines()
-	if !othertests.TestFromIntToStrDate() {
-		panic("Date isn't a date")
-	}
-	fmt.Println("Date is correct")
-	if !othertests.TestFromIntToStrTime() {
-		panic("Time isn't a time")
-	}
-	fmt.Println("Time is correct")
 }

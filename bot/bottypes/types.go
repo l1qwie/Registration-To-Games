@@ -10,7 +10,7 @@ type RegToGames struct {
 type Media struct {
 	Id        string
 	Interval  string
-	Direcrion string
+	Direction string
 	Limit     int
 	DelGameId int
 	Counter   int
