@@ -1,14 +1,14 @@
 package executer
 
 import (
+	"RegistrationToGames/fmtogram/errors"
+	"RegistrationToGames/fmtogram/types"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
-	"registrationtogames/fmtogram/errors"
-	"registrationtogames/fmtogram/types"
 )
 
 const None int = -1

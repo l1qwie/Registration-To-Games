@@ -1,13 +1,13 @@
 package preparationdata
 
 import (
-	"registrationtogames/fmtogram/types"
-	"registrationtogames/tests/database"
-	"registrationtogames/tests/media"
-	"registrationtogames/tests/registration"
-	"registrationtogames/tests/routine"
-	"registrationtogames/tests/schedule"
-	"registrationtogames/tests/welcome"
+	"RegistrationToGames/fmtogram/types"
+	"RegistrationToGames/tests/database"
+	"RegistrationToGames/tests/media"
+	"RegistrationToGames/tests/registration"
+	"RegistrationToGames/tests/routine"
+	"RegistrationToGames/tests/schedule"
+	"RegistrationToGames/tests/welcome"
 )
 
 const (

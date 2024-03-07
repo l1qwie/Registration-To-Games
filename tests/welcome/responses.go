@@ -1,6 +1,6 @@
 package welcome
 
-import "registrationtogames/fmtogram/types"
+import "RegistrationToGames/fmtogram/types"
 
 func JustTrash(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
 	responses <- &types.TelegramResponse{

@@ -1,6 +1,6 @@
 package media
 
-import "registrationtogames/fmtogram/formatter"
+import "RegistrationToGames/fmtogram/formatter"
 
 func ChooseDirection(fm *formatter.Formatter) {
 	fm.AssertString("Что вы хотите сделать?", true)

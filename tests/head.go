@@ -1,13 +1,13 @@
 package tests
 
 import (
+	"RegistrationToGames/fmtogram"
+	"RegistrationToGames/fmtogram/errors"
+	"RegistrationToGames/fmtogram/formatter"
+	"RegistrationToGames/fmtogram/types"
+	"RegistrationToGames/tests/othertests"
+	preparationdata "RegistrationToGames/tests/preparationData"
 	"fmt"
-	"registrationtogames/fmtogram"
-	"registrationtogames/fmtogram/errors"
-	"registrationtogames/fmtogram/formatter"
-	"registrationtogames/fmtogram/types"
-	"registrationtogames/tests/othertests"
-	preparationdata "registrationtogames/tests/preparationData"
 )
 
 func GlobalTest() {

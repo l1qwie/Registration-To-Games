@@ -1,12 +1,12 @@
 package fmtogram
 
 import (
+	"RegistrationToGames/bot"
+	"RegistrationToGames/fmtogram/executer"
+	"RegistrationToGames/fmtogram/formatter"
+	"RegistrationToGames/fmtogram/helper"
+	"RegistrationToGames/fmtogram/types"
 	"log"
-	"registrationtogames/bot"
-	"registrationtogames/fmtogram/executer"
-	"registrationtogames/fmtogram/formatter"
-	"registrationtogames/fmtogram/helper"
-	"registrationtogames/fmtogram/types"
 	"time"
 )
 

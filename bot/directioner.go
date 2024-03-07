@@ -1,11 +1,11 @@
 package bot
 
 import (
-	"registrationtogames/bot/bottypes"
-	"registrationtogames/bot/routine"
-	"registrationtogames/fmtogram/formatter"
-	"registrationtogames/fmtogram/helper"
-	"registrationtogames/fmtogram/types"
+	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/bot/routine"
+	"RegistrationToGames/fmtogram/formatter"
+	"RegistrationToGames/fmtogram/helper"
+	"RegistrationToGames/fmtogram/types"
 )
 
 func Receiving(tr *types.TelegramResponse, mes *types.MessageResponse) *formatter.Formatter {

@@ -1,9 +1,9 @@
 package welcome
 
 import (
-	"registrationtogames/bot/bottypes"
-	"registrationtogames/bot/dictionary"
-	"registrationtogames/fmtogram/formatter"
+	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/bot/dictionary"
+	"RegistrationToGames/fmtogram/formatter"
 )
 
 func GreetingsToUser(user *bottypes.User, fm *formatter.Formatter) {

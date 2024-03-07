@@ -1,8 +1,8 @@
 package formatter
 
 import (
+	"RegistrationToGames/fmtogram/errors"
 	"fmt"
-	"registrationtogames/fmtogram/errors"
 )
 
 func (tfm *Formatter) AssertPhoto(path string, condition bool) (err error) {

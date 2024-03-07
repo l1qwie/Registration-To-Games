@@ -1,10 +1,10 @@
 package schedule
 
 import (
+	"RegistrationToGames/bot/dictionary"
+	"RegistrationToGames/bot/forall"
+	"RegistrationToGames/fmtogram/types"
 	"database/sql"
-	"registrationtogames/bot/dictionary"
-	"registrationtogames/bot/forall"
-	"registrationtogames/fmtogram/types"
 
 	_ "github.com/lib/pq"
 )

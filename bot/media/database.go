@@ -1,9 +1,9 @@
 package media
 
 import (
+	"RegistrationToGames/bot/forall"
+	"RegistrationToGames/fmtogram/types"
 	"database/sql"
-	"registrationtogames/bot/forall"
-	"registrationtogames/fmtogram/types"
 )
 
 func FindMediaGame(gameId int) (detected bool) {
@@ -71,7 +71,7 @@ func findEveryGames() (unload, upload int) {
 	return unload, upload
 }
 
-func queryUnload(limit, lm int) (rows *sql.Rows) {
+func queryUnload(limit, lp int) (rows *sql.Rows) {
 	rows, err := types.Db.Query(`SELECT Schedule.gameId, sport, date, time 
 							FROM Schedule JOIN MediaRepository ON 
 							Schedule.gameId = MediaRepository.gameId AND 
@@ -84,7 +84,7 @@ func queryUnload(limit, lm int) (rows *sql.Rows) {
 	return rows
 }
 
-func queryUpload(limit, lm int) (rows *sql.Rows) {
+func queryUpload(limit, lp int) (rows *sql.Rows) {
 	rows, err := types.Db.Query(`SELECT gameId, sport, date, time 
 							FROM Schedule JOIN MediaRepository ON 
 							(MediaRepository.gameId = Schedule.gameId AND MediaRepository.status = 1 AND Schedule.status = -1) OR

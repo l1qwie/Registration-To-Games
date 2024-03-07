@@ -1,7 +1,7 @@
 package othertests
 
 import (
-	"registrationtogames/bot/forall"
+	"RegistrationToGames/bot/forall"
 )
 
 func TestFromIntToStrDate() (correct bool) {

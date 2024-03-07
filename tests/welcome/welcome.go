@@ -1,7 +1,7 @@
 package welcome
 
 import (
-	"registrationtogames/fmtogram/formatter"
+	"RegistrationToGames/fmtogram/formatter"
 )
 
 func TestGreetingsToUser(fm *formatter.Formatter) {

@@ -1,10 +1,10 @@
 package database
 
 import (
+	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/bot/routine"
+	"RegistrationToGames/fmtogram/types"
 	"database/sql"
-	"registrationtogames/bot/bottypes"
-	"registrationtogames/bot/routine"
-	"registrationtogames/fmtogram/types"
 
 	_ "github.com/lib/pq"
 )
@@ -184,8 +184,8 @@ func AfterMainMenuCheckDb(userId int) {
 	if user.Media.Interval != "" {
 		panic("user.Media.Interval != ``")
 	}
-	if user.Media.Direcrion != "" {
-		panic("user.Media.Direcrion != ``")
+	if user.Media.Direction != "" {
+		panic("user.Media.Direction != ``")
 	}
 	if user.Media.Limit != 7 {
 		panic("user.Media.Limit != 7")

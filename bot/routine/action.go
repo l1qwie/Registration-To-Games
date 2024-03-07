@@ -1,15 +1,15 @@
 package routine
 
 import (
+	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/bot/dictionary"
+	"RegistrationToGames/bot/forall"
+	"RegistrationToGames/bot/media"
+	"RegistrationToGames/bot/registration"
+	"RegistrationToGames/bot/schedule"
+	"RegistrationToGames/bot/welcome"
+	"RegistrationToGames/fmtogram/formatter"
 	"fmt"
-	"registrationtogames/bot/bottypes"
-	"registrationtogames/bot/dictionary"
-	"registrationtogames/bot/forall"
-	"registrationtogames/bot/media"
-	"registrationtogames/bot/registration"
-	"registrationtogames/bot/schedule"
-	"registrationtogames/bot/welcome"
-	"registrationtogames/fmtogram/formatter"
 	"strconv"
 )
 

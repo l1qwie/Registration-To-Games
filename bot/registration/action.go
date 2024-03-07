@@ -1,12 +1,12 @@
 package registration
 
 import (
+	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/bot/dictionary"
+	"RegistrationToGames/bot/forall"
+	"RegistrationToGames/fmtogram/formatter"
+	"RegistrationToGames/fmtogram/types"
 	"fmt"
-	"registrationtogames/bot/bottypes"
-	"registrationtogames/bot/dictionary"
-	"registrationtogames/bot/forall"
-	"registrationtogames/fmtogram/formatter"
-	"registrationtogames/fmtogram/types"
 	"strconv"
 )
 

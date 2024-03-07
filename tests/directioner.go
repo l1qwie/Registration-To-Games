@@ -1,21 +1,21 @@
 package tests
 
 import (
+	rootmedia "RegistrationToGames/bot/media"
+	rootregistration "RegistrationToGames/bot/registration"
+	root "RegistrationToGames/bot/routine"
+	"RegistrationToGames/fmtogram"
+	"RegistrationToGames/fmtogram/formatter"
+	"RegistrationToGames/fmtogram/types"
+	"RegistrationToGames/tests/database"
+	"RegistrationToGames/tests/media"
+	preparationdata "RegistrationToGames/tests/preparationData"
+	"RegistrationToGames/tests/registration"
+	"RegistrationToGames/tests/routine"
+	"RegistrationToGames/tests/schedule"
+	"RegistrationToGames/tests/welcome"
 	"fmt"
 	"log"
-	rootmedia "registrationtogames/bot/media"
-	rootregistration "registrationtogames/bot/registration"
-	root "registrationtogames/bot/routine"
-	"registrationtogames/fmtogram"
-	"registrationtogames/fmtogram/formatter"
-	"registrationtogames/fmtogram/types"
-	"registrationtogames/tests/database"
-	"registrationtogames/tests/media"
-	preparationdata "registrationtogames/tests/preparationData"
-	"registrationtogames/tests/registration"
-	"registrationtogames/tests/routine"
-	"registrationtogames/tests/schedule"
-	"registrationtogames/tests/welcome"
 )
 
 const (

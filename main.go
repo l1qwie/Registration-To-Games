@@ -1,8 +1,8 @@
 package main
 
 import (
-	"registrationtogames/fmtogram/types"
-	"registrationtogames/tests"
+	"RegistrationToGames/fmtogram/types"
+	"RegistrationToGames/tests"
 )
 
 // executer.TelegramTest

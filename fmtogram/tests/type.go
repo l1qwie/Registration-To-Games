@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"registrationtogames/fmtogram/types"
+	"RegistrationToGames/fmtogram/types"
 )
 
 type Formatter struct {

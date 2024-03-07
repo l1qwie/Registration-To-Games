@@ -1,12 +1,10 @@
 package registration
 
 import (
+	"RegistrationToGames/bot/dictionary"
+	"RegistrationToGames/bot/forall"
+	"RegistrationToGames/fmtogram/types"
 	"database/sql"
-	"registrationtogames/bot/dictionary"
-	"registrationtogames/bot/forall"
-	"registrationtogames/fmtogram/types"
-
-	_ "github.com/lib/pq"
 )
 
 func selectTheSchedule(limit, offset int, language string) (schedule []*forall.Game) {

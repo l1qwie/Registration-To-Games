@@ -1,7 +1,7 @@
 package welcome
 
 import (
-	"registrationtogames/fmtogram/types"
+	"RegistrationToGames/fmtogram/types"
 
 	_ "github.com/lib/pq"
 )

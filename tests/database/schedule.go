@@ -1,8 +1,8 @@
 package database
 
 import (
-	"registrationtogames/bot/bottypes"
-	"registrationtogames/bot/routine"
+	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/bot/routine"
 )
 
 func AfterShowTheSchedule(userId int) {
@@ -51,8 +51,8 @@ func AfterShowTheSchedule(userId int) {
 	if user.Media.Interval != "" {
 		panic("user.Media.Interval != ``")
 	}
-	if user.Media.Direcrion != "" {
-		panic("user.Media.Direcrion != ``")
+	if user.Media.Direction != "" {
+		panic("user.Media.Direction != ``")
 	}
 	if user.Media.Limit != 7 {
 		panic("user.Media.Limit != 7")

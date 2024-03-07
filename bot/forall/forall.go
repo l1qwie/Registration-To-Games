@@ -1,10 +1,10 @@
 package forall
 
 import (
+	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/bot/dictionary"
+	"RegistrationToGames/fmtogram/formatter"
 	"fmt"
-	"registrationtogames/bot/bottypes"
-	"registrationtogames/bot/dictionary"
-	"registrationtogames/fmtogram/formatter"
 	"strconv"
 )
 

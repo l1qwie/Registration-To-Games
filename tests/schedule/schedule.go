@@ -1,7 +1,7 @@
 package schedule
 
 import (
-	"registrationtogames/fmtogram/formatter"
+	"RegistrationToGames/fmtogram/formatter"
 )
 
 func ShowTheSchedule(fm *formatter.Formatter) {

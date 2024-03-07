@@ -1,10 +1,10 @@
 package formatter
 
 import (
+	"RegistrationToGames/fmtogram/executer"
+	"RegistrationToGamess/fmtogram/types"
 	"bytes"
 	"encoding/json"
-	"registrationtogames/fmtogram/executer"
-	"registrationtogames/fmtogram/types"
 )
 
 func (fm *Formatter) Reset() {

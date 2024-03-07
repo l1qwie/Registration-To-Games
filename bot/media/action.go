@@ -1,11 +1,11 @@
 package media
 
 import (
+	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/bot/dictionary"
+	"RegistrationToGames/bot/forall"
+	"RegistrationToGames/fmtogram/formatter"
 	"fmt"
-	"registrationtogames/bot/bottypes"
-	"registrationtogames/bot/dictionary"
-	"registrationtogames/bot/forall"
-	"registrationtogames/fmtogram/formatter"
 )
 
 func createScheduleKeyboard(user *bottypes.User, fm *formatter.Formatter, schedule []*forall.Game) {
@@ -129,7 +129,8 @@ func unload(user *bottypes.User, fm *formatter.Formatter) {
 }
 
 func upload(user *bottypes.User, fm *formatter.Formatter) {
-	if 
+	//if
+
 }
 
 func UnloadAndUnload(user *bottypes.User, fm *formatter.Formatter) {

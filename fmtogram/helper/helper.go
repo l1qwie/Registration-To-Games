@@ -1,8 +1,8 @@
 package helper
 
 import (
+	"RegistrationToGames/fmtogram/types"
 	"fmt"
-	"registrationtogames/fmtogram/types"
 )
 
 func ReturnText(telegramResponse *types.TelegramResponse) (text string) {

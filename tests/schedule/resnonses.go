@@ -1,7 +1,7 @@
 package schedule
 
 import (
-	"registrationtogames/fmtogram/types"
+	"RegistrationToGames/fmtogram/types"
 )
 
 func QueryForSeeSchedule(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {

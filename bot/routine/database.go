@@ -1,9 +1,9 @@
 package routine
 
 import (
+	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/fmtogram/types"
 	"database/sql"
-	"registrationtogames/bot/bottypes"
-	"registrationtogames/fmtogram/types"
 
 	_ "github.com/lib/pq"
 )
@@ -53,7 +53,7 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 		for rows.Next() {
 			err = rows.Scan(&user.Id, &user.Language, &gameId, &user.LaunchPoint, &user.Act, &user.Level,
 				&user.Reg.Seats, &user.Reg.Payment,
-				&user.Media.Interval, &user.Media.Direcrion, &user.Media.Limit, &user.Media.Id, &user.Media.Counter,
+				&user.Media.Interval, &user.Media.Direction, &user.Media.Limit, &user.Media.Id, &user.Media.Counter,
 				&user.UserRec.Changeable, &user.UserRec.ActGame, &user.UserRec.WillChangeable, &user.UserRec.NewPay)
 			if err != nil {
 				panic(err)
@@ -82,7 +82,7 @@ func DbRetainUser(user *bottypes.User) (err error) {
 	if err == nil {
 		_, err = types.Db.Exec(request, user.Id, user.Language, gameId, user.LaunchPoint, user.Act, user.Level,
 			user.Reg.Seats, user.Reg.Payment,
-			user.Media.Interval, user.Media.Direcrion, user.Media.Limit, user.Media.Id, user.Media.Counter,
+			user.Media.Interval, user.Media.Direction, user.Media.Limit, user.Media.Id, user.Media.Counter,
 			user.UserRec.Changeable, user.UserRec.ActGame, user.UserRec.WillChangeable, user.UserRec.NewPay)
 	}
 	return err
