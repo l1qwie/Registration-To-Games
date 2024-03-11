@@ -86,20 +86,34 @@ func ReturnMessageId(message *types.MessageResponse) (messageId int, err error) 
 	return messageId, err
 }
 
-func ReturnPhotoFileId(message *types.MessageResponse) (fileId string, err error) {
+func ReturnPhotosFileId(message *types.MessageResponse) ([]string, error) {
+	var (
+		err     error
+		fileIds []string
+	)
+	fileIds = make([]string, len(message.Result.Photo))
 	if len(message.Result.Photo) > 0 {
-		fileId = message.Result.Photo[0].FileId
+		for i := 0; i < len(message.Result.Photo); i++ {
+			fileIds[i] = message.Result.Photo[i].FileId
+		}
 	} else {
 		err = fmt.Errorf("we don't have a Photo fileId")
 	}
-	return fileId, err
+	return fileIds, err
 }
 
-func ReturnVideo(message *types.MessageResponse) (fileId string, err error) {
+func ReturnVideosFileId(message *types.MessageResponse) ([]string, error) {
+	var (
+		err     error
+		fileIds []string
+	)
+	fileIds = make([]string, len(message.Result.Video))
 	if len(message.Result.Video) > 0 {
-		fileId = message.Result.Video[0].FileId
+		for i := 0; i < len(message.Result.Video); i++ {
+			fileIds[i] = message.Result.Video[i].FileId
+		}
 	} else {
 		err = fmt.Errorf("we don't have a Video fileId")
 	}
-	return fileId, err
+	return fileIds, err
 }

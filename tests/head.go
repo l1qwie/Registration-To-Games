@@ -119,12 +119,24 @@ func MediaTest() {
 		requests  chan *formatter.Formatter
 		output    chan *types.MessageResponse
 	)
-	responses = make(chan *types.TelegramResponse, 1)
-	requests = make(chan *formatter.Formatter, 1)
-	output = make(chan *types.MessageResponse, 1)
+	responses = make(chan *types.TelegramResponse, 10)
+	requests = make(chan *formatter.Formatter, 10)
+	output = make(chan *types.MessageResponse, 10)
 	defer errors.MakeIntestines()
-	Unload(responses, requests, output)
-	Upload(responses, requests, output)
+	/*counter := 0
+	for counter < 3 {
+		for j := 0; j < 3; j++ {
+			preparationdata.MediaUnload(counter, j, responses, output)
+			preparationDatabaseForMediaUnload(counter)
+			fmtogram.Worker(responses, output, requests)
+			acceptanceOfResOfUnloadMedia(<-requests, counter, j)
+		}
+		fmt.Printf("UploadTest %d has been complete\n", counter)
+		counter++
+	}
+	*/
+	//UnloadOne(responses, requests, output) //with two games (to unload and upload)
+	UploadOne(responses, requests, output) //with one games (to upload)
 	//UnloadALot()
 	//UploadALot()
 	//UploadNotAll()

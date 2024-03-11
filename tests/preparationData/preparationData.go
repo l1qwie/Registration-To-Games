@@ -17,6 +17,12 @@ const (
 	userIdT4   int  = 499
 	gameId     int  = 2
 	pastgameId int  = 10
+	START      int  = 0
+	LEVEL1     int  = 1
+	LEVEL2     int  = 2
+	LEVEL3     int  = 3
+	LEVEL4     int  = 4
+	LEVEL5     int  = 5
 	wSTART     int  = 0
 	wLEVEL1    int  = 1
 	wLEVEL2    int  = 2
@@ -187,29 +193,32 @@ func RegToGamesAct(counter, i int, responses chan *types.TelegramResponse, outpu
 }
 
 func MediaUnload(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
-	if counter == mStart {
+	if counter == START {
 		media.QueryForChooseDirection(responses, output)
 		routine.DeleteUser(userIdT2)
 		database.DeleteMedia(pastgameId)
 		database.DeleteGame(pastgameId)
-	} else if counter == mLEVEL1 {
+	} else if counter == LEVEL1 {
 		chooseMediaGame(i, responses, output, Unload)
-	} else if counter == mLEVEL2 {
+	} else if counter == LEVEL2 {
 		unload(i, responses, output)
 	}
 }
 
 func MediaUpload(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
-	if counter == mStart {
+	if counter == START {
 		media.QueryForChooseDirection(responses, output)
 		routine.DeleteUser(userIdT4)
 		database.DeleteMedia(pastgameId)
 		database.DeleteGame(pastgameId)
-	} else if counter == mLEVEL1 {
-		chooseMediaGame(i, responses, output, Upload)
-	} else if counter == mLEVEL2 {
+	} else if counter == LEVEL1 {
+		//chooseMediaGame(i, responses, output, Upload)
 		waitingYourMedia(i, responses, output)
-	} else if counter == mLEVEL3 {
+	} else if counter == LEVEL2 {
+		//waitingYourMedia(i, responses, output)
 		upload(i, responses, output)
+		//} else if counter == LEVEL3 {
+		//upload(i, responses, output)
+		//}
 	}
 }

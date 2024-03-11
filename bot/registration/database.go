@@ -7,20 +7,24 @@ import (
 	"database/sql"
 )
 
-func selectTheSchedule(limit, offset int, language string) (schedule []*forall.Game) {
+func selectTheSchedule(limit, offset int, language string) []*forall.Game {
 	var (
 		rows           *sql.Rows
 		err            error
 		request, sport string
 		i, date, time  int
 	)
+	schedule := make([]*forall.Game, limit)
+	//for j := 0; j < limit; j++ {
+	//		schedule[j] = &forall.Game{}
+	//	}
 	request = `SELECT gameId, sport, date, time, seats FROM Schedule WHERE (status != -1) ORDER BY Schedule DESC LIMIT $1 OFFSET $2`
 	rows, err = types.Db.Query(request, limit, offset)
 	if err != nil {
 		panic(err)
 	}
 	for rows.Next() {
-		schedule = append(schedule, &forall.Game{})
+		schedule[i] = &forall.Game{}
 		err = rows.Scan(&schedule[i].Id, &sport, &date, &time, &schedule[i].Seats)
 		if err != nil {
 			panic(err)

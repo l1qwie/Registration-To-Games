@@ -25,15 +25,18 @@ type UserRec struct {
 }
 
 type User struct {
-	Id          int
-	ExMessageId int
-	PhotoFileId string
-	Request     string
-	Language    string
-	LaunchPoint int
-	Act         string
-	Level       int
-	Reg         RegToGames
-	Media       Media
-	UserRec     UserRec
+	Id           int
+	ExMessageId  int
+	PhotosFileId []string
+	VideosFileId []string
+	Type         []string
+	Counter      int
+	Request      string
+	Language     string
+	LaunchPoint  int
+	Act          string
+	Level        int
+	Reg          RegToGames
+	Media        Media
+	UserRec      UserRec
 }

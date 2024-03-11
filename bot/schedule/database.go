@@ -9,6 +9,31 @@ import (
 	_ "github.com/lib/pq"
 )
 
+func FindGame() bool {
+	var (
+		exist bool
+		rows  *sql.Rows
+		cn    int
+		err   error
+		req   string
+	)
+	req = "SELECT gameId FROM Schedule WHERE status != -1"
+	rows, err = types.Db.Query(req)
+	if err != nil {
+		panic(err)
+	}
+	for rows.Next() {
+		err = rows.Scan(&cn)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if cn > 0 {
+		exist = true
+	}
+	return exist
+}
+
 func selectSchedule(language string) (schedule []*forall.Game) {
 	var (
 		rows           *sql.Rows

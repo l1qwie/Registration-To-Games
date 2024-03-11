@@ -9,6 +9,13 @@ import (
 	_ "github.com/lib/pq"
 )
 
+func DeleteUser(userId int) {
+	_, err := types.Db.Exec("DELETE FROM Users WHERE userId = $1", userId)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func UpdateLanguage(language string, userId int) {
 	_, err := types.Db.Exec("UPDATE Users SET language = $1 WHERE userId = $2", language, userId)
 	if err != nil {

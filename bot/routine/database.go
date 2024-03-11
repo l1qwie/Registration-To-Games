@@ -61,6 +61,8 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 		}
 		if user.Act == "reg to games" {
 			user.Reg.GameId = gameId
+		} else if user.Act == "photos and videos" {
+			user.Media.DelGameId = gameId
 		}
 	}
 
@@ -78,13 +80,13 @@ func DbRetainUser(user *bottypes.User) (err error) {
 	changeable = $14, actGame = $15, willChangeable = $16, newPay = $17 WHERE userId = $1`
 	if user.Act == "reg to games" {
 		gameId = user.Reg.GameId
+	} else if user.Act == "photos and videos" {
+		gameId = user.Media.DelGameId
 	}
-	if err == nil {
-		_, err = types.Db.Exec(request, user.Id, user.Language, gameId, user.LaunchPoint, user.Act, user.Level,
-			user.Reg.Seats, user.Reg.Payment,
-			user.Media.Interval, user.Media.Direction, user.Media.Limit, user.Media.Id, user.Media.Counter,
-			user.UserRec.Changeable, user.UserRec.ActGame, user.UserRec.WillChangeable, user.UserRec.NewPay)
-	}
+	_, err = types.Db.Exec(request, user.Id, user.Language, gameId, user.LaunchPoint, user.Act, user.Level,
+		user.Reg.Seats, user.Reg.Payment,
+		user.Media.Interval, user.Media.Direction, user.Media.Limit, user.Media.Id, user.Media.Counter,
+		user.UserRec.Changeable, user.UserRec.ActGame, user.UserRec.WillChangeable, user.UserRec.NewPay)
 	return err
 }
 
@@ -92,9 +94,7 @@ func SelectExMessageId(userId int) (exMessageId int, err error) {
 	var (
 		rows *sql.Rows
 	)
-	if err == nil {
-		rows, err = types.Db.Query("SELECT ExMessageId FROM Users WHERE userId = $1", userId)
-	}
+	rows, err = types.Db.Query("SELECT ExMessageId FROM Users WHERE userId = $1", userId)
 	if err == nil {
 		rows.Next()
 		err = rows.Scan(&exMessageId)

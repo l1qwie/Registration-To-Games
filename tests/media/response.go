@@ -29,9 +29,6 @@ func JustTrash(responses chan *types.TelegramResponse, output chan<- *types.Mess
 			Chat: types.Chat{
 				Id: 499,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
 		},
 	}
 }
@@ -63,9 +60,6 @@ func JustTrash2(responses chan *types.TelegramResponse, output chan<- *types.Mes
 			Chat: types.Chat{
 				Id: 499,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
 		},
 	}
 }
@@ -97,9 +91,6 @@ func QueryForChooseDirection(responses chan *types.TelegramResponse, output chan
 			Chat: types.Chat{
 				Id: 499,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
 		},
 	}
 }
@@ -131,9 +122,6 @@ func QueryForChooseMediaGameUnload(responses chan *types.TelegramResponse, outpu
 			Chat: types.Chat{
 				Id: 499,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
 		},
 	}
 }
@@ -165,9 +153,6 @@ func QueryForChooseMediaGameUpload(responses chan *types.TelegramResponse, outpu
 			Chat: types.Chat{
 				Id: 499,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
 		},
 	}
 }
@@ -199,9 +184,6 @@ func QueryForWaitingYourMedia(responses chan *types.TelegramResponse, output cha
 			Chat: types.Chat{
 				Id: 499,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
 		},
 	}
 }
@@ -233,9 +215,6 @@ func QueryForUnload(responses chan *types.TelegramResponse, output chan<- *types
 			Chat: types.Chat{
 				Id: 499,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
 		},
 	}
 }
@@ -255,7 +234,7 @@ func QueryForUpload(responses chan *types.TelegramResponse, output chan<- *types
 						Username: "Bogdy",
 						Language: "ru",
 					},
-					Text: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419",
+					Text: "Take my photo",
 				},
 			},
 		},
@@ -268,7 +247,7 @@ func QueryForUpload(responses chan *types.TelegramResponse, output chan<- *types
 				Id: 499,
 			},
 			Photo: []types.Photo{{
-				FileId: "",
+				FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419",
 			}},
 		},
 	}

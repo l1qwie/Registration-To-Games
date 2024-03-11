@@ -55,6 +55,18 @@ func ru(dict map[string]string) {
 	dict["no-deleteAll"] = "Нет, не хочу"
 	dict["Can'tUnderstend"] = "К сожалению, я вас не понимаю. Выберите опцию"
 	dict["Schedule"] = "<b>%d.</b> <em>Спорт:</em> <b>%s</b>, <em>Дата:</em> <b>%s</b>, <em>Время:</em> <b>%s</b>, <em>Осталось свободных мест:</em> <b>%d</b>, <em>Цена за одно место:</em> <b>%d %s</b>\n\n\n"
+	dict["NoGames"] = "Игра пока что нет\n\n"
+	dict["WeDon'tHaveAnyGames"] = "Расписание полностью пусто! Проверьте позже\n\n"
+	dict["UpAndUn"] = "Вы хотите загрузить или посмотреть?"
+	dict["UnloadGames"] = "Игр на которые можно загрузить фотографии пока что нет. Сейчас можно только посмотреть\n"
+	dict["UploadGames"] = "Игр с уже загруженными медиафайлами еще нет, но вы можете стать первым!\n"
+	dict["WaitForYourFiles"] = "Прекрасно! Вы выбрали игру. У нее осталось %d свободных мест для медиафайлов (максимум 20). Присылайте ваших фотографий или видео, которые были сделаны на этой игре. За один раз можно прислать не более 10 фалов. Кончено же, желательно, чтобы это число не привышало свободных мест"
+	dict["HereYouAre"] = "Вот все медиа по это игре"
+	dict["NotEnoughSpace"] = "К сожалению, похоже что у меня не осталось свободного места для загрузки ваших файлов на эту игру"
+	dict["unload"] = "Посмотреть"
+	dict["upload"] = "Загрузить"
+	dict["Succesful"] = "Все файлы успешно загружены"
+
 }
 
 func en(dict map[string]string) {
@@ -117,6 +129,17 @@ func en(dict map[string]string) {
 	dict["no-deleteAll"] = "No, I don't want"
 	dict["Can'tUnderstend"] = "Unfortunately, I don't understand you. Please choose an option"
 	dict["Schedule"] = "<b>%d.</b> <em>Sport:</em> <b>%s</b>, <em>Date:</em> <b>%s</b>, <em>Time:</em> <b>%s</b>, <em>Remaining seats:</em> <b>%d</b>, <em>Price per seat:</em> <b>%d %s</b>\n\n\n"
+	dict["NoGames"] = "The game is not available yet\n\n"
+	dict["WeDon'tHaveAnyGames"] = "The schedule is completely empty! Check back later\n\n"
+	dict["UpAndUn"] = "Do you want to upload or view?"
+	dict["UnloadGames"] = "There are currently no games where you can upload photos. Right now, you can only view them\n"
+	dict["UploadGames"] = "There are no games with already uploaded media files yet, but you can be the first!\n"
+	dict["WaitForYourFiles"] = "Great! You've selected the game. It has %d free slots for media files (maximum 20). Send your photos or videos taken in this game. You can send up to 10 files at a time. Of course, it's preferable that this number doesn't exceed the available slots"
+	dict["HereYouAre"] = "Here is all the media for this game"
+	dict["NotEnoughSpace"] = "Unfortunately, it seems that I don't have enough space left to upload your files for this game"
+	dict["unload"] = "View"
+	dict["upload"] = "Upload"
+	dict["Succesful"] = "All files have been successfully uploaded"
 }
 
 func tur(dict map[string]string) {
@@ -179,6 +202,17 @@ func tur(dict map[string]string) {
 	dict["no-deleteAll"] = "Hayır, istemiyorum"
 	dict["Can'tUnderstend"] = "Üzgünüm, sizi anlamıyorum. Lütfen bir seçenek seçin"
 	dict["Schedule"] = "<b>%d.</b> <em>Spor:</em> <b>%s</b>, <em>Tarih:</em> <b>%s</b>, <em>Saat:</em> <b>%s</b>, <em>Kalan boş yerler:</em> <b>%d</b>, <em>Bir koltuk için fiyat:</em> <b>%d %s</b>\n\n\n"
+	dict["NoGames"] = "Oyun henüz mevcut değil\n\n"
+	dict["WeDon'tHaveAnyGames"] = "Program tamamen boş! Daha sonra kontrol edin\n\n"
+	dict["UpAndUn"] = "Yüklemek mi istiyorsunuz yoksa görmek mi?"
+	dict["UnloadGames"] = "Şu anda fotoğraf yükleyebileceğiniz oyun yok. Şu anda sadece onları görüntüleyebilirsiniz\n"
+	dict["UploadGames"] = "Henüz yüklenmiş medya dosyaları olan oyunlar yok, ancak siz ilk olan olabilirsiniz!\n"
+	dict["WaitForYourFiles"] = "Harika! Oyunu seçtiniz. Onun için %d medya dosyası için boş yer var (maksimum 20). Bu oyunda çekilen fotoğraflarınızı veya videolarınızı gönderin. Bir seferde en fazla 10 dosya gönderebilirsiniz. Tabii ki, bu sayının boş yerleri aşmaması tercih edilir"
+	dict["HereYouAre"] = "Bu oyun için tüm medya burada"
+	dict["NotEnoughSpace"] = "Maalesef, görünüşe göre bu oyun için dosyalarınızı yüklemek için yeterli alanım kalmadı"
+	dict["unload"] = "Görüntüle"
+	dict["upload"] = "Yükle"
+	dict["Succesful"] = "Tüm dosyalar başarıyla yüklendi."
 }
 
 func init() {

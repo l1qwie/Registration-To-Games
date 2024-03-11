@@ -2,7 +2,7 @@ package formatter
 
 import (
 	"RegistrationToGames/fmtogram/executer"
-	"RegistrationToGamess/fmtogram/types"
+	"RegistrationToGames/fmtogram/types"
 	"bytes"
 	"encoding/json"
 )

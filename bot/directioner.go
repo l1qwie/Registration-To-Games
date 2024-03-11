@@ -19,7 +19,9 @@ func Receiving(tr *types.TelegramResponse, mes *types.MessageResponse) *formatte
 	user.Id = helper.ReturnChatId(tr)
 	user.Language = helper.ReturnLanguage(tr)
 	user.ExMessageId, _ = helper.ReturnMessageId(mes)
-	user.PhotoFileId, _ = helper.ReturnPhotoFileId(mes)
+	user.PhotosFileId, _ = helper.ReturnPhotosFileId(mes)
+	user.VideosFileId, _ = helper.ReturnVideosFileId(mes)
+
 	routine.DispatcherPhrase(user, fm)
 
 	return fm

@@ -4,6 +4,7 @@ import (
 	"RegistrationToGames/bot/bottypes"
 	"RegistrationToGames/bot/dictionary"
 	"RegistrationToGames/bot/forall"
+	"RegistrationToGames/bot/schedule"
 	"RegistrationToGames/fmtogram/formatter"
 	"RegistrationToGames/fmtogram/types"
 	"fmt"
@@ -28,27 +29,31 @@ func SeatsAreFull(user *bottypes.User, fm *formatter.Formatter) {
 
 func PresentationScheduele(user *bottypes.User, fm *formatter.Formatter) {
 	var (
-		schedule       []*forall.Game
+		sch            []*forall.Game
 		coordinates    []int
 		kbName, kbData []string
 		dict           map[string]string
 	)
 	dict = dictionary.Dictionary[user.Language]
-	user.Level = 1
-	schedule = selectTheSchedule(user.Media.Limit, user.LaunchPoint, user.Language)
-	for i := 0; i < len(schedule); i++ {
+	if schedule.FindGame() {
+		user.Level = 1
+		sch = selectTheSchedule(user.Media.Limit, user.LaunchPoint, user.Language)
+		for i := 0; sch[i] != nil && i < len(sch); i++ {
+			coordinates = append(coordinates, 1)
+			kbName = append(kbName, fmt.Sprintf("%s %s %s %s %d", sch[i].Sport, sch[i].Date, sch[i].Time, dict["freeSpace"], sch[i].Seats))
+			kbData = append(kbData, strconv.Itoa(sch[i].Id))
+		}
+		coordinates = append(coordinates, 2)
 		coordinates = append(coordinates, 1)
-		kbName = append(kbName, fmt.Sprintf("%s %s %s %s %d", schedule[i].Sport, schedule[i].Date, schedule[i].Time, dict["freeSpace"], schedule[i].Seats))
-		kbData = append(kbData, strconv.Itoa(schedule[i].Id))
+		forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
+		fm.WriteInlineButtonCmd(dict["previous"], "previous page")
+		fm.WriteInlineButtonCmd(dict["next"], "next page")
+		fm.WriteInlineButtonCmd(dict["MainMenu"], "MainMenu")
+		fm.WriteString(dict["ChooseAnyGame"])
+		fm.WriteChatId(user.Id)
+	} else {
+		forall.GoToMainMenu(user, fm, (fmt.Sprint(dict["NoGames"], dict["MainMenu"])))
 	}
-	coordinates = append(coordinates, 2)
-	coordinates = append(coordinates, 1)
-	forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
-	fm.WriteInlineButtonCmd(dict["previous"], "previous page")
-	fm.WriteInlineButtonCmd(dict["next"], "next page")
-	fm.WriteInlineButtonCmd(dict["MainMenu"], "MainMenu")
-	fm.WriteString(dict["ChooseAnyGame"])
-	fm.WriteChatId(user.Id)
 }
 
 func ChooseGame(user *bottypes.User, fm *formatter.Formatter, seatsStatus bool) {

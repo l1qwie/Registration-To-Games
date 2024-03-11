@@ -10,15 +10,13 @@ import (
 
 func main() {
 	types.Db = types.ConnectToDatabase()
-	//async.Main()
-	//err := database.FirstConnect()
 	//database.CreateSchedule()
 	//fmtogram.StartWithTelegram()
 	//tests.GlobalTest()
 	tests.MediaTest()
 	//tests.JustOtherTests()
-	//tests.Welcome()
-	//tests.RegToGames()
+	//tests.WelcomeTest()
+	//tests.RegToGamesTest()
 	//tests.SeeTheSchedule()
 	types.Db.Close()
 }

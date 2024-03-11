@@ -32,8 +32,8 @@ func retrieveUser(user *bottypes.User) {
 		err = DbRetrieveUser(user)
 	} else {
 		err = CreateUser(user.Id, user.Language)
+		user.Act = "registration"
 	}
-
 	if err != nil {
 		panic(err)
 	}
@@ -98,39 +98,43 @@ func Media(user *bottypes.User, fm *formatter.Formatter) {
 	if user.Level == START {
 		media.ChooseDirection(user, fm)
 	} else if user.Level == LEVEL1 {
-		media.ChooseMediaGame(user, fm)
+		media.ChooseMediaGame(user, fm, "")
 	} else if user.Level == LEVEL2 {
 		media.WaitingYourMedia(user, fm)
 	} else if user.Level == LEVEL3 {
 		media.UnloadAndUnload(user, fm)
 	} else if user.Level == LEVEL4 {
-		media.CheckUpload(user, fm)
+		user.Act = "divarication"
+		user.Level = OPTIONS
+		MainMenu(user, fm)
 	}
 }
 
 func Edit(user *bottypes.User, fm *formatter.Formatter) (exMessageId int) {
 	var err error
 	if user.ExMessageId == 0 {
-		fmt.Println("SELECT")
 		exMessageId, err = SelectExMessageId(user.Id)
 		if err != nil {
 			panic(err)
 		}
 	} else {
-		fmt.Println("UPDATE")
 		exMessageId = user.ExMessageId
 		err = updateExMessageId(exMessageId, user.Id)
 		if err != nil {
 			panic(err)
 		}
 	}
-	if user.PhotoFileId == "" {
-		fmt.Println("Edit", exMessageId)
+	if len(user.PhotosFileId) == 0 && len(user.VideosFileId) == 0 {
 		fm.WriteEditMesId(exMessageId)
 	} else {
-		fmt.Println("Delete", exMessageId)
+		if len(user.PhotosFileId) == 0 {
+			user.Media.Counter = len(user.PhotosFileId)
+		} else if len(user.VideosFileId) == 0 {
+			user.Media.Counter = len(user.VideosFileId)
+		}
 		fm.WriteDeleteMesId(exMessageId)
 	}
+	fmt.Println(len(user.PhotosFileId), len(user.VideosFileId))
 	return exMessageId
 }
 
@@ -163,8 +167,6 @@ func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	if user.Request == "MainMenu" {
 		user.Act = "divarication"
 		user.Level = OPTIONS
-		//fm.WriteDeleteMesId(user.ExMessageId)
-		//fm.AddPhotoFromStorage("qr.jpg")
 		MainMenu(user, fm)
 	} else if user.Act == "registration" {
 		Welcome(user, fm)

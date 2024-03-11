@@ -22,6 +22,10 @@ func ConnectToDatabase() (db *sql.DB) {
 	if err != nil {
 		panic(err)
 	}
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
 	return db
 }
 

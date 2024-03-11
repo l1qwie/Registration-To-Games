@@ -44,6 +44,10 @@ func (fm *Formatter) AddVideoFromInternet(path string) {
 	fm.mediatype = "video"
 }
 
+func (fm *Formatter) AddMapOfMedia(arr map[string]string) {
+
+}
+
 func (fm *Formatter) PrepareMedia(buf *bytes.Buffer) (string, error) {
 	var (
 		file   *os.File

@@ -118,14 +118,16 @@ func GoToMainMenu(user *bottypes.User, fm *formatter.Formatter, textresponse str
 	kbData = []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}
 	coordinates = []int{1, 1, 1, 1}
 	SetTheKeyboard(fm, coordinates, kbName, kbData)
-	fm.WriteString(fmt.Sprintf(textresponse, dict["Main Menu"]))
+	fm.WriteString(textresponse)
 	fm.WriteChatId(user.Id)
 }
 
-func CheckPages(req string, lp int) {
+func CheckPages(req string, lp int) int {
 	if req == "next page" {
 		lp = lp + 7
 	} else if req == "previuos page" {
 		lp = lp - 7
 	}
+
+	return lp
 }

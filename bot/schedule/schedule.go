@@ -16,13 +16,17 @@ func ShowTheSchedule(user *bottypes.User, fm *formatter.Formatter) {
 		mes      string
 	)
 	dict = dictionary.Dictionary[user.Language]
-	schedule = selectSchedule(user.Language)
-	for i := 0; i < len(schedule); i++ {
-		mes += (fmt.Sprintf(dict["Schedule"], i+1, schedule[i].Sport, schedule[i].Date, schedule[i].Time, schedule[i].Seats, schedule[i].Price, schedule[i].Currency))
+	if FindGame() {
+		schedule = selectSchedule(user.Language)
+		for i := 0; i < len(schedule); i++ {
+			mes += (fmt.Sprintf(dict["Schedule"], i+1, schedule[i].Sport, schedule[i].Date, schedule[i].Time, schedule[i].Seats, schedule[i].Price, schedule[i].Currency))
+		}
+		fm.WriteString(mes)
+		fm.SetIkbdDim([]int{1})
+		fm.WriteInlineButtonCmd(dict["MainMenu"], "MainMenu")
+		fm.WriteParseMode(types.HTML)
+		fm.WriteChatId(user.Id)
+	} else {
+		forall.GoToMainMenu(user, fm, dict["NoGames"])
 	}
-	fm.SetIkbdDim([]int{1})
-	fm.WriteInlineButtonCmd(dict["MainMenu"], "MainMenu")
-	fm.WriteParseMode(types.HTML)
-	fm.WriteString(mes)
-	fm.WriteChatId(user.Id)
 }
