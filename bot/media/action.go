@@ -152,7 +152,7 @@ func upload(user *bottypes.User, fm *formatter.Formatter) {
 		dict  map[string]string
 	)
 	dict = dictionary.Dictionary[user.Language]
-	if len(user.VideosFileId) != 0 || len(user.PhotosFileId) != 0 {
+	if len(user.Media.Photo) != 0 || len(user.Media.Video) != 0 {
 		space, ok = howMuchSpace(user.Media.DelGameId)
 		if ok && space > user.Media.Counter {
 			user.Level = 4
@@ -160,10 +160,10 @@ func upload(user *bottypes.User, fm *formatter.Formatter) {
 			if user.Media.Counter > 1 {
 				//
 			} else {
-				if len(user.PhotosFileId) != 0 {
-					insertOneNewMedia(user.PhotosFileId[0], "photo", user.Media.DelGameId, user.Id)
+				if len(user.Media.Photo) != 0 {
+					insertOneNewMedia(user.Media.Photo[0], "photo", user.Media.DelGameId, user.Id)
 				} else {
-					insertOneNewMedia(user.VideosFileId[0], "video", user.Media.DelGameId, user.Id)
+					insertOneNewMedia(user.Media.Video[0], "video", user.Media.DelGameId, user.Id)
 				}
 			}
 			forall.SetTheKeyboard(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})

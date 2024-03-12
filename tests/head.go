@@ -135,7 +135,7 @@ func MediaTest() {
 		counter++
 	}
 	*/
-	//UnloadOne(responses, requests, output) //with two games (to unload and upload)
+	UnloadOne(responses, requests, output) //with two games (to unload and upload)
 	UploadOne(responses, requests, output) //with one games (to upload)
 	//UnloadALot()
 	//UploadALot()

@@ -236,6 +236,9 @@ func QueryForUpload(responses chan *types.TelegramResponse, output chan<- *types
 					},
 					Text: "Take my photo",
 				},
+				Photo: []types.Photo{{
+					FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419",
+				}},
 			},
 		},
 	}
@@ -246,9 +249,6 @@ func QueryForUpload(responses chan *types.TelegramResponse, output chan<- *types
 			Chat: types.Chat{
 				Id: 499,
 			},
-			Photo: []types.Photo{{
-				FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419",
-			}},
 		},
 	}
 }

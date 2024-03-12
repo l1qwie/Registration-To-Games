@@ -127,14 +127,14 @@ func Edit(user *bottypes.User, fm *formatter.Formatter) (exMessageId int) {
 	if len(user.PhotosFileId) == 0 && len(user.VideosFileId) == 0 {
 		fm.WriteEditMesId(exMessageId)
 	} else {
-		if len(user.PhotosFileId) == 0 {
-			user.Media.Counter = len(user.PhotosFileId)
-		} else if len(user.VideosFileId) == 0 {
-			user.Media.Counter = len(user.VideosFileId)
-		}
 		fm.WriteDeleteMesId(exMessageId)
 	}
-	fmt.Println(len(user.PhotosFileId), len(user.VideosFileId))
+	if len(user.Media.Photo) != 0 {
+		user.Media.Counter += len(user.Media.Photo)
+	}
+	if len(user.Media.Video) != 0 {
+		user.Media.Counter += len(user.Media.Video)
+	}
 	return exMessageId
 }
 

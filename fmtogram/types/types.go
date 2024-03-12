@@ -48,6 +48,8 @@ type TelegramUpdate struct {
 	MessageId int        `json:"message_id"`
 	Message   InfMessage `json:"message"`
 	Query     Callback   `json:"callback_query"`
+	Photo     []Photo    `json:"photo"`
+	Video     []Video    `json:"video"`
 }
 
 type Callback struct {

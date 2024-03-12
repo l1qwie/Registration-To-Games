@@ -55,7 +55,7 @@ func Unload(fm *formatter.Formatter) {
 func Upload(fm *formatter.Formatter) {
 	fm.AssertString("Все файлы успешно загружены", true)
 	fm.AssertInlineKeyboard([]int{1}, []string{"Главное Меню"}, []string{"MainMenu"}, []string{"cmd"}, true)
-	fm.AssertDeleteMessageId(66666, true)
+	fm.AssertEditMessageId(66666, true)
 	fm.AssertChatId(499, true)
 }
 

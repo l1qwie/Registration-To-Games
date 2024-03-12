@@ -14,6 +14,8 @@ type Media struct {
 	Limit     int
 	DelGameId int
 	Counter   int
+	Photo     []string
+	Video     []string
 }
 
 type UserRec struct {
