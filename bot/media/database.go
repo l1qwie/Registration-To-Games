@@ -11,7 +11,6 @@ func FindMediaGame(gameId int) bool {
 		rows    *sql.Rows
 		counter int
 		err     error
-		dec     bool
 	)
 	rows, err = types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE gameId = $1 AND status = -1", gameId)
 	if err != nil {
@@ -22,10 +21,7 @@ func FindMediaGame(gameId int) bool {
 	if err != nil {
 		panic(err)
 	}
-	if counter > 0 {
-		dec = true
-	}
-	return dec
+	return counter > 0
 }
 
 func findAnyMGames() bool {
@@ -33,7 +29,6 @@ func findAnyMGames() bool {
 		rows    *sql.Rows
 		counter int
 		err     error
-		d       bool
 	)
 	rows, err = types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE status = -1")
 	if err != nil {
@@ -44,10 +39,7 @@ func findAnyMGames() bool {
 	if err != nil {
 		panic(err)
 	}
-	if counter > 0 {
-		d = true
-	}
-	return d
+	return counter > 0
 }
 
 func howMuchSpace(gameId int) (int, bool) {
@@ -55,7 +47,6 @@ func howMuchSpace(gameId int) (int, bool) {
 		rows *sql.Rows
 		err  error
 		res  int
-		ok   bool
 	)
 	rows, err = types.Db.Query("SELECT COUNT(*) FROM MediaRepository WHERE gameId  = $1", gameId)
 	if err != nil {
@@ -66,10 +57,7 @@ func howMuchSpace(gameId int) (int, bool) {
 	if err != nil {
 		panic(err)
 	}
-	if (20 - res) > 0 {
-		ok = true
-	}
-	return 20 - res, ok
+	return 20 - res, (20 - res) > 0
 }
 
 func selectQuantity(gameId int) int {
@@ -109,6 +97,26 @@ func selectArrOrMedia(gameId int) map[string]string {
 		fIds[id] = ty
 	}
 	return fIds
+}
+
+func insertAfewNewMeda(media map[string]string, gameId, userId int) {
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 0", gameId)
+	if err != nil {
+		panic(err)
+	}
+	rows.Next()
+	cc := 0
+	err = rows.Scan(&cc)
+	if err != nil {
+		panic(err)
+	}
+	cc += len(media)
+	for key := range media {
+		_, err = types.Db.Exec("INSERT INTO MediaRepository (gameId, fileId, type, counter, userId) VALUES ($1, $2, $3, $4, $5)", gameId, key, media[key], cc, userId)
+		if err != nil {
+			panic(err)
+		}
+	}
 }
 
 func insertOneNewMedia(fileId, ty string, gameId, userId int) {
@@ -176,12 +184,12 @@ func findEveryGames() (unload, upload int) {
 }
 
 func queryUnload(limit, lp int) (rows *sql.Rows) {
-	rows, err := types.Db.Query(`SELECT Schedule.gameId, sport, date, time 
-							FROM Schedule JOIN MediaRepository ON 
-							Schedule.gameId = MediaRepository.gameId AND 
-							Schedule.status = -1 AND 
-							MediaRepository.status = 1
-							ORDER BY Schedule DESC LIMIT $1 OFFSET $2`, limit, lp)
+	rows, err := types.Db.Query(`
+		SELECT DISTINCT Schedule.gameId, sport, date, time 
+		FROM Schedule 
+		JOIN MediaRepository ON Schedule.gameId = MediaRepository.gameId 
+		WHERE Schedule.status = -1 AND MediaRepository.status = 1
+		ORDER BY Schedule.gameId DESC LIMIT $1 OFFSET $2`, limit, lp)
 	if err != nil {
 		panic(err)
 	}
@@ -189,9 +197,10 @@ func queryUnload(limit, lp int) (rows *sql.Rows) {
 }
 
 func queryUpload(limit, lp int) (rows *sql.Rows) {
-	rows, err := types.Db.Query(`SELECT gameId, sport, date, time 
-								FROM Schedule WHERE status = -1
-								ORDER BY Schedule DESC LIMIT $1 OFFSET $2`, limit, lp)
+	rows, err := types.Db.Query(`SELECT DISTINCT(gameId), sport, date, time 
+								FROM Schedule 
+								WHERE status = -1
+								ORDER BY gameId DESC LIMIT $1 OFFSET $2`, limit, lp)
 	if err != nil {
 		panic(err)
 	}

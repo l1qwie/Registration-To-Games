@@ -11,14 +11,13 @@ import (
 
 func createScheduleKeyboard(user *bottypes.User, fm *formatter.Formatter, schedule []*forall.Game, pretext string) {
 	var (
-		dict           map[string]string
 		kbName, kbData []string
 		coordinates    []int
 	)
-	dict = dictionary.Dictionary[user.Language]
+	dict := dictionary.Dictionary[user.Language]
 	for i := 0; schedule[i] != nil && i < len(schedule); i++ {
-		kbName = []string{fmt.Sprintf("%s %s %s", dict[schedule[i].Sport], schedule[i].Date, schedule[i].Time)}
-		kbData = []string{fmt.Sprint(schedule[i].Id)}
+		kbName = append(kbName, fmt.Sprintf("%s %s %s", dict[schedule[i].Sport], schedule[i].Date, schedule[i].Time))
+		kbData = append(kbData, fmt.Sprint(schedule[i].Id))
 		coordinates = append(coordinates, 1)
 	}
 	forall.SetTheKeyboard(fm, coordinates, kbName, kbData)
@@ -120,7 +119,7 @@ func unload(user *bottypes.User, fm *formatter.Formatter) {
 		if FindMediaGame(gameId) {
 			quan = selectQuantity(gameId)
 			if quan > 1 {
-				fm.AddMapOfMedia(selectArrOrMedia(gameId)) //this func doesn't have functional
+				fm.AddMapOfMedia(selectArrOrMedia(gameId))
 			} else {
 				fid, ty = selectOneMedia(gameId)
 				if ty == "photo" {
@@ -156,9 +155,19 @@ func upload(user *bottypes.User, fm *formatter.Formatter) {
 		space, ok = howMuchSpace(user.Media.DelGameId)
 		if ok && space > user.Media.Counter {
 			user.Level = 4
-			fmt.Println(user.Media.Counter)
 			if user.Media.Counter > 1 {
-				//
+				media := make(map[string]string, (len(user.Media.Photo) + len(user.Media.Video)))
+				if len(user.Media.Photo) != 0 {
+					for i := 0; i < len(user.Media.Photo); i++ {
+						media[user.Media.Photo[i]] = "photo"
+					}
+				}
+				if len(user.Media.Video) != 0 {
+					for i := 0; i < len(user.Media.Video); i++ {
+						media[user.Media.Video[i]] = "video"
+					}
+				}
+				insertAfewNewMeda(media, user.Media.DelGameId, user.Id)
 			} else {
 				if len(user.Media.Photo) != 0 {
 					insertOneNewMedia(user.Media.Photo[0], "photo", user.Media.DelGameId, user.Id)

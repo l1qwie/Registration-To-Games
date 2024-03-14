@@ -31,9 +31,7 @@ func QueryForSeeSchedule(responses chan<- *types.TelegramResponse, output chan<-
 			Chat: types.Chat{
 				Id: 488,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }

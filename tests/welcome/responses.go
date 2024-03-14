@@ -29,9 +29,7 @@ func JustTrash(responses chan<- *types.TelegramResponse, output chan<- *types.Me
 			Chat: types.Chat{
 				Id: 456,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }
@@ -63,9 +61,7 @@ func JustTrash2(responses chan<- *types.TelegramResponse, output chan<- *types.M
 			Chat: types.Chat{
 				Id: 456,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }
@@ -97,9 +93,7 @@ func Start(responses chan<- *types.TelegramResponse, output chan<- *types.Messag
 			Chat: types.Chat{
 				Id: 456,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }
@@ -131,9 +125,7 @@ func QueryForShowRules(responses chan<- *types.TelegramResponse, output chan<- *
 			Chat: types.Chat{
 				Id: 456,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }
@@ -165,9 +157,7 @@ func QueryForWelcomeToMainMenu(responses chan<- *types.TelegramResponse, output 
 			Chat: types.Chat{
 				Id: 456,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }

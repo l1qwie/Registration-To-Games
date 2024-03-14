@@ -78,14 +78,14 @@ type StorageOfJson struct {
 }
 
 type SendMessagePayload struct {
-	ChatID      int    `json:"chat_id"`
-	Text        string `json:"text"`
-	ReplyMarkup string `json:"reply_markup"`
-	Photo       string `json:"photo"`
-	Video       string `json:"video"`
-	ParseMode   string `json:"parse_mode"`
-	MessageId   int    `json:"message_id"`
-	InputMedia  string `json:"media"`
+	ChatID      int      `json:"chat_id"`
+	Text        string   `json:"text"`
+	ReplyMarkup string   `json:"reply_markup"`
+	Photo       []string `json:"photo"`
+	Video       []string `json:"video"`
+	ParseMode   string   `json:"parse_mode"`
+	MessageId   int      `json:"message_id"`
+	InputMedia  string   `json:"media"`
 }
 
 type DelMessage struct {

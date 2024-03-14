@@ -136,20 +136,7 @@ func PreparationDatabaseForRegToGames(counter int) {
 	}
 }
 
-func preparationDatabaseForMediaUnload(counter int) {
-	var err error
-	if !rootmedia.FindMediaGame(pastgameId) {
-		err = database.CreateNotFullMediaGame(pastgameId)
-		if err != nil {
-			panic(err)
-		}
-	}
-	if !root.Find(userIdT4) {
-		err = root.CreateUser(userIdT4, "ru")
-		if err != nil {
-			panic(err)
-		}
-	}
+func UnloadAnoOpt(counter int) {
 	if counter == START {
 		database.UpdateLanguage("ru", userIdT4)
 		database.UpdateAction("photos and videos", userIdT4)
@@ -165,6 +152,80 @@ func preparationDatabaseForMediaUnload(counter int) {
 	}
 }
 
+func UploadAnoOpt(counter int) {
+	if !root.Find(userIdT4) {
+		err := root.CreateUser(userIdT4, "ru")
+		if err != nil {
+			panic(err)
+		}
+	}
+	if counter == START {
+		database.UpdateLanguage("ru", userIdT4)
+		database.UpdateAction("photos and videos", userIdT4)
+		database.UpdateLevel(0, userIdT4)
+	} else if counter == LEVEL1 {
+		database.UpdateLanguage("ru", userIdT4)
+		database.UpdateAction("photos and videos", userIdT4)
+		database.UpdateLevel(2, userIdT4)
+	} else if counter == LEVEL2 {
+		database.UpdateLanguage("ru", userIdT4)
+		database.UpdateAction("photos and videos", userIdT4)
+		database.UpdateLevel(3, userIdT4)
+	} else if counter == LEVEL3 {
+		database.UpdateLanguage("ru", userIdT4)
+		database.UpdateAction("photos and videos", userIdT4)
+		database.UpdateLevel(4, userIdT4)
+	} else if counter == LEVEL4 {
+		database.UpdateLanguage("ru", userIdT4)
+		database.UpdateAction("photos and videos", userIdT4)
+		database.UpdateLevel(5, userIdT4)
+	}
+}
+
+func prparDbForUnloadAfew(counter int) {
+	if !root.Find(userIdT4) {
+		err := root.CreateUser(userIdT4, "ru")
+		if err != nil {
+			panic(err)
+		}
+	}
+	// only one option
+	UnloadAnoOpt(counter)
+}
+
+func prparDbForUnloadOne(counter int) {
+	if !rootmedia.FindMediaGame(pastgameId) {
+		err := database.CreateNotFullMediaGame(pastgameId)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if !root.Find(userIdT4) {
+		err := root.CreateUser(userIdT4, "ru")
+		if err != nil {
+			panic(err)
+		}
+	}
+	// only one option
+	UnloadAnoOpt(counter)
+}
+
+func prparDbForUploadOne(counter int) {
+	if !rootmedia.FindMediaGame(pastgameId) {
+		err := database.CreateEmptyMediaGame(pastgameId)
+		if err != nil {
+			panic(err)
+		}
+	}
+	UploadAnoOpt(counter)
+}
+
+func prparDbForUploadAfew(counter int) {
+
+	UploadAnoOpt(counter)
+}
+
+/*
 func preparationDatabaseForMediaUpload(counter int) {
 	var err error
 	if !rootmedia.FindMediaGame(pastgameId) {
@@ -201,6 +262,7 @@ func preparationDatabaseForMediaUpload(counter int) {
 		database.UpdateLevel(5, userIdT4)
 	}
 }
+*/
 
 func PreparationDatabase(counter int) {
 	if counter < Welcome {
@@ -284,7 +346,67 @@ func AcceptanceOfResOfRegToGames(output *formatter.Formatter, counter, i int) {
 	}
 }
 
-func acceptanceOfResOfUnloadMedia(output *formatter.Formatter, counter, i int) {
+/*
+func acceptanceOfResOfUnloadMedia(output *formatter.Formatter, counter, i int, alone bool) {
+	if counter == START {
+		media.ChooseDirection(output)
+		database.AfterChooseDirection(userIdT4)
+	} else if counter == LEVEL1 {
+		if i < wrongAnswers {
+			media.ChooseDirection(output)
+			database.AfterChooseDirection(userIdT4)
+		} else {
+			if alone {
+				media.ChooseMediaGameUnload(output)
+			} else {
+				media.ChooseMediaGamesUnload(output)
+			}
+			database.AfterChooseMediaGameUnload(userIdT4)
+		}
+	} else if counter == LEVEL2 {
+		if i < wrongAnswers {
+			if alone {
+				media.ChooseMediaGameUnload(output)
+			} else {
+				media.ChooseMediaGamesUnload(output)
+			}
+			database.AfterChooseMediaGameUnload(userIdT4)
+		} else {
+			if alone {
+				media.Unloadone(output)
+				database.AfterUnloadone(userIdT4)
+			} else {
+				media.Unloadall(output)
+				database.AfterUnloadAlot(userIdT4)
+			}
+		}
+	}
+}
+*/
+
+func accOfResOfUnloadAfew(output *formatter.Formatter, counter, i int) {
+	if counter == START {
+		media.ChooseDirection(output)
+		database.AfterChooseDirection(userIdT4)
+	} else if counter == LEVEL1 {
+		if i < wrongAnswers {
+			media.ChooseDirection(output)
+			database.AfterChooseDirection(userIdT4)
+		} else {
+			media.ChooseMediaGamesUnload(output)
+			database.AfterChooseMediaGameUnload(userIdT4)
+		}
+	} else if counter == LEVEL2 {
+		if i < wrongAnswers {
+			media.ChooseMediaGamesUnload(output)
+			database.AfterChooseMediaGameUnload(userIdT4)
+		} else {
+			media.Unloadall(output)
+			database.AfterUnloadAlot(userIdT4)
+		}
+	}
+}
+func accOfResOfUnloadOne(output *formatter.Formatter, counter, i int) {
 	if counter == START {
 		media.ChooseDirection(output)
 		database.AfterChooseDirection(userIdT4)
@@ -301,50 +423,55 @@ func acceptanceOfResOfUnloadMedia(output *formatter.Formatter, counter, i int) {
 			media.ChooseMediaGameUnload(output)
 			database.AfterChooseMediaGameUnload(userIdT4)
 		} else {
-			media.Unload(output)
-			database.AfterUnload(userIdT4)
+			media.Unloadone(output)
+			database.AfterUnloadone(userIdT4)
 		}
 	}
 }
 
-func acceptanceOfResOfUploadMedia(output *formatter.Formatter, counter, i int) {
+func accOfResOfUploadOne(output *formatter.Formatter, counter, i int) {
 	if counter == START {
-		//media.ChooseDirection(output)
-		media.NoChoiseOnlyUpload(output)
+		media.NoChoiseOnlyUploadOne(output)
 		//database.AfterNoChoiseOnlyUpload(userIdT4)
 	} else if counter == LEVEL1 {
 		if i < wrongAnswers {
-			media.ChooseGame(output)
+			media.ChooseGameOne(output)
 			database.AfterChooseGame(userIdT4)
 		} else {
 			media.WaitingYourMedia(output)
-			database.AfterWaitingYourMedia(userIdT4)
-			//media.ChooseMediaGameUpload(output)
+			database.AfterWaitingYourMediaOne(userIdT4)
 		}
 	} else if counter == LEVEL2 {
 		if i < wrongAnswers {
 			media.WaitingYourMedia(output)
-			//media.ChooseMediaGameUpload(output)
-			database.AfterChooseMediaGameUpload(userIdT4)
+			database.AfterChooseMediaGameUploadOne(userIdT4)
 		} else {
 			media.Upload(output)
-			database.AfterUpload(userIdT4)
-			//media.WaitingYourMedia(output)
+			database.AfterUploadOne(userIdT4)
 		}
-		/*
-			} else if counter == LEVEL3 {
-				if i < wrongAnswers {
-					media.WaitingYourMedia(output)
-				} else {
-					media.Upload(output)
-				}
-			} else if counter == LEVEL4 {
-				if i < wrongAnswers {
-					media.Upload(output)
-				} else {
-					media.CheckUpload(output)
-				}
-		*/
+	}
+}
+
+func accOfResOfUploadAfew(output *formatter.Formatter, counter, i int) {
+	if counter == START {
+		media.NoChoiseOnlyUploadAfew(output)
+		//database.AfterNoChoiseOnlyUpload(userIdT4)
+	} else if counter == LEVEL1 {
+		if i < wrongAnswers {
+			media.ChooseGameAfew(output)
+			database.AfterChooseGame(userIdT4)
+		} else {
+			media.WaitingYourMedia(output)
+			database.AfterWaitingYourMediaAfew(userIdT4)
+		}
+	} else if counter == LEVEL2 {
+		if i < wrongAnswers {
+			media.WaitingYourMedia(output)
+			database.AfterChooseMediaGameUploadAfew(userIdT4)
+		} else {
+			media.Upload(output)
+			database.AfterUploadAfew(userIdT4)
+		}
 	}
 }
 
@@ -354,11 +481,11 @@ func UnloadOne(response chan *types.TelegramResponse, request chan *formatter.Fo
 	defer database.DeleteMedia(pastgameId)
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 3; j++ {
-			preparationdata.MediaUnload(i, j, response, output)
-			preparationDatabaseForMediaUnload(i)
+			preparationdata.MediaUnloadOne(i, j, response, output)
+			prparDbForUnloadOne(i)
 			fmtogram.Worker(response, output, request)
 			r := <-request
-			acceptanceOfResOfUnloadMedia(r, i, j)
+			accOfResOfUnloadOne(r, i, j)
 		}
 		fmt.Printf("UploadTest %d has been complete\n", i)
 	}
@@ -371,15 +498,50 @@ func UploadOne(response chan *types.TelegramResponse, request chan *formatter.Fo
 	defer database.DeleteMedia(pastgameId)
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 3; j++ {
-			preparationdata.MediaUpload(i, j, response, output)
-			preparationDatabaseForMediaUpload(i)
+			preparationdata.MediaUploadOne(i, j, response, output)
+			prparDbForUploadOne(i)
 			fmtogram.Worker(response, output, request)
 			r := <-request
-			acceptanceOfResOfUploadMedia(r, i, j)
+			accOfResOfUploadOne(r, i, j)
 		}
 		fmt.Printf("UploadTest %d has been complete\n", i)
 	}
 	fmt.Println("Whole UploadTest has been complete")
+}
+
+func UnloadAfew(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
+	defer database.DeleteUser(userIdT4)
+	defer database.DeleteSchedule()
+	defer database.DeleteMediaSchedule()
+	database.CreateMediaShedule()
+	database.FillMEdiaSchedule()
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 3; j++ {
+			preparationdata.MediaUnloadAfew(i, j, response, output)
+			prparDbForUnloadAfew(i)
+			fmtogram.Worker(response, output, request)
+			r := <-request
+			accOfResOfUnloadAfew(r, i, j)
+		}
+		fmt.Printf("UploadTest %d has been complete\n", i)
+	}
+}
+
+func UploadAfew(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
+	defer database.DeleteUser(userIdT4)
+	defer database.DeleteSchedule()
+	defer database.DeleteMediaSchedule()
+	database.CreateMediaShedule()
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 3; j++ {
+			preparationdata.MediaUploadAfew(i, j, response, output)
+			prparDbForUploadAfew(i)
+			fmtogram.Worker(response, output, request)
+			r := <-request
+			accOfResOfUploadAfew(r, i, j)
+		}
+		fmt.Printf("UploadTest %d has been complete\n", i)
+	}
 }
 
 func CheckTheRoutine() {

@@ -24,8 +24,8 @@ type Formatter struct {
 	Keyboard      InlineKeyboard
 	DeleteMessage types.DelMessage
 	contenttype   string
-	kindofmedia   int
-	mediatype     string
+	kindofmedia   []int
+	mediatype     []string
 }
 
 type btnKind int

@@ -7,15 +7,19 @@ import (
 
 func (tfm *Formatter) AssertPhoto(path string, condition bool) (err error) {
 	var function string
-	if tfm.Message.Photo != path {
-		if tfm.kindofmedia == fromStorage {
-			function = "AddPhotoFromStorage"
-		} else if tfm.kindofmedia == fromInternet {
-			function = "AddPhotoFromInternet"
-		} else if tfm.kindofmedia == fromTelegram {
-			function = "AddPhotoFromTG"
+	if len(tfm.Message.Photo) > 0 {
+		if tfm.Message.Photo[0] != path {
+			if tfm.kindofmedia[0] == fromStorage {
+				function = "AddPhotoFromStorage"
+			} else if tfm.kindofmedia[0] == fromInternet {
+				function = "AddPhotoFromInternet"
+			} else if tfm.kindofmedia[0] == fromTelegram {
+				function = "AddPhotoFromTG"
+			}
+			err = errors.AssertTest(tfm.Message.Photo[0], function, path, "AssertPhoto")
 		}
-		err = errors.AssertTest(tfm.Message.Photo, function, path, "AssertPhoto")
+	} else {
+		err = errors.AssertTest(fmt.Sprint(tfm.Message.Photo), function, path, "AssertPhoto")
 	}
 	if condition {
 		if err != nil {
@@ -27,15 +31,19 @@ func (tfm *Formatter) AssertPhoto(path string, condition bool) (err error) {
 
 func (tfm *Formatter) AssertVideo(path string, condition bool) (err error) {
 	var function string
-	if tfm.Message.Video != path {
-		if tfm.kindofmedia == fromStorage {
-			function = "AddVideoFromStorage"
-		} else if tfm.kindofmedia == fromInternet {
-			function = "AddVideoFromInternet"
-		} else if tfm.kindofmedia == fromTelegram {
-			function = "AddVideoFromTG"
+	if len(tfm.Message.Video) > 0 {
+		if tfm.Message.Video[0] != path {
+			if tfm.kindofmedia[0] == fromStorage {
+				function = "AddVideoFromStorage"
+			} else if tfm.kindofmedia[0] == fromInternet {
+				function = "AddVideoFromInternet"
+			} else if tfm.kindofmedia[0] == fromTelegram {
+				function = "AddVideoFromTG"
+			}
+			err = errors.AssertTest(tfm.Message.Video[0], function, path, "AssertVideo")
 		}
-		err = errors.AssertTest(tfm.Message.Video, function, path, "AssertVideo")
+	} else {
+		err = errors.AssertTest(fmt.Sprint(tfm.Message.Video), function, path, "AssertPhoto")
 	}
 	if condition {
 		if err != nil {
@@ -155,6 +163,45 @@ func (tfm *Formatter) AssertDeleteMessageId(messageId int, condition bool) (err 
 		err = errors.AssertTest(fmt.Sprint(tfm.DeleteMessage.MessageId), "WriteDeleteMesId", fmt.Sprint(messageId), "AssertDeleteMessageId")
 	}
 	if condition {
+		if err != nil {
+			panic(err)
+		}
+	}
+	return err
+}
+
+func (tfm *Formatter) AssertMapOfMedia(group map[string]string, con bool) (err error) {
+	var found bool
+	if (len(tfm.Message.Photo) + len(tfm.Message.Video)) != len(group) {
+		err = errors.AssertTest(fmt.Sprint("length of map is ", (len(tfm.Message.Photo)+len(tfm.Message.Video))), "AddMapOfMedia", fmt.Sprint("length of map is ", len(group)), "AssertMapOfMedia")
+	} else {
+		for key := range group {
+			ty, ok := group[key]
+			if ok {
+				if ty == "photo" {
+					for _, minorv := range tfm.Message.Photo {
+						if !found {
+							if minorv == key {
+								found = true
+							}
+						}
+					}
+				} else if ty == "video" {
+					for _, minorv := range tfm.Message.Video {
+						if !found {
+							if minorv == key {
+								found = true
+							}
+						}
+					}
+				}
+			}
+			if !found {
+				err = errors.AssertTest(fmt.Sprint(tfm.Message.Photo, tfm.Message.Video), "AddMapOfMedia", fmt.Sprint(group), "AssertMapOfMedia")
+			}
+		}
+	}
+	if con {
 		if err != nil {
 			panic(err)
 		}

@@ -7,13 +7,14 @@ import (
 	"encoding/json"
 )
 
+/*
 func (fm *Formatter) Reset() {
 	*fm = Formatter{
 		Message: types.SendMessagePayload{
 			ChatID:      0,
 			Text:        "",
 			ReplyMarkup: "",
-			Photo:       "",
+			Photo:       tp{},
 			Video:       "",
 		},
 		Keyboard: InlineKeyboard{
@@ -26,6 +27,7 @@ func (fm *Formatter) Reset() {
 		mediatype:   "",
 	}
 }
+*/
 
 func (fm *Formatter) WriteString(lineoftext string) {
 	fm.Message.Text = lineoftext
@@ -92,7 +94,7 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 	}
 
 	if err == nil {
-		if fm.Message.Photo == "" && fm.Message.Video == "" {
+		if len(fm.Message.Photo) == 0 && len(fm.Message.Video) == 0 {
 			if fm.Message.MessageId == 0 {
 				marshalstatus = true
 				function = "sendMessage"
@@ -104,21 +106,26 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 				fm.contenttype = "application/json"
 				finalBuffer = bytes.NewBuffer(jsonMessage)
 			}
-		} else if fm.Message.Video != "" || fm.Message.Photo != "" {
+		} else if len(fm.Message.Photo) != 0 || len(fm.Message.Video) != 0 {
 			marshalstatus = true
-			if fm.mediatype == "photo" {
-				function = "sendPhoto"
-			} else if fm.mediatype == "video" {
-				function = "sendVideo"
-			}
-			if fm.kindofmedia == fromStorage {
+			if len(fm.Message.Photo) > 1 || len(fm.Message.Video) > 1 {
 				finalBuffer = bytes.NewBuffer(nil)
-				fm.contenttype, err = fm.PrepareMedia(finalBuffer)
+				fm.contenttype, err = fm.createMediaGroup(finalBuffer)
 			} else {
-				jsonMessage, err = json.Marshal(fm.Message)
-				if err == nil {
-					fm.contenttype = "application/json"
-					finalBuffer = bytes.NewBuffer(jsonMessage)
+				if fm.mediatype[0] == "photo" {
+					function = "sendPhoto"
+				} else if fm.mediatype[0] == "video" {
+					function = "sendVideo"
+				}
+				if fm.kindofmedia[0] == fromStorage {
+					finalBuffer = bytes.NewBuffer(nil)
+					fm.contenttype, err = fm.PrepareMedia(finalBuffer)
+				} else {
+					jsonMessage, err = json.Marshal(fm.Message)
+					if err == nil {
+						fm.contenttype = "application/json"
+						finalBuffer = bytes.NewBuffer(jsonMessage)
+					}
 				}
 			}
 		}
@@ -127,7 +134,7 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 	if err == nil {
 		mes = executer.Send(finalBuffer, function, fm.contenttype, marshalstatus)
 	}
-	fm.Reset()
+	//fm.Reset()
 
 	return mes, err
 }

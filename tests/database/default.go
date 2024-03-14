@@ -16,6 +16,20 @@ func DeleteUser(userId int) {
 	}
 }
 
+func DeleteSchedule() {
+	_, err := types.Db.Exec("DELETE FROM Schedule WHERE gameId = 1 OR gameId = 2 OR gameId = 3 OR gameId = 4")
+	if err != nil {
+		panic(err)
+	}
+}
+
+func DeleteMediaSchedule() {
+	_, err := types.Db.Exec("DELETE FROM MediaRepository WHERE gameId = 1 OR gameId = 2 OR gameId = 3 OR gameId = 4")
+	if err != nil {
+		panic(err)
+	}
+}
+
 func UpdateLanguage(language string, userId int) {
 	_, err := types.Db.Exec("UPDATE Users SET language = $1 WHERE userId = $2", language, userId)
 	if err != nil {
@@ -76,6 +90,90 @@ func CreateNotFullMediaGame(gameId int) (err error) {
 			VALUES ($1, 499, '!@#IOJSIOJE!@#**()!@#$*()SIOPE!@()#', 'photo', 0, 1)`, gameId)
 	}
 	return err
+}
+
+func FillMEdiaSchedule() {
+	var request string
+	for i := 0; i < 8; i++ {
+		if i == 0 {
+			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
+			VALUES (1, 499, '!@#IOJSJE!@#**()!@#$*()SIOPE!@()#', 'photo', 3, 1)`
+		} else if i == 1 {
+			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
+			VALUES (2, 499, '!@#IOJSJE!@#**()!@#$*()SIOPE!@(#!@*(IOOI)', 'photo', 2, 1)`
+		} else if i == 2 {
+			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
+			VALUES (3, 499, '!@#IOJSIOJASDGE!@#**()!@#$*()SIOPE!@()#', 'photo', 2, 1)`
+		} else if i == 3 {
+			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
+			VALUES (4, 499, '!@#IOJSIOJESL:DFK**()!@#$*()SIOPE!@()#', 'photo', 1, 1)`
+		} else if i == 4 {
+			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
+			VALUES (1, 499, '!@#IOJSIOJE!@#**()!@HFF#$*()SIOPE$#@$!@()#', 'photo', 3, 1)`
+		} else if i == 5 {
+			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
+			VALUES (2, 499, '!@#IOJSIOJE!@#**()!()()998890-@#$*()SIOPE!@()#', 'photo', 2, 1)`
+		} else if i == 6 {
+			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
+			VALUES (3, 499, '!@#IOJSIOJE!@#**ASDG()!@#$*()SIOPE!@()#', 'photo', 2, 1)`
+		} else if i == 7 {
+			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
+			VALUES (1, 499, '!@#IOJSIOJE!$@!$!@#@#**()!@#$*()SIOPE!@()#', 'photo', 3, 1)`
+		}
+		_, err := types.Db.Exec(request)
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
+func CreateMediaShedule() {
+	var request string
+	for i := 1; i < 5; i++ {
+		if i == 1 {
+			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+				VALUES (1, 'volleyball', 20260212, 1100, 34, 36.893445, 30.709591, 'Кладбище в Анталии', 10, 'POUNDS', -1)`
+		} else if i == 2 {
+			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+				VALUES (2, 'football', 20250412, 1800, 14, 36.893445, 30.709591, 'Кладбище в Анталии', 1000, 'USD', -1)`
+		} else if i == 3 {
+			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+				VALUES (3, 'volleyball', 20250202, 0800, 77, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'RUB', -1)`
+		} else if i == 4 {
+			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+				VALUES (4, 'volleyball', 20250202, 0800, 77, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'RUB', -1)`
+		}
+		_, err := types.Db.Exec(request)
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
+func findMediaSchedule() bool {
+	var (
+		rows *sql.Rows
+		err  error
+	)
+	querys := []string{
+		"SELECT COUNT(*) FROM MediaRepository WHERE gameId = 1 AND fileId = '!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419' AND type = 'photo' AND counter = 4",
+		"SELECT COUNT(*) FROM MediaRepository WHERE gameId = 1 AND fileId = '!@#UIO!@#IOJJKLIO!JKLASJKL13419' AND type = 'photo' AND counter = 4",
+		"SELECT COUNT(*) FROM MediaRepository WHERE gameId = 1 AND fileId = 'IJ!#JJKLASERJKLIOPEIO*()%*()IOPSDKL:ASDOPK#I!#~!@31313' AND type = 'photo' AND counter = 4",
+		"SELECT COUNT(*) FROM MediaRepository WHERE gameId = 1 AND fileId = 'H!UIO@#HUI!@HASJKLDIOJKL#*()!@()_IOASDEUIO%()_)_' AND type = 'photo' AND counter = 4",
+	}
+	counter := 1
+	for i := 0; i < 3 && counter > 0; i++ {
+		rows, err = types.Db.Query(querys[i])
+		if err != nil {
+			panic(err)
+		}
+		rows.Next()
+		err = rows.Scan(&counter)
+		if err != nil {
+			panic(err)
+		}
+	}
+	return counter > 0
 }
 
 func CreateEmptyMediaGame(gameId int) (err error) {

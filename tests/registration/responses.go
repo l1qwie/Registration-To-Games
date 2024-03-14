@@ -29,9 +29,7 @@ func JustTrash(responses chan *types.TelegramResponse, output chan<- *types.Mess
 			Chat: types.Chat{
 				Id: 477,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }
@@ -63,9 +61,7 @@ func JustTrash2(responses chan *types.TelegramResponse, output chan<- *types.Mes
 			Chat: types.Chat{
 				Id: 477,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }
@@ -97,9 +93,7 @@ func QueryForPresentationScheduele(responses chan<- *types.TelegramResponse, out
 			Chat: types.Chat{
 				Id: 477,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }
@@ -131,9 +125,7 @@ func QueryForChooseGame(responses chan *types.TelegramResponse, output chan<- *t
 			Chat: types.Chat{
 				Id: 477,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }
@@ -165,9 +157,7 @@ func QueryForChooseSeats(responses chan *types.TelegramResponse, output chan<- *
 			Chat: types.Chat{
 				Id: 477,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }
@@ -199,9 +189,7 @@ func QueryForChoosePayment(responses chan *types.TelegramResponse, output chan<-
 			Chat: types.Chat{
 				Id: 477,
 			},
-			Photo: []types.Photo{{
-				FileId: "",
-			}},
+			Photo: []types.Photo{},
 		},
 	}
 }

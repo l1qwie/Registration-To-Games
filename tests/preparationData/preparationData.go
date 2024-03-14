@@ -124,33 +124,63 @@ func chooseMediaGame(counter int, responses chan *types.TelegramResponse, output
 	}
 }
 
-func waitingYourMedia(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func waitingYourMediaOne(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
 		media.JustTrash(responses, output)
 	} else if counter == 1 {
 		media.JustTrash2(responses, output)
 	} else if counter == 2 {
-		media.QueryForWaitingYourMedia(responses, output)
+		media.QueryForWaitingYourMediaOne(responses, output)
 	}
 }
 
-func unload(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func waitingYourMediaAfew(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
 		media.JustTrash(responses, output)
 	} else if counter == 1 {
 		media.JustTrash2(responses, output)
 	} else if counter == 2 {
-		media.QueryForUnload(responses, output)
+		media.QueryForWaitingYourMediaAfew(responses, output)
 	}
 }
 
-func upload(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func unloadOne(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == 0 {
 		media.JustTrash(responses, output)
 	} else if counter == 1 {
 		media.JustTrash2(responses, output)
 	} else if counter == 2 {
-		media.QueryForUpload(responses, output)
+		media.QueryForUnloadone(responses, output)
+
+	}
+}
+
+func unloadAfew(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == 0 {
+		media.JustTrash(responses, output)
+	} else if counter == 1 {
+		media.JustTrash2(responses, output)
+	} else if counter == 2 {
+		media.QueryForUnloadAfew(responses, output)
+	}
+}
+func uploadOne(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == 0 {
+		media.JustTrash(responses, output)
+	} else if counter == 1 {
+		media.JustTrash2(responses, output)
+	} else if counter == 2 {
+		media.QueryForUploadOne(responses, output)
+	}
+}
+
+func uploadAfew(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == 0 {
+		media.JustTrash(responses, output)
+	} else if counter == 1 {
+		media.JustTrash2(responses, output)
+	} else if counter == 2 {
+		media.QueryForUploadAfew(responses, output)
 	}
 }
 
@@ -192,7 +222,7 @@ func RegToGamesAct(counter, i int, responses chan *types.TelegramResponse, outpu
 	}
 }
 
-func MediaUnload(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+func MediaUnloadOne(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == START {
 		media.QueryForChooseDirection(responses, output)
 		routine.DeleteUser(userIdT2)
@@ -201,10 +231,24 @@ func MediaUnload(counter, i int, responses chan *types.TelegramResponse, output 
 	} else if counter == LEVEL1 {
 		chooseMediaGame(i, responses, output, Unload)
 	} else if counter == LEVEL2 {
-		unload(i, responses, output)
+		unloadOne(i, responses, output)
 	}
 }
 
+func MediaUnloadAfew(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == START {
+		media.QueryForChooseDirection(responses, output)
+		routine.DeleteUser(userIdT2)
+		database.DeleteMedia(pastgameId)
+		database.DeleteGame(pastgameId)
+	} else if counter == LEVEL1 {
+		chooseMediaGame(i, responses, output, Unload)
+	} else if counter == LEVEL2 {
+		unloadAfew(i, responses, output)
+	}
+}
+
+/*
 func MediaUpload(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
 	if counter == START {
 		media.QueryForChooseDirection(responses, output)
@@ -216,9 +260,36 @@ func MediaUpload(counter, i int, responses chan *types.TelegramResponse, output 
 		waitingYourMedia(i, responses, output)
 	} else if counter == LEVEL2 {
 		//waitingYourMedia(i, responses, output)
-		upload(i, responses, output)
+		uploadOne(i, responses, output)
 		//} else if counter == LEVEL3 {
 		//upload(i, responses, output)
 		//}
+	}
+}
+*/
+
+func MediaUploadOne(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == START {
+		media.QueryForChooseDirection(responses, output)
+		routine.DeleteUser(userIdT4)
+		database.DeleteMedia(pastgameId)
+		database.DeleteGame(pastgameId)
+	} else if counter == LEVEL1 {
+		waitingYourMediaOne(i, responses, output)
+	} else if counter == LEVEL2 {
+		uploadOne(i, responses, output)
+	}
+}
+
+func MediaUploadAfew(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	if counter == START {
+		media.QueryForChooseDirection(responses, output)
+		routine.DeleteUser(userIdT4)
+		database.DeleteMedia(pastgameId)
+		database.DeleteGame(pastgameId)
+	} else if counter == LEVEL1 {
+		waitingYourMediaAfew(i, responses, output)
+	} else if counter == LEVEL2 {
+		uploadAfew(i, responses, output)
 	}
 }
