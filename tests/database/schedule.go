@@ -5,7 +5,7 @@ import (
 	"RegistrationToGames/bot/routine"
 )
 
-func AfterShowTheSchedule(userId int) {
+func withoutS(userId int) *bottypes.User {
 	var (
 		err  error
 		user *bottypes.User
@@ -35,9 +35,6 @@ func AfterShowTheSchedule(userId int) {
 	}
 	if user.Act != "see schedule" {
 		panic("user.Act != `see schedule`")
-	}
-	if user.Level != 0 {
-		panic("user.Level != 0")
 	}
 	if user.Reg.GameId != 0 {
 		panic("user.Reg.GameId != 0")
@@ -74,5 +71,13 @@ func AfterShowTheSchedule(userId int) {
 	}
 	if user.UserRec.NewPay != "" {
 		panic("user.UserRec.NewPay != ``")
+	}
+	return user
+}
+
+func AfterShowTheSchedule(userId int) {
+	user := withoutS(userId)
+	if user.Level != 0 {
+		panic("user.Level != 0")
 	}
 }

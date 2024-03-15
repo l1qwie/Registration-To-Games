@@ -7,20 +7,17 @@ import (
 )
 
 func FindMediaGame(gameId int) bool {
-	var (
-		rows    *sql.Rows
-		counter int
-		err     error
-	)
-	rows, err = types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE gameId = $1 AND status = -1", gameId)
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE gameId = $1 AND status = -1", gameId)
 	if err != nil {
 		panic(err)
 	}
 	rows.Next()
+	counter := 0
 	err = rows.Scan(&counter)
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return counter > 0
 }
 
@@ -39,6 +36,7 @@ func findAnyMGames() bool {
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return counter > 0
 }
 
@@ -57,6 +55,7 @@ func howMuchSpace(gameId int) (int, bool) {
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return 20 - res, (20 - res) > 0
 }
 
@@ -75,6 +74,7 @@ func selectQuantity(gameId int) int {
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return res
 }
 
@@ -96,6 +96,7 @@ func selectArrOrMedia(gameId int) map[string]string {
 		}
 		fIds[id] = ty
 	}
+	defer rows.Close()
 	return fIds
 }
 
@@ -117,19 +118,16 @@ func insertAfewNewMeda(media map[string]string, gameId, userId int) {
 			panic(err)
 		}
 	}
+	defer rows.Close()
 }
 
 func insertOneNewMedia(fileId, ty string, gameId, userId int) {
-	var (
-		//rows *sql.Rows
-		//err  error
-		cc int
-	)
 	rows, err := types.Db.Query("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 0", gameId)
 	if err != nil {
 		panic(err)
 	}
 	rows.Next()
+	cc := 0
 	err = rows.Scan(&cc)
 	if err != nil {
 		panic(err)
@@ -138,6 +136,7 @@ func insertOneNewMedia(fileId, ty string, gameId, userId int) {
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 }
 
 func selectOneMedia(gameId int) (string, string) {
@@ -155,6 +154,7 @@ func selectOneMedia(gameId int) (string, string) {
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return fId, ty
 }
 
@@ -180,6 +180,7 @@ func findEveryGames() (unload, upload int) {
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return unload, upload
 }
 
@@ -229,5 +230,6 @@ func selectGamesInf(limit, lp int, vector bool) []*forall.Game {
 		schedule[i].Time = forall.FromIntToStrTime(time)
 		i++
 	}
+	defer rows.Close()
 	return schedule
 }

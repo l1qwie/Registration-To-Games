@@ -11,9 +11,9 @@ func main() {
 	//fmtogram.StartWithTelegram()
 	//tests.GlobalTest()
 	//tests.JustOtherTests()
-	//tests.WelcomeTest()
-	//tests.RegToGamesTest()
-	//tests.SeeTheSchedule()
+	tests.WelcomeTest()
+	tests.RegToGamesTest()
+	tests.SeeTheSchedule()
 	tests.MediaTest()
 	types.Db.Close()
 }

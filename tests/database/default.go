@@ -173,6 +173,28 @@ func findMediaSchedule() bool {
 			panic(err)
 		}
 	}
+	defer rows.Close()
+	return counter > 0
+}
+
+func checkGamesWithUsersTable(userId, gameId, seats int, payment string) bool {
+	var (
+		rows    *sql.Rows
+		err     error
+		request string
+		counter int
+	)
+	request = `SELECT COUNT(*) FROM GamesWithUsers WHERE userId = $1 AND gameId = $2 AND seats = $3 AND payment = $4` //AND statuspayment = 0 AND status = 0
+	rows, err = types.Db.Query(request, userId, gameId, seats, payment)
+	if err != nil {
+		panic(err)
+	}
+	rows.Next()
+	err = rows.Scan(&counter)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
 	return counter > 0
 }
 
@@ -206,28 +228,19 @@ func CreateSchedule() (err error) {
 	return err
 }
 
-func FoundGame(gameId int) (detected bool) {
-	var (
-		rows    *sql.Rows
-		err     error
-		request string
-		counter int
-	)
-	request = `SELECT COUNT(*) FROM Schedule WHERE gameId = $1`
-	rows, err = types.Db.Query(request, gameId)
+func FoundGame(gameId int) bool {
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
 		panic(err)
 	}
 	rows.Next()
+	counter := 0
 	err = rows.Scan(&counter)
 	if err != nil {
 		panic(err)
 	}
-	if counter > 0 {
-		detected = true
-	}
-
-	return detected
+	defer rows.Close()
+	return counter > 0
 }
 
 func DeleteGame(gameId int) {

@@ -78,14 +78,9 @@ func FromIntToStrTime(numberTime int) (time string) {
 	return time
 }
 
-func IntCheck(numS string) (detected bool, num int) {
-	var err error
-	num, err = strconv.Atoi(numS)
-	if err == nil {
-		detected = true
-	}
-
-	return detected, num
+func IntCheck(numS string) (bool, int) {
+	num, err := strconv.Atoi(numS)
+	return err == nil, num
 }
 
 func SetTheKeyboard(fm *formatter.Formatter, coordinates []int, kbName, kbData []string) {

@@ -15,7 +15,6 @@ import (
 	"RegistrationToGames/tests/schedule"
 	"RegistrationToGames/tests/welcome"
 	"fmt"
-	"log"
 )
 
 const (
@@ -54,7 +53,7 @@ const (
 	LEVEL5       int    = 5
 )
 
-func PreparationDatabaseForSchedule(counter int) {
+func PreparationDatabaseForSchedule() {
 	if !root.Find(userIdT3) {
 		err := root.CreateUser(userIdT3, "ru")
 		if err != nil {
@@ -65,11 +64,9 @@ func PreparationDatabaseForSchedule(counter int) {
 	if err != nil {
 		panic(err)
 	}
-	if counter == schSTART {
-		database.UpdateLanguage("ru", userIdT3)
-		database.UpdateAction("see schedule", userIdT3)
-		database.UpdateLevel(0, userIdT3)
-	}
+	database.UpdateLanguage("ru", userIdT3)
+	database.UpdateAction("see schedule", userIdT3)
+	database.UpdateLevel(0, userIdT3)
 }
 
 func PreparationDatabaseForWelcome(counter int) {
@@ -107,26 +104,26 @@ func PreparationDatabaseForRegToGames(counter int) {
 			panic(err)
 		}
 	}
-	if counter == rSTART {
+	if counter == START {
 		database.UpdateLanguage("ru", userIdT2)
 		database.UpdateAction("reg to games", userIdT2)
 		database.UpdateLevel(0, userIdT2)
-	} else if counter == rLEVEL1 {
+	} else if counter == LEVEL1 {
 		database.UpdateLanguage("ru", userIdT2)
 		database.UpdateAction("reg to games", userIdT2)
 		database.UpdateLevel(1, userIdT2)
-	} else if counter == rLEVEL2 {
+	} else if counter == LEVEL2 {
 		database.UpdateLanguage("ru", userIdT2)
 		database.UpdateAction("reg to games", userIdT2)
 		database.UpdateLevel(2, userIdT2)
 		database.InsertGameId(gameId, userIdT2)
-	} else if counter == rLEVEL3 {
+	} else if counter == LEVEL3 {
 		database.UpdateLanguage("ru", userIdT2)
 		database.UpdateAction("reg to games", userIdT2)
 		database.UpdateLevel(3, userIdT2)
 		database.InsertGameId(gameId, userIdT2)
 		database.InsertSeats(seats, userIdT2)
-	} else if counter == rLEVEL4 {
+	} else if counter == LEVEL4 {
 		database.UpdateLanguage("ru", userIdT2)
 		database.UpdateAction("reg to games", userIdT2)
 		database.UpdateLevel(4, userIdT2)
@@ -221,64 +218,12 @@ func prparDbForUploadOne(counter int) {
 }
 
 func prparDbForUploadAfew(counter int) {
-
 	UploadAnoOpt(counter)
 }
 
-/*
-func preparationDatabaseForMediaUpload(counter int) {
-	var err error
-	if !rootmedia.FindMediaGame(pastgameId) {
-		err = database.CreateEmptyMediaGame(pastgameId)
-		if err != nil {
-			panic(err)
-		}
-	}
-	if !root.Find(userIdT4) {
-		err = root.CreateUser(userIdT4, "ru")
-		if err != nil {
-			panic(err)
-		}
-	}
-	if counter == START {
-		database.UpdateLanguage("ru", userIdT4)
-		database.UpdateAction("photos and videos", userIdT4)
-		database.UpdateLevel(0, userIdT4)
-	} else if counter == LEVEL1 {
-		database.UpdateLanguage("ru", userIdT4)
-		database.UpdateAction("photos and videos", userIdT4)
-		database.UpdateLevel(2, userIdT4)
-	} else if counter == LEVEL2 {
-		database.UpdateLanguage("ru", userIdT4)
-		database.UpdateAction("photos and videos", userIdT4)
-		database.UpdateLevel(3, userIdT4)
-	} else if counter == LEVEL3 {
-		database.UpdateLanguage("ru", userIdT4)
-		database.UpdateAction("photos and videos", userIdT4)
-		database.UpdateLevel(4, userIdT4)
-	} else if counter == LEVEL4 {
-		database.UpdateLanguage("ru", userIdT4)
-		database.UpdateAction("photos and videos", userIdT4)
-		database.UpdateLevel(5, userIdT4)
-	}
-}
-*/
-
-func PreparationDatabase(counter int) {
-	if counter < Welcome {
-		PreparationDatabaseForWelcome(counter)
-	} else if counter >= Welcome && counter < RegToGames {
-		PreparationDatabaseForRegToGames(counter)
-	} else if counter >= ShowSchedule && counter < Media {
-		PreparationDatabaseForSchedule(counter)
-	}
-}
-
-func AcceptanceOfResOfSchedule(output *formatter.Formatter, counter int) {
-	if counter == schSTART {
-		schedule.ShowTheSchedule(output)
-		database.AfterShowTheSchedule(userIdT3)
-	}
+func AcceptanceOfResOfSchedule(output *formatter.Formatter) {
+	schedule.ShowTheSchedule(output)
+	database.AfterShowTheSchedule(userIdT3)
 	for i := 0; i < 4; i++ {
 		database.DeleteGame(i)
 	}
@@ -287,58 +232,58 @@ func AcceptanceOfResOfSchedule(output *formatter.Formatter, counter int) {
 func AcceptanceOfResOfWelcome(output *formatter.Formatter, counter, i int) {
 	if counter == wSTART {
 		welcome.TestGreetingsToUser(output)
-		database.AfterGreetingsToUserCheckDb(userIdT1)
+		database.AfterGreetingsToUser(userIdT1)
 	} else if counter == wLEVEL1 {
 		if i < wrongAnswers {
 			welcome.TestGreetingsToUser(output)
-			database.AfterGreetingsToUserCheckDb(userIdT1)
+			database.AfterGreetingsToUser(userIdT1)
 		} else {
 			welcome.TestShowRules(output)
-			database.AfterShowRulesCheckDb(userIdT1)
+			database.AfterShowRules(userIdT1)
 		}
 	} else if counter == wLEVEL2 {
 		if i < wrongAnswers {
 			welcome.TestShowRules(output)
-			database.AfterShowRulesCheckDb(userIdT1)
+			database.AfterShowRules(userIdT1)
 		} else {
 			welcome.TestWelcomeToMainMenu(output)
-			database.AfterMainMenuCheckDb(userIdT1)
+			database.AfterWelcomeMainMenu(userIdT1)
 		}
 	}
 }
 
 func AcceptanceOfResOfRegToGames(output *formatter.Formatter, counter, i int) {
-	if counter == rSTART {
+	if counter == START {
 		registration.PresentationScheduele(output)
-		database.AfterPresentationSchedueleCheckDb(userIdT2)
-	} else if counter == rLEVEL1 {
+		database.AfterPresentationScheduele(userIdT2)
+	} else if counter == LEVEL1 {
 		if i < wrongAnswers {
 			registration.PresentationScheduele(output)
-			database.AfterPresentationSchedueleCheckDb(userIdT2)
+			database.AfterPresentationScheduele(userIdT2)
 		} else {
 			registration.ChooseGame(output)
-			database.AfterChooseGameCheckDb(userIdT2)
+			database.AfterChooseGameR(userIdT2)
 		}
-	} else if counter == rLEVEL2 {
+	} else if counter == LEVEL2 {
 		if i < wrongAnswers {
 			registration.ChooseGame(output)
-			database.AfterChooseGameCheckDb(userIdT2)
+			database.AfterChooseGameR(userIdT2)
 		} else {
 			registration.ChooseSeats(output)
-			database.AfterChooseSeatsCheckDb(userIdT2)
+			database.AfterAfterChooseSeats(userIdT2)
 		}
-	} else if counter == rLEVEL3 {
+	} else if counter == LEVEL3 {
 		if i < wrongAnswers {
 			registration.ChooseSeats(output)
-			database.AfterChooseSeatsCheckDb(userIdT2)
+			database.AfterAfterChooseSeats(userIdT2)
 		} else {
 			registration.ChoosePayment(output)
-			database.AfterChoosePaymentCheckDb(userIdT2)
+			database.AfterChoosePayment(userIdT2)
 		}
-	} else if counter == rLEVEL4 {
+	} else if counter == LEVEL4 {
 		if i < wrongAnswers {
 			registration.ChoosePayment(output)
-			database.AfterChoosePaymentCheckDb(userIdT2)
+			database.AfterChoosePayment(userIdT2)
 		} else {
 			registration.BestWishes(output)
 			database.AfterBestWishes(userIdT2)
@@ -549,17 +494,30 @@ func CheckTheRoutine() {
 	routine.TestRetainUser()
 }
 
-func AcceptanceOfResults(output *formatter.Formatter, counter, i int) {
-	if output == nil {
-		log.Fatal()
+func JustWelcome(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
+	defer database.DeleteUser(userIdT1)
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 3; j++ {
+			preparationdata.WelcomeAct(i, j, response, output)
+			PreparationDatabaseForWelcome(i)
+			fmtogram.Worker(response, output, request)
+			r := <-request
+			AcceptanceOfResOfWelcome(r, i, j)
+		}
+		fmt.Printf("WelcomeTest %d by counter: %d has been completed\n", i+1, i)
 	}
-	//CheckTheRoutine()
+}
 
-	if counter < Welcome {
-		AcceptanceOfResOfWelcome(output, counter, i)
-	} else if counter >= Welcome && counter < RegToGames {
-		AcceptanceOfResOfRegToGames(output, counter, i)
-	} else if counter >= ShowSchedule && counter < Media {
-		AcceptanceOfResOfSchedule(output, counter)
+func RegToOneGame(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
+	defer database.DeleteUser(userIdT2)
+	for i := 0; i < 5; i++ {
+		for j := 0; j < 3; j++ {
+			preparationdata.RegToGamesAct(i, j, response, output)
+			PreparationDatabaseForRegToGames(i)
+			fmtogram.Worker(response, output, request)
+			r := <-request
+			AcceptanceOfResOfRegToGames(r, i, j)
+		}
+		fmt.Printf("RegToGamesTest %d by counter: %d has been completed\n", i+1, i)
 	}
 }

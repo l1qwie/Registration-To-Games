@@ -185,39 +185,37 @@ func uploadAfew(counter int, responses chan *types.TelegramResponse, output chan
 }
 
 func WelcomeAct(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
-	if counter == wSTART {
+	if counter == START {
 		welcome.Start(responses, output)
 		routine.DeleteUser(userIdT1)
-	} else if counter == wLEVEL1 {
+	} else if counter == LEVEL1 {
 		preparationToShowRules(i, responses, output)
-	} else if counter == wLEVEL2 {
+	} else if counter == LEVEL2 {
 		welcomeToMainMenu(i, responses, output)
 	}
 }
 
-func SeeTheSchedule(counter int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
-	if counter == schSTART {
-		for i := 0; i < 4; i++ {
-			if database.FoundGame(i) {
-				database.DeleteGame(i)
-			}
+func SeeTheSchedule(responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
+	for i := 0; i < 4; i++ {
+		if database.FoundGame(i) {
+			database.DeleteGame(i)
 		}
-		schedule.QueryForSeeSchedule(responses, output)
 	}
+	schedule.QueryForSeeSchedule(responses, output)
 }
 
 func RegToGamesAct(counter, i int, responses chan *types.TelegramResponse, output chan *types.MessageResponse) {
-	if counter == rSTART {
+	if counter == START {
 		registration.QueryForPresentationScheduele(responses, output)
 		routine.DeleteUser(userIdT2)
 		database.DeleteGame(gameId)
-	} else if counter == rLEVEL1 {
+	} else if counter == LEVEL1 {
 		chooseGame(i, responses, output)
-	} else if counter == rLEVEL2 {
+	} else if counter == LEVEL2 {
 		chooseSeats(i, responses, output)
-	} else if counter == rLEVEL3 {
+	} else if counter == LEVEL3 {
 		choosePayment(i, responses, output)
-	} else if counter == rLEVEL4 {
+	} else if counter == LEVEL4 {
 		bestWishes(i, responses, output)
 	}
 }

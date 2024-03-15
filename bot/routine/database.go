@@ -28,6 +28,7 @@ func Find(id int) (detected bool) {
 	if counter > 0 {
 		detected = true
 	}
+	defer rows.Close()
 	return detected
 }
 
@@ -65,6 +66,7 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 			user.Media.DelGameId = gameId
 		}
 	}
+	defer rows.Close()
 
 	return err
 }
@@ -103,6 +105,7 @@ func SelectExMessageId(userId int) (exMessageId int, err error) {
 		}
 
 	}
+	defer rows.Close()
 	return exMessageId, err
 }
 

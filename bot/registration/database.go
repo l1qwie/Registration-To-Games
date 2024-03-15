@@ -15,9 +15,6 @@ func selectTheSchedule(limit, offset int, language string) []*forall.Game {
 		i, date, time  int
 	)
 	schedule := make([]*forall.Game, limit)
-	//for j := 0; j < limit; j++ {
-	//		schedule[j] = &forall.Game{}
-	//	}
 	request = `SELECT gameId, sport, date, time, seats FROM Schedule WHERE (status != -1) ORDER BY Schedule DESC LIMIT $1 OFFSET $2`
 	rows, err = types.Db.Query(request, limit, offset)
 	if err != nil {
@@ -34,41 +31,27 @@ func selectTheSchedule(limit, offset int, language string) []*forall.Game {
 		schedule[i].Time = forall.FromIntToStrTime(time)
 		i++
 	}
+	defer rows.Close()
 	return schedule
 }
 
-func FindAGame(gameId int) (detected bool) {
-	var (
-		rows    *sql.Rows
-		err     error
-		request string
-		counter int
-	)
-	request = `SELECT COUNT(*) FROM Schedule WHERE status != -1 AND gameId = $1`
-	rows, err = types.Db.Query(request, gameId)
+func FindAGame(gameId int) bool {
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE status != -1 AND gameId = $1", gameId)
 	if err != nil {
 		panic(err)
 	}
 	rows.Next()
+	counter := 0
 	err = rows.Scan(&counter)
 	if err != nil {
 		panic(err)
 	}
-
-	if counter > 0 {
-		detected = true
-	}
-	return detected
+	defer rows.Close()
+	return counter > 0
 }
 
 func selectThePrice(gameId int) (price, space int, currency string) {
-	var (
-		rows    *sql.Rows
-		err     error
-		request string
-	)
-	request = `SELECT price, seats, currency FROM Schedule WHERE gameId = $1`
-	rows, err = types.Db.Query(request, gameId)
+	rows, err := types.Db.Query("SELECT price, seats, currency FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
 		panic(err)
 	}
@@ -77,32 +60,23 @@ func selectThePrice(gameId int) (price, space int, currency string) {
 	if err != nil {
 		panic(err)
 	}
-
+	defer rows.Close()
 	return price, space, currency
 }
 
-func howManyIsLeft(gameId int, wishfulseats int) (thereArePlaces bool) {
-	var (
-		rows    *sql.Rows
-		err     error
-		request string
-		seats   int
-	)
-	request = `SELECT seats FROM Schedule WHERE gameId = $1`
-	rows, err = types.Db.Query(request, gameId)
+func howManyIsLeft(gameId int, wishfulseats int) bool {
+	rows, err := types.Db.Query("SELECT seats FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
 		panic(err)
 	}
 	rows.Next()
+	seats := 0
 	err = rows.Scan(&seats)
 	if err != nil {
 		panic(err)
 	}
-
-	if wishfulseats < seats {
-		thereArePlaces = true
-	}
-	return thereArePlaces
+	defer rows.Close()
+	return wishfulseats < seats
 }
 
 func completeRegistration(userId, gameId, seats int, payment string) (err error) {
@@ -125,6 +99,7 @@ func completeRegistration(userId, gameId, seats int, payment string) (err error)
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return err
 }
 
@@ -149,5 +124,6 @@ func selectDetailOfGame(gameId int, language string) (details *forall.Game) {
 	details.Sport = dictionary.Dictionary[language][details.Sport]
 	details.Date = forall.FromIntToStrDate(date)
 	details.Time = forall.FromIntToStrTime(time)
+	defer rows.Close()
 	return details
 }

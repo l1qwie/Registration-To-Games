@@ -10,28 +10,19 @@ import (
 )
 
 func FindGame() bool {
-	var (
-		exist bool
-		rows  *sql.Rows
-		cn    int
-		err   error
-		req   string
-	)
-	req = "SELECT gameId FROM Schedule WHERE status != -1"
-	rows, err = types.Db.Query(req)
+	rows, err := types.Db.Query("SELECT gameId FROM Schedule WHERE status != -1")
 	if err != nil {
 		panic(err)
 	}
+	cn := 0
 	for rows.Next() {
 		err = rows.Scan(&cn)
 		if err != nil {
 			panic(err)
 		}
 	}
-	if cn > 0 {
-		exist = true
-	}
-	return exist
+	defer rows.Close()
+	return cn > 0
 }
 
 func selectSchedule(language string) (schedule []*forall.Game) {
@@ -57,5 +48,6 @@ func selectSchedule(language string) (schedule []*forall.Game) {
 		schedule[i].Time = forall.FromIntToStrTime(time)
 		i++
 	}
+	defer rows.Close()
 	return schedule
 }
