@@ -12,18 +12,18 @@ import (
 )
 
 func RegToGamesTest() {
-	response := make(chan *types.TelegramResponse, 4)
-	request := make(chan *formatter.Formatter, 4)
-	output := make(chan *types.MessageResponse, 4)
+	response := make(chan *types.TelegramResponse, 1)
+	request := make(chan *formatter.Formatter, 1)
+	output := make(chan *types.MessageResponse, 1)
 	defer errors.MakeIntestines()
 	RegToOneGame(response, request, output) //with one game in database
 	fmt.Print("RegToGamesTest was alright!\n")
 }
 
 func WelcomeTest() {
-	response := make(chan *types.TelegramResponse, 2)
-	request := make(chan *formatter.Formatter, 2)
-	output := make(chan *types.MessageResponse, 2)
+	response := make(chan *types.TelegramResponse, 1)
+	request := make(chan *formatter.Formatter, 1)
+	output := make(chan *types.MessageResponse, 1)
 	defer errors.MakeIntestines()
 	JustWelcome(response, request, output)
 	fmt.Print("WelcomeTest was alright!\n")
@@ -49,15 +49,26 @@ func SeeTheSchedule() {
 }
 
 func MediaTest() {
-	responses := make(chan *types.TelegramResponse, 10)
-	requests := make(chan *formatter.Formatter, 10)
-	output := make(chan *types.MessageResponse, 10)
+	responses := make(chan *types.TelegramResponse, 1)
+	requests := make(chan *formatter.Formatter, 1)
+	output := make(chan *types.MessageResponse, 1)
 	defer errors.MakeIntestines()
 	UnloadOne(responses, requests, output)  //with two games (to unload and upload)
 	UploadOne(responses, requests, output)  //with one games (to upload)
 	UnloadAfew(responses, requests, output) //with four games (only to unload)
 	UploadAfew(responses, requests, output) //with four games (only to upload)
 	fmt.Print("MediaTest was alright!\n")
+}
+
+func SettingsTest() {
+	responses := make(chan *types.TelegramResponse, 1)
+	requests := make(chan *formatter.Formatter, 1)
+	output := make(chan *types.MessageResponse, 1)
+	defer errors.MakeIntestines()
+	ChangeLanguage(responses, requests, output) //test "change language" functionality
+	//DeleteGame(responses, requests, output)     //test "delete user game" functionality
+	//ChangeSeats()                               //test "change seats on user games" functionality
+	//ChagePayment()                              //test "change payment on user games" functionality
 }
 
 func JustOtherTests() {

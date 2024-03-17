@@ -73,6 +73,46 @@ func InsertPayment(payment string, userId int) {
 	}
 }
 
+func DeleteUserGames(userId int) {
+	_, err := types.Db.Exec("DELETE FROM GamesWithUsers WHERE userId = $1", userId)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func CreateUserSchedule(userId int) {
+	_, err := types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	VALUES (1, 'volleyball', 20250212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'POUNDS', 1)`)
+	if err != nil {
+		panic(err)
+	}
+	_, err = types.Db.Exec(`INSERT INTO GamesWithSchedule (userId, gameId, seats, payment, statuspayment, status)
+		VALUES ($1, 1, 3, "card", 1, 0)`, userId)
+	if err != nil {
+		panic(err)
+	}
+	_, err = types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	VALUES (2, 'volleyball', 20251212, 1100, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', 1)`)
+	if err != nil {
+		panic(err)
+	}
+	_, err = types.Db.Exec(`INSERT INTO GamesWithSchedule (userId, gameId, seats, payment, statuspayment, status)
+		VALUES ($1, 2, 6, "card", 0, 0)`, userId)
+	if err != nil {
+		panic(err)
+	}
+	_, err = types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	VALUES (3, 'volleyball', 20250612, 1000, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'RUB', 1)`)
+	if err != nil {
+		panic(err)
+	}
+	_, err = types.Db.Exec(`INSERT INTO GamesWithSchedule (userId, gameId, seats, payment, statuspayment, status)
+		VALUES ($1, 3, 7, "cash", 0, 0)`, userId)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func CreateGame(gameId int) (err error) {
 	_, err = types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
 		VALUES ($1, 'volleyball', 20250212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', 1)`, gameId)

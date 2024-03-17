@@ -2,8 +2,8 @@ package media
 
 import "RegistrationToGames/fmtogram/types"
 
-func JustTrash(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
+func defTR() *types.TelegramResponse {
+	return &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
 			{
@@ -17,12 +17,14 @@ func JustTrash(responses chan *types.TelegramResponse, output chan<- *types.Mess
 						Username: "Bogdy",
 						Language: "ru",
 					},
-					Text: "O, I want to see some photos or videos from some games!",
 				},
 			},
 		},
 	}
-	output <- &types.MessageResponse{
+}
+
+func defMR() *types.MessageResponse {
+	return &types.MessageResponse{
 		Ok: true,
 		Result: types.Message{
 			MessageId: 66666,
@@ -33,324 +35,77 @@ func JustTrash(responses chan *types.TelegramResponse, output chan<- *types.Mess
 	}
 }
 
-func JustTrash2(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "Please give me photos!",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func Trash() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "O, I want to see some photos or videos from some games!"
+	return tr
 }
 
-func QueryForChooseDirection(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "OK!",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func Trash2() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "Please give me photos!"
+	return tr
 }
 
-func QueryForChooseMediaGameUnload(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "unload",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func ChDir() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "OK!"
+	return tr
 }
 
-func QueryForChooseMediaGameUpload(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "upload",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func ChMUnload() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "unload"
+	return tr
 }
 
-func QueryForWaitingYourMediaOne(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "10",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func ChMUpload() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "upload"
+	return tr
 }
 
-func QueryForWaitingYourMediaAfew(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "1",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func ChWaitMediaOne() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "10"
+	return tr
 }
 
-func QueryForUnloadone(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "10",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func ChWaitMediaAfew() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "1"
+	return tr
 }
 
-func QueryForUnloadAfew(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "1",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func UnlOne() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "10"
+	return tr
 }
 
-func QueryForUploadOne(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "Take my photo",
-				},
-				Photo: []types.Photo{{
-					FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419",
-				}},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func UnlAfew() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "1"
+	return tr
 }
 
-func QueryForUploadAfew(responses chan *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   499,
-						IsBot:    false,
-						Name:     "Bogdan",
-						LastName: "Dmitriev",
-						Username: "Bogdy",
-						Language: "ru",
-					},
-					Text: "Take my photo",
-				},
-				Photo: []types.Photo{{
-					FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419",
-				}, {
-					FileId: "!@#UIO!@#IOJJKLIO!JKLASJKL13419",
-				}, {
-					FileId: "IJ!#JJKLASERJKLIOPEIO*()%*()IOPSDKL:ASDOPK#I!#~!@31313",
-				}, {
-					FileId: "H!UIO@#HUI!@HASJKLDIOJKL#*()!@()_IOASDEUIO%()_)_",
-				}},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 66666,
-			Chat: types.Chat{
-				Id: 499,
-			},
-		},
-	}
+func UplOne() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "Take my photo"
+	tr.Result[0].Photo[0].FileId = "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"
+	return tr
+}
+
+func UplAfew() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "Take my photo"
+	tr.Result[0].Photo[0].FileId = "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"
+	tr.Result[0].Photo[1].FileId = "!@#UIO!@#IOJJKLIO!JKLASJKL13419"
+	tr.Result[0].Photo[2].FileId = "IJ!#JJKLASERJKLIOPEIO*()%*()IOPSDKL:ASDOPK#I!#~!@31313"
+	tr.Result[0].Photo[3].FileId = "H!UIO@#HUI!@HASJKLDIOJKL#*()!@()_IOASDEUIO%()_)_"
+	return tr
+}
+
+func MesResp() *types.MessageResponse {
+	return defMR()
 }

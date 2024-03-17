@@ -66,6 +66,11 @@ func ru(dict map[string]string) {
 	dict["unload"] = "Посмотреть"
 	dict["upload"] = "Загрузить"
 	dict["Succesful"] = "Все файлы успешно загружены"
+	dict["NoGamesChangeLang"] = "У вас пока нет ни одной записи об игре! Вам доступна только смена языка! Пожалуйста, выберите предпочтительный язык"
+	dict["en"] = "Английский язык"
+	dict["ru"] = "Русский язык"
+	dict["tur"] = "Турецкий язык"
+	dict["Lanchanged"] = "Язык бота успешно изменен"
 
 }
 
@@ -92,7 +97,6 @@ func en(dict map[string]string) {
 	dict["first"] = "View schedule"
 	dict["second"] = "Game registration"
 	dict["third"] = "Our photos and videos"
-	dict["fourth"] = "Settings | My games"
 	dict["fourth"] = "Settings | My games"
 	dict["ChooseAnyGame"] = "Choose the game you are interested in"
 	dict["freeSpace"] = "Available seats left:"
@@ -140,6 +144,11 @@ func en(dict map[string]string) {
 	dict["unload"] = "View"
 	dict["upload"] = "Upload"
 	dict["Succesful"] = "All files have been successfully uploaded"
+	dict["NoGamesChangeLang"] = "You don't have any game records yet! You only have access to language change! Choose your preferred language"
+	dict["en"] = "English language"
+	dict["ru"] = "Russian language"
+	dict["tur"] = "Turkish language"
+	dict["Lanchanged"] = "The bot language has been successfully changed"
 }
 
 func tur(dict map[string]string) {
@@ -212,7 +221,12 @@ func tur(dict map[string]string) {
 	dict["NotEnoughSpace"] = "Maalesef, görünüşe göre bu oyun için dosyalarınızı yüklemek için yeterli alanım kalmadı"
 	dict["unload"] = "Görüntüle"
 	dict["upload"] = "Yükle"
-	dict["Succesful"] = "Tüm dosyalar başarıyla yüklendi."
+	dict["Succesful"] = "Tüm dosyalar başarıyla yüklendi"
+	dict["NoGamesChangeLang"] = "Henüz hiç oyun kaydınız yok! Sadece dil değiştirme seçeneğiniz var! Tercih ettiğiniz dili seçin"
+	dict["en"] = "İngilizce dil"
+	dict["ru"] = "Rusça dil"
+	dict["tur"] = "Türkçe dil"
+	dict["Lanchanged"] = "Bot dil başarıyla değiştirildi"
 }
 
 func init() {

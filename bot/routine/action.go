@@ -7,6 +7,7 @@ import (
 	"RegistrationToGames/bot/media"
 	"RegistrationToGames/bot/registration"
 	"RegistrationToGames/bot/schedule"
+	"RegistrationToGames/bot/settings"
 	"RegistrationToGames/bot/welcome"
 	"RegistrationToGames/fmtogram/formatter"
 	"fmt"
@@ -110,6 +111,17 @@ func Media(user *bottypes.User, fm *formatter.Formatter) {
 	}
 }
 
+func Settings(user *bottypes.User, fm *formatter.Formatter) {
+	if user.Level == START {
+		settings.ChooseOptions(user, fm)
+	} else if user.Level == LEVEL1 {
+		//
+	} else if user.Level == LEVEL2 {
+		settings.WhatWay(user, fm)
+	}
+	// I'll be here later
+}
+
 func Edit(user *bottypes.User, fm *formatter.Formatter) (exMessageId int) {
 	var err error
 	if user.ExMessageId == 0 {
@@ -151,6 +163,10 @@ func Options(user *bottypes.User, fm *formatter.Formatter) {
 		user.Level = START
 		user.Act = "photos and videos"
 		Media(user, fm)
+	} else if user.Request == "My records" {
+		user.Level = START
+		user.Act = "settings"
+		Settings(user, fm)
 	} else {
 		user.Act = "divarication"
 		user.Level = OPTIONS
@@ -178,6 +194,8 @@ func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 		Schedule(user, fm)
 	} else if user.Act == "photos and videos" {
 		Media(user, fm)
+	} else if user.Act == "settings" {
+		Settings(user, fm)
 	}
 	retainUser(user)
 }

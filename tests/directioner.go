@@ -13,6 +13,7 @@ import (
 	"RegistrationToGames/tests/registration"
 	"RegistrationToGames/tests/routine"
 	"RegistrationToGames/tests/schedule"
+	"RegistrationToGames/tests/settings"
 	"RegistrationToGames/tests/welcome"
 	"fmt"
 )
@@ -22,6 +23,7 @@ const (
 	userIdT2     int    = 477
 	userIdT3     int    = 488
 	userIdT4     int    = 499
+	userIdT5     int    = 899
 	gameId       int    = 2
 	pastgameId   int    = 10
 	seats        int    = 2
@@ -69,7 +71,7 @@ func PreparationDatabaseForSchedule() {
 	database.UpdateLevel(0, userIdT3)
 }
 
-func PreparationDatabaseForWelcome(counter int) {
+func prparDbForWelcome(counter int) {
 	if !root.Find(userIdT1) {
 		err := root.CreateUser(userIdT1, "ru")
 		if err != nil {
@@ -91,7 +93,7 @@ func PreparationDatabaseForWelcome(counter int) {
 	}
 }
 
-func PreparationDatabaseForRegToGames(counter int) {
+func prparDbForRegToGames(counter int) {
 	if !rootregistration.FindAGame(gameId) {
 		err := database.CreateGame(gameId)
 		if err != nil {
@@ -221,6 +223,42 @@ func prparDbForUploadAfew(counter int) {
 	UploadAnoOpt(counter)
 }
 
+func prparDbForChangeLang(counter int) {
+	if !root.Find(userIdT5) {
+		err := root.CreateUser(userIdT5, "ru")
+		if err != nil {
+			panic(err)
+		}
+	}
+	if counter == START {
+		database.UpdateLanguage("ru", userIdT5)
+		database.UpdateAction("settings", userIdT5)
+		database.UpdateLevel(0, userIdT5)
+	} else if counter == LEVEL1 {
+		database.UpdateLanguage("ru", userIdT5)
+		database.UpdateAction("settings", userIdT5)
+		database.UpdateLevel(2, userIdT5)
+	}
+}
+
+func prparDbForDeleteGame(counter int) {
+	if !root.Find(userIdT5) {
+		err := root.CreateUser(userIdT5, "ru")
+		if err != nil {
+			panic(err)
+		}
+	}
+	if counter == START {
+		database.UpdateLanguage("ru", userIdT5)
+		database.UpdateAction("settings", userIdT5)
+		database.UpdateLevel(0, userIdT5)
+	} else if counter == LEVEL1 {
+		database.UpdateLanguage("ru", userIdT5)
+		database.UpdateAction("settings", userIdT5)
+		database.UpdateLevel(1, userIdT5)
+	}
+}
+
 func AcceptanceOfResOfSchedule(output *formatter.Formatter) {
 	schedule.ShowTheSchedule(output)
 	database.AfterShowTheSchedule(userIdT3)
@@ -229,7 +267,7 @@ func AcceptanceOfResOfSchedule(output *formatter.Formatter) {
 	}
 }
 
-func AcceptanceOfResOfWelcome(output *formatter.Formatter, counter, i int) {
+func accOfResOfWelcome(output *formatter.Formatter, counter, i int) {
 	if counter == wSTART {
 		welcome.TestGreetingsToUser(output)
 		database.AfterGreetingsToUser(userIdT1)
@@ -252,7 +290,7 @@ func AcceptanceOfResOfWelcome(output *formatter.Formatter, counter, i int) {
 	}
 }
 
-func AcceptanceOfResOfRegToGames(output *formatter.Formatter, counter, i int) {
+func accOfResOfRegToGames(output *formatter.Formatter, counter, i int) {
 	if counter == START {
 		registration.PresentationScheduele(output)
 		database.AfterPresentationScheduele(userIdT2)
@@ -290,44 +328,6 @@ func AcceptanceOfResOfRegToGames(output *formatter.Formatter, counter, i int) {
 		}
 	}
 }
-
-/*
-func acceptanceOfResOfUnloadMedia(output *formatter.Formatter, counter, i int, alone bool) {
-	if counter == START {
-		media.ChooseDirection(output)
-		database.AfterChooseDirection(userIdT4)
-	} else if counter == LEVEL1 {
-		if i < wrongAnswers {
-			media.ChooseDirection(output)
-			database.AfterChooseDirection(userIdT4)
-		} else {
-			if alone {
-				media.ChooseMediaGameUnload(output)
-			} else {
-				media.ChooseMediaGamesUnload(output)
-			}
-			database.AfterChooseMediaGameUnload(userIdT4)
-		}
-	} else if counter == LEVEL2 {
-		if i < wrongAnswers {
-			if alone {
-				media.ChooseMediaGameUnload(output)
-			} else {
-				media.ChooseMediaGamesUnload(output)
-			}
-			database.AfterChooseMediaGameUnload(userIdT4)
-		} else {
-			if alone {
-				media.Unloadone(output)
-				database.AfterUnloadone(userIdT4)
-			} else {
-				media.Unloadall(output)
-				database.AfterUnloadAlot(userIdT4)
-			}
-		}
-	}
-}
-*/
 
 func accOfResOfUnloadAfew(output *formatter.Formatter, counter, i int) {
 	if counter == START {
@@ -400,7 +400,6 @@ func accOfResOfUploadOne(output *formatter.Formatter, counter, i int) {
 func accOfResOfUploadAfew(output *formatter.Formatter, counter, i int) {
 	if counter == START {
 		media.NoChoiseOnlyUploadAfew(output)
-		//database.AfterNoChoiseOnlyUpload(userIdT4)
 	} else if counter == LEVEL1 {
 		if i < wrongAnswers {
 			media.ChooseGameAfew(output)
@@ -420,10 +419,30 @@ func accOfResOfUploadAfew(output *formatter.Formatter, counter, i int) {
 	}
 }
 
+func accOfResOfChangeLanguage(output *formatter.Formatter, counter, i int) {
+	if counter == START {
+		settings.ChooseOptionOnlyLang(output)
+		database.AfterChooseOptionOnlyLang(userIdT5)
+	} else if counter == LEVEL1 {
+		if i < wrongAnswers {
+			settings.ChooseOptionOnlyLang(output)
+			database.AfterChooseOptionOnlyLang(userIdT5)
+		} else {
+			settings.ChooseLanguage(output)
+			database.AfterChooseLanguage(userIdT5)
+		}
+	}
+}
+
+func accOfResOfDeleteGame(output *formatter.Formatter, counter, i int) {
+
+}
+
 func UnloadOne(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
 	defer database.DeleteUser(userIdT4)
 	defer database.DeleteGame(pastgameId)
 	defer database.DeleteMedia(pastgameId)
+	//arrfunc := []func() *types.TelegramResponse{media.ChDir, media.ChMUnload, media.UnlOne}
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 3; j++ {
 			preparationdata.MediaUnloadOne(i, j, response, output)
@@ -434,7 +453,6 @@ func UnloadOne(response chan *types.TelegramResponse, request chan *formatter.Fo
 		}
 		fmt.Printf("UploadTest %d has been complete\n", i)
 	}
-	fmt.Println("Whole UnloadTest has been complete")
 }
 
 func UploadOne(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
@@ -451,7 +469,6 @@ func UploadOne(response chan *types.TelegramResponse, request chan *formatter.Fo
 		}
 		fmt.Printf("UploadTest %d has been complete\n", i)
 	}
-	fmt.Println("Whole UploadTest has been complete")
 }
 
 func UnloadAfew(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
@@ -460,9 +477,10 @@ func UnloadAfew(response chan *types.TelegramResponse, request chan *formatter.F
 	defer database.DeleteMediaSchedule()
 	database.CreateMediaShedule()
 	database.FillMEdiaSchedule()
+	arrfunc := []func() *types.TelegramResponse{media.ChDir, media.ChMUnload, media.UnlAfew}
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 3; j++ {
-			preparationdata.MediaUnloadAfew(i, j, response, output)
+			preparationdata.MediaUnloadAfew(i, j, response, output, arrfunc)
 			prparDbForUnloadAfew(i)
 			fmtogram.Worker(response, output, request)
 			r := <-request
@@ -470,6 +488,7 @@ func UnloadAfew(response chan *types.TelegramResponse, request chan *formatter.F
 		}
 		fmt.Printf("UploadTest %d has been complete\n", i)
 	}
+	fmt.Println("Whole UnloadTest has been complete")
 }
 
 func UploadAfew(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
@@ -487,6 +506,7 @@ func UploadAfew(response chan *types.TelegramResponse, request chan *formatter.F
 		}
 		fmt.Printf("UploadTest %d has been complete\n", i)
 	}
+	fmt.Println("Whole UnloadTest has been complete")
 }
 
 func CheckTheRoutine() {
@@ -499,12 +519,12 @@ func JustWelcome(response chan *types.TelegramResponse, request chan *formatter.
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 3; j++ {
 			preparationdata.WelcomeAct(i, j, response, output)
-			PreparationDatabaseForWelcome(i)
+			prparDbForWelcome(i)
 			fmtogram.Worker(response, output, request)
 			r := <-request
-			AcceptanceOfResOfWelcome(r, i, j)
+			accOfResOfWelcome(r, i, j)
 		}
-		fmt.Printf("WelcomeTest %d by counter: %d has been completed\n", i+1, i)
+		fmt.Printf("WelcomeTest %d has been complete\n", i)
 	}
 }
 
@@ -513,11 +533,52 @@ func RegToOneGame(response chan *types.TelegramResponse, request chan *formatter
 	for i := 0; i < 5; i++ {
 		for j := 0; j < 3; j++ {
 			preparationdata.RegToGamesAct(i, j, response, output)
-			PreparationDatabaseForRegToGames(i)
+			prparDbForRegToGames(i)
 			fmtogram.Worker(response, output, request)
 			r := <-request
-			AcceptanceOfResOfRegToGames(r, i, j)
+			accOfResOfRegToGames(r, i, j)
 		}
-		fmt.Printf("RegToGamesTest %d by counter: %d has been completed\n", i+1, i)
+		fmt.Printf("RegToGamesTest %d has been complete\n", i)
+	}
+}
+
+func ChangeLanguage(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
+	defer database.DeleteUser(userIdT5)
+	ts := new(preparationdata.TestStuct)
+	ts.Query = make(chan *types.TelegramResponse, 1)
+	ts.Response = make(chan *types.MessageResponse, 1)
+	ts.ArrFuncTr = []func() *types.TelegramResponse{settings.ChOpt, settings.ChLang}
+	ts.ArrFuncMr = []func() *types.MessageResponse{settings.MesResp}
+	ts.ArrFuncTrash = []func() *types.TelegramResponse{settings.Trash, settings.Trash2}
+	for ts.TRcount < 2 {
+		ts.Trshcount = 0
+		for ts.Trshcount < 3 {
+			ts.TheHead()
+			//preparationdata.SetActChanLang(i, j, response, output, arrfunc)
+			prparDbForChangeLang(ts.TRcount)
+			fmtogram.Worker(ts.Query, ts.Response, request)
+			r := <-request
+			accOfResOfChangeLanguage(r, ts.TRcount, ts.Trshcount)
+			ts.Trshcount++
+		}
+		fmt.Printf("ChangeLanguageTest %d has been complete\n", ts.TRcount)
+		ts.TRcount++
+	}
+}
+
+func DeleteGame(response chan *types.TelegramResponse, request chan *formatter.Formatter, output chan *types.MessageResponse) {
+	defer database.DeleteUser(userIdT5)
+	defer database.DeleteSchedule()
+	defer database.DeleteUserGames(userIdT5)
+	database.CreateUserSchedule(userIdT5)
+	for i := 0; i < 2; i++ {
+		for j := 0; j < 3; j++ {
+			preparationdata.SetActDeleteGame(i, j, response, output)
+			prparDbForDeleteGame(i)
+			fmtogram.Worker(response, output, request)
+			r := <-request
+			accOfResOfDeleteGame(r, i, j)
+		}
+		fmt.Printf("DeleteGameTest %d has been complete\n", i)
 	}
 }
