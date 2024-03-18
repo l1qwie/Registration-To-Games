@@ -5,7 +5,6 @@ import (
 )
 
 func PresentationScheduele(fm *formatter.Formatter) {
-	//fmt.Println("ASIOKLDJOUIHJKSADHJKASD")
 	fm.AssertChatId(477, true)
 	fm.AssertString("Выберите интересующую вас игру", true)
 	fm.AssertInlineKeyboard([]int{1, 2, 1}, []string{"Волейбол 12-02-2025 12:00 Свободный мест осталось: 55", "<<", ">>", "Главное Меню"}, []string{"2", "previous page", "next page", "MainMenu"}, []string{"cmd", "cmd", "cmd", "cmd"}, true)

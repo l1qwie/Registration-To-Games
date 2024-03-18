@@ -4,14 +4,14 @@ import (
 	"RegistrationToGames/fmtogram/formatter"
 )
 
-func TestGreetingsToUser(fm *formatter.Formatter) {
+func GreetingsToUser(fm *formatter.Formatter) {
 	fm.AssertChatId(456, true)
 	fm.AssertString("Добро пожаловать в нашего бота! Этот бот предназначен для регистрации на спортивные игры в Стамбуле, но для начала вам нужно зарегистрироваться у нас!", true)
 	fm.AssertInlineKeyboard([]int{1}, []string{"Зарегистрироваться"}, []string{"GoReg"}, []string{"cmd"}, true)
 	fm.AssertEditMessageId(8888, true)
 }
 
-func TestShowRules(fm *formatter.Formatter) {
+func ShowTheRules(fm *formatter.Formatter) {
 	fm.AssertChatId(456, true)
 	fm.AssertString(`Добро Пожаловать в нашу дружную компанию! Далее я вам напишу некоторые правила, и рекомендации как пользоваться ботом:\n1. Просмотр расписания.\n     
 	- Предельно просто. Вы сможете посмтореть полное расписание всех возможных игр.\n2. Регистрация на игру.\n      
@@ -24,7 +24,7 @@ func TestShowRules(fm *formatter.Formatter) {
 	fm.AssertEditMessageId(8888, true)
 }
 
-func TestWelcomeToMainMenu(fm *formatter.Formatter) {
+func WelcomeToMainMenu(fm *formatter.Formatter) {
 	fm.AssertChatId(456, true)
 	fm.AssertString("Добро пожаловать в гланое меню", true)
 	fm.AssertInlineKeyboard([]int{1, 1, 1, 1}, []string{"Просмотр расписания", "Регистрация на игру", "Наши фото и видео", "Настройки | Мои игры"},

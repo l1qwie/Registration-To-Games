@@ -2,8 +2,8 @@ package welcome
 
 import "RegistrationToGames/fmtogram/types"
 
-func JustTrash(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
+func defTR() *types.TelegramResponse {
+	return &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
 			{
@@ -17,12 +17,14 @@ func JustTrash(responses chan<- *types.TelegramResponse, output chan<- *types.Me
 						Username: "johndoe",
 						Language: "ru",
 					},
-					Text: "Hello World ma booooooooy",
 				},
 			},
 		},
 	}
-	output <- &types.MessageResponse{
+}
+
+func defMR() *types.MessageResponse {
+	return &types.MessageResponse{
 		Ok: true,
 		Result: types.Message{
 			MessageId: 8888,
@@ -34,130 +36,36 @@ func JustTrash(responses chan<- *types.TelegramResponse, output chan<- *types.Me
 	}
 }
 
-func JustTrash2(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   456,
-						IsBot:    false,
-						Name:     "John",
-						LastName: "Doe",
-						Username: "johndoe",
-						Language: "ru",
-					},
-					Text: "Owww, nooo, you are the best human in the world!",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 8888,
-			Chat: types.Chat{
-				Id: 456,
-			},
-			Photo: []types.Photo{},
-		},
-	}
+func Trash() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "Hello World ma booooooooy"
+	return tr
 }
 
-func Start(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   456,
-						IsBot:    false,
-						Name:     "John",
-						LastName: "Doe",
-						Username: "johndoe",
-						Language: "ru",
-					},
-					Text: "/start",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 8888,
-			Chat: types.Chat{
-				Id: 456,
-			},
-			Photo: []types.Photo{},
-		},
-	}
+func Trash2() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "Owww, nooo, you are the best human in the world!"
+	return tr
 }
 
-func QueryForShowRules(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   456,
-						IsBot:    false,
-						Name:     "John",
-						LastName: "Doe",
-						Username: "johndoe",
-						Language: "ru",
-					},
-					Text: "GoReg",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 8888,
-			Chat: types.Chat{
-				Id: 456,
-			},
-			Photo: []types.Photo{},
-		},
-	}
+func Start() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "/start"
+	return tr
 }
 
-func QueryForWelcomeToMainMenu(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
-		Ok: true,
-		Result: []types.TelegramUpdate{
-			{
-				UpdateID: 123,
-				Message: types.InfMessage{
-					TypeFrom: types.User{
-						UserID:   456,
-						IsBot:    false,
-						Name:     "John",
-						LastName: "Doe",
-						Username: "johndoe",
-						Language: "ru",
-					},
-					Text: "GoNext",
-				},
-			},
-		},
-	}
-	output <- &types.MessageResponse{
-		Ok: true,
-		Result: types.Message{
-			MessageId: 8888,
-			Chat: types.Chat{
-				Id: 456,
-			},
-			Photo: []types.Photo{},
-		},
-	}
+func ShowRules() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "GoReg"
+	return tr
+}
+
+func ToMainMenu() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "GoNext"
+	return tr
+}
+
+func MesResp() *types.MessageResponse {
+	return defMR()
 }

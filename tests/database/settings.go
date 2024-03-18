@@ -84,7 +84,7 @@ func AfterChooseOptionOnlyLang(userId int) {
 func AfterChooseLanguage(userId int) {
 	user := withOutS(userId)
 	if user.Level != 3 {
-		panic("user.Level != ")
+		panic("user.Level != 3")
 	}
 	if user.Language != "en" {
 		panic("user.Language != `en`")

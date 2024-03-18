@@ -87,6 +87,28 @@ func AfterChooseDirection(userId int) {
 	}
 }
 
+func AfterNoChOnlyUploadAfew(userId int) {
+	user := withoutM(userId)
+	if user.Level != 2 {
+		panic("user.Level != 2")
+	}
+	if user.Media.Interval != "" {
+		panic("user.Media.Interval != ``")
+	}
+	if user.Media.Direction != "upload" {
+		panic("user.Media.Direction != ``")
+	}
+	if user.Media.Id != "" {
+		panic("user.Media.Id != ``")
+	}
+	if user.Media.DelGameId != 0 {
+		panic("user.Media.DelGameId != 0")
+	}
+	if user.Media.Counter != 0 {
+		panic("user.Media.Counter != 0")
+	}
+}
+
 func AfterChooseMediaGameUnload(userId int) {
 	user := withoutM(userId)
 	if user.Level != 3 {
@@ -131,7 +153,7 @@ func AfterUnloadone(userId int) {
 	}
 }
 
-func AfterUnloadAlot(userId int) {
+func AfterUnloadAfew(userId int) {
 	user := withoutM(userId)
 	if user.Level != 4 {
 		panic("user.Level != 4")
@@ -154,28 +176,6 @@ func AfterUnloadAlot(userId int) {
 }
 
 func AfterNoChoiseOnlyUpload(userId int) {
-	user := withoutM(userId)
-	if user.Level != 1 {
-		panic("user.Level != 1")
-	}
-	if user.Media.Interval != "" {
-		panic("user.Media.Interval != ``")
-	}
-	if user.Media.Direction != "" {
-		panic("user.Media.Direction != ``")
-	}
-	if user.Media.Id != "" {
-		panic("user.Media.Id != ``")
-	}
-	if user.Media.DelGameId != 0 {
-		panic("user.Media.DelGameId != 0")
-	}
-	if user.Media.Counter != 0 {
-		panic("user.Media.Counter != 0")
-	}
-}
-
-func AfterChooseGame(userId int) {
 	user := withoutM(userId)
 	if user.Level != 2 {
 		panic("user.Level != 2")
@@ -220,50 +220,6 @@ func AfterWaitingYourMediaOne(userId int) {
 }
 
 func AfterWaitingYourMediaAfew(userId int) {
-	user := withoutM(userId)
-	if user.Level != 3 {
-		panic("user.Level != 3")
-	}
-	if user.Media.Interval != "" {
-		panic("user.Media.Interval != ``")
-	}
-	if user.Media.Direction != "upload" {
-		panic("user.Media.Direction != `upload`")
-	}
-	if user.Media.Id != "" {
-		panic("user.Media.Id != ``")
-	}
-	if user.Media.DelGameId != 1 {
-		panic("user.Media.DelGameId != 1")
-	}
-	if user.Media.Counter != 0 {
-		panic("user.Media.Counter != 0")
-	}
-}
-
-func AfterChooseMediaGameUploadOne(userId int) {
-	user := withoutM(userId)
-	if user.Level != 3 {
-		panic("user.Level != 3")
-	}
-	if user.Media.Interval != "" {
-		panic("user.Media.Interval != ``")
-	}
-	if user.Media.Direction != "upload" {
-		panic("user.Media.Direction != `upload`")
-	}
-	if user.Media.Id != "" {
-		panic("user.Media.Id != ``")
-	}
-	if user.Media.DelGameId != 10 {
-		panic("user.Media.DelGameId != 10")
-	}
-	if user.Media.Counter != 0 {
-		panic("user.Media.Counter != 0")
-	}
-}
-
-func AfterChooseMediaGameUploadAfew(userId int) {
 	user := withoutM(userId)
 	if user.Level != 3 {
 		panic("user.Level != 3")

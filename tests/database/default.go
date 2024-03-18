@@ -1,8 +1,6 @@
 package database
 
 import (
-	"RegistrationToGames/bot/bottypes"
-	"RegistrationToGames/bot/routine"
 	"RegistrationToGames/fmtogram/types"
 	"database/sql"
 
@@ -16,8 +14,15 @@ func DeleteUser(userId int) {
 	}
 }
 
+func CreateUser(userId int) {
+	_, err := types.Db.Exec("INSERT INTO Users (userId, action, language, level) VALUES ($1, $2, $3, $4)", userId, "registration", "ru", 0)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func DeleteSchedule() {
-	_, err := types.Db.Exec("DELETE FROM Schedule WHERE gameId = 1 OR gameId = 2 OR gameId = 3 OR gameId = 4")
+	_, err := types.Db.Exec("DELETE FROM Schedule WHERE gameId = 0 OR gameId = 1 OR gameId = 2 OR gameId = 3 OR gameId = 4")
 	if err != nil {
 		panic(err)
 	}
@@ -50,34 +55,6 @@ func UpdateLevel(level, userId int) {
 		panic(err)
 	}
 
-}
-
-func InsertGameId(gameId, userId int) {
-	_, err := types.Db.Exec("UPDATE Users SET gameId = $1 WHERE userId = $2", gameId, userId)
-	if err != nil {
-		panic(err)
-	}
-}
-
-func InsertSeats(seats, userId int) {
-	_, err := types.Db.Exec("UPDATE Users SET seats = $1 WHERE userId = $2", seats, userId)
-	if err != nil {
-		panic(err)
-	}
-}
-
-func InsertPayment(payment string, userId int) {
-	_, err := types.Db.Exec("UPDATE Users SET payment = $1 WHERE userId = $2", payment, userId)
-	if err != nil {
-		panic(err)
-	}
-}
-
-func DeleteUserGames(userId int) {
-	_, err := types.Db.Exec("DELETE FROM GamesWithUsers WHERE userId = $1", userId)
-	if err != nil {
-		panic(err)
-	}
 }
 
 func CreateUserSchedule(userId int) {
@@ -268,21 +245,6 @@ func CreateSchedule() (err error) {
 	return err
 }
 
-func FoundGame(gameId int) bool {
-	rows, err := types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE gameId = $1", gameId)
-	if err != nil {
-		panic(err)
-	}
-	rows.Next()
-	counter := 0
-	err = rows.Scan(&counter)
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
-	return counter > 0
-}
-
 func DeleteGame(gameId int) {
 	_, err := types.Db.Exec("DELETE FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
@@ -294,76 +256,5 @@ func DeleteMedia(gameId int) {
 	_, err := types.Db.Exec("DELETE FROM MediaRepository WHERE gameId = $1", gameId)
 	if err != nil {
 		panic(err)
-	}
-}
-
-func AfterMainMenuCheckDb(userId int) {
-	var (
-		err  error
-		user *bottypes.User
-	)
-	user = new(bottypes.User)
-	user.Id = userId
-	err = routine.DbRetrieveUser(user)
-	if err != nil {
-		panic(err)
-	}
-	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
-	if err != nil {
-		panic(err)
-	}
-	if user.ExMessageId != 8888 {
-		panic("user.ExMessageId != 8888")
-	}
-	if user.Id != 456 {
-		panic("user.Id != 456")
-	}
-	if user.Language != "ru" {
-		panic("user.Language != `ru`")
-	}
-	if user.Reg.GameId != 0 {
-		panic("user.Reg.GameId != 0")
-	}
-	if user.LaunchPoint != 0 {
-		panic("user.LaunchPoint != 0")
-	}
-	if user.Act != "divarication" {
-		panic("user.Act != `divarication`")
-	}
-	if user.Level != 3 {
-		panic("user.Level != 3")
-	}
-	if user.Reg.Seats != 0 {
-		panic("user.Reg.Seats != 0")
-	}
-	if user.Reg.Payment != "" {
-		panic("user.Reg.Payment != ``")
-	}
-	if user.Media.Interval != "" {
-		panic("user.Media.Interval != ``")
-	}
-	if user.Media.Direction != "" {
-		panic("user.Media.Direction != ``")
-	}
-	if user.Media.Limit != 7 {
-		panic("user.Media.Limit != 7")
-	}
-	if user.Media.Id != "" {
-		panic("user.Media.Id != ``")
-	}
-	if user.Media.Counter != 0 {
-		panic("user.Media.Counter != 0")
-	}
-	if user.UserRec.Changeable != "" {
-		panic("user.UserRec.Changeable != ``")
-	}
-	if user.UserRec.ActGame != "" {
-		panic("user.UserRec.ActGame != ``")
-	}
-	if user.UserRec.WillChangeable != "" {
-		panic("user.UserRec.WillChangeable != ``")
-	}
-	if user.UserRec.NewPay != "" {
-		panic("user.UserRec.NewPay != ``")
 	}
 }

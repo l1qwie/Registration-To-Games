@@ -97,12 +97,12 @@ func WaitingYourMedia(user *bottypes.User, fm *formatter.Formatter) {
 			}
 		} else {
 			user.Request = user.Media.Direction
-			ChooseMediaGame(user, fm, "")
+			ChooseMediaGame(user, fm, dict["UploadGames"])
 		}
 	} else {
 		user.LaunchPoint = forall.CheckPages(user.Request, user.LaunchPoint)
 		user.Request = user.Media.Direction
-		ChooseMediaGame(user, fm, "")
+		ChooseMediaGame(user, fm, dict["UploadGames"])
 	}
 }
 

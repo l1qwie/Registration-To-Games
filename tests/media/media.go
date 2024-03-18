@@ -25,20 +25,6 @@ func NoChoiseOnlyUploadAfew(fm *formatter.Formatter) {
 	fm.AssertChatId(499, true)
 }
 
-func ChooseGameOne(fm *formatter.Formatter) {
-	fm.AssertString("Выберите интересующую вас игру", true)
-	fm.AssertInlineKeyboard([]int{1}, []string{"Волейбол 12-02-2024 12:00"}, []string{"10"}, []string{"cmd"}, true)
-	fm.AssertEditMessageId(66666, true)
-	fm.AssertChatId(499, true)
-}
-
-func ChooseGameAfew(fm *formatter.Formatter) {
-	fm.AssertString("Выберите интересующую вас игру", true)
-	fm.AssertInlineKeyboard([]int{1, 1, 1, 1}, []string{"Волейбол 02-02-2025 08:00", "Волейбол 02-02-2025 08:00", "Футбол 12-04-2025 18:00", "Волейбол 12-02-2026 11:00"}, []string{"4", "3", "2", "1"}, []string{"cmd", "cmd", "cmd", "cmd"}, true)
-	fm.AssertEditMessageId(66666, true)
-	fm.AssertChatId(499, true)
-}
-
 func ChooseMediaGameUnload(fm *formatter.Formatter) {
 	fm.AssertString("Выберите интересующую вас игру", true)
 	fm.AssertInlineKeyboard([]int{1}, []string{"Футбол 12-02-2024 12:00"}, []string{"10"}, []string{"cmd"}, true)
@@ -49,13 +35,6 @@ func ChooseMediaGameUnload(fm *formatter.Formatter) {
 func ChooseMediaGamesUnload(fm *formatter.Formatter) {
 	fm.AssertString("Выберите интересующую вас игру", true)
 	fm.AssertInlineKeyboard([]int{1, 1, 1, 1}, []string{"Волейбол 02-02-2025 08:00", "Волейбол 02-02-2025 08:00", "Футбол 12-04-2025 18:00", "Волейбол 12-02-2026 11:00"}, []string{"4", "3", "2", "1"}, []string{"cmd", "cmd", "cmd", "cmd"}, true)
-	fm.AssertEditMessageId(66666, true)
-	fm.AssertChatId(499, true)
-}
-
-func ChooseMediaGameUpload(fm *formatter.Formatter) {
-	fm.AssertString("Выберите интересующую вас игру", true)
-	fm.AssertInlineKeyboard([]int{1}, []string{"Волейбол 12-02-2024 12:00"}, []string{"10"}, []string{"cmd"}, true)
 	fm.AssertEditMessageId(66666, true)
 	fm.AssertChatId(499, true)
 }

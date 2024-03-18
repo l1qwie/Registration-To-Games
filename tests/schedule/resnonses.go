@@ -4,8 +4,8 @@ import (
 	"RegistrationToGames/fmtogram/types"
 )
 
-func QueryForSeeSchedule(responses chan<- *types.TelegramResponse, output chan<- *types.MessageResponse) {
-	responses <- &types.TelegramResponse{
+func SeeSchedule() *types.TelegramResponse {
+	return &types.TelegramResponse{
 		Ok: true,
 		Result: []types.TelegramUpdate{
 			{
@@ -24,7 +24,10 @@ func QueryForSeeSchedule(responses chan<- *types.TelegramResponse, output chan<-
 			},
 		},
 	}
-	output <- &types.MessageResponse{
+}
+
+func defMR() *types.MessageResponse {
+	return &types.MessageResponse{
 		Ok: true,
 		Result: types.Message{
 			MessageId: 9999,
@@ -34,4 +37,8 @@ func QueryForSeeSchedule(responses chan<- *types.TelegramResponse, output chan<-
 			Photo: []types.Photo{},
 		},
 	}
+}
+
+func MesResp() *types.MessageResponse {
+	return defMR()
 }
