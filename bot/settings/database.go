@@ -6,6 +6,7 @@ import (
 	"RegistrationToGames/bot/forall"
 	"RegistrationToGames/fmtogram/types"
 	"database/sql"
+	"fmt"
 )
 
 func FindUserGames(userId int) bool {
@@ -108,11 +109,12 @@ func delTheGame(seats, gameId, userId int) {
 }
 
 func selPaymethod(gameId, userId int) bool {
-	rows, err := types.Db.Query("SELECT payment FROM GameWithUsers WHERE gameId = $1 AND userId = $2 AND status = 1", gameId, userId)
+	rows, err := types.Db.Query("SELECT payment FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND status = 1", gameId, userId)
 	if err != nil {
 		panic(err)
 	}
 	p := ""
+	rows.Next()
 	err = rows.Scan(&p)
 	if err != nil {
 		panic(err)
@@ -138,6 +140,7 @@ func findSomeSeats(gameId, userId, wantS int) (int, int, bool) {
 }
 
 func updtPayment(gameId, userId int, paymeth string) {
+	fmt.Println(paymeth, gameId, userId)
 	_, err := types.Db.Exec("UPDATE GamesWithUsers SET payment = $1 WHERE gameId = $2 AND userId = $3 AND status = 1", paymeth, gameId, userId)
 	if err != nil {
 		panic(err)
@@ -145,7 +148,7 @@ func updtPayment(gameId, userId int, paymeth string) {
 }
 
 func updtSeats(gameId, userId, genS, oldS, newS int) {
-	_, err := types.Db.Exec("UPDATE GameWithUsers SET seats = $1 WHERE gameId = $2 AND userId = $3", newS, gameId, userId)
+	_, err := types.Db.Exec("UPDATE GamesWithUsers SET seats = $1 WHERE gameId = $2 AND userId = $3", newS, gameId, userId)
 	if err != nil {
 		panic(err)
 	}

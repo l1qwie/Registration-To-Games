@@ -163,10 +163,9 @@ func AfterChOrDelGame(userId int) {
 	if user.UserRec.NewPay != "" {
 		panic("user.UserRec.NewPay != ``")
 	}
-	if user.UserRec.GameId != 1 {
-		panic("user.UserRec.GameId != 1")
+	if user.UserRec.GameId != 2 {
+		panic("user.UserRec.GameId != 2")
 	}
-
 }
 
 func AfterDelGame(userId int) {
@@ -197,5 +196,123 @@ func AfterDelGame(userId int) {
 	}
 	if !checkDelGame(1, user.Id) {
 		panic("The game wasn't deleted")
+	}
+}
+
+func AfterChangeWay(userId int) {
+	user := withOutS(userId)
+	if user.Level != 4 {
+		panic("user.Level != 4")
+	}
+	if user.Language != "ru" {
+		panic("user.Language != `ru`")
+	}
+	if user.Act != "settings" {
+		panic("user.Act != `settings`")
+	}
+	if user.UserRec.Changeable != "" {
+		panic("user.UserRec.Changeable != ``")
+	}
+	if user.UserRec.ActGame != "" {
+		panic("user.UserRec.ActGame != ``")
+	}
+	if user.UserRec.WillChangeable != "" {
+		panic("user.UserRec.WillChangeable != ``")
+	}
+	if user.UserRec.NewPay != "" {
+		panic("user.UserRec.NewPay != ``")
+	}
+	if user.UserRec.GameId != 2 {
+		panic("user.UserRec.GameId != 2")
+	}
+}
+
+func AfterWhPayment(userId int) {
+	user := withOutS(userId)
+	if user.Level != 5 {
+		panic("user.Level != 5")
+	}
+	if user.Language != "ru" {
+		panic("user.Language != `ru`")
+	}
+	if user.Act != "settings" {
+		panic("user.Act != `settings`")
+	}
+	if user.UserRec.Changeable != "payment" {
+		panic("user.UserRec.Changeable != `payment`")
+	}
+	if user.UserRec.ActGame != "" {
+		panic("user.UserRec.ActGame != ``")
+	}
+	if user.UserRec.WillChangeable != "" {
+		panic("user.UserRec.WillChangeable != ``")
+	}
+	if user.UserRec.NewPay != "" {
+		panic("user.UserRec.NewPay != ``")
+	}
+	if user.UserRec.GameId != 1 {
+		panic("user.UserRec.GameId != 1")
+	}
+}
+
+func AfterPBCash(userId int) {
+	user := withOutS(userId)
+	if user.Level != 3 {
+		panic("user.Level != 3")
+	}
+	if user.Language != "ru" {
+		panic("user.Language != `ru`")
+	}
+	if user.Act != "divarication" {
+		panic("user.Act != `divarication`")
+	}
+	if user.UserRec.Changeable != "payment" {
+		panic("user.UserRec.Changeable != `payment`")
+	}
+	if user.UserRec.ActGame != "" {
+		panic("user.UserRec.ActGame != ``")
+	}
+	if user.UserRec.WillChangeable != "" {
+		panic("user.UserRec.WillChangeable != ``")
+	}
+	if user.UserRec.NewPay != "" {
+		panic("user.UserRec.NewPay != ``")
+	}
+	if user.UserRec.GameId != 0 {
+		panic("user.UserRec.GameId != 0")
+	}
+	if !checkChangePaymethodCash(userId, 2) {
+		panic("Paymethod wasn't changed to cash")
+	}
+}
+
+func AfterPBCard(userId int) {
+	user := withOutS(userId)
+	if user.Level != 3 {
+		panic("user.Level != 3")
+	}
+	if user.Language != "ru" {
+		panic("user.Language != `ru`")
+	}
+	if user.Act != "divarication" {
+		panic("user.Act != `divarication`")
+	}
+	if user.UserRec.Changeable != "payment" {
+		panic("user.UserRec.Changeable != `payment`")
+	}
+	if user.UserRec.ActGame != "" {
+		panic("user.UserRec.ActGame != ``")
+	}
+	if user.UserRec.WillChangeable != "" {
+		panic("user.UserRec.WillChangeable != ``")
+	}
+	if user.UserRec.NewPay != "" {
+		panic("user.UserRec.NewPay != ``")
+	}
+	if user.UserRec.GameId != 0 {
+		panic("user.UserRec.GameId != 0")
+	}
+	if !checkChangePaymethodCard(userId, 1) {
+		panic("Paymethod wasn't changed to card")
 	}
 }

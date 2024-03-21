@@ -275,6 +275,34 @@ func checkDelGame(gameId, userId int) bool {
 	return cc > 0
 }
 
+func checkChangePaymethodCash(userId, gameId int) bool {
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND status = 1 AND payment = 'cash'", gameId, userId)
+	if err != nil {
+		panic(err)
+	}
+	cc := 0
+	rows.Next()
+	err = rows.Scan(&cc)
+	if err != nil {
+		panic(err)
+	}
+	return cc > 0
+}
+
+func checkChangePaymethodCard(userId, gameId int) bool {
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND status = 1 AND payment = 'card'", gameId, userId)
+	if err != nil {
+		panic(err)
+	}
+	cc := 0
+	rows.Next()
+	err = rows.Scan(&cc)
+	if err != nil {
+		panic(err)
+	}
+	return cc > 0
+}
+
 func CreateSchedule() (err error) {
 	var request string
 	for i := 0; i < 4; i++ {

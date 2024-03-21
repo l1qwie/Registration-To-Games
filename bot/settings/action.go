@@ -153,23 +153,39 @@ func DirForRec(user *bottypes.User, fm *formatter.Formatter) {
 	}
 }
 
+func changeToCard(user *bottypes.User, fm *formatter.Formatter) {
+	dict := dictionary.Dictionary[user.Language]
+	user.Act = "divarication"
+	user.Level = 3
+	updtPayment(user.UserRec.GameId, user.Id, user.Request)
+	fm.SetIkbdDim([]int{1, 1})
+	fm.WriteInlineButtonUrl(dict["pay"], "https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3")
+	fm.WriteInlineButtonCmd(dict["MainMenu"], "MainMenu")
+	fm.WriteString(dict["ThxForChange"])
+	fm.WriteChatId(user.Id)
+}
+
 func chPayment(user *bottypes.User, fm *formatter.Formatter) {
 	var (
-		dict         map[string]string
-		names, datas []string
+	//dict map[string]string
+	//names, datas []string
 	)
-	user.Level = 5
 	user.UserRec.Changeable = user.Request
-	dict = dictionary.Dictionary[user.Language]
+	dict := dictionary.Dictionary[user.Language]
 	if selPaymethod(user.UserRec.GameId, user.Id) {
-		names = []string{dict["payByCard"], dict["MainMenu"]}
-		datas = []string{"card", "MainMenu"}
+		user.Request = "card"
+		changeToCard(user, fm)
+		//names = []string{dict["payByCard"], dict["MainMenu"]}
+		//datas = []string{"card", "MainMenu"}
 	} else {
-		names = []string{dict["payByCash"], dict["MainMenu"]}
-		datas = []string{"cash", "MainMenu"}
+		updtPayment(user.UserRec.GameId, user.Id, "cash")
+		forall.GoToMainMenu(user, fm, dict["ThxForChange"])
+		//names = []string{dict["payByCash"], dict["MainMenu"]}
+		//datas = []string{"cash", "MainMenu"}
 	}
-	forall.SetTheKeyboard(fm, []int{1, 1}, names, datas)
-	fm.WriteString(dict["ChoosePaymethod"])
+	//forall.SetTheKeyboard(fm, []int{1, 1}, names, datas)
+	//fm.WriteString(dict["ChoosePaymethod"])
+	fm.WriteChatId(user.Id)
 }
 
 func chMySeats(user *bottypes.User, fm *formatter.Formatter) {
@@ -200,6 +216,8 @@ func Chengeable(user *bottypes.User, fm *formatter.Formatter) {
 func confPayment(user *bottypes.User, fm *formatter.Formatter) {
 	dict := dictionary.Dictionary[user.Language]
 	if user.Request == "card" {
+		user.Act = "divarication"
+		user.Level = 3
 		updtPayment(user.UserRec.GameId, user.Id, user.Request)
 		fm.SetIkbdDim([]int{1, 1})
 		fm.WriteInlineButtonUrl(dict["pay"], "https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3")

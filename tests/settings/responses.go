@@ -76,13 +76,31 @@ func ChGame() *types.TelegramResponse {
 
 func ChDelGame() *types.TelegramResponse {
 	tr := defTR()
-	tr.Result[0].Message.Text = "1"
+	tr.Result[0].Message.Text = "2"
 	return tr
 }
 
-func ChOrDel() *types.TelegramResponse {
+func Del() *types.TelegramResponse {
 	tr := defTR()
 	tr.Result[0].Message.Text = "del"
+	return tr
+}
+
+func Change() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "change"
+	return tr
+}
+
+func Payment() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "payment"
+	return tr
+}
+
+func Paymethod() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "card"
 	return tr
 }
 

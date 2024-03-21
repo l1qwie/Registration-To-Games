@@ -52,6 +52,33 @@ func ChOrDelGame(fm *formatter.Formatter) {
 	everyTime(fm)
 }
 
+func ChangeWay(fm *formatter.Formatter) {
+	fm.AssertString("Что вы хотите изменить?", true)
+	fm.AssertInlineKeyboard([]int{1, 1, 1}, []string{"Способ оплаты", "Количество человек со мной", "Главное Меню"},
+		[]string{"payment", "myseats", "MainMenu"}, []string{"cmd", "cmd", "cmd"}, true)
+	everyTime(fm)
+}
+
+func PayByCard(fm *formatter.Formatter) {
+	fm.AssertString("Все успешно изменено\n\n", true)
+	fm.AssertInlineKeyboard([]int{1, 1}, []string{"Оплатить", "Главное Меню"},
+		[]string{"https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3", "MainMenu"}, []string{"url", "cmd"}, true)
+	everyTime(fm)
+}
+
+func PayByCash(fm *formatter.Formatter) {
+	fm.AssertString("Все успешно изменено\n\n", true)
+	fm.AssertInlineKeyboard([]int{1, 1, 1, 1}, []string{"Просмотр расписания", "Регистрация на игру", "Наши фото и видео", "Настройки | Мои игры"},
+		[]string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}, []string{"cmd", "cmd", "cmd", "cmd"}, true)
+	everyTime(fm)
+}
+
+func WhichPayment(fm *formatter.Formatter) {
+	fm.AssertString("Выберите способ оплаты", true)
+	fm.AssertInlineKeyboard([]int{1, 1}, []string{"Онлайн оплата", "Главное Меню"}, []string{"card", "MainMenu"}, []string{"cmd", "cmd"}, true)
+	everyTime(fm)
+}
+
 func DelGame(fm *formatter.Formatter) {
 	fm.AssertString("Ваша бронь на игру успешно удалена\n\n", true)
 	fm.AssertInlineKeyboard([]int{1, 1, 1, 1}, []string{"Просмотр расписания", "Регистрация на игру", "Наши фото и видео", "Настройки | Мои игры"},
