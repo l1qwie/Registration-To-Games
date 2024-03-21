@@ -12,7 +12,7 @@ import (
 func ShowTheSchedule(user *bottypes.User, fm *formatter.Formatter) {
 	var (
 		dict     map[string]string
-		schedule []*forall.Game
+		schedule []*bottypes.Game
 		mes      string
 	)
 	dict = dictionary.Dictionary[user.Language]

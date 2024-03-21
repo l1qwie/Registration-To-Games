@@ -1,27 +1,28 @@
 package registration
 
 import (
+	"RegistrationToGames/bot/bottypes"
 	"RegistrationToGames/bot/dictionary"
 	"RegistrationToGames/bot/forall"
 	"RegistrationToGames/fmtogram/types"
 	"database/sql"
 )
 
-func selectTheSchedule(limit, offset int, language string) []*forall.Game {
+func selectTheSchedule(limit, offset int, language string) []*bottypes.Game {
 	var (
 		rows           *sql.Rows
 		err            error
 		request, sport string
 		i, date, time  int
 	)
-	schedule := make([]*forall.Game, limit)
+	schedule := make([]*bottypes.Game, limit)
 	request = `SELECT gameId, sport, date, time, seats FROM Schedule WHERE (status != -1) ORDER BY Schedule DESC LIMIT $1 OFFSET $2`
 	rows, err = types.Db.Query(request, limit, offset)
 	if err != nil {
 		panic(err)
 	}
 	for rows.Next() {
-		schedule[i] = &forall.Game{}
+		schedule[i] = &bottypes.Game{}
 		err = rows.Scan(&schedule[i].Id, &sport, &date, &time, &schedule[i].Seats)
 		if err != nil {
 			panic(err)
@@ -103,14 +104,14 @@ func completeRegistration(userId, gameId, seats int, payment string) (err error)
 	return err
 }
 
-func selectDetailOfGame(gameId int, language string) (details *forall.Game) {
+func selectDetailOfGame(gameId int, language string) (details *bottypes.Game) {
 	var (
 		rows       *sql.Rows
 		err        error
 		request    string
 		date, time int
 	)
-	details = new(forall.Game)
+	details = new(bottypes.Game)
 	request = `SELECT gameId, sport, date, time, seats, latitude, longitude, address, price, currency FROM Schedule WHERE gameId = $1`
 	rows, err = types.Db.Query(request, gameId)
 	if err != nil {

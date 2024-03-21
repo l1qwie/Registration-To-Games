@@ -56,6 +56,12 @@ func ChOpt() *types.TelegramResponse {
 	return tr
 }
 
+func WhatOpt() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "records"
+	return tr
+}
+
 func ChLang() *types.TelegramResponse {
 	tr := defTR()
 	tr.Result[0].Message.Text = "en"
@@ -71,6 +77,12 @@ func ChGame() *types.TelegramResponse {
 func ChDelGame() *types.TelegramResponse {
 	tr := defTR()
 	tr.Result[0].Message.Text = "1"
+	return tr
+}
+
+func ChOrDel() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "del"
 	return tr
 }
 

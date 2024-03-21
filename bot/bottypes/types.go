@@ -42,3 +42,18 @@ type User struct {
 	Media        Media
 	UserRec      UserRec
 }
+
+type Game struct {
+	Id            int
+	Sport         string
+	Date          string
+	Time          string
+	Seats         int
+	Price         int
+	Currency      string
+	Address       string
+	Lattitude     float32
+	Longitude     float32
+	Payment       string
+	StatusPayment string
+}

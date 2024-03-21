@@ -115,11 +115,16 @@ func Settings(user *bottypes.User, fm *formatter.Formatter) {
 	if user.Level == START {
 		settings.ChooseOptions(user, fm)
 	} else if user.Level == LEVEL1 {
-		//
-	} else if user.Level == LEVEL2 {
 		settings.WhatWay(user, fm)
+	} else if user.Level == LEVEL2 {
+		settings.ChangeOrDel(user, fm)
+	} else if user.Level == LEVEL3 {
+		settings.DirForRec(user, fm)
+	} else if user.Level == LEVEL4 {
+		settings.Chengeable(user, fm)
+	} else if user.Level == LEVEL5 {
+		settings.Confirm(user, fm)
 	}
-	// I'll be here later
 }
 
 func Edit(user *bottypes.User, fm *formatter.Formatter) (exMessageId int) {

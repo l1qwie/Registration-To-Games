@@ -8,19 +8,6 @@ import (
 	"strconv"
 )
 
-type Game struct {
-	Id        int
-	Sport     string
-	Date      string
-	Time      string
-	Seats     int
-	Price     int
-	Currency  string
-	Address   string
-	Lattitude float32
-	Longitude float32
-}
-
 func FromIntToStrDate(numberDate int) (date string) {
 	var (
 		year, month, day       int
@@ -57,11 +44,10 @@ func FromIntToStrTime(numberTime int) (time string) {
 	)
 	hour = numberTime / 100
 	minute = (numberTime - (hour * 100))
-
-	if hour <= 10 {
+	if hour < 10 {
 		hourString = fmt.Sprintf("%d%d", 0, hour)
 	}
-	if minute <= 10 {
+	if minute < 10 {
 		minuteString = fmt.Sprintf("%d%d", 0, minute)
 	}
 
@@ -74,7 +60,6 @@ func FromIntToStrTime(numberTime int) (time string) {
 	} else if hourString == "" && minuteString == "" {
 		time = fmt.Sprintf("%d:%d", hour, minute)
 	}
-
 	return time
 }
 
@@ -125,4 +110,16 @@ func CheckPages(req string, lp int) int {
 	}
 
 	return lp
+}
+
+func Seats(hm int, fm *formatter.Formatter) {
+	crd := make([]int, hm)
+	names := make([]string, hm)
+	datas := make([]string, hm)
+	for i := range crd {
+		crd[i] = 1
+		names[i] = fmt.Sprint(i + 1)
+		datas[i] = fmt.Sprint(i + 1)
+	}
+	SetTheKeyboard(fm, crd, names, datas)
 }

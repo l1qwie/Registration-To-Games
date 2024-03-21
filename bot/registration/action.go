@@ -29,7 +29,7 @@ func SeatsAreFull(user *bottypes.User, fm *formatter.Formatter) {
 
 func PresentationScheduele(user *bottypes.User, fm *formatter.Formatter) {
 	var (
-		sch            []*forall.Game
+		sch            []*bottypes.Game
 		coordinates    []int
 		kbName, kbData []string
 		dict           map[string]string
@@ -161,7 +161,7 @@ func ChoosePayment(user *bottypes.User, fm *formatter.Formatter) {
 
 func BestWishes(user *bottypes.User, fm *formatter.Formatter) {
 	var (
-		details        *forall.Game
+		details        *bottypes.Game
 		coordinates    []int
 		kbName, kbData []string
 		dict           map[string]string
@@ -173,7 +173,7 @@ func BestWishes(user *bottypes.User, fm *formatter.Formatter) {
 			completeRegistration(user.Id, user.Reg.GameId, user.Reg.Seats, user.Reg.Payment)
 			user.Level = 3
 			user.Act = "divarication"
-			details = new(forall.Game)
+			details = new(bottypes.Game)
 			details = selectDetailOfGame(user.Reg.GameId, user.Language)
 			cost = details.Price * user.Reg.Seats
 			kbName = []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}

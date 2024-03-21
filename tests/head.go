@@ -22,61 +22,9 @@ const (
 	userIdT4   int = 499
 	userIdT5   int = 899
 	gameId     int = 2
+	gameIdS    int = 3
 	pastgameId int = 10
-	START      int = 0
-	LEVEL1     int = 1
-	LEVEL2     int = 2
-	LEVEL3     int = 3
-	LEVEL4     int = 4
-	LEVEL5     int = 5
 )
-
-func RegToGamesTest() {
-	defer errors.MakeIntestines()
-	RegToOneGame() //with one game in database
-	fmt.Print("All RegToGamesTest were alright!\n")
-}
-
-func WelcomeTest() {
-	defer errors.MakeIntestines()
-	Welcome()
-	fmt.Print("All WelcomeTests were alright!\n")
-}
-
-func SeeTheSchedule() {
-	Schedule()
-	fmt.Print("All SeeTheScheduleTests were alright!\n")
-}
-
-func MediaTest() {
-	defer errors.MakeIntestines()
-	UnloadOne()  //with two games (to unload and upload)
-	UploadOne()  //with one games (to upload)
-	UnloadAfew() //with four games (only to unload)
-	UploadAfew() //with four games (only to upload)
-	fmt.Print("All MediaTests were alright!\n")
-}
-
-func SettingsTest() {
-	defer errors.MakeIntestines()
-	ChangeLanguage() //test "change language" functionality
-	//DeleteGame(responses, requests, output)     //test "delete user game" functionality
-	//ChangeSeats()                               //test "change seats on user games" functionality
-	//ChagePayment()                              //test "change payment on user games" functionality
-	fmt.Print("All SettingsTest were alright!\n")
-}
-
-func JustOtherTests() {
-	defer errors.MakeIntestines()
-	if !othertests.TestFromIntToStrDate() {
-		panic("Date isn't a date")
-	}
-	fmt.Println("Date is correct")
-	if !othertests.TestFromIntToStrTime() {
-		panic("Time isn't a time")
-	}
-	fmt.Println("Time is correct")
-}
 
 /*
 	ts := new(texecuter.TestStuct)
@@ -228,6 +176,7 @@ func Schedule() {
 func RegToOneGame() {
 	defer database.DeleteUser(userIdT2)
 	defer database.DeleteGame(gameId)
+	defer database.DeleteGameWithUser(gameId, userIdT2)
 	database.CreateUser(userIdT2)
 	database.CreateGame(gameId)
 	ts := new(texecuter.TestStuct)
@@ -263,6 +212,75 @@ func ChangeLanguage() {
 	ts.ArrFuncMr = []func() *types.MessageResponse{settings.MesResp}
 	ts.ArrFuncTrash = []func() *types.TelegramResponse{settings.Trash, settings.Trash2}
 	ts.ArrFuncAss = []func(*formatter.Formatter){settings.ChooseOptionOnlyLang, settings.ChooseLanguage}
-	ts.ArrFuncChDB = []func(int){database.AfterChooseOptionOnlyLang, database.AfterChooseLanguage}
+	ts.ArrFuncChDB = []func(int){database.AfterChooseOpt, database.AfterChooseLanguage}
 	ts.DoTest()
+}
+
+func DeleteGame() {
+	defer database.DeleteUser(userIdT5)
+	defer database.DeleteUserSchedule(userIdT5)
+	defer database.DeleteSchedule()
+	database.CreateScheduleForUser()
+	database.CreateUserScehdule(userIdT5)
+	database.CreateUser(userIdT5)
+	ts := new(texecuter.TestStuct)
+	ts.Round = 4
+	ts.Name = "DeleteGameTest"
+	ts.Update = []texecuter.Update{{Act: "settings", Lang: "ru", Level: 0, UserId: userIdT5}, {Act: "settings", Lang: "ru", Level: 1, UserId: userIdT5}, {Act: "settings", Lang: "ru", Level: 2, UserId: userIdT5}, {Act: "settings", Lang: "ru", Level: 3, UserId: userIdT5}}
+	ts.Query = make(chan *types.TelegramResponse, 1)
+	ts.Response = make(chan *types.MessageResponse, 1)
+	ts.Fmt = make(chan *formatter.Formatter, 1)
+	ts.ArrFuncTr = []func() *types.TelegramResponse{settings.ChOpt, settings.WhatOpt, settings.ChDelGame, settings.ChOrDel}
+	ts.ArrFuncMr = []func() *types.MessageResponse{settings.MesResp}
+	ts.ArrFuncTrash = []func() *types.TelegramResponse{settings.Trash, settings.Trash2}
+	ts.ArrFuncAss = []func(*formatter.Formatter){settings.ChooseOptionTwo, settings.ChoGame, settings.ChOrDelGame, settings.DelGame}
+	ts.ArrFuncChDB = []func(int){database.AfterChooseOpt, database.AfterChGame, database.AfterChOrDelGame, database.AfterDelGame}
+	ts.DoTest()
+}
+
+func RegToGamesTest() {
+	defer errors.MakeIntestines()
+	RegToOneGame() //with one game in database
+	fmt.Print("All RegToGamesTest were alright!\n")
+}
+
+func WelcomeTest() {
+	defer errors.MakeIntestines()
+	Welcome()
+	fmt.Print("All WelcomeTests were alright!\n")
+}
+
+func SeeTheSchedule() {
+	Schedule()
+	fmt.Print("All SeeTheScheduleTests were alright!\n")
+}
+
+func MediaTest() {
+	defer errors.MakeIntestines()
+	UnloadOne()  //with two games (to unload and upload)
+	UploadOne()  //with one games (to upload)
+	UnloadAfew() //with four games (only to unload)
+	UploadAfew() //with four games (only to upload)
+	fmt.Print("All MediaTests were alright!\n")
+}
+
+func SettingsTest() {
+	defer errors.MakeIntestines()
+	//ChangeLanguage() //test "change language" functionality
+	DeleteGame() //test "delete user game" functionality
+	//ChangeSeats()                               //test "change seats on user games" functionality
+	//ChagePayment()                              //test "change payment on user games" functionality
+	fmt.Print("All SettingsTest were alright!\n")
+}
+
+func JustOtherTests() {
+	defer errors.MakeIntestines()
+	if !othertests.TestFromIntToStrDate() {
+		panic("Date isn't a date")
+	}
+	fmt.Println("Date is correct")
+	if !othertests.TestFromIntToStrTime() {
+		panic("Time isn't a time")
+	}
+	fmt.Println("Time is correct")
 }

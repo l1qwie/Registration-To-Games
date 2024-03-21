@@ -64,6 +64,8 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 			user.Reg.GameId = gameId
 		} else if user.Act == "photos and videos" {
 			user.Media.DelGameId = gameId
+		} else if user.Act == "settings" {
+			user.UserRec.GameId = gameId
 		}
 	}
 	defer rows.Close()
@@ -84,6 +86,8 @@ func DbRetainUser(user *bottypes.User) (err error) {
 		gameId = user.Reg.GameId
 	} else if user.Act == "photos and videos" {
 		gameId = user.Media.DelGameId
+	} else if user.Act == "settings" {
+		gameId = user.UserRec.GameId
 	}
 	_, err = types.Db.Exec(request, user.Id, user.Language, gameId, user.LaunchPoint, user.Act, user.Level,
 		user.Reg.Seats, user.Reg.Payment,

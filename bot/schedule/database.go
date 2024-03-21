@@ -1,6 +1,7 @@
 package schedule
 
 import (
+	"RegistrationToGames/bot/bottypes"
 	"RegistrationToGames/bot/dictionary"
 	"RegistrationToGames/bot/forall"
 	"RegistrationToGames/fmtogram/types"
@@ -25,7 +26,7 @@ func FindGame() bool {
 	return cn > 0
 }
 
-func selectSchedule(language string) (schedule []*forall.Game) {
+func selectSchedule(language string) (schedule []*bottypes.Game) {
 	var (
 		rows           *sql.Rows
 		err            error
@@ -38,7 +39,7 @@ func selectSchedule(language string) (schedule []*forall.Game) {
 		panic(err)
 	}
 	for rows.Next() {
-		schedule = append(schedule, &forall.Game{})
+		schedule = append(schedule, &bottypes.Game{})
 		err = rows.Scan(&schedule[i].Id, &sport, &date, &time, &schedule[i].Seats, &schedule[i].Price, &schedule[i].Currency)
 		if err != nil {
 			panic(err)

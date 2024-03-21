@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func createScheduleKeyboard(user *bottypes.User, fm *formatter.Formatter, schedule []*forall.Game, pretext string) {
+func createScheduleKeyboard(user *bottypes.User, fm *formatter.Formatter, schedule []*bottypes.Game, pretext string) {
 	var (
 		kbName, kbData []string
 		coordinates    []int

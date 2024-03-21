@@ -221,6 +221,60 @@ func CreateEmptyMediaGame(gameId int) (err error) {
 	return err
 }
 
+func CreateUserScehdule(userId int) {
+	_, err := types.Db.Exec("INSERT INTO GamesWithUsers (userId, gameId, seats, payment, statuspayment, status) VALUES ($1, 0, 3, 'card', 1, 1)", userId)
+	if err != nil {
+		panic(err)
+	}
+	_, err = types.Db.Exec("INSERT INTO GamesWithUsers (userId, gameId, seats, payment, statuspayment, status) VALUES ($1, 1, 6, 'card', 0, 1)", userId)
+	if err != nil {
+		panic(err)
+	}
+	_, err = types.Db.Exec("INSERT INTO GamesWithUsers (userId, gameId, seats, payment, statuspayment, status) VALUES ($1, 2, 7, 'cash', 0, 1)", userId)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func CreateScheduleForUser() {
+	_, err := types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	VALUES (0, 'volleyball', 20250212, 1200, 44, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'POUNDS', 1)`)
+	if err != nil {
+		panic(err)
+	}
+	_, err = types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	VALUES (1, 'volleyball', 20251212, 1100, 44, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', 1)`)
+	if err != nil {
+		panic(err)
+	}
+	_, err = types.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
+	VALUES (2, 'volleyball', 20250612, 1000, 44, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'RUB', 1)`)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func DeleteUserSchedule(userId int) {
+	_, err := types.Db.Exec("DELETE FROM GamesWithUsers WHERE userId = $1", userId)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func checkDelGame(gameId, userId int) bool {
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND status = -1", gameId, userId)
+	if err != nil {
+		panic(err)
+	}
+	cc := 0
+	rows.Next()
+	err = rows.Scan(&cc)
+	if err != nil {
+		panic(err)
+	}
+	return cc > 0
+}
+
 func CreateSchedule() (err error) {
 	var request string
 	for i := 0; i < 4; i++ {
@@ -252,6 +306,12 @@ func DeleteGame(gameId int) {
 	}
 }
 
+func DeleteGameWithUser(gameId, userId int) {
+	_, err := types.Db.Exec("DELETE FROM GamesWithUsers WHERE gameId = $2 AND userId = $1", gameId, userId)
+	if err != nil {
+		panic(err)
+	}
+}
 func DeleteMedia(gameId int) {
 	_, err := types.Db.Exec("DELETE FROM MediaRepository WHERE gameId = $1", gameId)
 	if err != nil {

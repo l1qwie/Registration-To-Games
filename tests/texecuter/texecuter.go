@@ -8,37 +8,7 @@ import (
 	"fmt"
 )
 
-const (
-	userIdT1     int  = 456
-	userIdT2     int  = 477
-	userIdT3     int  = 488
-	userIdT4     int  = 499
-	userIdT5     int  = 899
-	gameId       int  = 2
-	wrongAnswers int  = 2
-	pastgameId   int  = 10
-	START        int  = 0
-	LEVEL1       int  = 1
-	LEVEL2       int  = 2
-	LEVEL3       int  = 3
-	LEVEL4       int  = 4
-	LEVEL5       int  = 5
-	wSTART       int  = 0
-	wLEVEL1      int  = 1
-	wLEVEL2      int  = 2
-	rSTART       int  = 3
-	rLEVEL1      int  = 4
-	rLEVEL2      int  = 5
-	rLEVEL3      int  = 6
-	rLEVEL4      int  = 7
-	schSTART     int  = 8
-	mStart       int  = 9
-	mLEVEL1      int  = 10
-	mLEVEL2      int  = 11
-	mLEVEL3      int  = 12
-	Unload       bool = true
-	Upload       bool = false
-)
+const wrongAnswers int = 2
 
 // This stuct only for Update functions to update database
 type Update struct {

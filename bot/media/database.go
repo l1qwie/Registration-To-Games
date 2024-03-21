@@ -1,6 +1,7 @@
 package media
 
 import (
+	"RegistrationToGames/bot/bottypes"
 	"RegistrationToGames/bot/forall"
 	"RegistrationToGames/fmtogram/types"
 	"database/sql"
@@ -208,20 +209,20 @@ func queryUpload(limit, lp int) (rows *sql.Rows) {
 	return rows
 }
 
-func selectGamesInf(limit, lp int, vector bool) []*forall.Game {
+func selectGamesInf(limit, lp int, vector bool) []*bottypes.Game {
 	var (
 		rows          *sql.Rows
 		err           error
 		date, time, i int
 	)
-	schedule := make([]*forall.Game, limit)
+	schedule := make([]*bottypes.Game, limit)
 	if vector {
 		rows = queryUnload(limit, lp)
 	} else {
 		rows = queryUpload(limit, lp)
 	}
 	for rows.Next() {
-		schedule[i] = &forall.Game{}
+		schedule[i] = &bottypes.Game{}
 		err = rows.Scan(&schedule[i].Id, &schedule[i].Sport, &date, &time)
 		if err != nil {
 			panic(err)
