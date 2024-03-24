@@ -92,14 +92,14 @@ func UnlAfew() *types.TelegramResponse {
 func UplOne() *types.TelegramResponse {
 	tr := defTR()
 	tr.Result[0].Message.Text = "Take my photo"
-	tr.Result[0].Photo = []types.Photo{{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"}}
+	tr.Result[0].Message.Photo = []types.Photo{{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"}}
 	return tr
 }
 
 func UplAfew() *types.TelegramResponse {
 	tr := defTR()
 	tr.Result[0].Message.Text = "Take my photo"
-	tr.Result[0].Photo = []types.Photo{{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
+	tr.Result[0].Message.Photo = []types.Photo{{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
 		{FileId: "!@#UIO!@#IOJJKLIO!JKLASJKL13419"},
 		{FileId: "IJ!#JJKLASERJKLIOPEIO*()%*()IOPSDKL:ASDOPK#I!#~!@31313"},
 		{FileId: "H!UIO@#HUI!@HASJKLDIOJKL#*()!@()_IOASDEUIO%()_)_"}}

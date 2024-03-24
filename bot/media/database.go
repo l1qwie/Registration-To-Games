@@ -102,7 +102,7 @@ func selectArrOrMedia(gameId int) map[string]string {
 }
 
 func insertAfewNewMeda(media map[string]string, gameId, userId int) {
-	rows, err := types.Db.Query("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 0", gameId)
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 1", gameId)
 	if err != nil {
 		panic(err)
 	}
@@ -114,7 +114,7 @@ func insertAfewNewMeda(media map[string]string, gameId, userId int) {
 	}
 	cc += len(media)
 	for key := range media {
-		_, err = types.Db.Exec("INSERT INTO MediaRepository (gameId, fileId, type, counter, userId) VALUES ($1, $2, $3, $4, $5)", gameId, key, media[key], cc, userId)
+		_, err = types.Db.Exec("INSERT INTO MediaRepository (gameId, fileId, type, counter, userId, status) VALUES ($1, $2, $3, $4, $5, 1)", gameId, key, media[key], cc, userId)
 		if err != nil {
 			panic(err)
 		}
@@ -123,7 +123,7 @@ func insertAfewNewMeda(media map[string]string, gameId, userId int) {
 }
 
 func insertOneNewMedia(fileId, ty string, gameId, userId int) {
-	rows, err := types.Db.Query("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 0", gameId)
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 1", gameId)
 	if err != nil {
 		panic(err)
 	}
@@ -133,7 +133,7 @@ func insertOneNewMedia(fileId, ty string, gameId, userId int) {
 	if err != nil {
 		panic(err)
 	}
-	_, err = types.Db.Exec("INSERT INTO MediaRepository (gameId, fileId, type, counter, userId) VALUES ($1, $2, $3, $4, $5)", gameId, fileId, ty, cc+1, userId)
+	_, err = types.Db.Exec("INSERT INTO MediaRepository (gameId, fileId, type, counter, userId, status) VALUES ($1, $2, $3, $4, $5, 1)", gameId, fileId, ty, cc+1, userId)
 	if err != nil {
 		panic(err)
 	}
@@ -187,7 +187,7 @@ func findEveryGames() (unload, upload int) {
 
 func queryUnload(limit, lp int) (rows *sql.Rows) {
 	rows, err := types.Db.Query(`
-		SELECT DISTINCT Schedule.gameId, sport, date, time 
+		SELECT DISTINCT(Schedule.gameId), sport, date, time 
 		FROM Schedule 
 		JOIN MediaRepository ON Schedule.gameId = MediaRepository.gameId 
 		WHERE Schedule.status = -1 AND MediaRepository.status = 1

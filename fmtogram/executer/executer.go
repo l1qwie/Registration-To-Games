@@ -13,14 +13,6 @@ import (
 
 const None int = -1
 
-type Telegram struct {
-	Url string
-}
-
-type TelegramTest struct {
-	Url string
-}
-
 type Entry struct {
 	UserId int
 	Chu    chan *types.TelegramResponse
@@ -119,7 +111,6 @@ func handlerTelegramResponse(response []byte, telegramResponse *types.TelegramRe
 			err = fmt.Errorf(fmt.Sprintf("Telegram API вернул ошибку: %s", telegramResponse.Error.Message))
 		}
 	}
-
 	return err
 }
 
@@ -178,43 +169,3 @@ func RequestOffset(TelebotToken string, offset *int) (err error) {
 
 	return err
 }
-
-func (test *TelegramTest) RequestOffset(TelebotToken string, offset *int) error {
-	return nil
-}
-
-func (test *TelegramTest) Updates(TelebotToken string, offset *int, telegramResponse *types.TelegramResponse) error {
-
-	return nil
-}
-
-/*
-type entry struct { user int; ch *chan<-Response }
-
-var reg []entry
-
-func this (user int) int //return index of user in the registry
-{
-	return none
-}
-
-funr free () int // return free index in the registry
-{
-	return none
-}
-
-func Writer ()
-{
-	var rs Response
-	getRs(rs)
-	n = this(rs.user)
-	if n != none { reg[n].ch <- rs }
-	else {
-		n = free()
-		reg[n].user = rs.user
-		reg[n].ch = /* create a new channel
-		reg[n].ch <- rs
-		go Worker(reg[n].ch)
-	}
-}
-*/

@@ -8,7 +8,7 @@ import (
 func (tfm *Formatter) AssertPhoto(path string, condition bool) (err error) {
 	var function string
 	if len(tfm.Message.Photo) > 0 {
-		if tfm.Message.Photo[0] != path {
+		if tfm.Message.Photo != path {
 			if tfm.kindofmedia[0] == fromStorage {
 				function = "AddPhotoFromStorage"
 			} else if tfm.kindofmedia[0] == fromInternet {
@@ -16,7 +16,7 @@ func (tfm *Formatter) AssertPhoto(path string, condition bool) (err error) {
 			} else if tfm.kindofmedia[0] == fromTelegram {
 				function = "AddPhotoFromTG"
 			}
-			err = errors.AssertTest(tfm.Message.Photo[0], function, path, "AssertPhoto")
+			err = errors.AssertTest(tfm.Message.Photo, function, path, "AssertPhoto")
 		}
 	} else {
 		err = errors.AssertTest(fmt.Sprint(tfm.Message.Photo), function, path, "AssertPhoto")
@@ -179,13 +179,18 @@ func (tfm *Formatter) AssertMapOfMedia(group map[string]string, con bool) (err e
 			ty, ok := group[key]
 			if ok {
 				if ty == "photo" {
-					for _, minorv := range tfm.Message.Photo {
-						if !found {
-							if minorv == key {
-								found = true
+					if tfm.Message.Photo == key {
+						found = true
+					}
+					/*
+						for _, minorv := range tfm.Message.Photo {
+							if !found {
+								if minorv == key {
+									found = true
+								}
 							}
 						}
-					}
+					*/
 				} else if ty == "video" {
 					for _, minorv := range tfm.Message.Video {
 						if !found {

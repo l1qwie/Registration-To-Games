@@ -9,19 +9,19 @@ import (
 )
 
 func (fm *Formatter) AddPhotoFromStorage(path string) {
-	fm.Message.Photo = []string{path}
+	fm.Message.Photo = path
 	fm.kindofmedia = []int{fromStorage}
 	fm.mediatype = []string{"photo"}
 }
 
 func (fm *Formatter) AddPhotoFromTG(path string) {
-	fm.Message.Photo = []string{path}
+	fm.Message.Photo = path
 	fm.kindofmedia = []int{fromTelegram}
 	fm.mediatype = []string{"photo"}
 }
 
 func (fm *Formatter) AddPhotoFromInternet(path string) {
-	fm.Message.Photo = []string{path}
+	fm.Message.Photo = path
 	fm.kindofmedia = []int{fromInternet}
 	fm.mediatype = []string{"photo"}
 }
@@ -43,6 +43,7 @@ func (fm *Formatter) AddVideoFromInternet(path string) {
 	fm.mediatype = []string{"video"}
 }
 
+/*
 func (fm *Formatter) AddMapOfMedia(arr map[string]string) {
 	i := 0
 	for key := range arr {
@@ -57,6 +58,7 @@ func (fm *Formatter) AddMapOfMedia(arr map[string]string) {
 		i++
 	}
 }
+*/
 
 func (fm *Formatter) createMediaGroup(buf *bytes.Buffer) (string, error) {
 	var (
@@ -70,7 +72,7 @@ func (fm *Formatter) createMediaGroup(buf *bytes.Buffer) (string, error) {
 	writer = multipart.NewWriter(buf)
 	for i := 0; i < len(fm.Message.Photo) || i < len(fm.Message.Video); i++ {
 		if i < len(fm.Message.Photo) && !p {
-			media = fm.Message.Photo[i]
+			media = fm.Message.Photo
 		} else if i < len(fm.Message.Video) && p {
 			media = fm.Message.Video[i]
 		}
@@ -101,7 +103,7 @@ func (fm *Formatter) PrepareMedia(buf *bytes.Buffer) (string, error) {
 
 	writer = multipart.NewWriter(buf)
 	if fm.mediatype[0] == "photo" {
-		media = fm.Message.Photo[0]
+		media = fm.Message.Photo
 	} else if fm.mediatype[0] == "video" {
 		media = fm.Message.Video[0]
 	}
@@ -144,7 +146,7 @@ func (fm *Formatter) PrepareMediaForEdit(buf *bytes.Buffer) (string, error) {
 	)
 	writer = multipart.NewWriter(buf)
 	if fm.mediatype[0] == "photo" {
-		media = fm.Message.Photo[0]
+		media = fm.Message.Photo
 	} else if fm.mediatype[0] == "video" {
 		media = fm.Message.Video[0]
 	}

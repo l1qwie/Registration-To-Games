@@ -7,7 +7,8 @@ import (
 
 func main() {
 	types.Db = types.ConnectToDatabase()
-	tests.TelegramTests()
+	//tests.TelegramTests()
+	tests.SendPhoto()
 	//fmtogram.StartWithTelegram()
 	//tests.JustOtherTests()
 	//tests.WelcomeTest()

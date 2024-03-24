@@ -346,6 +346,17 @@ func TelegramTests() {
 	fmtogram.StartWithTelegram()
 }
 
+func SendPhoto() {
+	fm := new(formatter.Formatter)
+	fm.AddPhotoFromTG("AgACAgIAAxkDAAIN0mYAAW5slidxmrwJK_HIAri8aPk6QQACSNUxG03B2UqlEDWAtFWFvgEAAwIAA3MAAzQE")
+	fm.WriteChatId(738070596)
+	_, err := fm.Send()
+	if err != nil {
+		panic(err)
+	}
+
+}
+
 func JustOtherTests() {
 	defer errors.MakeIntestines()
 	if !othertests.TestFromIntToStrDate() {

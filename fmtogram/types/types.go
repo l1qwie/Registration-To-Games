@@ -30,8 +30,10 @@ func ConnectToDatabase() (db *sql.DB) {
 }
 
 type InfMessage struct {
-	TypeFrom User   `json:"from"`
-	Text     string `json:"text"`
+	TypeFrom User    `json:"from"`
+	Text     string  `json:"text"`
+	Photo    []Photo `json:"photo"`
+	Video    []Video `json:"video"`
 }
 
 type User struct {
@@ -48,8 +50,6 @@ type TelegramUpdate struct {
 	MessageId int        `json:"message_id"`
 	Message   InfMessage `json:"message"`
 	Query     Callback   `json:"callback_query"`
-	Photo     []Photo    `json:"photo"`
-	Video     []Video    `json:"video"`
 }
 
 type Callback struct {
@@ -81,7 +81,7 @@ type SendMessagePayload struct {
 	ChatID      int      `json:"chat_id"`
 	Text        string   `json:"text"`
 	ReplyMarkup string   `json:"reply_markup"`
-	Photo       []string `json:"photo"`
+	Photo       string   `json:"photo"`
 	Video       []string `json:"video"`
 	ParseMode   string   `json:"parse_mode"`
 	MessageId   int      `json:"message_id"`

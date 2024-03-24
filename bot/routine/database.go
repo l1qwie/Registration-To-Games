@@ -88,6 +88,9 @@ func DbRetainUser(user *bottypes.User) (err error) {
 	} else if user.Act == "settings" {
 		gameId = user.UserRec.GameId
 	}
+	if user.Act != "photos and videos" {
+		user.Media.Counter = 0
+	}
 	_, err = types.Db.Exec(request, user.Id, user.Language, gameId, user.LaunchPoint, user.Act, user.Level,
 		user.Reg.Seats, user.Reg.Payment,
 		user.Media.Interval, user.Media.Direction, user.Media.Limit, user.Media.Id, user.Media.Counter,

@@ -73,11 +73,6 @@ func ReturnBotStatus(telegramResponse *types.TelegramResponse) (botstatus bool) 
 }
 
 func ReturnMessageId(message *types.MessageResponse) (messageId int, err error) {
-	/*if len(message.Result) != 0 {
-		messageId = message.Result[0].Chat.Id
-	} else {
-		err = fmt.Errorf("Don't have message Id")
-	}*/
 	if message.Ok {
 		messageId = message.Result.MessageId
 	} else {
@@ -123,10 +118,13 @@ func ReturnPhotosFileIdfrom(tr *types.TelegramResponse) ([]string, error) {
 		err     error
 		fileIds []string
 	)
-	fileIds = make([]string, len(tr.Result[0].Photo))
-	if len(tr.Result[0].Photo) > 0 {
-		for i := 0; i < len(tr.Result[0].Photo); i++ {
-			fileIds[i] = tr.Result[0].Photo[i].FileId
+	j := 0
+	if len(tr.Result[0].Message.Photo) > 0 {
+		l := len(tr.Result[0].Message.Photo) / 4
+		fileIds = make([]string, l)
+		for i := 0; i < l; i++ {
+			fileIds[i] = tr.Result[0].Message.Photo[j].FileId
+			j = j + 4
 		}
 	} else {
 		err = fmt.Errorf("we don't have a Photo fileId")
@@ -139,10 +137,10 @@ func ReturnVideosFileIdfrom(tr *types.TelegramResponse) ([]string, error) {
 		err     error
 		fileIds []string
 	)
-	fileIds = make([]string, len(tr.Result[0].Video))
-	if len(tr.Result[0].Video) > 0 {
-		for i := 0; i < len(tr.Result[0].Video); i++ {
-			fileIds[i] = tr.Result[0].Video[i].FileId
+	fileIds = make([]string, len(tr.Result[0].Message.Video))
+	if len(tr.Result[0].Message.Video) > 0 {
+		for i := 0; i < len(tr.Result[0].Message.Video); i++ {
+			fileIds[i] = tr.Result[0].Message.Video[i].FileId
 		}
 	} else {
 		err = fmt.Errorf("we don't have a Video fileId")
