@@ -85,3 +85,16 @@ func DelGame(fm *formatter.Formatter) {
 		[]string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}, []string{"cmd", "cmd", "cmd", "cmd"}, true)
 	everyTime(fm)
 }
+
+func WriteSeats(fm *formatter.Formatter) {
+	fm.AssertString("Выберите или напишите мне количество мест на игру, которые вы хоите занять. На эту игру есть свободных мест 44. У вас уже есть бронь на 7. После ввода ваша бронь на 7 мест будет снята. Всего мест, если не учитывать вашу бронь 51", true)
+	fm.AssertInlineKeyboard([]int{1, 1, 1}, []string{"1", "2", "3"}, []string{"1", "2", "3"}, []string{"cmd", "cmd", "cmd"}, true)
+	everyTime(fm)
+}
+
+func ChanSeats(fm *formatter.Formatter) {
+	fm.AssertString("Все успешно изменено\n\n", true)
+	fm.AssertInlineKeyboard([]int{1, 1, 1, 1}, []string{"Просмотр расписания", "Регистрация на игру", "Наши фото и видео", "Настройки | Мои игры"},
+		[]string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}, []string{"cmd", "cmd", "cmd", "cmd"}, true)
+	everyTime(fm)
+}

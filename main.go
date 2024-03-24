@@ -7,14 +7,13 @@ import (
 
 func main() {
 	types.Db = types.ConnectToDatabase()
-	//database.CreateSchedule()
+	tests.TelegramTests()
 	//fmtogram.StartWithTelegram()
-	//tests.GlobalTest()
 	//tests.JustOtherTests()
 	//tests.WelcomeTest()
 	//tests.RegToGamesTest()
 	//tests.SeeTheSchedule()
 	//tests.MediaTest()
-	tests.SettingsTest()
+	//tests.SettingsTest()
 	types.Db.Close()
 }

@@ -40,7 +40,7 @@ func ChooseOptions(user *bottypes.User, fm *formatter.Formatter) {
 		datas = []string{"language", "records", "MainMenu"}
 		fm.WriteParseMode("HTML")
 	} else {
-		user.Request = "language"
+		user.UserRec.Changeable = "language"
 		mes = dict["NoGamesChangeLang"]
 		crd = []int{1, 1, 1, 1}
 		names = []string{dict["en"], dict["ru"], dict["tur"], dict["MainMenu"]}
@@ -83,7 +83,7 @@ func changeRecords(user *bottypes.User, fm *formatter.Formatter) {
 }
 
 func WhatWay(user *bottypes.User, fm *formatter.Formatter) {
-	if user.Request == "language" {
+	if user.Request == "language" || user.UserRec.Changeable == "language" {
 		changeLanguge(user, fm)
 	} else if user.Request == "records" {
 		changeRecords(user, fm)
@@ -199,7 +199,7 @@ func chMySeats(user *bottypes.User, fm *formatter.Formatter) {
 		s = schs
 	}
 	forall.Seats(s, fm)
-	fm.WriteString(fmt.Sprintf(dictionary.Dictionary[user.Language]["ChooseSeat"], schs, uss, schs+uss))
+	fm.WriteString(fmt.Sprintf(dictionary.Dictionary[user.Language]["ChooseSeat"], schs, uss, uss, (schs + uss)))
 	fm.WriteChatId(user.Id)
 }
 

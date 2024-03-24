@@ -69,7 +69,6 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 		}
 	}
 	defer rows.Close()
-
 	return err
 }
 

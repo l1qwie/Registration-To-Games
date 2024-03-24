@@ -6,6 +6,7 @@ import (
 	"RegistrationToGames/bot/forall"
 	"RegistrationToGames/fmtogram/types"
 	"database/sql"
+	"fmt"
 )
 
 func selectTheSchedule(limit, offset int, language string) []*bottypes.Game {
@@ -85,7 +86,8 @@ func completeRegistration(userId, gameId, seats int, payment string) (err error)
 		rows      *sql.Rows
 		gameSeats int
 	)
-	_, err = types.Db.Exec("INSERT INTO GamesWithUsers (userId, gameId, seats, payment) VALUES ($1, $2, $3, $4)", userId, gameId, seats, payment)
+	fmt.Println(userId, gameId, seats, payment)
+	_, err = types.Db.Exec("INSERT INTO GamesWithUsers (userId, gameId, seats, payment, status) VALUES ($1, $2, $3, $4, 1)", userId, gameId, seats, payment)
 	if err == nil {
 		rows, err = types.Db.Query("SELECT seats FROM Schedule WHERE gameId = $1", gameId)
 	}

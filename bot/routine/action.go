@@ -34,6 +34,7 @@ func retrieveUser(user *bottypes.User) {
 	} else {
 		err = CreateUser(user.Id, user.Language)
 		user.Act = "registration"
+		user.Media.Limit = 7
 	}
 	if err != nil {
 		panic(err)

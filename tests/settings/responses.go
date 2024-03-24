@@ -80,6 +80,12 @@ func ChDelGame() *types.TelegramResponse {
 	return tr
 }
 
+func DeleteGame() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "1"
+	return tr
+}
+
 func Del() *types.TelegramResponse {
 	tr := defTR()
 	tr.Result[0].Message.Text = "del"
@@ -98,9 +104,21 @@ func Payment() *types.TelegramResponse {
 	return tr
 }
 
+func Seats() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "myseats"
+	return tr
+}
+
+func NumOfSeast() *types.TelegramResponse {
+	tr := defTR()
+	tr.Result[0].Message.Text = "6"
+	return tr
+}
+
 func Paymethod() *types.TelegramResponse {
 	tr := defTR()
-	tr.Result[0].Message.Text = "card"
+	tr.Result[0].Message.Text = "5"
 	return tr
 }
 

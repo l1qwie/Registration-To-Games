@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"RegistrationToGames/fmtogram"
 	"RegistrationToGames/fmtogram/errors"
 	"RegistrationToGames/fmtogram/formatter"
 	"RegistrationToGames/fmtogram/types"
@@ -175,8 +176,8 @@ func Schedule() {
 
 func RegToOneGame() {
 	defer database.DeleteUser(userIdT2)
-	defer database.DeleteGame(gameId)
 	defer database.DeleteGameWithUser(gameId, userIdT2)
+	defer database.DeleteGame(gameId)
 	database.CreateUser(userIdT2)
 	database.CreateGame(gameId)
 	ts := new(texecuter.TestStuct)
@@ -204,7 +205,7 @@ func ChangeLanguage() {
 	ts := new(texecuter.TestStuct)
 	ts.Round = 2
 	ts.Name = "ChangeLanguageTest"
-	ts.Update = []texecuter.Update{{Act: "settings", Lang: "ru", Level: 0, UserId: userIdT5}, {Act: "settings", Lang: "ru", Level: 2, UserId: userIdT5}}
+	ts.Update = []texecuter.Update{{Act: "settings", Lang: "ru", Level: 0, UserId: userIdT5}, {Act: "settings", Lang: "ru", Level: 1, UserId: userIdT5}}
 	ts.Query = make(chan *types.TelegramResponse, 1)
 	ts.Response = make(chan *types.MessageResponse, 1)
 	ts.Fmt = make(chan *formatter.Formatter, 1)
@@ -212,7 +213,7 @@ func ChangeLanguage() {
 	ts.ArrFuncMr = []func() *types.MessageResponse{settings.MesResp}
 	ts.ArrFuncTrash = []func() *types.TelegramResponse{settings.Trash, settings.Trash2}
 	ts.ArrFuncAss = []func(*formatter.Formatter){settings.ChooseOptionOnlyLang, settings.ChooseLanguage}
-	ts.ArrFuncChDB = []func(int){database.AfterChooseOpt, database.AfterChooseLanguage}
+	ts.ArrFuncChDB = []func(int){database.AfterChOptLang, database.AfterChooseLanguage}
 	ts.DoTest()
 }
 
@@ -233,11 +234,11 @@ func DeleteGame() {
 	ts.Query = make(chan *types.TelegramResponse, 1)
 	ts.Response = make(chan *types.MessageResponse, 1)
 	ts.Fmt = make(chan *formatter.Formatter, 1)
-	ts.ArrFuncTr = []func() *types.TelegramResponse{settings.ChOpt, settings.WhatOpt, settings.ChDelGame, settings.Del}
+	ts.ArrFuncTr = []func() *types.TelegramResponse{settings.ChOpt, settings.WhatOpt, settings.DeleteGame, settings.Del}
 	ts.ArrFuncMr = []func() *types.MessageResponse{settings.MesResp}
 	ts.ArrFuncTrash = []func() *types.TelegramResponse{settings.Trash, settings.Trash2}
 	ts.ArrFuncAss = []func(*formatter.Formatter){settings.ChooseOptionTwo, settings.ChoGame, settings.ChOrDelGame, settings.DelGame}
-	ts.ArrFuncChDB = []func(int){database.AfterChooseOpt, database.AfterChGame, database.AfterChOrDelGame, database.AfterDelGame}
+	ts.ArrFuncChDB = []func(int){database.AfterChooseOpt, database.AfterChGame, database.AfterChOrDelGameDel, database.AfterDelGame}
 	ts.DoTest()
 }
 
@@ -264,6 +265,33 @@ func ChangePayment() {
 	ts.ArrFuncTrash = []func() *types.TelegramResponse{settings.Trash, settings.Trash2}
 	ts.ArrFuncAss = []func(*formatter.Formatter){settings.ChooseOptionTwo, settings.ChoGame, settings.ChOrDelGame, settings.ChangeWay, settings.PayByCash} // settings.WhichPayment level 4
 	ts.ArrFuncChDB = []func(int){database.AfterChooseOpt, database.AfterChGame, database.AfterChOrDelGame, database.AfterChangeWay, database.AfterPBCash}  //  database.AfterWhPayment level 4
+	ts.DoTest()
+}
+
+func ChangeSeats() {
+	defer database.DeleteUser(userIdT5)
+	defer database.DeleteUserSchedule(userIdT5)
+	defer database.DeleteSchedule()
+	database.CreateScheduleForUser()
+	database.CreateUserScehdule(userIdT5)
+	database.CreateUser(userIdT5)
+	ts := new(texecuter.TestStuct)
+	ts.Round = 6
+	ts.Name = "ChangeSeatsTest"
+	ts.Update = []texecuter.Update{{Act: "settings", Lang: "ru", Level: 0, UserId: userIdT5},
+		{Act: "settings", Lang: "ru", Level: 1, UserId: userIdT5},
+		{Act: "settings", Lang: "ru", Level: 2, UserId: userIdT5},
+		{Act: "settings", Lang: "ru", Level: 3, UserId: userIdT5},
+		{Act: "settings", Lang: "ru", Level: 4, UserId: userIdT5},
+		{Act: "settings", Lang: "ru", Level: 5, UserId: userIdT5}}
+	ts.Query = make(chan *types.TelegramResponse, 1)
+	ts.Response = make(chan *types.MessageResponse, 1)
+	ts.Fmt = make(chan *formatter.Formatter, 1)
+	ts.ArrFuncTr = []func() *types.TelegramResponse{settings.ChOpt, settings.WhatOpt, settings.ChDelGame, settings.Change, settings.Seats, settings.NumOfSeast}
+	ts.ArrFuncMr = []func() *types.MessageResponse{settings.MesResp}
+	ts.ArrFuncTrash = []func() *types.TelegramResponse{settings.Trash, settings.Trash2}
+	ts.ArrFuncAss = []func(*formatter.Formatter){settings.ChooseOptionTwo, settings.ChoGame, settings.ChOrDelGame, settings.ChangeWay, settings.WriteSeats, settings.ChanSeats}
+	ts.ArrFuncChDB = []func(int){database.AfterChooseOpt, database.AfterChGame, database.AfterChOrDelGame, database.AfterChangeWay, database.AfterWrSeats, database.AfterChanSeats}
 	ts.DoTest()
 }
 
@@ -295,11 +323,27 @@ func MediaTest() {
 
 func SettingsTest() {
 	defer errors.MakeIntestines()
-	//ChangeLanguage() //test "change language" functionality
-	//DeleteGame() //test "delete user game" functionality
-	//ChangeSeats()                               //test "change seats on user games" functionality
-	ChangePayment() //test "change payment on user games" functionality
+	ChangeLanguage() //test "change language" functionality // no games
+	DeleteGame()     //test "delete user game" functionality
+	ChangeSeats()    //test "change seats on user games" functionality
+	ChangePayment()  //test "change payment on user games" functionality
 	fmt.Print("All SettingsTest were alright!\n")
+}
+
+func delEnv() {
+	database.DeleteSchedule()
+	database.DeleteEmptyMediaGame(10)
+}
+
+func createEnv() {
+	delEnv()
+	database.CreateSchedule()
+	database.CreateEmptyMediaGame(10)
+}
+
+func TelegramTests() {
+	createEnv()
+	fmtogram.StartWithTelegram()
 }
 
 func JustOtherTests() {

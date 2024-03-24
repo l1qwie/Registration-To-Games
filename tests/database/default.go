@@ -3,6 +3,7 @@ package database
 import (
 	"RegistrationToGames/fmtogram/types"
 	"database/sql"
+	"fmt"
 
 	_ "github.com/lib/pq"
 )
@@ -23,6 +24,13 @@ func CreateUser(userId int) {
 
 func DeleteSchedule() {
 	_, err := types.Db.Exec("DELETE FROM Schedule WHERE gameId = 0 OR gameId = 1 OR gameId = 2 OR gameId = 3 OR gameId = 4")
+	if err != nil {
+		panic(err)
+	}
+}
+
+func DeleteEmptyMediaGame(gameId int) {
+	_, err := types.Db.Exec("DELETE FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
 		panic(err)
 	}
@@ -254,6 +262,21 @@ func CreateScheduleForUser() {
 	}
 }
 
+func ckeckChangedSeats(userId, gameId, seats int) bool {
+	rows, err := types.Db.Query("SELECT COUNT(*) FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND seats = $3 AND status = 1", gameId, userId, seats)
+	if err != nil {
+		panic(err)
+	}
+	cc := 0
+	rows.Next()
+	err = rows.Scan(&cc)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	return cc > 0
+}
+
 func DeleteUserSchedule(userId int) {
 	_, err := types.Db.Exec("DELETE FROM GamesWithUsers WHERE userId = $1", userId)
 	if err != nil {
@@ -272,6 +295,7 @@ func checkDelGame(gameId, userId int) bool {
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return cc > 0
 }
 
@@ -286,6 +310,7 @@ func checkChangePaymethodCash(userId, gameId int) bool {
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return cc > 0
 }
 
@@ -300,6 +325,7 @@ func checkChangePaymethodCard(userId, gameId int) bool {
 	if err != nil {
 		panic(err)
 	}
+	defer rows.Close()
 	return cc > 0
 }
 
@@ -335,7 +361,8 @@ func DeleteGame(gameId int) {
 }
 
 func DeleteGameWithUser(gameId, userId int) {
-	_, err := types.Db.Exec("DELETE FROM GamesWithUsers WHERE gameId = $2 AND userId = $1", gameId, userId)
+	fmt.Println(userId, gameId)
+	_, err := types.Db.Exec("DELETE FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND status = 1", gameId, userId)
 	if err != nil {
 		panic(err)
 	}
