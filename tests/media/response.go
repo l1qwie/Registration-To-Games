@@ -1,6 +1,8 @@
 package media
 
-import "RegistrationToGames/fmtogram/types"
+import (
+	"RegistrationToGames/fmtogram/types"
+)
 
 func defTR() *types.TelegramResponse {
 	return &types.TelegramResponse{
@@ -92,7 +94,7 @@ func UnlAfew() *types.TelegramResponse {
 func UplOne() *types.TelegramResponse {
 	tr := defTR()
 	tr.Result[0].Message.Text = "Take my photo"
-	tr.Result[0].Message.Photo = []types.Photo{{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"}}
+	tr.Result[0].Message.Photo = []types.Photo{{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"}, {FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKKHJASDHJKASDHJK"}, {FileId: "!@#UIO!@#IOJJKLASEDKL234i90u213u8942389"}, {FileId: "!@#UIO!@#IOJJL:SJKHDFGL:JKASDFKjlolik"}}
 	return tr
 }
 
@@ -102,7 +104,19 @@ func UplAfew() *types.TelegramResponse {
 	tr.Result[0].Message.Photo = []types.Photo{{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
 		{FileId: "!@#UIO!@#IOJJKLIO!JKLASJKL13419"},
 		{FileId: "IJ!#JJKLASERJKLIOPEIO*()%*()IOPSDKL:ASDOPK#I!#~!@31313"},
-		{FileId: "H!UIO@#HUI!@HASJKLDIOJKL#*()!@()_IOASDEUIO%()_)_"}}
+		{FileId: "H!UIO@#HUI!@HASJKLDIOJKL#*()!@()_IOASDEUIO%()_)_"},
+		{FileId: "!@#UIO!@#IOJJKLIO!JKLASJKL13419"},
+		{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
+		{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
+		{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
+		{FileId: "IJ!#JJKLASERJKLIOPEIO*()%*()IOPSDKL:ASDOPK#I!#~!@31313"},
+		{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
+		{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
+		{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
+		{FileId: "H!UIO@#HUI!@HASJKLDIOJKL#*()!@()_IOASDEUIO%()_)_"},
+		{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
+		{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"},
+		{FileId: "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"}}
 	return tr
 }
 

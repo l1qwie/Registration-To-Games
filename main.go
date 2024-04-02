@@ -2,13 +2,13 @@ package main
 
 import (
 	"RegistrationToGames/fmtogram/types"
-	"RegistrationToGames/tests"
 )
 
 func main() {
-	types.Db = types.ConnectToDatabase()
+	types.Db = types.ConnectToDatabase(true)
 	//tests.TelegramTests()
-	tests.SendPhoto()
+	//tests.SendMediaGroup()
+	//tests.SendPhoto()
 	//fmtogram.StartWithTelegram()
 	//tests.JustOtherTests()
 	//tests.WelcomeTest()

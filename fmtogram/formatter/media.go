@@ -1,6 +1,7 @@
 package formatter
 
 import (
+	"RegistrationToGames/fmtogram/types"
 	"bytes"
 	"fmt"
 	"io"
@@ -26,71 +27,114 @@ func (fm *Formatter) AddPhotoFromInternet(path string) {
 	fm.mediatype = []string{"photo"}
 }
 func (fm *Formatter) AddVideoFromStorage(path string) {
-	fm.Message.Video = []string{path}
+	fm.Message.Video = path
 	fm.kindofmedia = []int{fromStorage}
 	fm.mediatype = []string{"video"}
 }
 
 func (fm *Formatter) AddVideoFromTG(path string) {
-	fm.Message.Video = []string{path}
+	fm.Message.Video = path
 	fm.kindofmedia = []int{fromTelegram}
 	fm.mediatype = []string{"video"}
 }
 
 func (fm *Formatter) AddVideoFromInternet(path string) {
-	fm.Message.Video = []string{path}
+	fm.Message.Video = path
 	fm.kindofmedia = []int{fromInternet}
 	fm.mediatype = []string{"video"}
 }
 
-/*
-func (fm *Formatter) AddMapOfMedia(arr map[string]string) {
+func (fm *Formatter) AddMapOfMedia(arr []types.Media) {
 	i := 0
-	for key := range arr {
-		val, ok := arr[key]
-		if ok {
-			if val == "photo" {
-				fm.Message.Photo = append(fm.Message.Photo, key)
-			} else if val == "video" {
-				fm.Message.Video = append(fm.Message.Video, key)
-			}
-		}
+	fm.Message.InputMedia = make([]types.Media, len(arr))
+	for _, val := range arr {
+		fm.Message.InputMedia[i].Type = val.Type
+		fm.Message.InputMedia[i].Media = val.Media
 		i++
 	}
 }
-*/
 
 func (fm *Formatter) createMediaGroup(buf *bytes.Buffer) (string, error) {
 	var (
-		file   *os.File
-		part   io.Writer
-		writer *multipart.Writer
-		err    error
-		media  string
-		p      bool
+		file    *os.File
+		err     error
+		part    io.Writer
+		w, wrtr *multipart.Writer
 	)
-	writer = multipart.NewWriter(buf)
-	for i := 0; i < len(fm.Message.Photo) || i < len(fm.Message.Video); i++ {
-		if i < len(fm.Message.Photo) && !p {
-			media = fm.Message.Photo
-		} else if i < len(fm.Message.Video) && p {
-			media = fm.Message.Video[i]
-		}
-		file, err = os.Open(media)
+	bf := bytes.NewBuffer(nil)
+	w = multipart.NewWriter(bf)
+	for i := 0; i < len(fm.Message.InputMedia); i++ {
+		file, err = os.Open(fm.Message.InputMedia[i].Media)
 		if err == nil {
-			part, err = writer.CreateFormFile(fm.mediatype[i], media)
+			err = w.WriteField("type", fm.Message.InputMedia[i].Type)
+		}
+		if err == nil {
+			part, err = w.CreateFormFile("media", fm.Message.InputMedia[i].Media)
 		}
 		if err == nil {
 			_, err = io.Copy(part, file)
 		}
-		file.Close()
-		if i == len(fm.Message.Photo) {
-			i = 0
-			p = true
+	}
+	wrtr = multipart.NewWriter(buf)
+	err = wrtr.WriteField("chat_id", fmt.Sprint(fm.Message.ChatID))
+	if err == nil {
+		fmt.Println(bf.String())
+		fmt.Println()
+		fmt.Println()
+		fmt.Println()
+		err = wrtr.WriteField("media", bf.String())
+	}
+	if err == nil {
+		err = w.Close()
+	}
+	if err == nil {
+		err = wrtr.Close()
+	}
+
+	return wrtr.FormDataContentType(), err
+}
+
+/*
+func (fm *Formatter) createMediaGroup(buf *bytes.Buffer) (string, error) {
+	var (
+		file         *os.File
+		writer       *multipart.Writer
+		err          error
+		fcont, mjson []byte
+	)
+	writer = multipart.NewWriter(buf)
+	mediaArr := make([]map[string]string, len(fm.Message.InputMedia))
+	for i := 0; i < len(fm.Message.InputMedia); i++ {
+		fmt.Println(fm.Message.InputMedia)
+		file, err = os.Open(fm.Message.InputMedia[i].Media)
+		if err == nil {
+			fcont, err = io.ReadAll(file)
 		}
+		if err == nil {
+			// Кодируем содержимое файла в строку Base64 без начального заголовка
+			//mediaBase64 := base64.StdEncoding.EncodeToString(fcont)
+			mediaArr[i] = map[string]string{
+				"type":  fm.Message.InputMedia[i].Type,
+				"media": string(fcont),
+			}
+		}
+		file.Close()
+	}
+	if err == nil {
+		mjson, err = json.Marshal(mediaArr)
+	}
+	if err == nil {
+		err = writer.WriteField("chat_id", fmt.Sprintf("%d", fm.Message.ChatID))
+	}
+	if err == nil {
+		err = writer.WriteField("media", string(mjson))
+	}
+	if err == nil {
+		err = writer.Close()
 	}
 	return writer.FormDataContentType(), err
 }
+*/
 
 func (fm *Formatter) PrepareMedia(buf *bytes.Buffer) (string, error) {
 	var (
@@ -105,7 +149,7 @@ func (fm *Formatter) PrepareMedia(buf *bytes.Buffer) (string, error) {
 	if fm.mediatype[0] == "photo" {
 		media = fm.Message.Photo
 	} else if fm.mediatype[0] == "video" {
-		media = fm.Message.Video[0]
+		media = fm.Message.Video
 	}
 
 	file, err = os.Open(media)
@@ -131,9 +175,7 @@ func (fm *Formatter) PrepareMedia(buf *bytes.Buffer) (string, error) {
 		err = writer.Close()
 	}
 	file.Close()
-
 	return writer.FormDataContentType(), err
-
 }
 
 func (fm *Formatter) PrepareMediaForEdit(buf *bytes.Buffer) (string, error) {
@@ -148,7 +190,7 @@ func (fm *Formatter) PrepareMediaForEdit(buf *bytes.Buffer) (string, error) {
 	if fm.mediatype[0] == "photo" {
 		media = fm.Message.Photo
 	} else if fm.mediatype[0] == "video" {
-		media = fm.Message.Video[0]
+		media = fm.Message.Video
 	}
 
 	file, err = os.Open(media)

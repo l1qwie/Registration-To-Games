@@ -314,9 +314,9 @@ func SeeTheSchedule() {
 
 func MediaTest() {
 	defer errors.MakeIntestines()
-	UnloadOne()  //with two games (to unload and upload)
-	UploadOne()  //with one games (to upload)
-	UnloadAfew() //with four games (only to unload)
+	//UnloadOne() //with two games (to unload and upload)
+	//UploadOne() //with one games (to upload)
+	//UnloadAfew() //with four games (only to unload)
 	UploadAfew() //with four games (only to upload)
 	fmt.Print("All MediaTests were alright!\n")
 }
@@ -348,13 +348,37 @@ func TelegramTests() {
 
 func SendPhoto() {
 	fm := new(formatter.Formatter)
-	fm.AddPhotoFromTG("AgACAgIAAxkDAAIN0mYAAW5slidxmrwJK_HIAri8aPk6QQACSNUxG03B2UqlEDWAtFWFvgEAAwIAA3MAAzQE")
+	fm.AddPhotoFromStorage("red.jpg")
 	fm.WriteChatId(738070596)
 	_, err := fm.Send()
 	if err != nil {
 		panic(err)
 	}
+}
+func SendMediaGroup() {
+	fm := new(formatter.Formatter)
+	mg := make([]types.Media, 3)
 
+	mg[0].Type = "photo"
+	mg[0].Media = "AgACAgIAAxkDAAIN12YECI0n-nb0tvzwNOpQpPUPQXr-AAJI1TEbTcHZSqUQNYC0VYW-AQADAgADcwADNAQ"
+	mg[1].Type = "photo"
+	mg[1].Media = "AgACAgIAAxkDAAIN12YECI0n-nb0tvzwNOpQpPUPQXr-AAJI1TEbTcHZSqUQNYC0VYW-AQADAgADcwADNAQ"
+	mg[2].Type = "photo"
+	mg[2].Media = "AgACAgIAAxkDAAIN12YECI0n-nb0tvzwNOpQpPUPQXr-AAJI1TEbTcHZSqUQNYC0VYW-AQADAgADcwADNAQ"
+	/*
+		mg[0].Type = "photo"
+		mg[0].Media = "red.jpg"
+		mg[1].Type = "photo"
+		mg[1].Media = "redd.jpg"
+		mg[2].Type = "photo"
+		mg[2].Media = "reddd.jpg"
+	*/
+	fm.AddMapOfMedia(mg)
+	fm.WriteChatId(738070596)
+	_, err := fm.Send()
+	if err != nil {
+		panic(err)
+	}
 }
 
 func JustOtherTests() {

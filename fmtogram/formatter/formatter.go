@@ -72,7 +72,7 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 		}
 	}
 	if err == nil {
-		if len(fm.Message.Photo) == 0 && len(fm.Message.Video) == 0 {
+		if len(fm.Message.InputMedia) == 0 && fm.Message.Photo == "" && fm.Message.Video == "" {
 			if fm.Message.MessageId == 0 {
 				marshalstatus = true
 				function = "sendMessage"
@@ -84,35 +84,45 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 				fm.contenttype = "application/json"
 				finalBuffer = bytes.NewBuffer(jsonMessage)
 			}
-		} else if len(fm.Message.Photo) != 0 || len(fm.Message.Video) != 0 {
+		} else if len(fm.Message.InputMedia) != 0 || fm.Message.Photo != "" || fm.Message.Video != "" {
 			marshalstatus = true
-			/*
-				if len(fm.Message.Photo) > 1 || len(fm.Message.Video) > 1 {
-					finalBuffer = bytes.NewBuffer(nil)
-					fm.contenttype, err = fm.createMediaGroup(finalBuffer)
-				} else {
-			*/
-			if fm.mediatype[0] == "photo" {
-				function = "sendPhoto"
-			} else if fm.mediatype[0] == "video" {
-				function = "sendVideo"
-			}
-			if fm.kindofmedia[0] == fromStorage {
-				finalBuffer = bytes.NewBuffer(nil)
-				fm.contenttype, err = fm.PrepareMedia(finalBuffer)
-			} else {
+			if len(fm.Message.InputMedia) > 1 {
+				function = "sendMediaGroup"
+				//finalBuffer = bytes.NewBuffer(nil)
+
 				jsonMessage, err = json.Marshal(fm.Message)
 				if err == nil {
 					fm.contenttype = "application/json"
 					finalBuffer = bytes.NewBuffer(jsonMessage)
 				}
+
+				//fm.contenttype, err = fm.createMediaGroup(finalBuffer)
+				//fmt.Println(err)
+				//_ = executer.Send(finalBuffer, "sendMediaGroup", fm.contenttype, marshalstatus)
+			} else {
+				if fm.mediatype[0] == "photo" {
+					function = "sendPhoto"
+				} else if fm.mediatype[0] == "video" {
+					function = "sendVideo"
+				}
+				if fm.kindofmedia[0] == fromStorage {
+					finalBuffer = bytes.NewBuffer(nil)
+					fm.contenttype, err = fm.PrepareMedia(finalBuffer)
+				} else {
+					jsonMessage, err = json.Marshal(fm.Message)
+					if err == nil {
+						fm.contenttype = "application/json"
+						finalBuffer = bytes.NewBuffer(jsonMessage)
+					}
+				}
 			}
-			//}
 		}
 
 	}
 	if err == nil {
-		fmt.Println(function, fm.Message.Photo)
+		fmt.Println(finalBuffer.String())
+		fmt.Println()
+		fmt.Println()
 		mes = executer.Send(finalBuffer, function, fm.contenttype, marshalstatus)
 	}
 

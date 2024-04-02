@@ -119,7 +119,7 @@ func unload(user *bottypes.User, fm *formatter.Formatter) {
 		if FindMediaGame(gameId) {
 			quan = selectQuantity(gameId)
 			if quan > 1 {
-				//fm.AddMapOfMedia(selectArrOrMedia(gameId))
+				fm.AddMapOfMedia(selectArrOrMedia(gameId))
 			} else {
 				fid, ty = selectOneMedia(gameId)
 				if ty == "photo" {
@@ -151,7 +151,6 @@ func upload(user *bottypes.User, fm *formatter.Formatter) {
 		dict  map[string]string
 	)
 	dict = dictionary.Dictionary[user.Language]
-	fmt.Println(user.Media.Counter)
 	if len(user.Media.Photo) != 0 || len(user.Media.Video) != 0 {
 		space, ok = howMuchSpace(user.Media.DelGameId)
 		if ok && space > user.Media.Counter {
@@ -179,7 +178,6 @@ func upload(user *bottypes.User, fm *formatter.Formatter) {
 			forall.SetTheKeyboard(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 			fm.WriteString(fmt.Sprint(dict["Succesful"]))
 			fm.WriteChatId(user.Id)
-			user.Media.Counter = 0
 		} else {
 			user.Request = strconv.Itoa(user.Media.DelGameId)
 			WaitingYourMedia(user, fm)

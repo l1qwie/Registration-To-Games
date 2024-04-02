@@ -3,6 +3,8 @@ package types
 import (
 	"database/sql"
 	"fmt"
+
+	_ "github.com/lib/pq"
 )
 
 const HttpsRequest = "https://api.telegram.org/"
@@ -17,8 +19,17 @@ const (
 	HTML     string = "HTML"
 )
 
-func ConnectToDatabase() (db *sql.DB) {
-	db, err := sql.Open("postgres", connectData())
+func ConnectToDatabase(doc bool) *sql.DB {
+	var (
+		db  *sql.DB
+		err error
+	)
+	if doc {
+		db, err = sql.Open("postgres", docConnect())
+	} else {
+		db, err = sql.Open("postgres", connectData())
+	}
+	fmt.Println(db)
 	if err != nil {
 		panic(err)
 	}
@@ -77,15 +88,20 @@ type StorageOfJson struct {
 	ID int `json:"update_id"`
 }
 
+type Media struct {
+	Type  string `json:"type"`
+	Media string `json:"media"`
+}
+
 type SendMessagePayload struct {
-	ChatID      int      `json:"chat_id"`
-	Text        string   `json:"text"`
-	ReplyMarkup string   `json:"reply_markup"`
-	Photo       string   `json:"photo"`
-	Video       []string `json:"video"`
-	ParseMode   string   `json:"parse_mode"`
-	MessageId   int      `json:"message_id"`
-	InputMedia  string   `json:"media"`
+	ChatID      int     `json:"chat_id"`
+	Text        string  `json:"text"`
+	ReplyMarkup string  `json:"reply_markup"`
+	Photo       string  `json:"photo"`
+	Video       string  `json:"video"`
+	ParseMode   string  `json:"parse_mode"`
+	MessageId   int     `json:"message_id"`
+	InputMedia  []Media `json:"media"`
 }
 
 type DelMessage struct {
@@ -139,8 +155,17 @@ type Responser interface {
 	Updates(string, *int, *TelegramResponse) error
 }
 
-func connectData() (body string) {
+func connectData() string {
 	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, sslmode)
+}
+
+func docConnect() string {
+	return fmt.Sprintf("port=%s user=%s password=%s dbname=%s sslmode=%s",
+		docPort,
+		docUsername,
+		docPass,
+		docDbname,
+		docSslmode)
 }
 
 func ConnectTo() string {

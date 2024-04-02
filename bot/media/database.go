@@ -79,13 +79,14 @@ func selectQuantity(gameId int) int {
 	return res
 }
 
-func selectArrOrMedia(gameId int) map[string]string {
+func selectArrOrMedia(gameId int) []types.Media {
 	var (
 		rows   *sql.Rows
 		err    error
 		id, ty string
+		i      int
 	)
-	fIds := make(map[string]string, 20)
+	fIds := make([]types.Media, 20)
 	rows, err = types.Db.Query("SELECT fileId, type FROM MediaRepository WHERE gameId = $1", gameId)
 	if err != nil {
 		panic(err)
@@ -95,7 +96,9 @@ func selectArrOrMedia(gameId int) map[string]string {
 		if err != nil {
 			panic(err)
 		}
-		fIds[id] = ty
+		fIds[i].Type = ty
+		fIds[i].Media = id
+		i++
 	}
 	defer rows.Close()
 	return fIds
