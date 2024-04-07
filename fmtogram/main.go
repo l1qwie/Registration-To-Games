@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func pollResponse(output chan<- *formatter.Formatter, reg *executer.RegTable) {
+func pollResponse(output chan *formatter.Formatter, reg *executer.RegTable) {
 	var (
 		offset           int
 		err              error
@@ -34,7 +34,7 @@ func pollResponse(output chan<- *formatter.Formatter, reg *executer.RegTable) {
 			} else {
 				index = reg.NewIndex()
 				reg.Reg[index].UserId = chatID
-				reg.Reg[index].Chu = make(chan *types.TelegramResponse, 10)
+				reg.Reg[index].Chu = make(chan *types.TelegramResponse, 1)
 				reg.Reg[index].Chu <- telegramResponse
 			}
 			go Worker(reg.Reg[index].Chu, reg.Reg[index].Chb, output)
@@ -45,7 +45,7 @@ func pollResponse(output chan<- *formatter.Formatter, reg *executer.RegTable) {
 	}
 }
 
-func Worker(input <-chan *types.TelegramResponse, mesoutput <-chan *types.MessageResponse, output chan<- *formatter.Formatter) {
+func Worker(input chan *types.TelegramResponse, mesoutput chan *types.MessageResponse, output chan *formatter.Formatter) {
 	var (
 		fm         *formatter.Formatter
 		userstruct *types.TelegramResponse
@@ -70,10 +70,12 @@ func Worker(input <-chan *types.TelegramResponse, mesoutput <-chan *types.Messag
 			}
 		}
 		fm = bot.Receiving(userstruct, mes)
-		fm.Complete()
-		output <- fm
+		if err := fm.Complete(); err == nil {
+			output <- fm
+		}
 	}
 }
+
 func pushRequest(requests <-chan *formatter.Formatter, reg *executer.RegTable) {
 	for r := range requests {
 		mes, err := r.Send()
@@ -82,7 +84,7 @@ func pushRequest(requests <-chan *formatter.Formatter, reg *executer.RegTable) {
 		}
 		if mes.Ok {
 			index := reg.Seeker(mes.Result.Chat.Id)
-			reg.Reg[index].Chb = make(chan *types.MessageResponse, 10)
+			reg.Reg[index].Chb = make(chan *types.MessageResponse, 1)
 			reg.Reg[index].Chb <- mes
 		}
 	}

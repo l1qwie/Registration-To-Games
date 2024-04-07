@@ -76,6 +76,7 @@ type TelegramResponse struct {
 	Ok     bool             `json:"ok"`
 	Result []TelegramUpdate `json:"result"`
 	Error  *TelegramError   `json:"error,omitempty"`
+	AppErr *chan error
 }
 
 type JustForUpdate struct {

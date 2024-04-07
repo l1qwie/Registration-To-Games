@@ -1,24 +1,33 @@
 wait-for-it.sh: waiting 15 seconds for postgresql:5432
 wait-for-it.sh: postgresql:5432 is available after 0 seconds
-2024/04/07 09:41:46 DispatcherPhrase basic data:				
+2024/04/07 10:09:57 Путь к программе: /app/bin
+2024/04/07 10:09:57 DispatcherPhrase basic data:				
 		user.Level = 0, user.Request = Hello World ma booooooooy, user.Act = registration user.Id = 456
-2024/04/07 09:41:46 DispatcherPhrase basic data:				
+2024/04/07 10:09:57 Путь к программе: /app/bin
+2024/04/07 10:09:57 DispatcherPhrase basic data:				
 		user.Level = 0, user.Request = Owww, nooo, you are the best human in the world!, user.Act = registration user.Id = 456
-2024/04/07 09:41:46 DispatcherPhrase basic data:				
+2024/04/07 10:09:57 Путь к программе: /app/bin
+2024/04/07 10:09:57 DispatcherPhrase basic data:				
 		user.Level = 0, user.Request = /start, user.Act = registration user.Id = 456
-2024/04/07 09:41:46 WelcomeTest 0 has been complete
-2024/04/07 09:41:46 DispatcherPhrase basic data:				
+2024/04/07 10:09:57 WelcomeTest 0 has been complete
+2024/04/07 10:09:57 Путь к программе: /app/bin
+2024/04/07 10:09:57 DispatcherPhrase basic data:				
 		user.Level = 1, user.Request = Hello World ma booooooooy, user.Act = registration user.Id = 456
-2024/04/07 09:41:46 DispatcherPhrase basic data:				
+2024/04/07 10:09:57 Путь к программе: /app/bin
+2024/04/07 10:09:57 DispatcherPhrase basic data:				
 		user.Level = 1, user.Request = Owww, nooo, you are the best human in the world!, user.Act = registration user.Id = 456
-2024/04/07 09:41:46 DispatcherPhrase basic data:				
+2024/04/07 10:09:57 Путь к программе: /app/bin
+2024/04/07 10:09:57 DispatcherPhrase basic data:				
 		user.Level = 1, user.Request = GoReg, user.Act = registration user.Id = 456
-2024/04/07 09:41:46 WelcomeTest 1 has been complete
-2024/04/07 09:41:46 DispatcherPhrase basic data:				
+2024/04/07 10:09:57 WelcomeTest 1 has been complete
+2024/04/07 10:09:57 Путь к программе: /app/bin
+2024/04/07 10:09:57 DispatcherPhrase basic data:				
 		user.Level = 2, user.Request = Hello World ma booooooooy, user.Act = registration user.Id = 456
-2024/04/07 09:41:46 DispatcherPhrase basic data:				
+2024/04/07 10:09:57 Путь к программе: /app/bin
+2024/04/07 10:09:57 DispatcherPhrase basic data:				
 		user.Level = 2, user.Request = Owww, nooo, you are the best human in the world!, user.Act = registration user.Id = 456
-2024/04/07 09:41:46 DispatcherPhrase basic data:				
+2024/04/07 10:09:57 Путь к программе: /app/bin
+2024/04/07 10:09:57 DispatcherPhrase basic data:				
 		user.Level = 2, user.Request = GoNext, user.Act = registration user.Id = 456
-2024/04/07 09:41:46 WelcomeTest 2 has been complete
-2024/04/07 09:41:46 All WelcomeTests were alright!
+2024/04/07 10:09:57 WelcomeTest 2 has been complete
+2024/04/07 10:09:57 All WelcomeTests were alright!

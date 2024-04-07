@@ -2,6 +2,7 @@ package errors
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"runtime/debug"
 )
@@ -27,9 +28,14 @@ func UpdatesMisstakes(part string) (err error) {
 	return err
 }
 
+func MadeMisstake(err error) {
+	log.Println("You have a misstake:", err)
+	debug.PrintStack()
+}
+
 func MakeIntestines() {
 	if r := recover(); r != nil {
-		fmt.Println("Recovered from panic:", r)
+		fmt.Println("Recovered from log.Fatal:", r)
 		debug.PrintStack()
 		os.Exit(1)
 	}

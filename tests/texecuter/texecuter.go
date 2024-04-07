@@ -26,8 +26,10 @@ type TestStuct struct {
 	Query                                        chan *types.TelegramResponse
 	Response                                     chan *types.MessageResponse
 	Fmt                                          chan *formatter.Formatter
+	Err                                          chan *error
 	Update                                       []Update
 	Name                                         string
+	err                                          bool
 }
 
 // Check trash-query, call a func and return true
@@ -75,8 +77,13 @@ func (t *TestStuct) prepDatabase() {
 // Call a func if it's not a wrong answer
 func (t *TestStuct) acceptAnswers() {
 	if !t.checkTheWorng() {
-		t.ArrFuncAss[t.TRcount](<-t.Fmt)
-		t.ArrFuncChDB[t.TRcount](t.Update[t.TRcount].UserId)
+		select {
+		case <-t.Fmt:
+			t.ArrFuncAss[t.TRcount](<-t.Fmt)
+			t.ArrFuncChDB[t.TRcount](t.Update[t.TRcount].UserId)
+		default:
+			t.err = true
+		}
 	}
 }
 
@@ -85,7 +92,7 @@ func (t *TestStuct) DoTest() {
 	for t.TRcount < t.Round {
 		t.Trshcount = 0
 		t.Wcounter = 0
-		for t.Trshcount < 3 {
+		for t.Trshcount < 3 && !t.err {
 			t.theHead()
 			t.prepDatabase()
 			fmtogram.Worker(t.Query, t.Response, t.Fmt)

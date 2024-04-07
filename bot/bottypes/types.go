@@ -41,6 +41,7 @@ type User struct {
 	Reg          RegToGames
 	Media        Media
 	UserRec      UserRec
+	AppErr       chan *error
 }
 
 type Game struct {

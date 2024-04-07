@@ -16,8 +16,8 @@ func ShowTheSchedule(user *bottypes.User, fm *formatter.Formatter) {
 		mes      string
 	)
 	dict = dictionary.Dictionary[user.Language]
-	if FindGame() {
-		schedule = selectSchedule(user.Language)
+	if FindGame(fm) {
+		schedule = selectSchedule(user.Language, fm)
 		for i := 0; i < len(schedule); i++ {
 			mes += (fmt.Sprintf(dict["Schedule"], i+1, schedule[i].Sport, schedule[i].Date, schedule[i].Time, schedule[i].Seats, schedule[i].Price, schedule[i].Currency))
 		}

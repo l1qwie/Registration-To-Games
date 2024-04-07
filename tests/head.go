@@ -147,6 +147,7 @@ func Welcome() {
 	ts.Query = make(chan *types.TelegramResponse, 1)
 	ts.Response = make(chan *types.MessageResponse, 1)
 	ts.Fmt = make(chan *formatter.Formatter, 1)
+	ts.Err = make(chan *error, 1)
 	ts.ArrFuncTr = []func() *types.TelegramResponse{welcome.Start, welcome.ShowRules, welcome.ToMainMenu}
 	ts.ArrFuncMr = []func() *types.MessageResponse{welcome.MesResp}
 	ts.ArrFuncTrash = []func() *types.TelegramResponse{welcome.Trash, welcome.Trash2}

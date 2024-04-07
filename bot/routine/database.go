@@ -2,13 +2,14 @@ package routine
 
 import (
 	"RegistrationToGames/bot/bottypes"
+	"RegistrationToGames/fmtogram/formatter"
 	"RegistrationToGames/fmtogram/types"
 	"database/sql"
 
 	_ "github.com/lib/pq"
 )
 
-func Find(id int) (detected bool) {
+func Find(id int, fm *formatter.Formatter) (detected bool) {
 	var (
 		rows    *sql.Rows
 		err     error
@@ -18,12 +19,12 @@ func Find(id int) (detected bool) {
 	request = `SELECT COUNT(*) FROM Users WHERE userId = $1`
 	rows, err = types.Db.Query(request, id)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	rows.Next()
 	err = rows.Scan(&counter)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	if counter > 0 {
 		detected = true
@@ -33,11 +34,11 @@ func Find(id int) (detected bool) {
 }
 
 func CreateUser(userId int, language string) (err error) {
-	_, err = types.Db.Exec("INSERT INTO Users (userId, action, language, level) VALUES ($1, $2, $3, $4)", userId, "registration", language, 0)
+	_, err = types.Db.Exec("INSERT INTO Users (userId, action, language, level) VALUES ($1, $2, $3, $4)", 222, "registration", language, 0) //userId
 	return err
 }
 
-func DbRetrieveUser(user *bottypes.User) (err error) {
+func DbRetrieveUser(user *bottypes.User, fm *formatter.Formatter) (err error) {
 	var (
 		rows    *sql.Rows
 		gameId  int
@@ -57,7 +58,7 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 				&user.Media.Interval, &user.Media.Direction, &user.Media.Limit, &user.Media.Id, &user.Media.Counter,
 				&user.UserRec.Changeable, &user.UserRec.ActGame, &user.UserRec.WillChangeable, &user.UserRec.NewPay)
 			if err != nil {
-				panic(err)
+				fm.Error(err)
 			}
 		}
 		if user.Act == "reg to games" {
@@ -72,7 +73,7 @@ func DbRetrieveUser(user *bottypes.User) (err error) {
 	return err
 }
 
-func DbRetainUser(user *bottypes.User) (err error) {
+func DbRetainUser(user *bottypes.User, fm *formatter.Formatter) (err error) {
 	var (
 		request string
 		gameId  int
@@ -98,7 +99,7 @@ func DbRetainUser(user *bottypes.User) (err error) {
 	return err
 }
 
-func SelectExMessageId(userId int) (exMessageId int, err error) {
+func SelectExMessageId(userId int, fm *formatter.Formatter) (exMessageId int, err error) {
 	var (
 		rows *sql.Rows
 	)
@@ -107,7 +108,7 @@ func SelectExMessageId(userId int) (exMessageId int, err error) {
 		rows.Next()
 		err = rows.Scan(&exMessageId)
 		if err != nil {
-			panic(err)
+			fm.Error(err)
 		}
 
 	}

@@ -4,7 +4,10 @@ import (
 	"RegistrationToGames/bot/bottypes"
 	"RegistrationToGames/bot/media"
 	"RegistrationToGames/bot/routine"
+	"RegistrationToGames/fmtogram/formatter"
 )
+
+var fm = new(formatter.Formatter)
 
 // check defalt columns without Media type
 // only user.Media.Limit could be here cause it is const
@@ -15,11 +18,11 @@ func withoutM(userId int) *bottypes.User {
 	)
 	user = new(bottypes.User)
 	user.Id = userId
-	err = routine.DbRetrieveUser(user)
+	err = routine.DbRetrieveUser(user, fm)
 	if err != nil {
 		panic(err)
 	}
-	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id, fm)
 	if err != nil {
 		panic(err)
 	}
@@ -261,7 +264,7 @@ func AfterUploadOne(userId int) {
 	if user.Media.Counter != 1 {
 		panic("user.Media.Counter != 1")
 	}
-	if !media.FindMediaGame(10) {
+	if !media.FindMediaGame(10, fm) {
 		panic("don't have the MediaGame")
 	}
 }

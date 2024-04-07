@@ -35,9 +35,9 @@ func PresentationScheduele(user *bottypes.User, fm *formatter.Formatter) {
 		dict           map[string]string
 	)
 	dict = dictionary.Dictionary[user.Language]
-	if schedule.FindGame() {
+	if schedule.FindGame(fm) {
 		user.Level = 1
-		sch = selectTheSchedule(user.Media.Limit, user.LaunchPoint, user.Language)
+		sch = selectTheSchedule(user.Media.Limit, user.LaunchPoint, user.Language, fm)
 		for i := 0; sch[i] != nil && i < len(sch); i++ {
 			coordinates = append(coordinates, 1)
 			kbName = append(kbName, fmt.Sprintf("%s %s %s %s %d", sch[i].Sport, sch[i].Date, sch[i].Time, dict["freeSpace"], sch[i].Seats))
@@ -68,10 +68,10 @@ func ChooseGame(user *bottypes.User, fm *formatter.Formatter, seatsStatus bool) 
 	dict = dictionary.Dictionary[user.Language]
 	detected, gameId = forall.IntCheck(user.Request)
 	if detected {
-		if FindAGame(gameId) {
+		if FindAGame(gameId, fm) {
 			user.Reg.GameId = gameId
 			user.Level = 2
-			price, space, currency = selectThePrice(gameId)
+			price, space, currency = selectThePrice(gameId, fm)
 			for i := 0; i < space && i < 3; i++ {
 				coordinates = append(coordinates, 1)
 				kbName = append(kbName, dict[strconv.Itoa(i+1)])
@@ -105,7 +105,7 @@ func ChooseSeats(user *bottypes.User, fm *formatter.Formatter) {
 	dict = dictionary.Dictionary[user.Language]
 	detected, seats = forall.IntCheck(user.Request)
 	if detected {
-		if howManyIsLeft(user.Reg.GameId, seats) {
+		if howManyIsLeft(user.Reg.GameId, seats, fm) {
 			user.Reg.Seats = seats
 			user.Level = 3
 			coordinates = []int{1, 1, 1}
@@ -133,11 +133,11 @@ func ChoosePayment(user *bottypes.User, fm *formatter.Formatter) {
 	)
 	dict = dictionary.Dictionary[user.Language]
 	if user.Request == "card" || user.Request == "cash" {
-		if howManyIsLeft(user.Reg.GameId, user.Reg.Seats) {
+		if howManyIsLeft(user.Reg.GameId, user.Reg.Seats, fm) {
 			user.Reg.Payment = user.Request
 			if user.Request == "card" {
 				user.Level = 4
-				price, _, currency = selectThePrice(user.Reg.GameId)
+				price, _, currency = selectThePrice(user.Reg.GameId, fm)
 				cost = price * user.Reg.Seats
 				fm.SetIkbdDim([]int{1, 1, 1})
 				fm.WriteInlineButtonUrl(dict["pay"], "https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3")
@@ -169,12 +169,12 @@ func BestWishes(user *bottypes.User, fm *formatter.Formatter) {
 	)
 	dict = dictionary.Dictionary[user.Language]
 	if user.Request == "cash" || user.Request == "Next" {
-		if howManyIsLeft(user.Reg.GameId, user.Reg.Seats) {
-			completeRegistration(user.Id, user.Reg.GameId, user.Reg.Seats, user.Reg.Payment)
+		if howManyIsLeft(user.Reg.GameId, user.Reg.Seats, fm) {
+			completeRegistration(user.Id, user.Reg.GameId, user.Reg.Seats, user.Reg.Payment, fm)
 			user.Level = 3
 			user.Act = "divarication"
 			details = new(bottypes.Game)
-			details = selectDetailOfGame(user.Reg.GameId, user.Language)
+			details = selectDetailOfGame(user.Reg.GameId, user.Language, fm)
 			cost = details.Price * user.Reg.Seats
 			kbName = []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}
 			kbData = []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}

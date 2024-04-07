@@ -1,6 +1,7 @@
 package formatter
 
 import (
+	"RegistrationToGames/fmtogram/errors"
 	"RegistrationToGames/fmtogram/executer"
 	"RegistrationToGames/fmtogram/types"
 	"bytes"
@@ -28,8 +29,16 @@ func (fm *Formatter) WriteEditMesId(mesId int) {
 	fm.Message.MessageId = mesId
 }
 
-func (fm *Formatter) Complete() {
+func (fm *Formatter) Error(err error) {
+	fm.err = err
 
+}
+
+func (fm *Formatter) Complete() error {
+	if fm.err != nil {
+		errors.MadeMisstake(fm.err)
+	}
+	return fm.err
 }
 
 func (fm *Formatter) CheckDelete() (err error) {

@@ -4,12 +4,13 @@ import (
 	"RegistrationToGames/bot/bottypes"
 	"RegistrationToGames/bot/dictionary"
 	"RegistrationToGames/bot/forall"
+	"RegistrationToGames/fmtogram/formatter"
 	"RegistrationToGames/fmtogram/types"
 	"database/sql"
 	"fmt"
 )
 
-func selectTheSchedule(limit, offset int, language string) []*bottypes.Game {
+func selectTheSchedule(limit, offset int, language string, fm *formatter.Formatter) []*bottypes.Game {
 	var (
 		rows           *sql.Rows
 		err            error
@@ -20,13 +21,13 @@ func selectTheSchedule(limit, offset int, language string) []*bottypes.Game {
 	request = `SELECT gameId, sport, date, time, seats FROM Schedule WHERE (status != -1) ORDER BY Schedule DESC LIMIT $1 OFFSET $2`
 	rows, err = types.Db.Query(request, limit, offset)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	for rows.Next() {
 		schedule[i] = &bottypes.Game{}
 		err = rows.Scan(&schedule[i].Id, &sport, &date, &time, &schedule[i].Seats)
 		if err != nil {
-			panic(err)
+			fm.Error(err)
 		}
 		schedule[i].Sport = dictionary.Dictionary[language][sport]
 		schedule[i].Date = forall.FromIntToStrDate(date)
@@ -37,51 +38,51 @@ func selectTheSchedule(limit, offset int, language string) []*bottypes.Game {
 	return schedule
 }
 
-func FindAGame(gameId int) bool {
+func FindAGame(gameId int, fm *formatter.Formatter) bool {
 	rows, err := types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE status != -1 AND gameId = $1", gameId)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	rows.Next()
 	counter := 0
 	err = rows.Scan(&counter)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	defer rows.Close()
 	return counter > 0
 }
 
-func selectThePrice(gameId int) (price, space int, currency string) {
+func selectThePrice(gameId int, fm *formatter.Formatter) (price, space int, currency string) {
 	rows, err := types.Db.Query("SELECT price, seats, currency FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	rows.Next()
 	err = rows.Scan(&price, &space, &currency)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	defer rows.Close()
 	return price, space, currency
 }
 
-func howManyIsLeft(gameId int, wishfulseats int) bool {
+func howManyIsLeft(gameId int, wishfulseats int, fm *formatter.Formatter) bool {
 	rows, err := types.Db.Query("SELECT seats FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	rows.Next()
 	seats := 0
 	err = rows.Scan(&seats)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	defer rows.Close()
 	return wishfulseats < seats
 }
 
-func completeRegistration(userId, gameId, seats int, payment string) (err error) {
+func completeRegistration(userId, gameId, seats int, payment string, fm *formatter.Formatter) (err error) {
 	var (
 		rows      *sql.Rows
 		gameSeats int
@@ -95,18 +96,18 @@ func completeRegistration(userId, gameId, seats int, payment string) (err error)
 		rows.Next()
 		err = rows.Scan(&gameSeats)
 		if err != nil {
-			panic(err)
+			fm.Error(err)
 		}
 	}
 	_, err = types.Db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", gameSeats-seats, gameId)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	defer rows.Close()
 	return err
 }
 
-func selectDetailOfGame(gameId int, language string) (details *bottypes.Game) {
+func selectDetailOfGame(gameId int, language string, fm *formatter.Formatter) (details *bottypes.Game) {
 	var (
 		rows       *sql.Rows
 		err        error
@@ -117,12 +118,12 @@ func selectDetailOfGame(gameId int, language string) (details *bottypes.Game) {
 	request = `SELECT gameId, sport, date, time, seats, latitude, longitude, address, price, currency FROM Schedule WHERE gameId = $1`
 	rows, err = types.Db.Query(request, gameId)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	rows.Next()
 	err = rows.Scan(&details.Id, &details.Sport, &date, &time, &details.Seats, &details.Lattitude, &details.Longitude, &details.Address, &details.Price, &details.Currency)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 	details.Sport = dictionary.Dictionary[language][details.Sport]
 	details.Date = forall.FromIntToStrDate(date)

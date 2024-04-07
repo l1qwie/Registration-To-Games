@@ -33,9 +33,9 @@ func ChooseDirection(user *bottypes.User, fm *formatter.Formatter) {
 		coordinates              []int
 	)
 	dict = dictionary.Dictionary[user.Language]
-	if findAnyMGames() {
+	if findAnyMGames(fm) {
 		user.Level = 1
-		unloadgames, uploadgames = findEveryGames()
+		unloadgames, uploadgames = findEveryGames(fm)
 		if unloadgames != 0 && uploadgames != 0 {
 			kbName = []string{dict["unload"], dict["upload"]}
 			kbData = []string{"unload", "upload"}
@@ -59,12 +59,12 @@ func ChooseMediaGame(user *bottypes.User, fm *formatter.Formatter, pretext strin
 	if user.Request == "unload" {
 		user.Media.Direction = user.Request
 		user.Level = 3
-		schedule := selectGamesInf(user.Media.Limit, user.LaunchPoint, true)
+		schedule := selectGamesInf(user.Media.Limit, user.LaunchPoint, true, fm)
 		createScheduleKeyboard(user, fm, schedule, pretext)
 	} else if user.Request == "upload" {
 		user.Media.Direction = user.Request
 		user.Level = 2
-		schedule := selectGamesInf(user.Media.Limit, user.LaunchPoint, false)
+		schedule := selectGamesInf(user.Media.Limit, user.LaunchPoint, false, fm)
 		createScheduleKeyboard(user, fm, schedule, pretext)
 	} else {
 		ChooseDirection(user, fm)
@@ -81,8 +81,8 @@ func WaitingYourMedia(user *bottypes.User, fm *formatter.Formatter) {
 	dict = dictionary.Dictionary[user.Language]
 	detected, gameId = forall.IntCheck(user.Request)
 	if detected {
-		if FindMediaGame(gameId) {
-			space, ok = howMuchSpace(gameId)
+		if FindMediaGame(gameId, fm) {
+			space, ok = howMuchSpace(gameId, fm)
 			if ok {
 				user.Level = 3
 				user.Media.DelGameId = gameId
@@ -116,12 +116,12 @@ func unload(user *bottypes.User, fm *formatter.Formatter) {
 	dict = dictionary.Dictionary[user.Language]
 	detected, gameId = forall.IntCheck(user.Request)
 	if detected {
-		if FindMediaGame(gameId) {
-			quan = selectQuantity(gameId)
+		if FindMediaGame(gameId, fm) {
+			quan = selectQuantity(gameId, fm)
 			if quan > 1 {
-				fm.AddMapOfMedia(selectArrOrMedia(gameId))
+				fm.AddMapOfMedia(selectArrOrMedia(gameId, fm))
 			} else {
-				fid, ty = selectOneMedia(gameId)
+				fid, ty = selectOneMedia(gameId, fm)
 				if ty == "photo" {
 					fm.AddPhotoFromTG(fid)
 				} else if ty == "video" {
@@ -152,7 +152,7 @@ func upload(user *bottypes.User, fm *formatter.Formatter) {
 	)
 	dict = dictionary.Dictionary[user.Language]
 	if len(user.Media.Photo) != 0 || len(user.Media.Video) != 0 {
-		space, ok = howMuchSpace(user.Media.DelGameId)
+		space, ok = howMuchSpace(user.Media.DelGameId, fm)
 		if ok && space > user.Media.Counter {
 			user.Level = 4
 			if user.Media.Counter > 1 {
@@ -167,12 +167,12 @@ func upload(user *bottypes.User, fm *formatter.Formatter) {
 						media[user.Media.Video[i]] = "video"
 					}
 				}
-				insertAfewNewMeda(media, user.Media.DelGameId, user.Id)
+				insertAfewNewMeda(media, user.Media.DelGameId, user.Id, fm)
 			} else {
 				if len(user.Media.Photo) != 0 {
-					insertOneNewMedia(user.Media.Photo[0], "photo", user.Media.DelGameId, user.Id)
+					insertOneNewMedia(user.Media.Photo[0], "photo", user.Media.DelGameId, user.Id, fm)
 				} else {
-					insertOneNewMedia(user.Media.Video[0], "video", user.Media.DelGameId, user.Id)
+					insertOneNewMedia(user.Media.Video[0], "video", user.Media.DelGameId, user.Id, fm)
 				}
 			}
 			forall.SetTheKeyboard(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})

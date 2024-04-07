@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	types.Db = types.ConnectToDatabase(true)
+	types.Db = types.ConnectToDatabase(false)
 	//tests.TelegramTests()
 	//tests.SendMediaGroup()
 	//tests.SendPhoto()

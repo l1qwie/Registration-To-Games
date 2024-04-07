@@ -10,6 +10,7 @@ import (
 	"RegistrationToGames/bot/settings"
 	"RegistrationToGames/bot/welcome"
 	"RegistrationToGames/fmtogram/formatter"
+	"fmt"
 	"log"
 	"strconv"
 )
@@ -27,24 +28,26 @@ const (
 	LEVEL8  int = 8
 )
 
-func retrieveUser(user *bottypes.User) {
+func retrieveUser(user *bottypes.User, fm *formatter.Formatter) {
 	var err error
-	if Find(user.Id) {
-		err = DbRetrieveUser(user)
+	if Find(user.Id, fm) {
+		err = DbRetrieveUser(user, fm)
 	} else {
 		err = CreateUser(user.Id, user.Language)
 		user.Act = "registration"
 		user.Media.Limit = 7
 	}
+	err = fmt.Errorf("help me")
 	if err != nil {
-		panic(err)
+		fm.Error(err)
+		//errors.MakeRecycle(&user.AppErr)
 	}
 }
 
-func retainUser(user *bottypes.User) {
-	err := DbRetainUser(user)
+func retainUser(user *bottypes.User, fm *formatter.Formatter) {
+	err := DbRetainUser(user, fm)
 	if err != nil {
-		panic(err)
+		fm.Error(err)
 	}
 }
 
@@ -131,15 +134,15 @@ func Settings(user *bottypes.User, fm *formatter.Formatter) {
 func Edit(user *bottypes.User, fm *formatter.Formatter) (exMessageId int) {
 	var err error
 	if user.ExMessageId == 0 {
-		exMessageId, err = SelectExMessageId(user.Id)
+		exMessageId, err = SelectExMessageId(user.Id, fm)
 		if err != nil {
-			panic(err)
+			fm.Error(err)
 		}
 	} else {
 		exMessageId = user.ExMessageId
 		err = updateExMessageId(exMessageId, user.Id)
 		if err != nil {
-			panic(err)
+			fm.Error(err)
 		}
 	}
 	if len(user.PhotosFileId) == 0 && len(user.VideosFileId) == 0 {
@@ -181,7 +184,7 @@ func Options(user *bottypes.User, fm *formatter.Formatter) {
 }
 
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
-	retrieveUser(user)
+	retrieveUser(user, fm)
 	user.ExMessageId = Edit(user, fm)
 	log.Printf(`DispatcherPhrase basic data:				
 		user.Level = %d, user.Request = %s, user.Act = %s user.Id = %d`, user.Level, user.Request, user.Act, user.Id)
@@ -202,5 +205,5 @@ func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	} else if user.Act == "settings" {
 		Settings(user, fm)
 	}
-	retainUser(user)
+	retainUser(user, fm)
 }

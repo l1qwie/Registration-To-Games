@@ -14,11 +14,11 @@ func withoutR(userId int) *bottypes.User {
 	)
 	user = new(bottypes.User)
 	user.Id = userId
-	err = routine.DbRetrieveUser(user)
+	err = routine.DbRetrieveUser(user, fm)
 	if err != nil {
 		panic(err)
 	}
-	user.ExMessageId, err = routine.SelectExMessageId(user.Id)
+	user.ExMessageId, err = routine.SelectExMessageId(user.Id, fm)
 	if err != nil {
 		panic(err)
 	}
