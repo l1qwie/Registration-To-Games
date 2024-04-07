@@ -1,9 +1,9 @@
 package formatter
 
 import (
-	"RegistrationToGames/fmtogram/errors"
-	"RegistrationToGames/fmtogram/executer"
-	"RegistrationToGames/fmtogram/types"
+	"Welcome/fmtogram/errors"
+	"Welcome/fmtogram/executer"
+	"Welcome/fmtogram/types"
 	"bytes"
 	"encoding/json"
 	"fmt"

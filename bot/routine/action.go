@@ -10,7 +10,6 @@ import (
 	"RegistrationToGames/bot/settings"
 	"RegistrationToGames/bot/welcome"
 	"RegistrationToGames/fmtogram/formatter"
-	"fmt"
 	"log"
 	"strconv"
 )
@@ -37,7 +36,6 @@ func retrieveUser(user *bottypes.User, fm *formatter.Formatter) {
 		user.Act = "registration"
 		user.Media.Limit = 7
 	}
-	err = fmt.Errorf("help me")
 	if err != nil {
 		fm.Error(err)
 		//errors.MakeRecycle(&user.AppErr)

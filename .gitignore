@@ -10,3 +10,4 @@ reddd.jpg
 pgdata
 .dockerignore
 logs/postgres.log
+Welcome/types/data.go
