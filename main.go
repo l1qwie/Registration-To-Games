@@ -2,6 +2,7 @@ package main
 
 import (
 	"RegistrationToGames/fmtogram/types"
+	"RegistrationToGames/tests"
 )
 
 func main() {
@@ -11,7 +12,7 @@ func main() {
 	//tests.SendPhoto()
 	//fmtogram.StartWithTelegram()
 	//tests.JustOtherTests()
-	//tests.WelcomeTest()
+	tests.WelcomeTest()
 	//tests.RegToGamesTest()
 	//tests.SeeTheSchedule()
 	//tests.MediaTest()

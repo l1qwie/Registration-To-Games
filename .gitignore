@@ -9,3 +9,4 @@ redd.jpg
 reddd.jpg
 pgdata
 .dockerignore
+logs/postgres.log

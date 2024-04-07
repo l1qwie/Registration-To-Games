@@ -10,7 +10,7 @@ import (
 	"RegistrationToGames/bot/settings"
 	"RegistrationToGames/bot/welcome"
 	"RegistrationToGames/fmtogram/formatter"
-	"fmt"
+	"log"
 	"strconv"
 )
 
@@ -182,10 +182,9 @@ func Options(user *bottypes.User, fm *formatter.Formatter) {
 
 func DispatcherPhrase(user *bottypes.User, fm *formatter.Formatter) {
 	retrieveUser(user)
-	//fm.WriteDeleteMesId(user.ExMessageId)
-	//fm.WriteChatId(user.Id)
 	user.ExMessageId = Edit(user, fm)
-	fmt.Println("level =", user.Level, fmt.Sprintf(`phrase = "%s"`, user.Request), fmt.Sprintf(`action = "%s"`, user.Act), "user.Id =", user.Id)
+	log.Printf(`DispatcherPhrase basic data:				
+		user.Level = %d, user.Request = %s, user.Act = %s user.Id = %d`, user.Level, user.Request, user.Act, user.Id)
 	if user.Request == "MainMenu" {
 		user.Act = "divarication"
 		user.Level = OPTIONS

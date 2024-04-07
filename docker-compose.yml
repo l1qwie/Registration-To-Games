@@ -1,23 +1,24 @@
 services:
 
-  app:
-    build: .
-    ports:
-      - 8080:8080
-    depends_on:
-      - postgresql
-
   postgresql:
     restart: always
     image: postgres:14
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+      #- ./postgres/logs:/var/log/postgresql
       - ./createdb.sql:/docker-entrypoint-initdb.d/createdb.sql
-      # - ./new_database.sql:/docker-entrypoint-initdb.d/new_database.sql
-    # network_mode: 'host'
     ports:
       - 5430:5432
+
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgresql
+    command: ["wait-for-it.sh", "postgresql:5432", "--", "/app/bin"]

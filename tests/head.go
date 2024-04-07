@@ -13,7 +13,7 @@ import (
 	"RegistrationToGames/tests/settings"
 	"RegistrationToGames/tests/texecuter"
 	"RegistrationToGames/tests/welcome"
-	"fmt"
+	"log"
 )
 
 const (
@@ -298,18 +298,18 @@ func ChangeSeats() {
 func RegToGamesTest() {
 	defer errors.MakeIntestines()
 	RegToOneGame() //with one game in database
-	fmt.Print("All RegToGamesTest were alright!\n")
+	log.Print("All RegToGamesTest were alright!\n")
 }
 
 func WelcomeTest() {
 	defer errors.MakeIntestines()
 	Welcome()
-	fmt.Print("All WelcomeTests were alright!\n")
+	log.Print("All WelcomeTests were alright!\n")
 }
 
 func SeeTheSchedule() {
 	Schedule()
-	fmt.Print("All SeeTheScheduleTests were alright!\n")
+	log.Print("All SeeTheScheduleTests were alright!\n")
 }
 
 func MediaTest() {
@@ -318,7 +318,7 @@ func MediaTest() {
 	//UploadOne() //with one games (to upload)
 	//UnloadAfew() //with four games (only to unload)
 	UploadAfew() //with four games (only to upload)
-	fmt.Print("All MediaTests were alright!\n")
+	log.Print("All MediaTests were alright!\n")
 }
 
 func SettingsTest() {
@@ -327,7 +327,7 @@ func SettingsTest() {
 	DeleteGame()     //test "delete user game" functionality
 	ChangeSeats()    //test "change seats on user games" functionality
 	ChangePayment()  //test "change payment on user games" functionality
-	fmt.Print("All SettingsTest were alright!\n")
+	log.Print("All SettingsTest were alright!\n")
 }
 
 func delEnv() {
@@ -386,9 +386,9 @@ func JustOtherTests() {
 	if !othertests.TestFromIntToStrDate() {
 		panic("Date isn't a date")
 	}
-	fmt.Println("Date is correct")
+	log.Println("Date is correct")
 	if !othertests.TestFromIntToStrTime() {
 		panic("Time isn't a time")
 	}
-	fmt.Println("Time is correct")
+	log.Println("Time is correct")
 }

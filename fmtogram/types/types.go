@@ -29,7 +29,6 @@ func ConnectToDatabase(doc bool) *sql.DB {
 	} else {
 		db, err = sql.Open("postgres", connectData())
 	}
-	fmt.Println(db)
 	if err != nil {
 		panic(err)
 	}
@@ -158,16 +157,12 @@ type Responser interface {
 func connectData() string {
 	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, sslmode)
 }
-
 func docConnect() string {
-	return fmt.Sprintf("port=%s user=%s password=%s dbname=%s sslmode=%s",
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		docHost,
 		docPort,
 		docUsername,
 		docPass,
 		docDbname,
 		docSslmode)
-}
-
-func ConnectTo() string {
-	return "#!@#!@#!@#"
 }

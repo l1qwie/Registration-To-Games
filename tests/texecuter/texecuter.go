@@ -5,7 +5,7 @@ import (
 	"RegistrationToGames/fmtogram/formatter"
 	"RegistrationToGames/fmtogram/types"
 	"RegistrationToGames/tests/database"
-	"fmt"
+	"log"
 )
 
 const wrongAnswers int = 2
@@ -93,7 +93,7 @@ func (t *TestStuct) DoTest() {
 			t.Trshcount++
 			t.Wcounter++
 		}
-		fmt.Printf("%s %d has been complete\n", t.Name, t.TRcount)
+		log.Printf("%s %d has been complete\n", t.Name, t.TRcount)
 		t.TRcount++
 		if t.MRcount+1 < len(t.ArrFuncMr) {
 			t.MRcount++

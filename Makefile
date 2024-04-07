@@ -8,3 +8,6 @@ up:
 
 rb:
 	docker build . -t registrationtogames-app
+
+#	docker logs registrationtogames-postgresql-1 >& logs/postgres.log
+#	docker logs registrationtogames-app-1 >& logs/app.log
