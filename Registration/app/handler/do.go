@@ -133,10 +133,8 @@ func makeSch(req *apptype.Request, res *apptype.Response, fm *formatter.Formatte
 	b.selGames(req, fm.Error, dict.Dictionary[req.Language])
 	b.prevNext(req, len(b.crd))
 	b.makeMainButt(dict.Dictionary[req.Language])
-
 	setKb(fm, b.crd, b.names, b.data)
 	fm.WriteString(dict.Dictionary[req.Language]["ChooseAnyGame"])
-	fm.WriteChatId(req.Id)
 }
 
 // Sets any keyboard
@@ -150,14 +148,13 @@ func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
 // GO to Main Menu
 func goToMain(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, tresp string) {
 	res.Level = 3
-	req.Act = "divarication"
+	res.Act = "divarication"
 	d := dict.Dictionary[req.Language]
 	names := []string{d["first"], d["second"], d["third"], d["fourth"]}
 	data := []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}
 	crd := []int{1, 1, 1, 1}
 	setKb(fm, crd, names, data)
 	fm.WriteString(tresp)
-	fm.WriteChatId(req.Id)
 }
 
 // Checks some information and if everything is allright
@@ -168,6 +165,7 @@ func presentationScheduele(req *apptype.Request, res *apptype.Response, fm *form
 	} else {
 		goToMain(req, res, fm, (fmt.Sprint(dict.Dictionary[req.Language]["NoGames"], dict.Dictionary[req.Language]["MainMenu"])))
 	}
+	fm.WriteChatId(req.Id)
 }
 
 // Makes some data to a question like "how many seats would you want?"
@@ -351,4 +349,5 @@ func RegistrationAct(req *apptype.Request, res *apptype.Response) {
 	res.Keyboard = fm.Message.ReplyMarkup
 	res.Message = fm.Message.Text
 	res.ChatID = fm.Message.ChatID
+	res.ParseMode = fm.Message.ParseMode
 }

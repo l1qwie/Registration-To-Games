@@ -6,14 +6,15 @@ import (
 )
 
 type check struct {
-	Mes     string
-	Kb      string
-	Payment string
-	Act     string
-	Lp      int
-	GameId  int
-	Seats   int
-	Res     *apptype.Response
+	Mes       string
+	Kb        string
+	Payment   string
+	Act       string
+	Lp        int
+	GameId    int
+	Seats     int
+	ParseMode string
+	Res       *apptype.Response
 }
 
 var (
@@ -46,6 +47,9 @@ func (ch *check) maintest() {
 	}
 	if ch.Res.Act != ch.Act {
 		panic(fmt.Sprintf(`ch.Res.Act != "%s"`, ch.Act))
+	}
+	if ch.Res.ParseMode != ch.ParseMode {
+		panic(fmt.Sprintf(`ch.Res.ParseMode != %s`, ch.ParseMode))
 	}
 }
 
@@ -120,6 +124,7 @@ func Dir(res *apptype.Response, i, j int) {
 	ch.Lp = res.LaunchPoint
 	ch.GameId = res.GameId
 	ch.Seats = res.Seats
+	ch.ParseMode = res.ParseMode
 	ch.Res = res
 	if j < 2 {
 		if i == 0 {

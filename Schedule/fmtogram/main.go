@@ -1,9 +1,9 @@
 package fmtogram
 
 import (
-	"Welcome/fmtogram/executer"
-	"Welcome/fmtogram/formatter"
-	"Welcome/fmtogram/types"
+	"Schedule/fmtogram/executer"
+	"Schedule/fmtogram/formatter"
+	"Schedule/fmtogram/types"
 	"time"
 )
 
@@ -67,7 +67,7 @@ func Worker(input chan *types.TelegramResponse, mesoutput chan *types.MessageRes
 				},
 			}
 		}
-		//fm = app.Receiving(userstruct, mes)
+		fm = bot.Receiving(userstruct, mes)
 		if err := fm.Complete(); err == nil {
 			output <- fm
 		}

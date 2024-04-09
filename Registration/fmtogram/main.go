@@ -3,12 +3,11 @@ package fmtogram
 import (
 	"Registraion/fmtogram/executer"
 	"Registraion/fmtogram/formatter"
-	"Registraion/fmtogram/helper"
 	"Registraion/fmtogram/types"
-	"log"
 	"time"
 )
 
+/*
 func pollResponse(output chan *formatter.Formatter, reg *executer.RegTable) {
 	var (
 		offset           int
@@ -44,7 +43,6 @@ func pollResponse(output chan *formatter.Formatter, reg *executer.RegTable) {
 	}
 }
 
-/*
 func Worker(input chan *types.TelegramResponse, mesoutput chan *types.MessageResponse, output chan *formatter.Formatter) {
 	var (
 		fm         *formatter.Formatter
@@ -98,7 +96,7 @@ func StartWithTelegram() {
 	)
 	requests = make(chan *formatter.Formatter)
 	reg = new(executer.RegTable)
-	go pollResponse(requests, reg)
+	//go pollResponse(requests, reg)
 	go pushRequest(requests, reg)
 
 	for {

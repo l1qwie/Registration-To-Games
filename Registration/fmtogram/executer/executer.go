@@ -63,7 +63,7 @@ func Send(buf *bytes.Buffer, function, contenttype string, unmarshal bool) (mes 
 		url  string
 		body []byte
 	)
-	url = fmt.Sprintf("%sbot%s/%s", types.HttpsRequest, types.TelebotToken, function)
+	//url = fmt.Sprintf("%sbot%s/%s", types.HttpsRequest, types.TelebotToken, function)
 	body, err = GetpostRequest(url, buf, contenttype)
 	fmt.Println(string(body))
 	if err == nil && unmarshal {
@@ -92,8 +92,8 @@ func Updates(offset *int, telegramResponse *types.TelegramResponse) (err error) 
 		body     []byte
 	)
 
-	url := fmt.Sprintf(types.HttpsRequest+"bot%s/getUpdates?limit=1&offset=%d", types.TelebotToken, *offset)
-	response, err = http.Get(url)
+	//url := fmt.Sprintf(types.HttpsRequest+"bot%s/getUpdates?limit=1&offset=%d", types.TelebotToken, *offset)
+	//response, err = http.Get(url)
 	if err == nil {
 		body, err = io.ReadAll(response.Body)
 	}

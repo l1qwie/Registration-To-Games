@@ -33,6 +33,7 @@ type Response struct {
 	Seats       int    `json:"seats"`
 	Payment     string `json:"payment"`
 	Act         string `json:"action"`
+	ParseMode   string `json:"parsemode"`
 }
 
 type Game struct {

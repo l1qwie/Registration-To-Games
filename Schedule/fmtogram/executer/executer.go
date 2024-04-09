@@ -1,8 +1,8 @@
 package executer
 
 import (
-	"Welcome/fmtogram/errors"
-	"Welcome/fmtogram/types"
+	"Schedule/fmtogram/errors"
+	"Schedule/fmtogram/types"
 	"bytes"
 	"encoding/json"
 	"fmt"

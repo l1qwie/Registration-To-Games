@@ -17,7 +17,7 @@ var (
 	trash   = []string{"O, I want to registrait myself to game!", "!#!@#QWESASED#!#!#$%#3123e1"}
 )
 
-func callwelcome(body []byte) *apptype.Response {
+func callreg(body []byte) *apptype.Response {
 	result := new(apptype.Response)
 	resp, err := http.Post("http://localhost:8082/Registration", "application/json", bytes.NewBuffer(body))
 	if err != nil {
@@ -73,7 +73,7 @@ func action() {
 			if err != nil {
 				panic(err)
 			}
-			res := callwelcome(jsonBytes)
+			res := callreg(jsonBytes)
 			log.Print(res.Message, "!!!!")
 			functional.Dir(res, i, j)
 			log.Printf("Secondary test %d was completed", j)
