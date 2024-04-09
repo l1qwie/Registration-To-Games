@@ -34,7 +34,7 @@ func handleDB(con *Connection) {
 
 func handleReq(con *Connection) *types.Request {
 	req := new(types.Request)
-	req.Id = 0
+	req.Id = 456
 	req.Act = "registration"
 	req.Level = i
 	req.Language = "ru"

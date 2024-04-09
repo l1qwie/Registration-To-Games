@@ -11,7 +11,7 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
       #- ./postgres/logs:/var/log/postgresql
-      - ./createdb.sql:/docker-entrypoint-initdb.d/createdb.sql
+      - ./postgres/createdb.sql:/docker-entrypoint-initdb.d/createdb.sql
     ports:
       - 5430:5432
 

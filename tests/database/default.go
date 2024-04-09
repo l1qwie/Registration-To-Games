@@ -3,7 +3,6 @@ package database
 import (
 	"RegistrationToGames/fmtogram/types"
 	"database/sql"
-	"fmt"
 
 	_ "github.com/lib/pq"
 )
@@ -361,7 +360,6 @@ func DeleteGame(gameId int) {
 }
 
 func DeleteGameWithUser(gameId, userId int) {
-	fmt.Println(userId, gameId)
 	_, err := types.Db.Exec("DELETE FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND status = 1", gameId, userId)
 	if err != nil {
 		panic(err)

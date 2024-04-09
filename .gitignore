@@ -11,3 +11,4 @@ pgdata
 .dockerignore
 logs/postgres.log
 Welcome/types/data.go
+Registration/apptype/data.go
