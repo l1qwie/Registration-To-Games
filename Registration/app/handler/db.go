@@ -7,6 +7,7 @@ import (
 	"database/sql"
 )
 
+// Selects the schedule of the app
 func selectTheSchedule(limit, offset int, language string, f func(error)) []*apptype.Game {
 	var (
 		rows           *sql.Rows
@@ -35,6 +36,7 @@ func selectTheSchedule(limit, offset int, language string, f func(error)) []*app
 	return schedule
 }
 
+// Tries to find any active(status != -1) game
 func findGame(f func(error)) bool {
 	rows, err := types.Db.Query("SELECT gameId FROM Schedule WHERE status != -1")
 	if err != nil {
@@ -51,6 +53,7 @@ func findGame(f func(error)) bool {
 	return cn > 0
 }
 
+// Tries to find the game that user choosed
 func findThatGame(gameId int, f func(error)) bool {
 	counter := 0
 	rows, err := types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE status != -1 AND gameId = $1", gameId)
@@ -67,6 +70,7 @@ func findThatGame(gameId int, f func(error)) bool {
 	return counter > 0
 }
 
+// Selects some information about the game
 func selectThePrice(gameId int, f func(error)) (price, space int, currency string) {
 	rows, err := types.Db.Query("SELECT price, seats, currency FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
@@ -81,6 +85,7 @@ func selectThePrice(gameId int, f func(error)) (price, space int, currency strin
 	return price, space, currency
 }
 
+// Checks is there any free seats (space) to registraite the user
 func howManyIsLeft(gameId int, wishfulseats int, f func(error)) bool {
 	rows, err := types.Db.Query("SELECT seats FROM Schedule WHERE gameId = $1", gameId)
 	if err != nil {
@@ -96,6 +101,8 @@ func howManyIsLeft(gameId int, wishfulseats int, f func(error)) bool {
 	return wishfulseats < seats
 }
 
+// Adds a new string in the table "GamesWithUsers"
+// Updates seats of the game in the table "Schedule"
 func completeRegistration(userId, gameId, seats int, payment string, f func(error)) {
 	var (
 		rows      *sql.Rows
@@ -119,6 +126,7 @@ func completeRegistration(userId, gameId, seats int, payment string, f func(erro
 	defer rows.Close()
 }
 
+// Selects all game data
 func selectDetailOfGame(gameId int, language string, f func(error)) (details *apptype.Game) {
 	var (
 		rows       *sql.Rows

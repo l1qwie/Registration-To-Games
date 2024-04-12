@@ -11,68 +11,83 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// make []string of errors (missing data)
+// Make []string of errors (missing data)
 func whatMiss(req *apptype.Request) []string {
 	m := make([]string, 6)
 	if req.Id == 0 {
-		m[0] = "req.Id = 0"
+		m[0] = `"id" = 0`
 	}
 	if req.Act == "" {
-		m[1] = "req.Act = ``"
+		m[1] = `"action" = ""`
 	}
 	if req.Language == "" {
-		m[2] = "req.Language = ``"
+		m[2] = `"language" = ""`
 	}
 	if req.Limit == 0 {
-		m[3] = "req.Limit = 0"
+		m[3] = `"limit" = 0`
 	}
 	if req.Req == "" {
-		m[4] = "req.Req = ``"
+		m[4] = `"request = ""`
 	}
 	if req.Connection == nil {
-		m[5] = "req.Connection = nil"
+		m[5] = `"connection" = nil`
 	}
 	return m
 }
 
-// make string
+// Make []string of errors (diffrent data is awaited)
+func whatDif(req *apptype.Request) []string {
+	m := make([]string, 2)
+	if req.Act != "reg to games" {
+		m[0] = `"action" isn't equal "reg to games"`
+	}
+	if req.Language != "ru" && req.Language != "en" && req.Language != "tur" {
+		m[1] = `"language" isn't equal "ru" or "en" or "tur"`
+	}
+	return m
+}
+
+// Make string
 func fromArrToStr(mes []string) string {
 	var message string
-	for i, m := range mes {
+	for _, m := range mes {
 		if m != "" {
-			if i == len(mes) {
-				message += m
-			} else {
-				message += fmt.Sprintf("%s, ", m)
-			}
+			message += fmt.Sprintf("%s\n", m)
 		}
 	}
 	return message
 }
 
-// error message wording
-// start from []string and then make it to string
-func mesofErr(req *apptype.Request) string {
-	m := whatMiss(req)
+// Error message wording
+// Starts from []string and then make it to string
+func mesofErr(req *apptype.Request, kind bool) string {
+	var m []string
+	if kind {
+		m = whatMiss(req)
+	} else {
+		m = whatDif(req)
+	}
 	return fromArrToStr(m)
 }
 
-// check for an error
-// return answer (string) and found (bool)
-func checkError(req *apptype.Request) (string, bool) {
-	var (
-		mes string
-		f   bool
-	)
-	if req.Id == 0 || req.Act == "" || req.Language == "" || req.Limit == 0 || req.Req == "" || req.Connection == nil {
-		mes = mesofErr(req)
+// Check for an error
+// Return answer (string) and found (bool)
+func checkError(req *apptype.Request) (mes string, f bool) {
+	if (req.Id == 0) || (req.Act == "") || (req.Language == "") || (req.Limit == 0) || (req.Req == "") || (req.Connection == nil) {
+		mes = "Not enough data: "
+		mes += mesofErr(req, true)
+		f = true
+	}
+	if (req.Act != "reg to games") || (req.Language != "ru" && req.Language != "en" && req.Language != "tur") {
+		mes += "Diffrent data is awaited: "
+		mes += mesofErr(req, false)
 		f = true
 	}
 	return mes, f
 }
 
-// start the server
-// main logic of the server
+// Starts the server
+// Main logic of the server
 func Registration() {
 	router := gin.Default()
 	router.POST("/Registration", func(c *gin.Context) {

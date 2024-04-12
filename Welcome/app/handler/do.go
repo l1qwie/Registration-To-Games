@@ -4,7 +4,6 @@ import (
 	"Welcome/app/dict"
 	"Welcome/fmtogram/formatter"
 	"Welcome/types"
-	"fmt"
 )
 
 const (
@@ -13,87 +12,79 @@ const (
 	LEVEL2 int = 2
 )
 
-func greetingsToUser(req *types.Request, fm *formatter.Formatter) {
-	var (
-		kbName, kbData []string
-		coordinates    []int
-	)
-	req.Level = 1
-	kbName = []string{dict.Dictionary[req.Language]["reg"]}
-	kbData = []string{"GoReg"}
-	coordinates = []int{1}
-
-	fm.SetIkbdDim(coordinates)
-	for i := 0; i < len(kbName); i++ {
-		fm.WriteInlineButtonCmd(kbName[i], kbData[i])
+// Sets any keyboard
+func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
+	fm.SetIkbdDim(crd)
+	for i := 0; i < len(crd) && i < len(names); i++ {
+		fm.WriteInlineButtonCmd(names[i], data[i])
 	}
-	fm.WriteString(dict.Dictionary[req.Language]["WelcomeToBot"])
-	fm.WriteChatId(req.Id)
 }
 
-func showRules(req *types.Request, fm *formatter.Formatter) {
-	var (
-		kbName, kbData []string
-		coordinates    []int
-	)
+// Greet to user
+// Says hello
+func greetingsToUser(res *types.Response, fm *formatter.Formatter, dict map[string]string) {
+	res.Level = 1
+	setKb(fm, []int{1}, []string{dict["reg"]}, []string{"GoReg"})
+	fm.WriteString(dict["WelcomeToBot"])
+}
+
+// The body of showRules
+// Prepares all data
+func srulBody(res *types.Response, fm *formatter.Formatter, dict map[string]string) {
+	res.Level = 2
+	setKb(fm, []int{1}, []string{dict["allright"]}, []string{"GoNext"})
+	fm.WriteString(dict["BotRules"])
+}
+
+// Sows the rules of the app
+func showRules(req *types.Request, res *types.Response, fm *formatter.Formatter) {
 	if req.Req == "GoReg" {
-		req.Level = 2
-		kbName = []string{dict.Dictionary[req.Language]["allright"]}
-		kbData = []string{"GoNext"}
-		coordinates = []int{1}
-
-		fm.SetIkbdDim(coordinates)
-		for i := 0; i < len(kbName); i++ {
-			fm.WriteInlineButtonCmd(kbName[i], kbData[i])
-		}
-		fm.WriteString(dict.Dictionary[req.Language]["BotRules"])
-		fm.WriteChatId(req.Id)
+		srulBody(res, fm, dict.Dictionary[req.Language])
 	} else {
-		greetingsToUser(req, fm)
+		greetingsToUser(res, fm, dict.Dictionary[req.Language])
 	}
 }
 
-func welcomeToMainMenu(req *types.Request, fm *formatter.Formatter) {
-	var (
-		kbName, kbData []string
-		coordinates    []int
-		d              map[string]string
-	)
+// The body of welcomeToMainMenu
+// Prepares all data
+func wtmmBody(res *types.Response, fm *formatter.Formatter, dict map[string]string) {
+	res.Level = 3
+	res.Act = "divarication"
+	setKb(fm, []int{1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}, []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"})
+	fm.WriteString(dict["WelcomeToMainMenu"])
+}
+
+// Redirect to Main Menu
+// This is the first enter of Main Menu
+func welcomeToMainMenu(req *types.Request, res *types.Response, fm *formatter.Formatter) {
 	if req.Req == "GoNext" {
-		req.Level = 3
-		req.Act = "divarication"
-		d = dict.Dictionary[req.Language]
-		kbName = []string{d["first"], d["second"], d["third"], d["fourth"]}
-		kbData = []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"}
-		coordinates = []int{1, 1, 1, 1}
-		fm.SetIkbdDim(coordinates)
-		for i := 0; i < len(kbName); i++ {
-			fm.WriteInlineButtonCmd(kbName[i], kbData[i])
-		}
-		fm.WriteString(d["WelcomeToMainMenu"])
-		fm.WriteChatId(req.Id)
-		fmt.Println(fm.Message.ReplyMarkup, "!#@$!")
+		wtmmBody(res, fm, dict.Dictionary[req.Language])
 	} else {
-		req.Req = "GoReg"
-		showRules(req, fm)
+		srulBody(res, fm, dict.Dictionary[req.Language])
 	}
 }
 
-func dir(req *types.Request, fm *formatter.Formatter) {
+// Directioner
+func dir(req *types.Request, res *types.Response, fm *formatter.Formatter) {
 	if req.Level == START {
-		greetingsToUser(req, fm)
+		greetingsToUser(res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL1 {
-		showRules(req, fm)
+		showRules(req, res, fm)
 	} else if req.Level == LEVEL2 {
-		welcomeToMainMenu(req, fm)
+		welcomeToMainMenu(req, res, fm)
 	}
 }
 
-func WelcomeAct(req *types.Request, resp *types.Response) {
+// The main
+// The head
+// The directioner
+func WelcomeAct(req *types.Request, res *types.Response) {
 	fm := new(formatter.Formatter)
-	dir(req, fm)
+	res.Level = req.Level
+	res.Act = req.Act
+	dir(req, res, fm)
 	fm.ReadyKB()
-	resp.Keyboard = fm.Message.ReplyMarkup
-	resp.Message = fm.Message.Text
-	resp.ChatID = fm.Message.ChatID
+	res.Keyboard = fm.Message.ReplyMarkup
+	res.Message = fm.Message.Text
+	res.ChatID = req.Id
 }

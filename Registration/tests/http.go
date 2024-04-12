@@ -17,6 +17,7 @@ var (
 	trash   = []string{"O, I want to registrait myself to game!", "!#!@#QWESASED#!#!#$%#3123e1"}
 )
 
+// Makes the requst and take a response
 func callreg(body []byte) *apptype.Response {
 	result := new(apptype.Response)
 	resp, err := http.Post("http://localhost:8082/Registration", "application/json", bytes.NewBuffer(body))
@@ -29,12 +30,14 @@ func callreg(body []byte) *apptype.Response {
 	return result
 }
 
+// Preparing the Database
 func handleDB() {
 	UpdateAction()
 	UpdateLevel()
 	UpdateLanguage()
 }
 
+// Preparing a request
 func handleReq() *apptype.Request {
 	req := new(apptype.Request)
 	req.Id = 477
@@ -63,6 +66,7 @@ func handleReq() *apptype.Request {
 	return req
 }
 
+// All main actions happen here
 func action() {
 	for i < 5 {
 		j = 0
@@ -74,17 +78,22 @@ func action() {
 				panic(err)
 			}
 			res := callreg(jsonBytes)
-			log.Print(res.Message, "!!!!")
-			functional.Dir(res, i, j)
-			log.Printf("Secondary test %d was completed", j)
-			j++
+			if res.Error == "" {
+				functional.Dir(res, i, j)
+				log.Printf("Secondary test %d was completed", j)
+				j++
+			} else {
+				panic(res.Error)
+			}
 		}
 		i++
 	}
 }
 
+// The head of the directioner
+// Only this function is imported
 func Head() {
-	types.Db = types.ConnectToDatabase(false)
+	types.Db = apptype.ConnectToDatabase(false)
 	defer DeleteUser()
 	defer DeleteGameWithUser()
 	defer DeleteGame()

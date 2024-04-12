@@ -9,6 +9,9 @@ type Response struct {
 	Keyboard string `json:"keyboard"`
 	Message  string `json:"message"`
 	ChatID   int    `json:"chatid"`
+	Act      string `json:"action"`
+	Level    int    `json:"level"`
+	Error    string `json:"error"`
 }
 
 type Request struct {

@@ -5,6 +5,7 @@ import (
 	"database/sql"
 )
 
+// Checks the table "GamesWithUsers" and looking for the changes
 func checkGamesWithUsersTable(userId, gameId, seats int, payment string) bool {
 	var (
 		rows    *sql.Rows
@@ -26,6 +27,7 @@ func checkGamesWithUsersTable(userId, gameId, seats int, payment string) bool {
 	return counter > 0
 }
 
+// Checks the table "Schedule" and looking for the changes
 func checkUpdatedSchedule(gameId, seats int) bool {
 	rows, err := types.Db.Query("SELECT COUNT(*) FROM Schedule WHERE gameId = $1 AND seats = $2", gameId, 55-seats)
 	if err != nil {

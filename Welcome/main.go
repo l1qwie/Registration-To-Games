@@ -2,10 +2,12 @@ package main
 
 import (
 	"Welcome/enter"
+	"Welcome/tests"
+	"time"
 )
 
 func main() {
-	enter.Welcome()
-	//time.Sleep(time.Second * 3)
-	//tests.Head()
+	go enter.Welcome()
+	time.Sleep(time.Second * 3)
+	tests.Head()
 }
