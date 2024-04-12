@@ -5,6 +5,7 @@ import (
 	"RegistrationToGames/bot/dictionary"
 	"RegistrationToGames/bot/forall"
 	"RegistrationToGames/fmtogram/formatter"
+	"RegistrationToGames/fmtogram/types"
 	"fmt"
 )
 
@@ -38,7 +39,7 @@ func ChooseOptions(user *bottypes.User, fm *formatter.Formatter) {
 		crd = []int{1, 1, 1}
 		names = []string{dict["Changelang"], dict["ChangRec"], dict["MainMenu"]} //[]string{"Изменить язык", "Изменить записи", "Главное Меню"}
 		datas = []string{"language", "records", "MainMenu"}
-		fm.WriteParseMode("HTML")
+		fm.WriteParseMode(types.HTML)
 	} else {
 		user.UserRec.Changeable = "language"
 		mes = dict["NoGamesChangeLang"]

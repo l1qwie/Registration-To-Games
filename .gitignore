@@ -15,3 +15,5 @@ Welcome/fmtogram/types/data.go
 Registration/apptype/data.go
 Registration/fmtogram/types/data.go
 Schedule/fmtogram/types/data.go
+Settings/fmtogram/types/data.go
+Settings/apptype/data.go
