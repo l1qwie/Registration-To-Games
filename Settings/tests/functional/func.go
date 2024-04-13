@@ -118,3 +118,74 @@ func ChooseLang(res *apptype.Response) {
 		panic("language wasn't changed")
 	}
 }
+
+// Data which I wait after after the function is executed "chooseOptions"
+// With two things that user can change - language or records to games
+func ChTwoOpt(res *apptype.Response) {
+	ch.mes = "Вот игры на которые у вас есть запись:\n\n"
+	ch.mes += "<b>1.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-06-2025</b>, <em>Время:</em> <b>10:00</b>, <em>Включая вас с вами будет:</em> <b>7</b>, <em>Цена за одно место:</em> <b>100 RUB</b>, <em>Способ оплаты:</em> <b>cash</b>, <em>Статус оплаты:</em> <b>Не оплачено</b>\n\n\n"
+	ch.mes += "<b>2.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-12-2025</b>, <em>Время:</em> <b>11:00</b>, <em>Включая вас с вами будет:</em> <b>6</b>, <em>Цена за одно место:</em> <b>100 USD</b>, <em>Способ оплаты:</em> <b>card</b>, <em>Статус оплаты:</em> <b>Не оплачено</b>\n\n\n"
+	ch.mes += "<b>3.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-02-2025</b>, <em>Время:</em> <b>12:00</b>, <em>Включая вас с вами будет:</em> <b>3</b>, <em>Цена за одно место:</em> <b>100 POUNDS</b>, <em>Способ оплаты:</em> <b>card</b>, <em>Статус оплаты:</em> <b>Оплачено</b>\n\n\n"
+	ch.mes += "Вы можете изменить информацию по вашей записи или же изменить язык"
+	ch.kb = `{"inline_keyboard":[[{"text":"Изменить язык","callback_data":"language","url":""}],[{"text":"Изменить бронь на игру","callback_data":"records","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.lvl = 1
+	ch.lp = 0
+	ch.act = "settings"
+	ch.isCh = ""
+	ch.lang = "ru"
+	ch.gameid = 0
+	ch.prmode = "HTML"
+	ch.res = res
+	ch.maintest()
+}
+
+// Data which I wait after after the function is executed "whatWay"
+func ChGame(res *apptype.Response) {
+	ch.mes = "Выберите вашу игру\n\n"
+	ch.mes += "<b>1.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-06-2025</b>, <em>Время:</em> <b>10:00</b>, <em>Включая вас с вами будет:</em> <b>7</b>, <em>Цена за одно место:</em> <b>100 RUB</b>, <em>Способ оплаты:</em> <b>cash</b>, <em>Статус оплаты:</em> <b>Не оплачено</b>\n\n\n"
+	ch.mes += "<b>2.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-12-2025</b>, <em>Время:</em> <b>11:00</b>, <em>Включая вас с вами будет:</em> <b>6</b>, <em>Цена за одно место:</em> <b>100 USD</b>, <em>Способ оплаты:</em> <b>card</b>, <em>Статус оплаты:</em> <b>Не оплачено</b>\n\n\n"
+	ch.mes += "<b>3.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-02-2025</b>, <em>Время:</em> <b>12:00</b>, <em>Включая вас с вами будет:</em> <b>3</b>, <em>Цена за одно место:</em> <b>100 POUNDS</b>, <em>Способ оплаты:</em> <b>card</b>, <em>Статус оплаты:</em> <b>Оплачено</b>\n\n\n"
+	ch.kb = `{"inline_keyboard":[[{"text":"1","callback_data":"2","url":""}],[{"text":"2","callback_data":"1","url":""}],[{"text":"3","callback_data":"0","url":""}]]}`
+	ch.lvl = 2
+	ch.lp = 0
+	ch.act = "settings"
+	ch.isCh = "records"
+	ch.lang = "ru"
+	ch.gameid = 0
+	ch.prmode = "HTML"
+	ch.res = res
+	ch.maintest()
+}
+
+// Data which I wait after after the function is executed "dirOfChanges"
+func ChOrDel(res *apptype.Response) {
+	ch.mes = "Вы хотите изменить или удалить?"
+	ch.kb = `{"inline_keyboard":[[{"text":"Изменить игру","callback_data":"change","url":""}],[{"text":"Удалить игру","callback_data":"del","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.lvl = 3
+	ch.lp = 0
+	ch.act = "settings"
+	ch.isCh = "records"
+	ch.lang = "ru"
+	ch.gameid = 1
+	ch.prmode = ""
+	ch.res = res
+	ch.maintest()
+}
+
+// Data which I wait after after the function is executed "dirForRec"
+func DelGame(res *apptype.Response) {
+	ch.mes = "Ваша бронь на игру успешно удалена\n\nГлавное Меню"
+	ch.kb = `{"inline_keyboard":[[{"text":"Просмотр расписания","callback_data":"Looking Schedule","url":""}],[{"text":"Регистрация на игру","callback_data":"Reg to games","url":""}],[{"text":"Наши фото и видео","callback_data":"Photo\u0026Video","url":""}],[{"text":"Настройки | Мои игры","callback_data":"My records","url":""}]]}`
+	ch.lvl = 3
+	ch.lp = 0
+	ch.act = "divarication"
+	ch.isCh = "records"
+	ch.lang = "ru"
+	ch.gameid = 1
+	ch.prmode = ""
+	ch.res = res
+	ch.maintest()
+	if !checkDelGame() {
+		panic("The game wasn't deleted")
+	}
+}

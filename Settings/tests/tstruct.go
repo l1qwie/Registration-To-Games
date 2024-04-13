@@ -10,8 +10,7 @@ import (
 const wrongAnswers int = 2
 
 var (
-	trashfunc = []func(int) *apptype.Request{trash, trash2}
-	onetime   = false
+	onetime = false
 )
 
 // This stuct only for Update functions to update database
@@ -22,21 +21,23 @@ type Update struct {
 
 // This stuct is for all tests. The main thought is you can use it anywhere
 type TestStuct struct {
-	TRcount, Trshcount, Round, Wcounter int
-	FuncReq                             []func() *apptype.Request
-	FuncRes                             []func(*apptype.Response)
-	FuncTrsh                            []func(int) *apptype.Request
-	request                             *apptype.Request
-	response                            *apptype.Response
-	UpdtLevel                           []int
-	Name                                string
+	TRcount, Trshcount, Round, Wcounter, inficount int
+	FuncReq                                        []func() *apptype.Request
+	FuncRes                                        []func(*apptype.Response)
+	FuncTrsh                                       []func() *apptype.Request
+	request                                        *apptype.Request
+	response                                       *apptype.Response
+	UpdtLevel                                      []int
+	Name                                           string
+	Logf                                           string
 }
 
 // Check trash-query, call a func and return true
 // else - return false
 func (t *TestStuct) checkTheTrash() bool {
 	if t.Trshcount < 2 {
-		t.request = trashfunc[t.Trshcount](t.UpdtLevel[t.TRcount])
+		t.request = t.FuncTrsh[t.inficount]()
+		t.inficount++
 	}
 	return t.Trshcount < 2
 }
@@ -73,7 +74,24 @@ func (t *TestStuct) prepDatabase() {
 	UpdateLevel(t.UpdtLevel[t.TRcount])
 }
 
+// Logs data from Request
+func (t *TestStuct) logReq() {
+	log.Print("Request:")
+	log.Printf("req.Id = %d", t.request.Id)
+	log.Printf("req.Level = %d", t.request.Level)
+	log.Printf("req.Language = %s", t.request.Language)
+	log.Printf("req.Act = %s", t.request.Act)
+	log.Printf("req.Limit = %d", t.request.Limit)
+	log.Printf("req.LaunchPoint = %d", t.request.LaunchPoint)
+	log.Printf("req.Req = %s", t.request.Req)
+	log.Printf("req.IsChanged = %s", t.request.IsChanged)
+	log.Printf("req.GameId = %d", t.request.GameId)
+	log.Print()
+}
+
+// Makes []bytes from json(object) and send it
 func (t *TestStuct) doRequest() {
+	t.logReq()
 	jb, err := json.Marshal(t.request)
 	if err != nil {
 		panic(err)
@@ -84,7 +102,9 @@ func (t *TestStuct) doRequest() {
 	}
 }
 
-func (t *TestStuct) logs() {
+// Logs data from Response
+func (t *TestStuct) logRes() {
+	log.Print("Response:")
 	log.Printf("res.Message = %s", t.response.Message)
 	log.Printf("res.Keyboard = %s", t.response.Keyboard)
 	log.Printf("res.ChatId = %d", t.response.ChatID)
@@ -95,6 +115,7 @@ func (t *TestStuct) logs() {
 	log.Printf("res.Language = %s", t.response.Language)
 	log.Printf("res.GameId = %d", t.response.GameId)
 	log.Printf("res.ParseMode = %s", t.response.ParseMode)
+	log.Print()
 }
 
 // Accept bot answers
@@ -102,7 +123,7 @@ func (t *TestStuct) logs() {
 func (t *TestStuct) acceptAnswers() {
 	if !t.checkTheWorng() {
 		t.FuncRes[t.TRcount](t.response)
-		t.logs()
+		t.logRes()
 	}
 }
 

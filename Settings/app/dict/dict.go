@@ -14,6 +14,20 @@ func ru(dict map[string]string) {
 	dict["second"] = "Регистрация на игру"
 	dict["third"] = "Наши фото и видео"
 	dict["fourth"] = "Настройки | Мои игры"
+	dict["Changelang"] = "Изменить язык"
+	dict["ChangRec"] = "Изменить бронь на игру"
+	dict["YouHaveGames"] = "Вот игры на которые у вас есть запись:\n\n"
+	dict["WhatUCanDo"] = "Вы можете изменить информацию по вашей записи или же изменить язык"
+	dict["UserSch"] = "<b>%d.</b> <em>Спорт:</em> <b>%s</b>, <em>Дата:</em> <b>%s</b>, <em>Время:</em> <b>%s</b>, <em>Включая вас с вами будет:</em> <b>%d</b>, <em>Цена за одно место:</em> <b>%d %s</b>, <em>Способ оплаты:</em> <b>%s</b>, <em>Статус оплаты:</em> <b>%s</b>\n\n\n"
+	dict["volleyball"] = "Волейбол"
+	dict["football"] = "Футбол"
+	dict["ChooseGame"] = "Выберите вашу игру\n\n"
+	dict["ChangeOrDel"] = "Вы хотите изменить или удалить?"
+	dict["Change"] = "Изменить игру"
+	dict["DelGame"] = "Удалить игру"
+	dict["GameDeleted"] = "Ваша бронь на игру успешно удалена\n\n"
+	dict["Paid"] = "Оплачено"
+	dict["WaitForPaid"] = "Не оплачено"
 }
 
 func en(dict map[string]string) {
@@ -28,6 +42,20 @@ func en(dict map[string]string) {
 	dict["second"] = "Game registration"
 	dict["third"] = "Our photos and videos"
 	dict["fourth"] = "Settings | My games"
+	dict["Changelang"] = "Change language"
+	dict["ChangRec"] = "Change reservation for the game"
+	dict["YouHaveGames"] = "Here are the games you have recordings of\n\n"
+	dict["WhatUCanDo"] = "You can modify the information about your recording or change the language"
+	dict["UserSch"] = "<b>%d.</b> <em>Sport:</em> <b>%s</b>, <em>Date:</em> <b>%s</b>, <em>Time:</em> <b>%s</b>, <em>Including you, there will be:</em> <b>%d</b>, <em>Price per spot:</em> <b>%d %s</b>, <em>Payment method:</em> <b>%s</b>, <em>Payment status:</em> <b>%s</b>\n\n\n"
+	dict["volleyball"] = "Volleyball"
+	dict["football"] = "Football"
+	dict["ChooseGame"] = "Choose your game\n\n"
+	dict["ChangeOrDel"] = "Do you want to change or delete?"
+	dict["Change"] = "Change the game"
+	dict["DelGame"] = "Delete the game"
+	dict["GameDeleted"] = "Your game reservation has been successfully deleted\n\n"
+	dict["Paid"] = "Paid"
+	dict["WaitForPaid"] = "Not paid"
 }
 
 func tur(dict map[string]string) {
@@ -42,6 +70,20 @@ func tur(dict map[string]string) {
 	dict["second"] = "Oyun kaydı"
 	dict["third"] = "Bizim fotoğraflar ve videolar"
 	dict["fourth"] = "Ayarlar | Oyunlarım"
+	dict["Changelang"] = "Dil değiştir"
+	dict["ChangRec"] = "Oyun için rezervasyonu değiştir"
+	dict["YouHaveGames"] = "İşte kayıtlarınızın olduğu oyunlar\n\n"
+	dict["WhatUCanDo"] = "Kaydınızla ilgili bilgileri değiştirebilir veya dilini değiştirebilirsiniz"
+	dict["UserSch"] = "<b>%d.</b> <em>Spor:</em> <b>%s</b>, <em>Tarih:</em> <b>%s</b>, <em>Saat:</em> <b>%s</b>, <em>Sizinle birlikte toplamda olacak kişi sayısı:</em> <b>%d</b>, <em>Her bir yer için fiyat:</em> <b>%d %s</b>, <em>Ödeme yöntemi:</em> <b>%s</b>, <em>Ödeme durumu:</em> <b>%s</b>\n\n\n"
+	dict["volleyball"] = "Voleybol"
+	dict["football"] = "Futbol"
+	dict["ChooseGame"] = "Oyununuzu seçin\n\n"
+	dict["WhatUWhantToCh"] = "Ne değiştirmek istiyorsunuz?"
+	dict["Payment"] = "Ödeme yöntemi"
+	dict["Seats"] = "Benimle birlikteki kişi sayısı"
+	dict["GameDeleted"] = "Oyun rezervasyonunuz başarıyla silindi\n\n"
+	dict["Paid"] = "Ödendi"
+	dict["WaitForPaid"] = "Ödenmedi"
 }
 
 func init() {

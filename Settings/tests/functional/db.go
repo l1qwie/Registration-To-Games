@@ -6,16 +6,20 @@ import (
 
 // Checks updated language
 func checkUpdtLang(lang string) bool {
-	count := 0
-	rows, err := apptype.Db.Query("SELECT COUNT(*) FROM Users WHERE userId = $1 AND language = $2", 899, lang)
+	var count int
+	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM Users WHERE userId = $1 AND language = $2", 899, lang).Scan(&count)
 	if err != nil {
 		panic(err)
 	}
-	rows.Next()
-	err = rows.Scan(&count)
+	return count > 0
+}
+
+// Checks the deleted game
+func checkDelGame() bool {
+	var count int
+	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM GamesWithUsers WHERE gameId = $1 and userId = $2 and status = -1", 1, 899).Scan(&count)
 	if err != nil {
 		panic(err)
 	}
-	defer rows.Close()
 	return count > 0
 }

@@ -18,25 +18,7 @@ func mainReq() *apptype.Request {
 	}
 }
 
-// Trash func
-func trash(lvl int) *apptype.Request {
-	req := mainReq()
-	req.Req = "()#!JKASKLDKLAJSLKJSALKD"
-	req.Level = lvl
-	req.IsChanged = "language"
-	return req
-}
-
-// Trash func 2
-func trash2(lvl int) *apptype.Request {
-	req := mainReq()
-	req.Req = "PRIVET GUYS!"
-	req.Level = lvl
-	req.IsChanged = "language"
-	return req
-}
-
-// Makes req.Req for the Change Option part
+// Makes data for the Change Option part
 func chOpt() *apptype.Request {
 	req := mainReq()
 	req.Req = "YA HOCHU CHEGO-NIBUD'"
@@ -44,11 +26,38 @@ func chOpt() *apptype.Request {
 	return req
 }
 
-// Make req.Req for the Change Language part
+// Make data and for the Change Language part
 func chLang() *apptype.Request {
 	req := mainReq()
 	req.Req = "en"
 	req.Level = 2
 	req.IsChanged = "language"
+	return req
+}
+
+// Make data and for the Choose the Way part
+func chRec() *apptype.Request {
+	req := mainReq()
+	req.Level = 1
+	req.Req = "records"
+	return req
+}
+
+// Make data and for the Choose a Game part
+func delGameId() *apptype.Request {
+	req := mainReq()
+	req.Level = 2
+	req.IsChanged = "records"
+	req.Req = "1"
+	return req
+}
+
+// Make data and for the Choose a Changeable Option part
+func del() *apptype.Request {
+	req := mainReq()
+	req.Level = 3
+	req.IsChanged = "records"
+	req.GameId = 1
+	req.Req = "del"
 	return req
 }

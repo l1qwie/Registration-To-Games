@@ -36,6 +36,18 @@ type Response struct {
 	Error       string `json:"error"`
 }
 
+type Game struct {
+	Id            int
+	Sport         string
+	Date          string
+	Time          string
+	Price         int
+	Currency      string
+	Payment       string
+	Seats         int
+	StatusPayment string
+}
+
 func connectData() string {
 	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, sslmode)
 }
