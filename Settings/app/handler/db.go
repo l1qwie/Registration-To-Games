@@ -75,7 +75,7 @@ func selectUserSchedule(userId, limit, lp int, f func(error), dict map[string]st
 // Tries to find some free seats in the game
 func findSomeSeats(gameId, userId, wantS int, f func(error)) (int, int, bool) {
 	var schs, uss int
-	err := apptype.Db.QueryRow("SELECT s.seats, gwu.seats FROM Schedule s JOIN GamesWithUsers gwu ON s.gameId = gwu.gameId WHERE gwu.userId = $1 AND s.gameId = $2 and gwu.status = 1", userId, gameId).Scan(&schs, uss)
+	err := apptype.Db.QueryRow("SELECT s.seats, gwu.seats FROM Schedule s JOIN GamesWithUsers gwu ON s.gameId = gwu.gameId WHERE gwu.userId = $1 AND s.gameId = $2 and gwu.status = 1", userId, gameId).Scan(&schs, &uss)
 	if err != nil {
 		f(err)
 	}
@@ -89,6 +89,28 @@ func delTheGame(seats, gameId, userId int, f func(error)) {
 		f(err)
 	}
 	_, err = apptype.Db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", seats, gameId)
+	if err != nil {
+		f(err)
+	}
+}
+
+// Select the statistics of pay status
+func statPayment(gameId, userId int, f func(error)) bool {
+	var stat int
+	err := apptype.Db.QueryRow("SELECT statuspayment FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND status = 1", gameId, userId).Scan(&stat)
+	if err != nil {
+		f(err)
+	}
+	return stat != 1
+}
+
+// Updates the seats of the user of the user's game
+func updtSeats(gameId, userId, genS, oldS, newS int, f func(error)) {
+	_, err := apptype.Db.Exec("UPDATE GamesWithUsers SET seats = $1 WHERE gameId = $2 AND userId = $3", newS, gameId, userId)
+	if err != nil {
+		f(err)
+	}
+	_, err = apptype.Db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", (genS+oldS)-newS, gameId)
 	if err != nil {
 		f(err)
 	}

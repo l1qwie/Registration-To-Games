@@ -23,3 +23,13 @@ func checkDelGame() bool {
 	}
 	return count > 0
 }
+
+// Chechs the change seats
+func checkSeatsWereChange() bool {
+	var count int
+	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND seats = $3 AND status = 1", 2, 899, 6).Scan(&count)
+	if err != nil {
+		panic(err)
+	}
+	return count > 0
+}

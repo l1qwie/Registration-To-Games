@@ -71,11 +71,31 @@ func delGame() {
 	defer f.Close()
 }
 
+// Tests Change the Seats functional
+func chSeats() {
+	defer DeleteUser()
+	defer DeleteUserSchedule()
+	defer DeleteSchedule()
+	CreateScheduleForUser()
+	CreateUserScehdule()
+	CreateUser()
+	f := initlogs("appchSeats.log")
+	ts := new(TestStuct)
+	ts.Round = 6
+	ts.Name = "ChangeSeatsTest"
+	ts.FuncReq = []func() *apptype.Request{chOpt, chRec, delGameId, change, seats, numOfSeats}
+	ts.FuncRes = []func(*apptype.Response){functional.ChTwoOpt, functional.ChGame, functional.ChOrDel, functional.ChThwWay, functional.WrtSeats, functional.ChangeSeats}
+	ts.FuncTrsh = []func() *apptype.Request{commontrash, commontrash2, chSeatstr2, chSeatstr3, chSeatstr4, chSeatstr5, chSeatstr6, chSeatstr7, chSeatstr8, chSeatstr9, chSeatstr10, chSeatstr11}
+	ts.UpdtLevel = []int{0, 1, 2, 3, 4, 5}
+	ts.DoTest()
+	defer f.Close()
+}
+
 // The list of testing functions
 func testList() {
 	//language()
-	delGame()
-	//chSeats()
+	//delGame()
+	chSeats()
 	//chPayment()
 }
 

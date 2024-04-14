@@ -18,7 +18,7 @@ func mainReq() *apptype.Request {
 	}
 }
 
-// Makes data for the Change Option part
+// Makes data the Change Option part
 func chOpt() *apptype.Request {
 	req := mainReq()
 	req.Req = "YA HOCHU CHEGO-NIBUD'"
@@ -26,7 +26,7 @@ func chOpt() *apptype.Request {
 	return req
 }
 
-// Make data and for the Change Language part
+// Make data for the Change Language part
 func chLang() *apptype.Request {
 	req := mainReq()
 	req.Req = "en"
@@ -35,7 +35,7 @@ func chLang() *apptype.Request {
 	return req
 }
 
-// Make data and for the Choose the Way part
+// Make data for the Choose the Way part
 func chRec() *apptype.Request {
 	req := mainReq()
 	req.Level = 1
@@ -43,21 +43,53 @@ func chRec() *apptype.Request {
 	return req
 }
 
-// Make data and for the Choose a Game part
+// Make data for the Choose a Game part
 func delGameId() *apptype.Request {
 	req := mainReq()
 	req.Level = 2
 	req.IsChanged = "records"
-	req.Req = "1"
+	//req.Req = "1" // if you want to delete
+	req.Req = "2" // if you want to change
 	return req
 }
 
-// Make data and for the Choose a Changeable Option part
+// Make data for the Choose a Changeable Option part
 func del() *apptype.Request {
 	req := mainReq()
 	req.Level = 3
 	req.IsChanged = "records"
-	req.GameId = 1
+	//req.GameId = 1 // if you want to delete
+	req.GameId = 2 // if you want to change
 	req.Req = "del"
+	return req
+}
+
+// Make data for the Choose an ChangeOption part
+func change() *apptype.Request {
+	req := mainReq()
+	req.Level = 3
+	req.Req = "change"
+	req.GameId = 2
+	req.IsChanged = "records"
+	return req
+}
+
+// Make data for the Choose an change option of the game
+func seats() *apptype.Request {
+	req := mainReq()
+	req.Level = 4
+	req.Req = "myseats"
+	req.GameId = 2
+	req.IsChanged = "records"
+	return req
+}
+
+// Make data to send num of seats
+func numOfSeats() *apptype.Request {
+	req := mainReq()
+	req.Level = 5
+	req.Req = "6"
+	req.GameId = 2
+	req.IsChanged = "myseats"
 	return req
 }

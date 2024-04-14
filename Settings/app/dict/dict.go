@@ -28,6 +28,12 @@ func ru(dict map[string]string) {
 	dict["GameDeleted"] = "Ваша бронь на игру успешно удалена\n\n"
 	dict["Paid"] = "Оплачено"
 	dict["WaitForPaid"] = "Не оплачено"
+	dict["WhatUWhantToCh"] = "Что вы хотите изменить?"
+	dict["Payment"] = "Способ оплаты"
+	dict["Seats"] = "Количество человек со мной"
+	dict["GameDeleted"] = "Ваша бронь на игру успешно удалена\n\n"
+	dict["ChooseSeat"] = "Выберите или напишите мне количество мест на игру, которые вы хоите занять. На эту игру есть свободных мест %d. У вас уже есть бронь на %d. После ввода ваша бронь на %d мест будет снята. Всего мест, если не учитывать вашу бронь %d"
+	dict["ThxForChange"] = "Все успешно изменено\n\n"
 }
 
 func en(dict map[string]string) {
@@ -56,6 +62,12 @@ func en(dict map[string]string) {
 	dict["GameDeleted"] = "Your game reservation has been successfully deleted\n\n"
 	dict["Paid"] = "Paid"
 	dict["WaitForPaid"] = "Not paid"
+	dict["WhatUWhantToCh"] = "What do you want to change?"
+	dict["Payment"] = "Payment method"
+	dict["Seats"] = "The number of people with me"
+	dict["GameDeleted"] = "Your game reservation has been successfully deleted\n\n"
+	dict["ChooseSeat"] = "Choose or write to me the number of seats for the game you want to occupy. There are %d available seats for this game. You already have a reservation for %d. After entering, your reservation for %d seats will be canceled. Total seats, excluding your reservation: %d"
+	dict["ThxForChange"] = "Everything has been successfully changed\n\n"
 }
 
 func tur(dict map[string]string) {
@@ -84,6 +96,12 @@ func tur(dict map[string]string) {
 	dict["GameDeleted"] = "Oyun rezervasyonunuz başarıyla silindi\n\n"
 	dict["Paid"] = "Ödendi"
 	dict["WaitForPaid"] = "Ödenmedi"
+	dict["WhatUWhantToCh"] = "Ne değiştirmek istiyorsunuz?"
+	dict["Payment"] = "Ödeme yöntemi"
+	dict["Seats"] = "Benimle birlikteki kişi sayısı"
+	dict["GameDeleted"] = "Oyun rezervasyonunuz başarıyla silindi\n\n"
+	dict["ChooseSeat"] = "Oyunda kapmak istediğiniz koltuk sayısını seçin veya yazın. Bu oyunda %d boş koltuk var. Zaten %d için bir rezervasyonunuz var. Girdikten sonra, %d koltuk için rezervasyonunuz iptal edilecek. Toplam koltuk sayısı, rezervasyonunuz hariç: %d"
+	dict["ThxForChange"] = "Hepsi başarıyla değiştirildi\n\n"
 }
 
 func init() {

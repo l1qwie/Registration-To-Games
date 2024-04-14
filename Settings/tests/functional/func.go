@@ -166,7 +166,8 @@ func ChOrDel(res *apptype.Response) {
 	ch.act = "settings"
 	ch.isCh = "records"
 	ch.lang = "ru"
-	ch.gameid = 1
+	//ch.gameid = 1 // if you want to delete
+	ch.gameid = 2 // if you want to change
 	ch.prmode = ""
 	ch.res = res
 	ch.maintest()
@@ -181,11 +182,60 @@ func DelGame(res *apptype.Response) {
 	ch.act = "divarication"
 	ch.isCh = "records"
 	ch.lang = "ru"
-	ch.gameid = 1
+	ch.gameid = 2
 	ch.prmode = ""
 	ch.res = res
 	ch.maintest()
 	if !checkDelGame() {
 		panic("The game wasn't deleted")
+	}
+}
+
+// Data which I wait after after the function is executed "dirOfChanges"
+func ChThwWay(res *apptype.Response) {
+	ch.mes = "Что вы хотите изменить?"
+	ch.kb = `{"inline_keyboard":[[{"text":"Способ оплаты","callback_data":"payment","url":""}],[{"text":"Количество человек со мной","callback_data":"myseats","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.lvl = 4
+	ch.lp = 0
+	ch.act = "settings"
+	ch.isCh = "records"
+	ch.lang = "ru"
+	ch.gameid = 2
+	ch.prmode = ""
+	ch.res = res
+	ch.maintest()
+}
+
+// Data which I wait after after the function is executed "chengeable"
+// The seats part
+func WrtSeats(res *apptype.Response) {
+	ch.mes = "Выберите или напишите мне количество мест на игру, которые вы хоите занять. На эту игру есть свободных мест 44. У вас уже есть бронь на 7. После ввода ваша бронь на 7 мест будет снята. Всего мест, если не учитывать вашу бронь 51"
+	ch.kb = `{"inline_keyboard":[[{"text":"1","callback_data":"1","url":""}],[{"text":"2","callback_data":"2","url":""}],[{"text":"3","callback_data":"3","url":""}]]}`
+	ch.lvl = 5
+	ch.lp = 0
+	ch.act = "settings"
+	ch.isCh = "myseats"
+	ch.lang = "ru"
+	ch.gameid = 2
+	ch.prmode = ""
+	ch.res = res
+	ch.maintest()
+}
+
+// Data which I wait after after the function is executed "confirm"
+func ChangeSeats(res *apptype.Response) {
+	ch.mes = "Все успешно изменено\n\nГлавное Меню"
+	ch.kb = `{"inline_keyboard":[[{"text":"Просмотр расписания","callback_data":"Looking Schedule","url":""}],[{"text":"Регистрация на игру","callback_data":"Reg to games","url":""}],[{"text":"Наши фото и видео","callback_data":"Photo\u0026Video","url":""}],[{"text":"Настройки | Мои игры","callback_data":"My records","url":""}]]}`
+	ch.lvl = 3
+	ch.lp = 0
+	ch.act = "divarication"
+	ch.isCh = "myseats"
+	ch.lang = "ru"
+	ch.gameid = 2
+	ch.prmode = ""
+	ch.res = res
+	ch.maintest()
+	if !checkSeatsWereChange() {
+		panic("The seats weren't changed")
 	}
 }

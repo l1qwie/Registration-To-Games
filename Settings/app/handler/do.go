@@ -129,7 +129,6 @@ func chooseOptions(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 	} else {
 		onlylang(res, fm, dict.Dictionary[req.Language], dict.Dictionary[req.Language]["NoGames"])
 	}
-	fm.WriteChatId(req.Id)
 }
 
 // Create a schedule of user's games and send it
@@ -171,7 +170,6 @@ func whatWay(req *apptype.Request, res *apptype.Response, fm *formatter.Formatte
 	} else {
 		chooseOptions(req, res, fm)
 	}
-	fm.WriteChatId(req.Id)
 }
 
 // Changes the app's language and redirect to MainMenu
@@ -210,12 +208,29 @@ func dirOfChanges(req *apptype.Request, res *apptype.Response, fm *formatter.For
 			recordsBody(res, req, fm, dict.Dictionary[req.Language])
 		}
 	}
-	fm.WriteChatId(req.Id)
 }
 
 // Starts the change part of the app
-func change() {
-	//Body
+func change(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, id int) {
+	var (
+		crd         []int
+		names, data []string
+		mes         string
+	)
+	if statPayment(res.GameId, id, fm.Error) {
+		mes = dict["WhatUWhantToCh"]
+		crd = []int{1, 1, 1}
+		names = []string{dict["Payment"], dict["Seats"], dict["MainMenu"]}
+		data = []string{"payment", "myseats", "MainMenu"}
+	} else {
+		mes = dict["WhatUWhantToCh"]
+		crd = []int{1, 1}
+		names = []string{dict["Seats"], dict["MainMenu"]}
+		data = []string{"myseats", "MainMenu"}
+	}
+	res.Level = 4
+	fm.WriteString(mes)
+	setKb(fm, crd, names, data)
 }
 
 // Deletes the game
@@ -228,13 +243,79 @@ func del(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 // Directioner of records
 func dirForRec(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	if req.Req == "change" {
-		change()
+		change(res, fm, dict.Dictionary[req.Language], req.Id)
 	} else if req.Req == "del" {
 		del(req, res, fm)
 	} else {
 		whWouldUCh(res, fm, dict.Dictionary[req.Language], req.GameId)
 	}
-	fm.WriteChatId(req.Id)
+}
+
+func chPayment() {
+	//Body
+}
+
+// The body of response is created here
+func chMySeats(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, id int) {
+	res.Level = 5
+	res.IsChanged = "myseats"
+	schs, uss, _ := findSomeSeats(res.GameId, id, 3, fm.Error) //jsut a random number becuse the number influences to the bool var and I don't need it here
+	s := 0
+	if schs > 3 {
+		s = 3
+	} else {
+		s = schs
+	}
+	crd := make([]int, s)
+	names := make([]string, s)
+	data := make([]string, s)
+	for i := range crd {
+		crd[i] = 1
+		names[i] = fmt.Sprint(i + 1)
+		data[i] = fmt.Sprint(i + 1)
+	}
+	setKb(fm, crd, names, data)
+	fm.WriteString(fmt.Sprintf(dict["ChooseSeat"], schs, uss, uss, (schs + uss)))
+}
+
+// What will we change?
+// This is the question that the func says to user
+func chengeable(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+	if req.Req == "payment" {
+		chPayment()
+	} else if req.Req == "myseats" {
+		chMySeats(res, fm, dict.Dictionary[req.Language], req.Id)
+	} else {
+		change(res, fm, dict.Dictionary[req.Language], req.Id)
+	}
+}
+
+func confPayment() {
+	//Body
+}
+
+// Confirm the changes of seats
+func confMySeats(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, phrase string, id int) {
+	det, num := intCheck(phrase)
+	if det {
+		schs, uss, freeS := findSomeSeats(res.GameId, id, num, fm.Error)
+		if freeS {
+			updtSeats(res.GameId, id, schs, uss, num, fm.Error)
+			goToMainMenu(res, fm, dict, fmt.Sprint(dict["ThxForChange"], dict["MainMenu"]))
+		}
+	} else {
+		chMySeats(res, fm, dict, id)
+	}
+}
+
+// Starts the act "Confirms the changes"
+// Directs to payment or seats
+func confirm(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+	if res.IsChanged == "payment" {
+		confPayment()
+	} else {
+		confMySeats(res, fm, dict.Dictionary[req.Language], req.Req, req.Id)
+	}
 }
 
 // Directioner
@@ -248,10 +329,11 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	} else if req.Level == LEVEL3 {
 		dirForRec(req, res, fm)
 	} else if req.Level == LEVEL4 {
-		//chengeable(req, res, fm)
+		chengeable(req, res, fm)
 	} else if req.Level == LEVEL5 {
-		//confirm(req, res, fm)
+		confirm(req, res, fm)
 	}
+	fm.WriteChatId(req.Id)
 }
 
 // The main
