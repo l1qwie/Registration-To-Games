@@ -115,3 +115,22 @@ func updtSeats(gameId, userId, genS, oldS, newS int, f func(error)) {
 		f(err)
 	}
 }
+
+// Select the paymethod and compare it with "card"
+// then return true if compare is also true
+func selPaymethod(gameId, userId int, f func(error)) bool {
+	var p string
+	err := apptype.Db.QueryRow("SELECT payment FROM GamesWithUsers WHERE gameId = $1 AND userId = $2 AND status = 1", gameId, userId).Scan(&p)
+	if err != nil {
+		f(err)
+	}
+	return p == "card"
+}
+
+// Updates the payment of the user's game
+func updtPayment(gameId, userId int, paymeth string, f func(error)) {
+	_, err := apptype.Db.Exec("UPDATE GamesWithUsers SET payment = $1 WHERE gameId = $2 AND userId = $3 AND status = 1", paymeth, gameId, userId)
+	if err != nil {
+		f(err)
+	}
+}

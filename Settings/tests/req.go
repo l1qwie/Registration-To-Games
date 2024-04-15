@@ -93,3 +93,13 @@ func numOfSeats() *apptype.Request {
 	req.IsChanged = "myseats"
 	return req
 }
+
+// Make data to send paymethod
+func payment() *apptype.Request {
+	req := mainReq()
+	req.Level = 4
+	req.Req = "payment"
+	req.GameId = 2
+	req.IsChanged = "records"
+	return req
+}

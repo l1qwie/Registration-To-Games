@@ -215,21 +215,18 @@ func change(res *apptype.Response, fm *formatter.Formatter, dict map[string]stri
 	var (
 		crd         []int
 		names, data []string
-		mes         string
 	)
 	if statPayment(res.GameId, id, fm.Error) {
-		mes = dict["WhatUWhantToCh"]
 		crd = []int{1, 1, 1}
 		names = []string{dict["Payment"], dict["Seats"], dict["MainMenu"]}
 		data = []string{"payment", "myseats", "MainMenu"}
 	} else {
-		mes = dict["WhatUWhantToCh"]
 		crd = []int{1, 1}
 		names = []string{dict["Seats"], dict["MainMenu"]}
 		data = []string{"myseats", "MainMenu"}
 	}
 	res.Level = 4
-	fm.WriteString(mes)
+	fm.WriteString(dict["WhatUWhantToCh"])
 	setKb(fm, crd, names, data)
 }
 
@@ -251,8 +248,25 @@ func dirForRec(req *apptype.Request, res *apptype.Response, fm *formatter.Format
 	}
 }
 
-func chPayment() {
-	//Body
+// Makes the body of a response and changes the paymethod
+func changeToCard(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, pm string, id int) {
+	res.Level = 5
+	updtPayment(res.GameId, id, pm, fm.Error)
+	fm.SetIkbdDim([]int{1, 1})
+	fm.WriteInlineButtonUrl(dict["pay"], "https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3")
+	fm.WriteInlineButtonCmd(dict["MainMenu"], "MainMenu")
+	fm.WriteString(dict["ThxForChange"])
+}
+
+// Dicrectioner to wich way would you change your paymethod
+func chPayment(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, id int) {
+	res.IsChanged = "payment"
+	if selPaymethod(res.GameId, id, fm.Error) {
+		changeToCard(res, fm, dict, "card", id)
+	} else {
+		updtPayment(res.GameId, id, "cash", fm.Error)
+		goToMainMenu(res, fm, dict, fmt.Sprint(dict["ThxForChange"], dict["MainMenu"]))
+	}
 }
 
 // The body of response is created here
@@ -282,16 +296,12 @@ func chMySeats(res *apptype.Response, fm *formatter.Formatter, dict map[string]s
 // This is the question that the func says to user
 func chengeable(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	if req.Req == "payment" {
-		chPayment()
+		chPayment(res, fm, dict.Dictionary[req.Language], req.Id)
 	} else if req.Req == "myseats" {
 		chMySeats(res, fm, dict.Dictionary[req.Language], req.Id)
 	} else {
 		change(res, fm, dict.Dictionary[req.Language], req.Id)
 	}
-}
-
-func confPayment() {
-	//Body
 }
 
 // Confirm the changes of seats
@@ -309,13 +319,14 @@ func confMySeats(res *apptype.Response, fm *formatter.Formatter, dict map[string
 }
 
 // Starts the act "Confirms the changes"
-// Directs to payment or seats
+// Directs to confirm changes of seats
 func confirm(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
-	if res.IsChanged == "payment" {
-		confPayment()
-	} else {
+	if req.IsChanged == "myseats" {
 		confMySeats(res, fm, dict.Dictionary[req.Language], req.Req, req.Id)
+	} else {
+		changeToCard(res, fm, dict.Dictionary[req.Language], "card", req.Id)
 	}
+
 }
 
 // Directioner

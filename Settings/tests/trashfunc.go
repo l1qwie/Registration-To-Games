@@ -139,10 +139,37 @@ func chSeatstr8() *apptype.Request {
 	return req
 }
 
+func chPay1() *apptype.Request {
+	req := mainReq()
+	req.Level = 4
+	req.Req = ":A(((9999)))))"
+	req.IsChanged = "records"
+	req.GameId = 2
+	return req
+}
+
+func chPay2() *apptype.Request {
+	req := mainReq()
+	req.Level = 4
+	req.Req = "AKSDKASDKASDKASKDKDASKDDASKDAKSDAKSDAKSDKAS"
+	req.IsChanged = "records"
+	req.GameId = 2
+	return req
+}
+
 func chSeatstr9() *apptype.Request {
 	req := mainReq()
 	req.Level = 4
 	req.Req = "AKSDKASDKASDKASKDKDASKDDASKDAKSDAKSDAKSDKAS"
+	req.IsChanged = "records"
+	req.GameId = 2
+	return req
+}
+
+func chPay() *apptype.Request {
+	req := mainReq()
+	req.Level = 4
+	req.Req = "ASDLKMFSKLJDFJKL"
 	req.IsChanged = "records"
 	req.GameId = 2
 	return req

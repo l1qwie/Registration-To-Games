@@ -91,12 +91,32 @@ func chSeats() {
 	defer f.Close()
 }
 
+// Tests Change the Paymethod functional
+func chPayment() {
+	defer DeleteUser()
+	defer DeleteUserSchedule()
+	defer DeleteSchedule()
+	CreateScheduleForUser()
+	CreateUserScehdule()
+	CreateUser()
+	f := initlogs("appchPay.log")
+	ts := new(TestStuct)
+	ts.Round = 5
+	ts.Name = "ChangePaymentTest"
+	ts.FuncReq = []func() *apptype.Request{chOpt, chRec, delGameId, change, payment}
+	ts.FuncRes = []func(*apptype.Response){functional.ChTwoOpt, functional.ChGame, functional.ChOrDel, functional.ChThwWay, functional.PaybyCash}
+	ts.FuncTrsh = []func() *apptype.Request{commontrash, commontrash2, chSeatstr2, chSeatstr3, chSeatstr4, chSeatstr5, chSeatstr6, chSeatstr7, chPay1, chPay}
+	ts.UpdtLevel = []int{0, 1, 2, 3, 4}
+	ts.DoTest()
+	defer f.Close()
+}
+
 // The list of testing functions
 func testList() {
 	//language()
 	//delGame()
-	chSeats()
-	//chPayment()
+	//chSeats()
+	chPayment()
 }
 
 // The head of the directioner

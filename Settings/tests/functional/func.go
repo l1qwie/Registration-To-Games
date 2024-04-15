@@ -191,7 +191,7 @@ func DelGame(res *apptype.Response) {
 	}
 }
 
-// Data which I wait after after the function is executed "dirOfChanges"
+// Data which I wait after after the function is executed "dirOfChanges".
 func ChThwWay(res *apptype.Response) {
 	ch.mes = "Что вы хотите изменить?"
 	ch.kb = `{"inline_keyboard":[[{"text":"Способ оплаты","callback_data":"payment","url":""}],[{"text":"Количество человек со мной","callback_data":"myseats","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
@@ -222,20 +222,54 @@ func WrtSeats(res *apptype.Response) {
 	ch.maintest()
 }
 
-// Data which I wait after after the function is executed "confirm"
-func ChangeSeats(res *apptype.Response) {
+// End of all changes
+func endOfChanges(res *apptype.Response) {
 	ch.mes = "Все успешно изменено\n\nГлавное Меню"
 	ch.kb = `{"inline_keyboard":[[{"text":"Просмотр расписания","callback_data":"Looking Schedule","url":""}],[{"text":"Регистрация на игру","callback_data":"Reg to games","url":""}],[{"text":"Наши фото и видео","callback_data":"Photo\u0026Video","url":""}],[{"text":"Настройки | Мои игры","callback_data":"My records","url":""}]]}`
 	ch.lvl = 3
 	ch.lp = 0
 	ch.act = "divarication"
+	ch.lang = "ru"
+	ch.gameid = 2
+	ch.prmode = ""
+	ch.res = res
+}
+
+// Data which I wait after after the function is executed "confirm".
+// Change seats part
+func ChangeSeats(res *apptype.Response) {
+	endOfChanges(res)
 	ch.isCh = "myseats"
+	ch.maintest()
+	if !checkSeatsWereChanged() {
+		panic("The seats weren't changed")
+	}
+}
+
+// Data which I wait after after the function is executed "confirm".
+// Change paymethod part (only cash)
+func PaybyCash(res *apptype.Response) {
+	endOfChanges(res)
+	ch.isCh = "payment"
+	ch.maintest()
+	if !checkPaymethodWasChanged("cash") {
+		panic("The paymethod wasn't changed to cash")
+	}
+}
+
+func PaybyCard(res *apptype.Response) {
+	ch.mes = "Все успешно изменено\n\n"
+	ch.kb = `{"inline_keyboard":[[{"text":"Оплатить","callback_data":"","url":"https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3"}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.lvl = 5
+	ch.lp = 0
+	ch.act = "settings"
+	ch.isCh = "payment"
 	ch.lang = "ru"
 	ch.gameid = 2
 	ch.prmode = ""
 	ch.res = res
 	ch.maintest()
-	if !checkSeatsWereChange() {
-		panic("The seats weren't changed")
+	if !checkPaymethodWasChanged("card") {
+		panic("The paymethod wasn't changed to card")
 	}
 }
