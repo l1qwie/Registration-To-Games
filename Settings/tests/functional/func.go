@@ -158,7 +158,7 @@ func ChGame(res *apptype.Response) {
 }
 
 // Data which I wait after after the function is executed "dirOfChanges"
-func ChOrDel(res *apptype.Response) {
+func Del(res *apptype.Response) {
 	ch.mes = "Вы хотите изменить или удалить?"
 	ch.kb = `{"inline_keyboard":[[{"text":"Изменить игру","callback_data":"change","url":""}],[{"text":"Удалить игру","callback_data":"del","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.lvl = 3
@@ -166,7 +166,20 @@ func ChOrDel(res *apptype.Response) {
 	ch.act = "settings"
 	ch.isCh = "records"
 	ch.lang = "ru"
-	//ch.gameid = 1 // if you want to delete
+	ch.gameid = 1
+	ch.prmode = ""
+	ch.res = res
+	ch.maintest()
+}
+
+func Ch(res *apptype.Response) {
+	ch.mes = "Вы хотите изменить или удалить?"
+	ch.kb = `{"inline_keyboard":[[{"text":"Изменить игру","callback_data":"change","url":""}],[{"text":"Удалить игру","callback_data":"del","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.lvl = 3
+	ch.lp = 0
+	ch.act = "settings"
+	ch.isCh = "records"
+	ch.lang = "ru"
 	ch.gameid = 2 // if you want to change
 	ch.prmode = ""
 	ch.res = res
@@ -182,7 +195,7 @@ func DelGame(res *apptype.Response) {
 	ch.act = "divarication"
 	ch.isCh = "records"
 	ch.lang = "ru"
-	ch.gameid = 2
+	ch.gameid = 1
 	ch.prmode = ""
 	ch.res = res
 	ch.maintest()

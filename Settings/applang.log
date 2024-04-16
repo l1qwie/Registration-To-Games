@@ -1,122 +1,122 @@
-2024/04/13 16:26:51 Request:
-2024/04/13 16:26:51 req.Id = 899
-2024/04/13 16:26:51 req.Level = 0
-2024/04/13 16:26:51 req.Language = ru
-2024/04/13 16:26:51 req.Act = settings
-2024/04/13 16:26:51 req.Limit = 7
-2024/04/13 16:26:51 req.LaunchPoint = 0
-2024/04/13 16:26:51 req.Req = ()#!JKASKLDKLAJSLKJSALKD
-2024/04/13 16:26:51 req.IsChanged = 
-2024/04/13 16:26:51 req.GameId = 0
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 req.Level = 0, req.Req = ()#!JKASKLDKLAJSLKJSALKD, req.Id = 899, req.Act = settings
-2024/04/13 16:26:51 Response:
-2024/04/13 16:26:51 res.Message = У вас пока нет ни одной записи об игре! Вам доступна только смена языка! Пожалуйста, выберите предпочтительный язык
-2024/04/13 16:26:51 res.Keyboard = {"inline_keyboard":[[{"text":"Английский язык","callback_data":"en","url":""}],[{"text":"Русский язык","callback_data":"ru","url":""}],[{"text":"Турецкий язык","callback_data":"tur","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
-2024/04/13 16:26:51 res.ChatId = 899
-2024/04/13 16:26:51 res.level = 2
-2024/04/13 16:26:51 res.LaunchPoint = 0
-2024/04/13 16:26:51 res.Act = settings
-2024/04/13 16:26:51 res.IsChanged = language
-2024/04/13 16:26:51 res.Language = ru
-2024/04/13 16:26:51 res.GameId = 0
-2024/04/13 16:26:51 res.ParseMode = 
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 Request:
-2024/04/13 16:26:51 req.Id = 899
-2024/04/13 16:26:51 req.Level = 0
-2024/04/13 16:26:51 req.Language = ru
-2024/04/13 16:26:51 req.Act = settings
-2024/04/13 16:26:51 req.Limit = 7
-2024/04/13 16:26:51 req.LaunchPoint = 0
-2024/04/13 16:26:51 req.Req = :ASDKL::KLDKOL(((((9999)))))
-2024/04/13 16:26:51 req.IsChanged = 
-2024/04/13 16:26:51 req.GameId = 0
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 req.Level = 0, req.Req = :ASDKL::KLDKOL(((((9999))))), req.Id = 899, req.Act = settings
-2024/04/13 16:26:51 Response:
-2024/04/13 16:26:51 res.Message = У вас пока нет ни одной записи об игре! Вам доступна только смена языка! Пожалуйста, выберите предпочтительный язык
-2024/04/13 16:26:51 res.Keyboard = {"inline_keyboard":[[{"text":"Английский язык","callback_data":"en","url":""}],[{"text":"Русский язык","callback_data":"ru","url":""}],[{"text":"Турецкий язык","callback_data":"tur","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
-2024/04/13 16:26:51 res.ChatId = 899
-2024/04/13 16:26:51 res.level = 2
-2024/04/13 16:26:51 res.LaunchPoint = 0
-2024/04/13 16:26:51 res.Act = settings
-2024/04/13 16:26:51 res.IsChanged = language
-2024/04/13 16:26:51 res.Language = ru
-2024/04/13 16:26:51 res.GameId = 0
-2024/04/13 16:26:51 res.ParseMode = 
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 Request:
-2024/04/13 16:26:51 req.Id = 899
-2024/04/13 16:26:51 req.Level = 0
-2024/04/13 16:26:51 req.Language = ru
-2024/04/13 16:26:51 req.Act = settings
-2024/04/13 16:26:51 req.Limit = 7
-2024/04/13 16:26:51 req.LaunchPoint = 0
-2024/04/13 16:26:51 req.Req = YA HOCHU CHEGO-NIBUD'
-2024/04/13 16:26:51 req.IsChanged = 
-2024/04/13 16:26:51 req.GameId = 0
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 req.Level = 0, req.Req = YA HOCHU CHEGO-NIBUD', req.Id = 899, req.Act = settings
-2024/04/13 16:26:51 Response:
-2024/04/13 16:26:51 res.Message = У вас пока нет ни одной записи об игре! Вам доступна только смена языка! Пожалуйста, выберите предпочтительный язык
-2024/04/13 16:26:51 res.Keyboard = {"inline_keyboard":[[{"text":"Английский язык","callback_data":"en","url":""}],[{"text":"Русский язык","callback_data":"ru","url":""}],[{"text":"Турецкий язык","callback_data":"tur","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
-2024/04/13 16:26:51 res.ChatId = 899
-2024/04/13 16:26:51 res.level = 2
-2024/04/13 16:26:51 res.LaunchPoint = 0
-2024/04/13 16:26:51 res.Act = settings
-2024/04/13 16:26:51 res.IsChanged = language
-2024/04/13 16:26:51 res.Language = ru
-2024/04/13 16:26:51 res.GameId = 0
-2024/04/13 16:26:51 res.ParseMode = 
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 ChangeLanguageTest 0 has been complete
-2024/04/13 16:26:51 Request:
-2024/04/13 16:26:51 req.Id = 899
-2024/04/13 16:26:51 req.Level = 2
-2024/04/13 16:26:51 req.Language = ru
-2024/04/13 16:26:51 req.Act = settings
-2024/04/13 16:26:51 req.Limit = 7
-2024/04/13 16:26:51 req.LaunchPoint = 0
-2024/04/13 16:26:51 req.Req = Zachem tak mnogo musornih funkcii?
-2024/04/13 16:26:51 req.IsChanged = language
-2024/04/13 16:26:51 req.GameId = 0
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 req.Level = 2, req.Req = Zachem tak mnogo musornih funkcii?, req.Id = 899, req.Act = settings
-2024/04/13 16:26:51 Request:
-2024/04/13 16:26:51 req.Id = 899
-2024/04/13 16:26:51 req.Level = 2
-2024/04/13 16:26:51 req.Language = ru
-2024/04/13 16:26:51 req.Act = settings
-2024/04/13 16:26:51 req.Limit = 7
-2024/04/13 16:26:51 req.LaunchPoint = 0
-2024/04/13 16:26:51 req.Req = Ya prosto hochu pomen'yat' yazik
-2024/04/13 16:26:51 req.IsChanged = language
-2024/04/13 16:26:51 req.GameId = 0
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 req.Level = 2, req.Req = Ya prosto hochu pomen'yat' yazik, req.Id = 899, req.Act = settings
-2024/04/13 16:26:51 Request:
-2024/04/13 16:26:51 req.Id = 899
-2024/04/13 16:26:51 req.Level = 2
-2024/04/13 16:26:51 req.Language = ru
-2024/04/13 16:26:51 req.Act = settings
-2024/04/13 16:26:51 req.Limit = 7
-2024/04/13 16:26:51 req.LaunchPoint = 0
-2024/04/13 16:26:51 req.Req = en
-2024/04/13 16:26:51 req.IsChanged = language
-2024/04/13 16:26:51 req.GameId = 0
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 req.Level = 2, req.Req = en, req.Id = 899, req.Act = settings
-2024/04/13 16:26:51 Response:
-2024/04/13 16:26:51 res.Message = The bot language has been successfully changed
-2024/04/13 16:26:51 res.Keyboard = {"inline_keyboard":[[{"text":"View schedule","callback_data":"Looking Schedule","url":""}],[{"text":"Game registration","callback_data":"Reg to games","url":""}],[{"text":"Our photos and videos","callback_data":"Photo\u0026Video","url":""}],[{"text":"Settings | My games","callback_data":"My records","url":""}]]}
-2024/04/13 16:26:51 res.ChatId = 899
-2024/04/13 16:26:51 res.level = 3
-2024/04/13 16:26:51 res.LaunchPoint = 0
-2024/04/13 16:26:51 res.Act = divarication
-2024/04/13 16:26:51 res.IsChanged = language
-2024/04/13 16:26:51 res.Language = en
-2024/04/13 16:26:51 res.GameId = 0
-2024/04/13 16:26:51 res.ParseMode = 
-2024/04/13 16:26:51 
-2024/04/13 16:26:51 ChangeLanguageTest 1 has been complete
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 0
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = ()#!JKASKLDKLAJSLKJSALKD
+2024/04/16 19:48:08 req.IsChanged = 
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 0, req.Req = ()#!JKASKLDKLAJSLKJSALKD, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = У вас пока нет ни одной записи об игре! Вам доступна только смена языка! Пожалуйста, выберите предпочтительный язык
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"Английский язык","callback_data":"en","url":""}],[{"text":"Русский язык","callback_data":"ru","url":""}],[{"text":"Турецкий язык","callback_data":"tur","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 2
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = settings
+2024/04/16 19:48:08 res.IsChanged = language
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 0
+2024/04/16 19:48:08 res.ParseMode = 
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 0
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = :ASDKL::KLDKOL(((((9999)))))
+2024/04/16 19:48:08 req.IsChanged = 
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 0, req.Req = :ASDKL::KLDKOL(((((9999))))), req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = У вас пока нет ни одной записи об игре! Вам доступна только смена языка! Пожалуйста, выберите предпочтительный язык
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"Английский язык","callback_data":"en","url":""}],[{"text":"Русский язык","callback_data":"ru","url":""}],[{"text":"Турецкий язык","callback_data":"tur","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 2
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = settings
+2024/04/16 19:48:08 res.IsChanged = language
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 0
+2024/04/16 19:48:08 res.ParseMode = 
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 0
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = YA HOCHU CHEGO-NIBUD'
+2024/04/16 19:48:08 req.IsChanged = 
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 0, req.Req = YA HOCHU CHEGO-NIBUD', req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = У вас пока нет ни одной записи об игре! Вам доступна только смена языка! Пожалуйста, выберите предпочтительный язык
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"Английский язык","callback_data":"en","url":""}],[{"text":"Русский язык","callback_data":"ru","url":""}],[{"text":"Турецкий язык","callback_data":"tur","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 2
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = settings
+2024/04/16 19:48:08 res.IsChanged = language
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 0
+2024/04/16 19:48:08 res.ParseMode = 
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 ChangeLanguageTest 0 has been complete
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 2
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = Zachem tak mnogo musornih funkcii?
+2024/04/16 19:48:08 req.IsChanged = language
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 2, req.Req = Zachem tak mnogo musornih funkcii?, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 2
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = Ya prosto hochu pomen'yat' yazik
+2024/04/16 19:48:08 req.IsChanged = language
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 2, req.Req = Ya prosto hochu pomen'yat' yazik, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 2
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = en
+2024/04/16 19:48:08 req.IsChanged = language
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 2, req.Req = en, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = The bot language has been successfully changed
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"View schedule","callback_data":"Looking Schedule","url":""}],[{"text":"Game registration","callback_data":"Reg to games","url":""}],[{"text":"Our photos and videos","callback_data":"Photo\u0026Video","url":""}],[{"text":"Settings | My games","callback_data":"My records","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 3
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = divarication
+2024/04/16 19:48:08 res.IsChanged = language
+2024/04/16 19:48:08 res.Language = en
+2024/04/16 19:48:08 res.GameId = 0
+2024/04/16 19:48:08 res.ParseMode = 
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 ChangeLanguageTest 1 has been complete

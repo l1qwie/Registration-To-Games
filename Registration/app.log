@@ -1,0 +1,192 @@
+2024/04/16 19:54:22 req.Level = 0, req.Req = O, I want to registrait myself to game!, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите интересующую вас игру
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Волейбол 12-02-2025 12:00 Свободный мест осталось: 55","callback_data":"2","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 1
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 0
+2024/04/16 19:54:22 res.Seats = 0
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 0 was completed
+2024/04/16 19:54:22 req.Level = 0, req.Req = !#!@#QWESASED#!#!#$%#3123e1, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите интересующую вас игру
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Волейбол 12-02-2025 12:00 Свободный мест осталось: 55","callback_data":"2","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 1
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 0
+2024/04/16 19:54:22 res.Seats = 0
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 1 was completed
+2024/04/16 19:54:22 req.Level = 0, req.Req = I don't want to type anything, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите интересующую вас игру
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Волейбол 12-02-2025 12:00 Свободный мест осталось: 55","callback_data":"2","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 1
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 0
+2024/04/16 19:54:22 res.Seats = 0
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 2 was completed
+2024/04/16 19:54:22 req.Level = 1, req.Req = O, I want to registrait myself to game!, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите интересующую вас игру
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Волейбол 12-02-2025 12:00 Свободный мест осталось: 55","callback_data":"2","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 1
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 0
+2024/04/16 19:54:22 res.Seats = 0
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 0 was completed
+2024/04/16 19:54:22 req.Level = 1, req.Req = !#!@#QWESASED#!#!#$%#3123e1, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите интересующую вас игру
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Волейбол 12-02-2025 12:00 Свободный мест осталось: 55","callback_data":"2","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 1
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 0
+2024/04/16 19:54:22 res.Seats = 0
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 1 was completed
+2024/04/16 19:54:22 req.Level = 1, req.Req = 2, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите или введите желаемое количество мест. Прошу обратить ваше внимание на то, что цена за одно место на эту игру составляет 100 USD
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Я буду один","callback_data":"1","url":""}],[{"text":"Нас будет двое","callback_data":"2","url":""}],[{"text":"Нас будет трое","callback_data":"3","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 2
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 0
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 2 was completed
+2024/04/16 19:54:22 req.Level = 2, req.Req = O, I want to registrait myself to game!, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите или введите желаемое количество мест. Прошу обратить ваше внимание на то, что цена за одно место на эту игру составляет 100 USD
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Я буду один","callback_data":"1","url":""}],[{"text":"Нас будет двое","callback_data":"2","url":""}],[{"text":"Нас будет трое","callback_data":"3","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 2
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 0
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 0 was completed
+2024/04/16 19:54:22 req.Level = 2, req.Req = !#!@#QWESASED#!#!#$%#3123e1, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите или введите желаемое количество мест. Прошу обратить ваше внимание на то, что цена за одно место на эту игру составляет 100 USD
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Я буду один","callback_data":"1","url":""}],[{"text":"Нас будет двое","callback_data":"2","url":""}],[{"text":"Нас будет трое","callback_data":"3","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 2
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 0
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 1 was completed
+2024/04/16 19:54:22 req.Level = 2, req.Req = 2, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите способ оплаты
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Онлайн оплата","callback_data":"card","url":""}],[{"text":"Наличкой администратору","callback_data":"cash","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 3
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 2
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 2 was completed
+2024/04/16 19:54:22 req.Level = 3, req.Req = O, I want to registrait myself to game!, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите способ оплаты
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Онлайн оплата","callback_data":"card","url":""}],[{"text":"Наличкой администратору","callback_data":"cash","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 3
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 2
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 0 was completed
+2024/04/16 19:54:22 req.Level = 3, req.Req = !#!@#QWESASED#!#!#$%#3123e1, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Выберите способ оплаты
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Онлайн оплата","callback_data":"card","url":""}],[{"text":"Наличкой администратору","callback_data":"cash","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 3
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 2
+2024/04/16 19:54:22 res.Payment = 
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 1 was completed
+2024/04/16 19:54:22 req.Level = 3, req.Req = card, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Вам нужно перевести 200 USD. Выше я выслал вам QR-code, по которому вы можете перейти и оплатить или же нажмите на кнопку ниже "Оплатить"
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Оплатить","callback_data":"","url":"https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3"}],[{"text":"Дальше","callback_data":"Next","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 4
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 2
+2024/04/16 19:54:22 res.Payment = card
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 2 was completed
+2024/04/16 19:54:22 req.Level = 4, req.Req = O, I want to registrait myself to game!, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Вам нужно перевести 200 USD. Выше я выслал вам QR-code, по которому вы можете перейти и оплатить или же нажмите на кнопку ниже "Оплатить"
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Оплатить","callback_data":"","url":"https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3"}],[{"text":"Дальше","callback_data":"Next","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 4
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 2
+2024/04/16 19:54:22 res.Payment = card
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 0 was completed
+2024/04/16 19:54:22 req.Level = 4, req.Req = !#!@#QWESASED#!#!#$%#3123e1, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Вам нужно перевести 200 USD. Выше я выслал вам QR-code, по которому вы можете перейти и оплатить или же нажмите на кнопку ниже "Оплатить"
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Оплатить","callback_data":"","url":"https://www.papara.com/personal/qr?karekod=7502100102120204082903122989563302730612230919141815530394954120000000000006114081020219164116304DDE3"}],[{"text":"Дальше","callback_data":"Next","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 4
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 2
+2024/04/16 19:54:22 res.Payment = card
+2024/04/16 19:54:22 res.Act = reg to games
+2024/04/16 19:54:22 res.ParseMode = 
+2024/04/16 19:54:22 Secondary test 1 was completed
+2024/04/16 19:54:22 req.Level = 4, req.Req = Next, req.Id = 477, req.Act = reg to games
+2024/04/16 19:54:22 res.Message = Прекрасно! Теперь вы зарегестрированны на игру\n
+	1. Вид спорта: <b>Волейбол</b>\n
+	2. Дата: <b>12-02-2025</b>\n
+	3. Время: <b>12:00</b>\n
+	4. Вы записали <b>2</b> персон на эту игру\n
+	5. Оплата: <b>by card</b>\n
+	6. Ваша стоимость посещения: <b>200 USD</b>\n\n
+	
+	***Вы можете изменить некоторые данные Вашей записи\n
+	или же удалить ее в Главном Меню нажав на <b>"Настройки | Мои игры"</b>***\n\n
+	
+	❤️❤️❤️Ждем вас по адресу: Кладбище в Анталии\n
+	https://www.google.com/maps?q=36.893444,30.709591
+2024/04/16 19:54:22 res.Keyboard = {"inline_keyboard":[[{"text":"Просмотр расписания","callback_data":"Looking Schedule","url":""}],[{"text":"Регистрация на игру","callback_data":"Reg to games","url":""}],[{"text":"Наши фото и видео","callback_data":"Photo\u0026Video","url":""}],[{"text":"Настройки | Мои игры","callback_data":"My records","url":""}]]}
+2024/04/16 19:54:22 res.ChatId = 477
+2024/04/16 19:54:22 res.level = 3
+2024/04/16 19:54:22 res.LaunchPoint = 0
+2024/04/16 19:54:22 res.GameId = 2
+2024/04/16 19:54:22 res.Seats = 2
+2024/04/16 19:54:22 res.Payment = card
+2024/04/16 19:54:22 res.Act = divarication
+2024/04/16 19:54:22 res.ParseMode = HTML
+2024/04/16 19:54:22 Secondary test 2 was completed

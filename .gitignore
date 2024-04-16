@@ -17,3 +17,5 @@ Registration/fmtogram/types/data.go
 Schedule/fmtogram/types/data.go
 Settings/fmtogram/types/data.go
 Settings/apptype/data.go
+Media/apptype/data.go
+Media/fmtogram/types/data.go

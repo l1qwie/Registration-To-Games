@@ -48,7 +48,14 @@ func delGameId() *apptype.Request {
 	req := mainReq()
 	req.Level = 2
 	req.IsChanged = "records"
-	//req.Req = "1" // if you want to delete
+	req.Req = "1"
+	return req
+}
+
+func delGameIdCh() *apptype.Request {
+	req := mainReq()
+	req.Level = 2
+	req.IsChanged = "records"
 	req.Req = "2" // if you want to change
 	return req
 }
@@ -58,8 +65,7 @@ func del() *apptype.Request {
 	req := mainReq()
 	req.Level = 3
 	req.IsChanged = "records"
-	//req.GameId = 1 // if you want to delete
-	req.GameId = 2 // if you want to change
+	req.GameId = 1
 	req.Req = "del"
 	return req
 }

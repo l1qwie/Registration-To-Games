@@ -1,13 +1,13 @@
 package main
 
 import (
-	"Schedule/enter"
-	"Schedule/tests"
+	"Media/enter"
+	"Media/tests"
 	"time"
 )
 
 func main() {
-	go enter.Schedule()
+	go enter.Media()
 	time.Sleep(time.Second)
 	tests.Head()
 }

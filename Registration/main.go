@@ -8,6 +8,6 @@ import (
 
 func main() {
 	go enter.Registration()
-	time.Sleep(time.Second * 3)
+	time.Sleep(time.Second)
 	tests.Head()
 }

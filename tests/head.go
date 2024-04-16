@@ -315,9 +315,9 @@ func SeeTheSchedule() {
 
 func MediaTest() {
 	defer errors.MakeIntestines()
-	//UnloadOne() //with two games (to unload and upload)
-	//UploadOne() //with one games (to upload)
-	//UnloadAfew() //with four games (only to unload)
+	UnloadOne()  //with two games (to unload and upload)
+	UploadOne()  //with one games (to upload)
+	UnloadAfew() //with four games (only to unload)
 	UploadAfew() //with four games (only to upload)
 	log.Print("All MediaTests were alright!\n")
 }

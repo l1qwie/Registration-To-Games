@@ -1,17 +1,17 @@
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 0
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = ()#!JKASKLDKLAJSLKJSALKD
-2024/04/15 14:09:05 req.IsChanged = 
-2024/04/15 14:09:05 req.GameId = 0
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 0, req.Req = ()#!JKASKLDKLAJSLKJSALKD, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Response:
-2024/04/15 14:09:05 res.Message = Вот игры на которые у вас есть запись:
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 0
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = ()#!JKASKLDKLAJSLKJSALKD
+2024/04/16 19:48:08 req.IsChanged = 
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 0, req.Req = ()#!JKASKLDKLAJSLKJSALKD, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = Вот игры на которые у вас есть запись:
 
 <b>1.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-06-2025</b>, <em>Время:</em> <b>10:00</b>, <em>Включая вас с вами будет:</em> <b>7</b>, <em>Цена за одно место:</em> <b>100 RUB</b>, <em>Способ оплаты:</em> <b>cash</b>, <em>Статус оплаты:</em> <b>Не оплачено</b>
 
@@ -23,30 +23,30 @@
 
 
 Вы можете изменить информацию по вашей записи или же изменить язык
-2024/04/15 14:09:05 res.Keyboard = {"inline_keyboard":[[{"text":"Изменить язык","callback_data":"language","url":""}],[{"text":"Изменить бронь на игру","callback_data":"records","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
-2024/04/15 14:09:05 res.ChatId = 899
-2024/04/15 14:09:05 res.level = 1
-2024/04/15 14:09:05 res.LaunchPoint = 0
-2024/04/15 14:09:05 res.Act = settings
-2024/04/15 14:09:05 res.IsChanged = 
-2024/04/15 14:09:05 res.Language = ru
-2024/04/15 14:09:05 res.GameId = 0
-2024/04/15 14:09:05 res.ParseMode = HTML
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 0
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = :ASDKL::KLDKOL(((((9999)))))
-2024/04/15 14:09:05 req.IsChanged = 
-2024/04/15 14:09:05 req.GameId = 0
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 0, req.Req = :ASDKL::KLDKOL(((((9999))))), req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Response:
-2024/04/15 14:09:05 res.Message = Вот игры на которые у вас есть запись:
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"Изменить язык","callback_data":"language","url":""}],[{"text":"Изменить бронь на игру","callback_data":"records","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 1
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = settings
+2024/04/16 19:48:08 res.IsChanged = 
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 0
+2024/04/16 19:48:08 res.ParseMode = HTML
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 0
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = :ASDKL::KLDKOL(((((9999)))))
+2024/04/16 19:48:08 req.IsChanged = 
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 0, req.Req = :ASDKL::KLDKOL(((((9999))))), req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = Вот игры на которые у вас есть запись:
 
 <b>1.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-06-2025</b>, <em>Время:</em> <b>10:00</b>, <em>Включая вас с вами будет:</em> <b>7</b>, <em>Цена за одно место:</em> <b>100 RUB</b>, <em>Способ оплаты:</em> <b>cash</b>, <em>Статус оплаты:</em> <b>Не оплачено</b>
 
@@ -58,30 +58,30 @@
 
 
 Вы можете изменить информацию по вашей записи или же изменить язык
-2024/04/15 14:09:05 res.Keyboard = {"inline_keyboard":[[{"text":"Изменить язык","callback_data":"language","url":""}],[{"text":"Изменить бронь на игру","callback_data":"records","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
-2024/04/15 14:09:05 res.ChatId = 899
-2024/04/15 14:09:05 res.level = 1
-2024/04/15 14:09:05 res.LaunchPoint = 0
-2024/04/15 14:09:05 res.Act = settings
-2024/04/15 14:09:05 res.IsChanged = 
-2024/04/15 14:09:05 res.Language = ru
-2024/04/15 14:09:05 res.GameId = 0
-2024/04/15 14:09:05 res.ParseMode = HTML
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 0
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = YA HOCHU CHEGO-NIBUD'
-2024/04/15 14:09:05 req.IsChanged = 
-2024/04/15 14:09:05 req.GameId = 0
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 0, req.Req = YA HOCHU CHEGO-NIBUD', req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Response:
-2024/04/15 14:09:05 res.Message = Вот игры на которые у вас есть запись:
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"Изменить язык","callback_data":"language","url":""}],[{"text":"Изменить бронь на игру","callback_data":"records","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 1
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = settings
+2024/04/16 19:48:08 res.IsChanged = 
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 0
+2024/04/16 19:48:08 res.ParseMode = HTML
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 0
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = YA HOCHU CHEGO-NIBUD'
+2024/04/16 19:48:08 req.IsChanged = 
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 0, req.Req = YA HOCHU CHEGO-NIBUD', req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = Вот игры на которые у вас есть запись:
 
 <b>1.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-06-2025</b>, <em>Время:</em> <b>10:00</b>, <em>Включая вас с вами будет:</em> <b>7</b>, <em>Цена за одно место:</em> <b>100 RUB</b>, <em>Способ оплаты:</em> <b>cash</b>, <em>Статус оплаты:</em> <b>Не оплачено</b>
 
@@ -93,55 +93,55 @@
 
 
 Вы можете изменить информацию по вашей записи или же изменить язык
-2024/04/15 14:09:05 res.Keyboard = {"inline_keyboard":[[{"text":"Изменить язык","callback_data":"language","url":""}],[{"text":"Изменить бронь на игру","callback_data":"records","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
-2024/04/15 14:09:05 res.ChatId = 899
-2024/04/15 14:09:05 res.level = 1
-2024/04/15 14:09:05 res.LaunchPoint = 0
-2024/04/15 14:09:05 res.Act = settings
-2024/04/15 14:09:05 res.IsChanged = 
-2024/04/15 14:09:05 res.Language = ru
-2024/04/15 14:09:05 res.GameId = 0
-2024/04/15 14:09:05 res.ParseMode = HTML
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 ChangePaymentTest 0 has been complete
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 1
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = KL:ASDKL:ASDL:KASDL:ASD
-2024/04/15 14:09:05 req.IsChanged = 
-2024/04/15 14:09:05 req.GameId = 0
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 1, req.Req = KL:ASDKL:ASDL:KASDL:ASD, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 1
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = PAMAGITIIII
-2024/04/15 14:09:05 req.IsChanged = 
-2024/04/15 14:09:05 req.GameId = 0
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 1, req.Req = PAMAGITIIII, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 1
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = records
-2024/04/15 14:09:05 req.IsChanged = 
-2024/04/15 14:09:05 req.GameId = 0
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 1, req.Req = records, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Response:
-2024/04/15 14:09:05 res.Message = Выберите вашу игру
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"Изменить язык","callback_data":"language","url":""}],[{"text":"Изменить бронь на игру","callback_data":"records","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 1
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = settings
+2024/04/16 19:48:08 res.IsChanged = 
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 0
+2024/04/16 19:48:08 res.ParseMode = HTML
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 ChangePaymentTest 0 has been complete
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 1
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = KL:ASDKL:ASDL:KASDL:ASD
+2024/04/16 19:48:08 req.IsChanged = 
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 1, req.Req = KL:ASDKL:ASDL:KASDL:ASD, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 1
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = PAMAGITIIII
+2024/04/16 19:48:08 req.IsChanged = 
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 1, req.Req = PAMAGITIIII, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 1
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = records
+2024/04/16 19:48:08 req.IsChanged = 
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 1, req.Req = records, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = Выберите вашу игру
 
 <b>1.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-06-2025</b>, <em>Время:</em> <b>10:00</b>, <em>Включая вас с вами будет:</em> <b>7</b>, <em>Цена за одно место:</em> <b>100 RUB</b>, <em>Способ оплаты:</em> <b>cash</b>, <em>Статус оплаты:</em> <b>Не оплачено</b>
 
@@ -152,163 +152,163 @@
 <b>3.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>12-02-2025</b>, <em>Время:</em> <b>12:00</b>, <em>Включая вас с вами будет:</em> <b>3</b>, <em>Цена за одно место:</em> <b>100 POUNDS</b>, <em>Способ оплаты:</em> <b>card</b>, <em>Статус оплаты:</em> <b>Оплачено</b>
 
 
-2024/04/15 14:09:05 res.Keyboard = {"inline_keyboard":[[{"text":"1","callback_data":"2","url":""}],[{"text":"2","callback_data":"1","url":""}],[{"text":"3","callback_data":"0","url":""}]]}
-2024/04/15 14:09:05 res.ChatId = 899
-2024/04/15 14:09:05 res.level = 2
-2024/04/15 14:09:05 res.LaunchPoint = 0
-2024/04/15 14:09:05 res.Act = settings
-2024/04/15 14:09:05 res.IsChanged = records
-2024/04/15 14:09:05 res.Language = ru
-2024/04/15 14:09:05 res.GameId = 0
-2024/04/15 14:09:05 res.ParseMode = HTML
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 ChangePaymentTest 1 has been complete
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 2
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = Cho za TREASHSHSHSH
-2024/04/15 14:09:05 req.IsChanged = records
-2024/04/15 14:09:05 req.GameId = 0
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 2, req.Req = Cho za TREASHSHSHSH, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 2
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = NU PACHIMUUUUUUUUUUU
-2024/04/15 14:09:05 req.IsChanged = records
-2024/04/15 14:09:05 req.GameId = 0
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 2, req.Req = NU PACHIMUUUUUUUUUUU, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 2
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = 2
-2024/04/15 14:09:05 req.IsChanged = records
-2024/04/15 14:09:05 req.GameId = 0
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 2, req.Req = 2, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Response:
-2024/04/15 14:09:05 res.Message = Вы хотите изменить или удалить?
-2024/04/15 14:09:05 res.Keyboard = {"inline_keyboard":[[{"text":"Изменить игру","callback_data":"change","url":""}],[{"text":"Удалить игру","callback_data":"del","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
-2024/04/15 14:09:05 res.ChatId = 899
-2024/04/15 14:09:05 res.level = 3
-2024/04/15 14:09:05 res.LaunchPoint = 0
-2024/04/15 14:09:05 res.Act = settings
-2024/04/15 14:09:05 res.IsChanged = records
-2024/04/15 14:09:05 res.Language = ru
-2024/04/15 14:09:05 res.GameId = 2
-2024/04/15 14:09:05 res.ParseMode = 
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 ChangePaymentTest 2 has been complete
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 3
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = Zachem tak mnogo musornih funkcii?
-2024/04/15 14:09:05 req.IsChanged = records
-2024/04/15 14:09:05 req.GameId = 2
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 3, req.Req = Zachem tak mnogo musornih funkcii?, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 3
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = :ASDKL::KLDKOL(((((9999)))))
-2024/04/15 14:09:05 req.IsChanged = records
-2024/04/15 14:09:05 req.GameId = 2
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 3, req.Req = :ASDKL::KLDKOL(((((9999))))), req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 3
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = change
-2024/04/15 14:09:05 req.IsChanged = records
-2024/04/15 14:09:05 req.GameId = 2
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 3, req.Req = change, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Response:
-2024/04/15 14:09:05 res.Message = Что вы хотите изменить?
-2024/04/15 14:09:05 res.Keyboard = {"inline_keyboard":[[{"text":"Способ оплаты","callback_data":"payment","url":""}],[{"text":"Количество человек со мной","callback_data":"myseats","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
-2024/04/15 14:09:05 res.ChatId = 899
-2024/04/15 14:09:05 res.level = 4
-2024/04/15 14:09:05 res.LaunchPoint = 0
-2024/04/15 14:09:05 res.Act = settings
-2024/04/15 14:09:05 res.IsChanged = records
-2024/04/15 14:09:05 res.Language = ru
-2024/04/15 14:09:05 res.GameId = 2
-2024/04/15 14:09:05 res.ParseMode = 
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 ChangePaymentTest 3 has been complete
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 4
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = :A(((9999)))))
-2024/04/15 14:09:05 req.IsChanged = records
-2024/04/15 14:09:05 req.GameId = 2
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 4, req.Req = :A(((9999))))), req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 4
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = ASDLKMFSKLJDFJKL
-2024/04/15 14:09:05 req.IsChanged = records
-2024/04/15 14:09:05 req.GameId = 2
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 4, req.Req = ASDLKMFSKLJDFJKL, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Request:
-2024/04/15 14:09:05 req.Id = 899
-2024/04/15 14:09:05 req.Level = 4
-2024/04/15 14:09:05 req.Language = ru
-2024/04/15 14:09:05 req.Act = settings
-2024/04/15 14:09:05 req.Limit = 7
-2024/04/15 14:09:05 req.LaunchPoint = 0
-2024/04/15 14:09:05 req.Req = payment
-2024/04/15 14:09:05 req.IsChanged = records
-2024/04/15 14:09:05 req.GameId = 2
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 req.Level = 4, req.Req = payment, req.Id = 899, req.Act = settings
-2024/04/15 14:09:05 Response:
-2024/04/15 14:09:05 res.Message = Все успешно изменено
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"1","callback_data":"2","url":""}],[{"text":"2","callback_data":"1","url":""}],[{"text":"3","callback_data":"0","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 2
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = settings
+2024/04/16 19:48:08 res.IsChanged = records
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 0
+2024/04/16 19:48:08 res.ParseMode = HTML
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 ChangePaymentTest 1 has been complete
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 2
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = Cho za TREASHSHSHSH
+2024/04/16 19:48:08 req.IsChanged = records
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 2, req.Req = Cho za TREASHSHSHSH, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 2
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = NU PACHIMUUUUUUUUUUU
+2024/04/16 19:48:08 req.IsChanged = records
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 2, req.Req = NU PACHIMUUUUUUUUUUU, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 2
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = 2
+2024/04/16 19:48:08 req.IsChanged = records
+2024/04/16 19:48:08 req.GameId = 0
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 2, req.Req = 2, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = Вы хотите изменить или удалить?
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"Изменить игру","callback_data":"change","url":""}],[{"text":"Удалить игру","callback_data":"del","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 3
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = settings
+2024/04/16 19:48:08 res.IsChanged = records
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 2
+2024/04/16 19:48:08 res.ParseMode = 
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 ChangePaymentTest 2 has been complete
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 3
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = Zachem tak mnogo musornih funkcii?
+2024/04/16 19:48:08 req.IsChanged = records
+2024/04/16 19:48:08 req.GameId = 2
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 3, req.Req = Zachem tak mnogo musornih funkcii?, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 3
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = :ASDKL::KLDKOL(((((9999)))))
+2024/04/16 19:48:08 req.IsChanged = records
+2024/04/16 19:48:08 req.GameId = 2
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 3, req.Req = :ASDKL::KLDKOL(((((9999))))), req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 3
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = change
+2024/04/16 19:48:08 req.IsChanged = records
+2024/04/16 19:48:08 req.GameId = 2
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 3, req.Req = change, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = Что вы хотите изменить?
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"Способ оплаты","callback_data":"payment","url":""}],[{"text":"Количество человек со мной","callback_data":"myseats","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 4
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = settings
+2024/04/16 19:48:08 res.IsChanged = records
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 2
+2024/04/16 19:48:08 res.ParseMode = 
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 ChangePaymentTest 3 has been complete
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 4
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = :A(((9999)))))
+2024/04/16 19:48:08 req.IsChanged = records
+2024/04/16 19:48:08 req.GameId = 2
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 4, req.Req = :A(((9999))))), req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 4
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = ASDLKMFSKLJDFJKL
+2024/04/16 19:48:08 req.IsChanged = records
+2024/04/16 19:48:08 req.GameId = 2
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 4, req.Req = ASDLKMFSKLJDFJKL, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Request:
+2024/04/16 19:48:08 req.Id = 899
+2024/04/16 19:48:08 req.Level = 4
+2024/04/16 19:48:08 req.Language = ru
+2024/04/16 19:48:08 req.Act = settings
+2024/04/16 19:48:08 req.Limit = 7
+2024/04/16 19:48:08 req.LaunchPoint = 0
+2024/04/16 19:48:08 req.Req = payment
+2024/04/16 19:48:08 req.IsChanged = records
+2024/04/16 19:48:08 req.GameId = 2
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 req.Level = 4, req.Req = payment, req.Id = 899, req.Act = settings
+2024/04/16 19:48:08 Response:
+2024/04/16 19:48:08 res.Message = Все успешно изменено
 
 Главное Меню
-2024/04/15 14:09:05 res.Keyboard = {"inline_keyboard":[[{"text":"Просмотр расписания","callback_data":"Looking Schedule","url":""}],[{"text":"Регистрация на игру","callback_data":"Reg to games","url":""}],[{"text":"Наши фото и видео","callback_data":"Photo\u0026Video","url":""}],[{"text":"Настройки | Мои игры","callback_data":"My records","url":""}]]}
-2024/04/15 14:09:05 res.ChatId = 899
-2024/04/15 14:09:05 res.level = 3
-2024/04/15 14:09:05 res.LaunchPoint = 0
-2024/04/15 14:09:05 res.Act = divarication
-2024/04/15 14:09:05 res.IsChanged = payment
-2024/04/15 14:09:05 res.Language = ru
-2024/04/15 14:09:05 res.GameId = 2
-2024/04/15 14:09:05 res.ParseMode = 
-2024/04/15 14:09:05 
-2024/04/15 14:09:05 ChangePaymentTest 4 has been complete
+2024/04/16 19:48:08 res.Keyboard = {"inline_keyboard":[[{"text":"Просмотр расписания","callback_data":"Looking Schedule","url":""}],[{"text":"Регистрация на игру","callback_data":"Reg to games","url":""}],[{"text":"Наши фото и видео","callback_data":"Photo\u0026Video","url":""}],[{"text":"Настройки | Мои игры","callback_data":"My records","url":""}]]}
+2024/04/16 19:48:08 res.ChatId = 899
+2024/04/16 19:48:08 res.level = 3
+2024/04/16 19:48:08 res.LaunchPoint = 0
+2024/04/16 19:48:08 res.Act = divarication
+2024/04/16 19:48:08 res.IsChanged = payment
+2024/04/16 19:48:08 res.Language = ru
+2024/04/16 19:48:08 res.GameId = 2
+2024/04/16 19:48:08 res.ParseMode = 
+2024/04/16 19:48:08 
+2024/04/16 19:48:08 ChangePaymentTest 4 has been complete

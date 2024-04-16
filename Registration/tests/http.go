@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 )
 
 var (
@@ -90,9 +91,21 @@ func action() {
 	}
 }
 
+// Inits logs
+func initlogs(file string) *os.File {
+	os.Remove(file)
+	lf, err := os.OpenFile(file, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		panic(err)
+	}
+	log.SetOutput(lf)
+	return lf
+}
+
 // The head of the directioner
 // Only this function is imported
 func Head() {
+	f := initlogs("app.log")
 	types.Db = apptype.ConnectToDatabase(false)
 	defer DeleteUser()
 	defer DeleteGameWithUser()
@@ -100,5 +113,6 @@ func Head() {
 	CreateUser()
 	CreateGame()
 	action()
+	f.Close()
 
 }

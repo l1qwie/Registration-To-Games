@@ -1,0 +1,208 @@
+2024/04/16 19:54:52 Request:
+2024/04/16 19:54:52 req.Id = 499
+2024/04/16 19:54:52 req.Level = 0
+2024/04/16 19:54:52 req.Language = "ru"
+2024/04/16 19:54:52 req.Act = "photos and videos"
+2024/04/16 19:54:52 req.Limit = 7
+2024/04/16 19:54:52 req.LaunchPoint = 0
+2024/04/16 19:54:52 req.Req = "A:KLDALK:SD:LKASD:LA"
+2024/04/16 19:54:52 req.MediaDir = ""
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 req.Level = 0, req.Req = A:KLDALK:SD:LKASD:LA, req.Id = 499, req.Act = photos and videos
+2024/04/16 19:54:52 Response:
+2024/04/16 19:54:52 res.Message = "Вы хотите загрузить или посмотреть?"
+2024/04/16 19:54:52 res.Keyboard = "{"inline_keyboard":[[{"text":"Посмотреть","callback_data":"unload","url":""}],[{"text":"Загрузить","callback_data":"upload","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}"
+2024/04/16 19:54:52 res.ChatId = 499
+2024/04/16 19:54:52 res.level = 1
+2024/04/16 19:54:52 res.LaunchPoint = 0
+2024/04/16 19:54:52 res.Act = "photos and videos"
+2024/04/16 19:54:52 req.MediaDir = ""
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 res.ParseMode = ""
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 Request:
+2024/04/16 19:54:52 req.Id = 499
+2024/04/16 19:54:52 req.Level = 0
+2024/04/16 19:54:52 req.Language = "ru"
+2024/04/16 19:54:52 req.Act = "photos and videos"
+2024/04/16 19:54:52 req.Limit = 7
+2024/04/16 19:54:52 req.LaunchPoint = 0
+2024/04/16 19:54:52 req.Req = "PAMAGITIIII"
+2024/04/16 19:54:52 req.MediaDir = ""
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 req.Level = 0, req.Req = PAMAGITIIII, req.Id = 499, req.Act = photos and videos
+2024/04/16 19:54:52 Response:
+2024/04/16 19:54:52 res.Message = "Вы хотите загрузить или посмотреть?"
+2024/04/16 19:54:52 res.Keyboard = "{"inline_keyboard":[[{"text":"Посмотреть","callback_data":"unload","url":""}],[{"text":"Загрузить","callback_data":"upload","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}"
+2024/04/16 19:54:52 res.ChatId = 499
+2024/04/16 19:54:52 res.level = 1
+2024/04/16 19:54:52 res.LaunchPoint = 0
+2024/04/16 19:54:52 res.Act = "photos and videos"
+2024/04/16 19:54:52 req.MediaDir = ""
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 res.ParseMode = ""
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 Request:
+2024/04/16 19:54:52 req.Id = 499
+2024/04/16 19:54:52 req.Level = 0
+2024/04/16 19:54:52 req.Language = "ru"
+2024/04/16 19:54:52 req.Act = "photos and videos"
+2024/04/16 19:54:52 req.Limit = 7
+2024/04/16 19:54:52 req.LaunchPoint = 0
+2024/04/16 19:54:52 req.Req = "!OK!"
+2024/04/16 19:54:52 req.MediaDir = ""
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 req.Level = 0, req.Req = !OK!, req.Id = 499, req.Act = photos and videos
+2024/04/16 19:54:52 Response:
+2024/04/16 19:54:52 res.Message = "Вы хотите загрузить или посмотреть?"
+2024/04/16 19:54:52 res.Keyboard = "{"inline_keyboard":[[{"text":"Посмотреть","callback_data":"unload","url":""}],[{"text":"Загрузить","callback_data":"upload","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}"
+2024/04/16 19:54:52 res.ChatId = 499
+2024/04/16 19:54:52 res.level = 1
+2024/04/16 19:54:52 res.LaunchPoint = 0
+2024/04/16 19:54:52 res.Act = "photos and videos"
+2024/04/16 19:54:52 req.MediaDir = ""
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 res.ParseMode = ""
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 Unload-One-Test 0 has been complete
+2024/04/16 19:54:52 Request:
+2024/04/16 19:54:52 req.Id = 499
+2024/04/16 19:54:52 req.Level = 1
+2024/04/16 19:54:52 req.Language = "ru"
+2024/04/16 19:54:52 req.Act = "photos and videos"
+2024/04/16 19:54:52 req.Limit = 7
+2024/04/16 19:54:52 req.LaunchPoint = 0
+2024/04/16 19:54:52 req.Req = "PARASYATA HRU HRU HRU"
+2024/04/16 19:54:52 req.MediaDir = ""
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 req.Level = 1, req.Req = PARASYATA HRU HRU HRU, req.Id = 499, req.Act = photos and videos
+2024/04/16 19:54:52 Request:
+2024/04/16 19:54:52 req.Id = 499
+2024/04/16 19:54:52 req.Level = 1
+2024/04/16 19:54:52 req.Language = "ru"
+2024/04/16 19:54:52 req.Act = "photos and videos"
+2024/04/16 19:54:52 req.Limit = 7
+2024/04/16 19:54:52 req.LaunchPoint = 0
+2024/04/16 19:54:52 req.Req = "NU DAITE UJE zagruzit' hot' shto-to"
+2024/04/16 19:54:52 req.MediaDir = ""
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 req.Level = 1, req.Req = NU DAITE UJE zagruzit' hot' shto-to, req.Id = 499, req.Act = photos and videos
+2024/04/16 19:54:52 Request:
+2024/04/16 19:54:52 req.Id = 499
+2024/04/16 19:54:52 req.Level = 1
+2024/04/16 19:54:52 req.Language = "ru"
+2024/04/16 19:54:52 req.Act = "photos and videos"
+2024/04/16 19:54:52 req.Limit = 7
+2024/04/16 19:54:52 req.LaunchPoint = 0
+2024/04/16 19:54:52 req.Req = "unload"
+2024/04/16 19:54:52 req.MediaDir = ""
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 req.Level = 1, req.Req = unload, req.Id = 499, req.Act = photos and videos
+2024/04/16 19:54:52 Response:
+2024/04/16 19:54:52 res.Message = "Выберите интересующую вас игру"
+2024/04/16 19:54:52 res.Keyboard = "{"inline_keyboard":[[{"text":"Волейбол 02-02-2025 08:00","callback_data":"4","url":""}],[{"text":"Волейбол 02-02-2025 08:00","callback_data":"3","url":""}],[{"text":"Футбол 12-04-2025 18:00","callback_data":"2","url":""}],[{"text":"Волейбол 12-02-2026 11:00","callback_data":"1","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}"
+2024/04/16 19:54:52 res.ChatId = 499
+2024/04/16 19:54:52 res.level = 3
+2024/04/16 19:54:52 res.LaunchPoint = 0
+2024/04/16 19:54:52 res.Act = "photos and videos"
+2024/04/16 19:54:52 req.MediaDir = "unload"
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 res.ParseMode = ""
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 Unload-One-Test 1 has been complete
+2024/04/16 19:54:52 Request:
+2024/04/16 19:54:52 req.Id = 499
+2024/04/16 19:54:52 req.Level = 3
+2024/04/16 19:54:52 req.Language = "ru"
+2024/04/16 19:54:52 req.Act = "photos and videos"
+2024/04/16 19:54:52 req.Limit = 7
+2024/04/16 19:54:52 req.LaunchPoint = 0
+2024/04/16 19:54:52 req.Req = "nu i cho?"
+2024/04/16 19:54:52 req.MediaDir = "unload"
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 req.Level = 3, req.Req = nu i cho?, req.Id = 499, req.Act = photos and videos
+2024/04/16 19:54:52 Request:
+2024/04/16 19:54:52 req.Id = 499
+2024/04/16 19:54:52 req.Level = 3
+2024/04/16 19:54:52 req.Language = "ru"
+2024/04/16 19:54:52 req.Act = "photos and videos"
+2024/04/16 19:54:52 req.Limit = 7
+2024/04/16 19:54:52 req.LaunchPoint = 0
+2024/04/16 19:54:52 req.Req = "nu i cho teper'?"
+2024/04/16 19:54:52 req.MediaDir = "unload"
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 req.Level = 3, req.Req = nu i cho teper'?, req.Id = 499, req.Act = photos and videos
+2024/04/16 19:54:52 Request:
+2024/04/16 19:54:52 req.Id = 499
+2024/04/16 19:54:52 req.Level = 3
+2024/04/16 19:54:52 req.Language = "ru"
+2024/04/16 19:54:52 req.Act = "photos and videos"
+2024/04/16 19:54:52 req.Limit = 7
+2024/04/16 19:54:52 req.LaunchPoint = 0
+2024/04/16 19:54:52 req.Req = "1"
+2024/04/16 19:54:52 req.MediaDir = "unload"
+2024/04/16 19:54:52 req.GameId = 0
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[]"
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 req.Level = 3, req.Req = 1, req.Id = 499, req.Act = photos and videos
+2024/04/16 19:54:52 Response:
+2024/04/16 19:54:52 res.Message = "Вот все медиа по это игре"
+2024/04/16 19:54:52 res.Keyboard = "{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}"
+2024/04/16 19:54:52 res.ChatId = 499
+2024/04/16 19:54:52 res.level = 4
+2024/04/16 19:54:52 res.LaunchPoint = 0
+2024/04/16 19:54:52 res.Act = "photos and videos"
+2024/04/16 19:54:52 req.MediaDir = "unload"
+2024/04/16 19:54:52 req.GameId = 1
+2024/04/16 19:54:52 req.FileId = ""
+2024/04/16 19:54:52 req.TypeOffile = ""
+2024/04/16 19:54:52 req.Media = "[{photo !@#IOJSJE!@#**()!@#$*()SIOPE!@()#} {photo !@#IOJSIOJE!@#**()!@HFF#$*()SIOPE$#@$!@()#} {photo !@#IOJSIOJE!$@!$!@#@#**()!@#$*()SIOPE!@()#} { } { } { } { } { } { } { } { } { } { } { } { } { } { } { } { } { }]"
+2024/04/16 19:54:52 res.ParseMode = ""
+2024/04/16 19:54:52 
+2024/04/16 19:54:52 Unload-One-Test 2 has been complete
