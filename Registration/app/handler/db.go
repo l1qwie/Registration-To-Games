@@ -7,6 +7,11 @@ import (
 	"database/sql"
 )
 
+const (
+	update = false
+	insert = true
+)
+
 // Selects the schedule of the app
 func selectTheSchedule(limit, offset int, language string, f func(error)) []*apptype.Game {
 	var (
@@ -150,4 +155,24 @@ func selectDetailOfGame(gameId int, language string, f func(error)) (details *ap
 	details.Time = fromIntToStrTime(time)
 	defer rows.Close()
 	return details
+}
+
+func UpdateTheSchedule(date, time, status int, g *apptype.Game, wshdo bool) error {
+	var request string
+	if wshdo == insert {
+		request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+	} else {
+		request = `UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, seats = $5, latitude = $6, longitude = $7, address = $8, price = $9, currency = $10, status = $11`
+	}
+	_, err := types.Db.Exec(request, g.Id, g.Sport, date, time, g.Seats, g.Lattitude, g.Longitude, g.Address, g.Price, g.Currency, status)
+	if err != nil {
+		panic(err)
+	}
+	return err
+}
+
+func selVal() (int, error) {
+	var seq int
+	err := types.Db.QueryRow("SELECT last_value FROM gameswithusers_id_seq").Scan(&seq)
+	return seq, err
 }

@@ -3,6 +3,8 @@ package types
 import (
 	"database/sql"
 	"fmt"
+
+	_ "github.com/lib/pq"
 )
 
 var Db *sql.DB
@@ -45,15 +47,25 @@ type Game struct {
 	Price         int
 	Currency      string
 	Address       string
-	Lattitude     float32
-	Longitude     float32
+	Lattitude     float64
+	Longitude     float64
 	Payment       string
 	StatusPayment string
 }
 
-func connectData() string {
-	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, sslmode)
+type Updates struct {
+	Id      int
+	GameId  int
+	UserId  int
+	Seats   int
+	Payment string
+	Status  int
 }
+
+func connectData() string {
+	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, "disable")
+}
+
 func docConnect() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		docHost,

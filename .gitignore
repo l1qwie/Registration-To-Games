@@ -19,3 +19,5 @@ Settings/fmtogram/types/data.go
 Settings/apptype/data.go
 Media/apptype/data.go
 Media/fmtogram/types/data.go
+User/apptype/data.go
+User/fmtogram/types/data.go

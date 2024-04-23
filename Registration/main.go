@@ -1,13 +1,8 @@
 package main
 
-import (
-	"Registraion/enter"
-	"Registraion/tests"
-	"time"
-)
+import "Registraion/api/servers"
 
 func main() {
-	go enter.Registration()
-	time.Sleep(time.Second)
-	tests.Head()
+	//servers.Registration()
+	servers.Start()
 }

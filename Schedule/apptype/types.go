@@ -31,6 +31,7 @@ type Game struct {
 	Seats    int    `json:"seats"`
 	Price    int    `json:"price"`
 	Currency string `json:"currency"`
+	Action   string
 }
 
 // Opens connection with Redis DB

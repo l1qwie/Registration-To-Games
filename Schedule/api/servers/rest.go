@@ -1,4 +1,4 @@
-package enter
+package servers
 
 import (
 	"Schedule/app"

@@ -297,6 +297,12 @@ func wishUGoodLuck(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 	fm.WriteParseMode(fmapptype.HTML)
 }
 
+// Prepares data to update function (the enter to gRPC)
+func upd(req *apptype.Request) {
+	//seq, err := selVal()
+	//client.Updates(seq, req.Id, req.GameId, req.Seats, 1, req.Payment, err)
+}
+
 // There is a function which can work with gameId, num of seats, and payment
 // The main diffrent between this function and previois (choosePayment)
 // Is this function wichs you good luck and directs to MainMenu
@@ -305,6 +311,7 @@ func bestWishes(req *apptype.Request, res *apptype.Response, fm *formatter.Forma
 		if howManyIsLeft(req.GameId, req.Seats, fm.Error) {
 			completeRegistration(req.Id, req.GameId, req.Seats, req.Payment, fm.Error)
 			wishUGoodLuck(req, res, fm, dict.Dictionary[req.Language])
+			upd(req)
 		} else {
 			seatsAreFull(res, fm, dict.Dictionary[req.Language])
 		}

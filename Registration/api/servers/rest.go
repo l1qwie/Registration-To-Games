@@ -1,4 +1,4 @@
-package enter
+package servers
 
 import (
 	"Registraion/app"
@@ -86,7 +86,7 @@ func checkError(req *apptype.Request) (mes string, f bool) {
 	return mes, f
 }
 
-// Starts the server
+// Starts a REST API server.
 // Main logic of the server
 func Registration() {
 	router := gin.Default()

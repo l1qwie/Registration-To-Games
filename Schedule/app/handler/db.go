@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -55,4 +56,38 @@ func selecGames(client *redis.Client, f func(error), length int) []*apptype.Game
 		lsG[i].Currency = g.Currency
 	}
 	return lsG
+}
+
+// Creates a new game
+func newGame(cl *redis.Client, g *apptype.Game) error {
+	key := fmt.Sprintf("gameid:%d", g.Id)
+	jsonbyt, err := json.Marshal(g)
+	if err != nil {
+		log.Print(err)
+	} else {
+		err = cl.Set(context.Background(), key, jsonbyt, 0).Err()
+		if err != nil {
+			log.Print(err)
+		}
+	}
+	return err
+}
+
+// Deletes a game
+func delGame(cl *redis.Client, gid int) error {
+	key := fmt.Sprintf("gameid:%d", gid)
+	err := cl.Del(context.Background(), key).Err()
+	if err != nil {
+		log.Print(err)
+	}
+	return err
+}
+
+// "Change a game", but honestly this function just calls [delGame] and [newGame] then
+func changeGame(cl *redis.Client, g *apptype.Game) error {
+	err := delGame(cl, g.Id)
+	if err == nil {
+		err = newGame(cl, g)
+	}
+	return err
 }

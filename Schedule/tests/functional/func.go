@@ -2,6 +2,7 @@ package functional
 
 import (
 	"Schedule/apptype"
+	"fmt"
 	"log"
 )
 
@@ -14,9 +15,11 @@ func IsItSch(res *apptype.Response) {
 	mes += "<b>4.</b> <em>Спорт:</em> <b>Волейбол</b>, <em>Дата:</em> <b>02-02-2025</b>, <em>Время:</em> <b>08:00</b>, <em>Осталось свободных мест:</em> <b>77</b>, <em>Цена за одно место:</em> <b>100 RUB</b>\n\n\n"
 
 	if res.ChatId != 488 {
-		panic("res.ChatId != 488")
+		panic(("res.ChatId != 488"))
 	}
 	if res.Message != mes {
+		fmt.Println(res.Message)
+		fmt.Println(mes)
 		panic("res.Message != mes")
 	}
 	if res.Keyboard != `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}` {

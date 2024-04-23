@@ -49,6 +49,19 @@ func mainLogic(req *apptype.Request, res *apptype.Response, fm *formatter.Format
 	fm.WriteChatId(req.Id)
 }
 
+// Updates the schedule
+func UpdateTheSchedule(g *apptype.Game) error {
+	cl, err := addClient()
+	if g.Action == "new" {
+		err = newGame(cl, g)
+	} else if g.Action == "del" {
+		err = delGame(cl, g.Id)
+	} else if g.Action == "change" {
+		err = changeGame(cl, g)
+	}
+	return err
+}
+
 // Checks are there any games and then redirect to making function
 func Schedule(req *apptype.Request, res *apptype.Response) *apptype.Response {
 	res.Act = req.Act
