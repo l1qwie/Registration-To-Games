@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"Registraion/api/client"
 	"Registraion/app/dict"
 	apptype "Registraion/apptype"
 	"Registraion/fmtogram/formatter"
@@ -299,8 +300,10 @@ func wishUGoodLuck(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 
 // Prepares data to update function (the enter to gRPC)
 func upd(req *apptype.Request) {
-	//seq, err := selVal()
-	//client.Updates(seq, req.Id, req.GameId, req.Seats, 1, req.Payment, err)
+	u, err := fill(req.GameId, req.Id)
+	u.Action = "change"
+	u.ActionGWU = "new"
+	client.Updates(u, err)
 }
 
 // There is a function which can work with gameId, num of seats, and payment

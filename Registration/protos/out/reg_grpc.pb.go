@@ -22,12 +22,16 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RegistrationClient interface {
-	UpdReg(ctx context.Context, in *RegServRequest, opts ...grpc.CallOption) (*EmptyResponse, error)
+	// Changes the table Schedule in Schedule (client)
 	UpdSchedule(ctx context.Context, in *ScheduleServRequest, opts ...grpc.CallOption) (*EmptyResponse, error)
-	UpdMedia(ctx context.Context, in *MediaServRequest, opts ...grpc.CallOption) (*EmptyResponse, error)
+	// Changes the table Schedule in Media (client)
+	UpdMediaSch(ctx context.Context, in *MediaServRequestSch, opts ...grpc.CallOption) (*EmptyResponse, error)
+	// Changes the table Schedule in Settings (client)
 	UpdSettingSch(ctx context.Context, in *SettingServRequestSch, opts ...grpc.CallOption) (*EmptyResponse, error)
+	// Changes the table GamesWithUsers in Settings (client)
 	UpdSettingGWU(ctx context.Context, in *SettingServRequestGWU, opts ...grpc.CallOption) (*EmptyResponse, error)
-	SetGamesWithUsers(ctx context.Context, in *GWURequest, opts ...grpc.CallOption) (*EmptyResponse, error)
+	// Changes the table Schedule in Registration (server)
+	UpdReg(ctx context.Context, in *RegServRequest, opts ...grpc.CallOption) (*EmptyResponse, error)
 }
 
 type registrationClient struct {
@@ -36,15 +40,6 @@ type registrationClient struct {
 
 func NewRegistrationClient(cc grpc.ClientConnInterface) RegistrationClient {
 	return &registrationClient{cc}
-}
-
-func (c *registrationClient) UpdReg(ctx context.Context, in *RegServRequest, opts ...grpc.CallOption) (*EmptyResponse, error) {
-	out := new(EmptyResponse)
-	err := c.cc.Invoke(ctx, "/registr.Registration/UpdReg", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *registrationClient) UpdSchedule(ctx context.Context, in *ScheduleServRequest, opts ...grpc.CallOption) (*EmptyResponse, error) {
@@ -56,9 +51,9 @@ func (c *registrationClient) UpdSchedule(ctx context.Context, in *ScheduleServRe
 	return out, nil
 }
 
-func (c *registrationClient) UpdMedia(ctx context.Context, in *MediaServRequest, opts ...grpc.CallOption) (*EmptyResponse, error) {
+func (c *registrationClient) UpdMediaSch(ctx context.Context, in *MediaServRequestSch, opts ...grpc.CallOption) (*EmptyResponse, error) {
 	out := new(EmptyResponse)
-	err := c.cc.Invoke(ctx, "/registr.Registration/UpdMedia", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/registr.Registration/UpdMediaSch", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,9 +78,9 @@ func (c *registrationClient) UpdSettingGWU(ctx context.Context, in *SettingServR
 	return out, nil
 }
 
-func (c *registrationClient) SetGamesWithUsers(ctx context.Context, in *GWURequest, opts ...grpc.CallOption) (*EmptyResponse, error) {
+func (c *registrationClient) UpdReg(ctx context.Context, in *RegServRequest, opts ...grpc.CallOption) (*EmptyResponse, error) {
 	out := new(EmptyResponse)
-	err := c.cc.Invoke(ctx, "/registr.Registration/SetGamesWithUsers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/registr.Registration/UpdReg", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,12 +91,16 @@ func (c *registrationClient) SetGamesWithUsers(ctx context.Context, in *GWUReque
 // All implementations must embed UnimplementedRegistrationServer
 // for forward compatibility
 type RegistrationServer interface {
-	UpdReg(context.Context, *RegServRequest) (*EmptyResponse, error)
+	// Changes the table Schedule in Schedule (client)
 	UpdSchedule(context.Context, *ScheduleServRequest) (*EmptyResponse, error)
-	UpdMedia(context.Context, *MediaServRequest) (*EmptyResponse, error)
+	// Changes the table Schedule in Media (client)
+	UpdMediaSch(context.Context, *MediaServRequestSch) (*EmptyResponse, error)
+	// Changes the table Schedule in Settings (client)
 	UpdSettingSch(context.Context, *SettingServRequestSch) (*EmptyResponse, error)
+	// Changes the table GamesWithUsers in Settings (client)
 	UpdSettingGWU(context.Context, *SettingServRequestGWU) (*EmptyResponse, error)
-	SetGamesWithUsers(context.Context, *GWURequest) (*EmptyResponse, error)
+	// Changes the table Schedule in Registration (server)
+	UpdReg(context.Context, *RegServRequest) (*EmptyResponse, error)
 	mustEmbedUnimplementedRegistrationServer()
 }
 
@@ -109,14 +108,11 @@ type RegistrationServer interface {
 type UnimplementedRegistrationServer struct {
 }
 
-func (UnimplementedRegistrationServer) UpdReg(context.Context, *RegServRequest) (*EmptyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdReg not implemented")
-}
 func (UnimplementedRegistrationServer) UpdSchedule(context.Context, *ScheduleServRequest) (*EmptyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdSchedule not implemented")
 }
-func (UnimplementedRegistrationServer) UpdMedia(context.Context, *MediaServRequest) (*EmptyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdMedia not implemented")
+func (UnimplementedRegistrationServer) UpdMediaSch(context.Context, *MediaServRequestSch) (*EmptyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdMediaSch not implemented")
 }
 func (UnimplementedRegistrationServer) UpdSettingSch(context.Context, *SettingServRequestSch) (*EmptyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdSettingSch not implemented")
@@ -124,8 +120,8 @@ func (UnimplementedRegistrationServer) UpdSettingSch(context.Context, *SettingSe
 func (UnimplementedRegistrationServer) UpdSettingGWU(context.Context, *SettingServRequestGWU) (*EmptyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdSettingGWU not implemented")
 }
-func (UnimplementedRegistrationServer) SetGamesWithUsers(context.Context, *GWURequest) (*EmptyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetGamesWithUsers not implemented")
+func (UnimplementedRegistrationServer) UpdReg(context.Context, *RegServRequest) (*EmptyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdReg not implemented")
 }
 func (UnimplementedRegistrationServer) mustEmbedUnimplementedRegistrationServer() {}
 
@@ -138,24 +134,6 @@ type UnsafeRegistrationServer interface {
 
 func RegisterRegistrationServer(s grpc.ServiceRegistrar, srv RegistrationServer) {
 	s.RegisterService(&Registration_ServiceDesc, srv)
-}
-
-func _Registration_UpdReg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegServRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RegistrationServer).UpdReg(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/registr.Registration/UpdReg",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegistrationServer).UpdReg(ctx, req.(*RegServRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Registration_UpdSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -176,20 +154,20 @@ func _Registration_UpdSchedule_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Registration_UpdMedia_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MediaServRequest)
+func _Registration_UpdMediaSch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MediaServRequestSch)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegistrationServer).UpdMedia(ctx, in)
+		return srv.(RegistrationServer).UpdMediaSch(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/registr.Registration/UpdMedia",
+		FullMethod: "/registr.Registration/UpdMediaSch",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegistrationServer).UpdMedia(ctx, req.(*MediaServRequest))
+		return srv.(RegistrationServer).UpdMediaSch(ctx, req.(*MediaServRequestSch))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -230,20 +208,20 @@ func _Registration_UpdSettingGWU_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Registration_SetGamesWithUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GWURequest)
+func _Registration_UpdReg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegServRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegistrationServer).SetGamesWithUsers(ctx, in)
+		return srv.(RegistrationServer).UpdReg(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/registr.Registration/SetGamesWithUsers",
+		FullMethod: "/registr.Registration/UpdReg",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegistrationServer).SetGamesWithUsers(ctx, req.(*GWURequest))
+		return srv.(RegistrationServer).UpdReg(ctx, req.(*RegServRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -256,16 +234,12 @@ var Registration_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*RegistrationServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "UpdReg",
-			Handler:    _Registration_UpdReg_Handler,
-		},
-		{
 			MethodName: "UpdSchedule",
 			Handler:    _Registration_UpdSchedule_Handler,
 		},
 		{
-			MethodName: "UpdMedia",
-			Handler:    _Registration_UpdMedia_Handler,
+			MethodName: "UpdMediaSch",
+			Handler:    _Registration_UpdMediaSch_Handler,
 		},
 		{
 			MethodName: "UpdSettingSch",
@@ -276,8 +250,8 @@ var Registration_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Registration_UpdSettingGWU_Handler,
 		},
 		{
-			MethodName: "SetGamesWithUsers",
-			Handler:    _Registration_SetGamesWithUsers_Handler,
+			MethodName: "UpdReg",
+			Handler:    _Registration_UpdReg_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

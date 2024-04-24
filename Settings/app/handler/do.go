@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"Settings/api/client"
 	"Settings/app/dict"
 	"Settings/apptype"
 	"Settings/fmtogram/formatter"
@@ -175,7 +176,11 @@ func whatWay(req *apptype.Request, res *apptype.Response, fm *formatter.Formatte
 // Changes the app's language and redirect to MainMenu
 func changeLanguge(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, lang string, id int) {
 	res.Language = updtLanguage(id, lang, fm.Error)
-	//fm.WriteString(dict["Lanchanged"])
+	u := new(client.Upd)
+	u.UserId = id
+	u.Language = lang
+	u.Customlang = true
+	client.Updates(u, "user", nil)
 	goToMainMenu(res, fm, dict, dict["Lanchanged"])
 }
 
@@ -230,10 +235,17 @@ func change(res *apptype.Response, fm *formatter.Formatter, dict map[string]stri
 	setKb(fm, crd, names, data)
 }
 
+func upd(gameId int) {
+	u, err := fill(gameId)
+	u.Action = "change"
+	client.Updates(u, "other", err)
+}
+
 // Deletes the game
 func del(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	schs, uss, _ := findSomeSeats(req.GameId, req.Id, 3, fm.Error) //jsut a random number becuse the number influences to the bool var and I don't need it here
 	delTheGame(schs+uss, req.GameId, req.Id, fm.Error)
+	upd(req.GameId)
 	goToMainMenu(res, fm, dict.Dictionary[req.Language], fmt.Sprint(dict.Dictionary[req.Language]["GameDeleted"], dict.Dictionary[req.Language]["MainMenu"]))
 }
 
@@ -312,6 +324,7 @@ func confMySeats(res *apptype.Response, fm *formatter.Formatter, dict map[string
 		if freeS {
 			updtSeats(res.GameId, id, schs, uss, num, fm.Error)
 			goToMainMenu(res, fm, dict, fmt.Sprint(dict["ThxForChange"], dict["MainMenu"]))
+			upd(res.GameId)
 		}
 	} else {
 		chMySeats(res, fm, dict, id)

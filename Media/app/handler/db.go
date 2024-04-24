@@ -183,3 +183,14 @@ func insertAfewNewMedia(media []types.Media, gameId, userId int, f func(error)) 
 		}
 	}
 }
+
+func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
+	var request string
+	if act == "new" {
+		request = "INSERT INTO Schedule (gameId, sport, date, time, status) VALUES ($1, $2, $3, $4, $5)"
+	} else if act == "change" {
+		request = "UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, status = $5"
+	}
+	_, err := apptype.Db.Exec(request, g.Id, g.Sport, date, time, status)
+	return err
+}

@@ -33,9 +33,6 @@ func (s *server) UpdReg(ctx context.Context, req *pb.RegServRequest) (*pb.EmptyR
 	g.Seats = int(req.GetSeats())
 	g.Price = int(req.GetPrice())
 	g.Currency = req.GetCurrency()
-	g.Address = req.GetAddress()
-	g.Lattitude = req.GetLatitude()
-	g.Longitude = req.GetLongitude()
 	types.Db = apptype.ConnectToDatabase(false)
 	err := handler.UpdateTheSchedule(date, time, stat, g, act)
 	return nil, err
@@ -43,7 +40,7 @@ func (s *server) UpdReg(ctx context.Context, req *pb.RegServRequest) (*pb.EmptyR
 
 // Starts a gRPC server
 func Start() {
-	lis, err := net.Listen("tcp", ":50050")
+	lis, err := net.Listen("tcp", ":50053")
 	if err != nil {
 		panic(fmt.Sprintf("failed to listen: %v", err))
 	}
@@ -51,7 +48,7 @@ func Start() {
 	pb.RegisterRegistrationServer(s, &server{})
 	reflection.Register(s)
 
-	log.Println("Server started on port 50050")
+	log.Println("Server started on port 50053")
 	if err := s.Serve(lis); err != nil {
 		panic(fmt.Sprintf("failed to serve: %v", err))
 	}

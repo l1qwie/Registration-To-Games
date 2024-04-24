@@ -5,8 +5,6 @@ import (
 )
 
 func main() {
-	//servers.Schedule()
+	servers.Schedule()
 	servers.Start()
-	//tests.Head()
-
 }

@@ -36,7 +36,7 @@ func (s *server) UpdSchedule(ctx context.Context, req *pb.ScheduleRequest) (*pb.
 
 // Starts a gRPC server
 func Start() {
-	lis, err := net.Listen("tcp", ":50052")
+	lis, err := net.Listen("tcp", ":50050")
 	if err != nil {
 		panic(fmt.Sprintf("failed to listen: %v", err))
 	}

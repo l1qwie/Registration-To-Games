@@ -1,9 +1,10 @@
 package main
 
 import (
-	"Settings/enter"
+	"Settings/api/servers"
 )
 
 func main() {
-	enter.Settings()
+	go servers.Start()
+	servers.Settings()
 }

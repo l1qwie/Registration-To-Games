@@ -48,6 +48,16 @@ type Game struct {
 	StatusPayment string
 }
 
+type GWU struct {
+	Id      int
+	UserId  int
+	GameId  int
+	Seats   int
+	Payment string
+	Statpay int
+	Status  int
+}
+
 func connectData() string {
 	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, sslmode)
 }

@@ -1,9 +1,10 @@
 package main
 
 import (
-	"Media/enter"
+	"Media/api/servers"
 )
 
 func main() {
-	enter.Media()
+	go servers.Start()
+	servers.Media()
 }

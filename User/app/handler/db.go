@@ -87,3 +87,8 @@ func updateExMessageId(exmid, userId int, f func(error)) {
 		f(err)
 	}
 }
+
+func UpdateTheUser(u *apptype.User, custlang bool) error {
+	_, err := types.Db.Exec("UPDATE Users SET language = $1, customlanguage = $2 WHERE userId = $3", u.Language, custlang, u.Id)
+	return err
+}
