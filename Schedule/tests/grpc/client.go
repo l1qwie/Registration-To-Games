@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func panics(g *apptype.Game, answr *pb.ScheduleRequest, act string) {
+func panics(g *apptype.Game, answr *pb.ScheduleServRequest, act string) {
 	if g.Id != int(answr.Gameid) {
 		panic(fmt.Sprintf(`g.Id != int(answr.Gameid) because g.Id = %d and int(answr.Gameid) = %d`, g.Id, int(answr.Gameid)))
 	}
@@ -87,7 +87,7 @@ func createGame2() {
 	}
 }
 
-func ckeckNewGame(answr *pb.ScheduleRequest) {
+func ckeckNewGame(answr *pb.ScheduleServRequest) {
 	g := new(apptype.Game)
 	jsonstr, err := apptype.Client.Get(context.Background(), fmt.Sprintf("gameid:%d", 4)).Result()
 	if err != nil {
@@ -105,7 +105,7 @@ func ckeckDelGame() bool {
 	return err == redis.Nil
 }
 
-func ckeckChangeGame(answr *pb.ScheduleRequest) {
+func ckeckChangeGame(answr *pb.ScheduleServRequest) {
 	g := new(apptype.Game)
 	jsonstr, err := apptype.Client.Get(context.Background(), fmt.Sprintf("gameid:%d", 1)).Result()
 	if err != nil {
@@ -120,7 +120,7 @@ func ckeckChangeGame(answr *pb.ScheduleRequest) {
 
 func newG(client pb.ScheduleClient, ctx context.Context) {
 	defer delSch()
-	request := &pb.ScheduleRequest{
+	request := &pb.ScheduleServRequest{
 		Gameid:   4,
 		Sport:    "football",
 		Date:     "14-06-2025",
@@ -139,7 +139,7 @@ func newG(client pb.ScheduleClient, ctx context.Context) {
 
 func del(client pb.ScheduleClient, ctx context.Context) {
 	createGame()
-	request := &pb.ScheduleRequest{
+	request := &pb.ScheduleServRequest{
 		Gameid:   5,
 		Sport:    "volleyball",
 		Date:     "14-06-2025",
@@ -161,7 +161,7 @@ func del(client pb.ScheduleClient, ctx context.Context) {
 func upd(client pb.ScheduleClient, ctx context.Context) {
 	defer delSch()
 	createGame2()
-	request := &pb.ScheduleRequest{
+	request := &pb.ScheduleServRequest{
 		Gameid:   1,
 		Sport:    "football",
 		Date:     "14-06-2025",

@@ -4,7 +4,6 @@ import (
 	"User/app/dict"
 	"User/apptype"
 	"User/fmtogram/formatter"
-	"User/fmtogram/types"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -54,16 +53,10 @@ func edit(user *apptype.User, fm *formatter.Formatter) (exMessageId int) {
 		exMessageId = user.ExMessageId
 		updateExMessageId(exMessageId, user.Id, fm.Error)
 	}
-	if user.Photo == "" && user.Video == "" && len(user.MediaF) == 0 {
+	if user.Photo == "" && user.Video == "" {
 		fm.WriteEditMesId(exMessageId)
 	} else {
 		fm.WriteDeleteMesId(exMessageId)
-	}
-	if len(user.Media.Photo) != 0 {
-		user.Media.Counter += len(user.Media.Photo)
-	}
-	if len(user.Media.Video) != 0 {
-		user.Media.Counter += len(user.Media.Video)
 	}
 	return exMessageId
 }
@@ -72,7 +65,7 @@ func mainMenu(user *apptype.User, fm *formatter.Formatter, dict map[string]strin
 	user.Act = "divarication"
 	user.Level = OPTIONS
 	setKb(fm, []int{1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}, []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"})
-	fm.WriteString(dict["Can'tUnderstend"])
+	fm.WriteString(dict["MainMenu"])
 	fm.WriteChatId(user.Id)
 }
 
@@ -96,7 +89,6 @@ func wreq(user *apptype.User, req *apptype.WelcomeReq) {
 	req.Language = user.Language
 	req.Req = user.Request
 	req.Act = user.Act
-	req.Connection = types.Db
 }
 
 func welcomeAct(user *apptype.User, fm *formatter.Formatter) {
@@ -130,14 +122,13 @@ func rreq(user *apptype.User, req *apptype.RegistrationReq) {
 	req.GameId = user.Reg.GameId
 	req.Seats = user.Reg.Seats
 	req.Payment = user.Reg.Payment
-	req.Connection = types.Db
 }
 
 func registrationAct(user *apptype.User, fm *formatter.Formatter) {
 	req := new(apptype.RegistrationReq)
 	rreq(user, req)
 	res := new(apptype.RegistrationRes)
-	err := send(req, res, "8082", "Registration")
+	err := send(req, res, "8094", "Registration")
 	if err == nil {
 		if res.Error == "" {
 			fm.WriteString(res.Message)
@@ -168,7 +159,7 @@ func scheduleAct(user *apptype.User, fm *formatter.Formatter) {
 	req := new(apptype.ScheduleReq)
 	schreq(user, req)
 	res := new(apptype.ScheduleRes)
-	err := send(req, res, "8079", "Schedule")
+	err := send(req, res, "8083", "Schedule")
 	if err == nil {
 		if res.Error == "" {
 			fm.WriteString(res.Message)
@@ -186,14 +177,17 @@ func scheduleAct(user *apptype.User, fm *formatter.Formatter) {
 }
 
 func mreq(user *apptype.User, req *apptype.MediaReq) {
-	if user.Photo != "" {
-		req.FileId = user.Photo
+	if user.Media.Photo != "" {
+		req.FileId = user.Media.Photo
 		req.TypeOffile = "photo"
-	} else if user.Video != "" {
-		req.FileId = user.Video
+		req.MediaCounter = 1
+	} else if user.Media.Video != "" {
+		req.FileId = user.Media.Video
 		req.TypeOffile = "video"
-	} else if len(user.MediaF) > 0 {
-		req.Media = user.MediaF
+		req.MediaCounter = 1
+	} else if len(user.Media.MediaF) > 0 {
+		req.Media = user.Media.MediaF
+		req.MediaCounter = len(user.Media.MediaF)
 	}
 	req.Id = user.Id
 	req.Level = user.Level
@@ -204,8 +198,6 @@ func mreq(user *apptype.User, req *apptype.MediaReq) {
 	req.Req = user.Request
 	req.MediaDir = user.Media.Direction
 	req.GameId = user.Media.DelGameId
-	req.MediaCounter = user.Media.Counter
-	req.Connection = types.Db
 }
 
 func mediaAct(user *apptype.User, fm *formatter.Formatter) {
@@ -219,12 +211,16 @@ func mediaAct(user *apptype.User, fm *formatter.Formatter) {
 			fm.WriteChatId(res.ChatID)
 			fm.WriteParseMode(res.ParseMode)
 			if res.TypeOffile == "photo" {
+				fm.WriteDeleteMesId(user.ExMessageId)
 				fm.AddPhotoFromTG(res.FileId)
 			} else if res.TypeOffile == "video" {
+				fm.WriteDeleteMesId(user.ExMessageId)
 				fm.AddVideoFromTG(res.FileId)
 			} else if len(res.Media) > 0 {
+				fm.WriteDeleteMesId(user.ExMessageId)
 				fm.AddMapOfMedia(res.Media)
 			}
+			log.Print(fm.Message.InputMedia)
 			fm.Message.ReplyMarkup = res.Keyboard
 			user.Level = res.Level
 			user.LaunchPoint = res.LaunchPoint
@@ -233,6 +229,7 @@ func mediaAct(user *apptype.User, fm *formatter.Formatter) {
 			user.Media.DelGameId = res.GameId
 		} else {
 			fm.Error(fmt.Errorf(res.Error))
+			panic(res.Error)
 		}
 	} else {
 		fm.Error(err)
@@ -249,14 +246,13 @@ func setreq(user *apptype.User, req *apptype.SettingsReq) {
 	req.Req = user.Request
 	req.IsChanged = user.UserRec.Changeable
 	req.GameId = user.UserRec.GameId
-	req.Connection = types.Db
 }
 
 func settingsAct(user *apptype.User, fm *formatter.Formatter) {
 	req := new(apptype.SettingsReq)
 	setreq(user, req)
 	res := new(apptype.SettingsRes)
-	err := send(req, res, "8084", "Settings")
+	err := send(req, res, "8089", "Settings")
 	if err == nil {
 		if res.Error == "" {
 			fm.WriteString(res.Message)

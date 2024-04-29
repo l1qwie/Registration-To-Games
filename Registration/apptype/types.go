@@ -10,18 +10,17 @@ import (
 var Db *sql.DB
 
 type Request struct {
-	Id          int     `json:"id"`
-	Level       int     `json:"level"`
-	Language    string  `json:"language"`
-	ExMesId     int     `json:"exmessageid"`
-	Act         string  `json:"action"`
-	Limit       int     `json:"limit"`
-	LaunchPoint int     `json:"launchpoint"`
-	Req         string  `json:"request"`
-	GameId      int     `json:"gameid"`
-	Seats       int     `json:"seats"`
-	Payment     string  `json:"payment"`
-	Connection  *sql.DB `json:"connection"`
+	Id          int    `json:"id"`
+	Level       int    `json:"level"`
+	Language    string `json:"language"`
+	ExMesId     int    `json:"exmessageid"`
+	Act         string `json:"action"`
+	Limit       int    `json:"limit"`
+	LaunchPoint int    `json:"launchpoint"`
+	Req         string `json:"request"`
+	GameId      int    `json:"gameid"`
+	Seats       int    `json:"seats"`
+	Payment     string `json:"payment"`
 }
 
 type Response struct {

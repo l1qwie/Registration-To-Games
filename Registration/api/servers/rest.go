@@ -13,7 +13,7 @@ import (
 
 // Make []string of errors (missing data)
 func whatMiss(req *apptype.Request) []string {
-	m := make([]string, 6)
+	m := make([]string, 5)
 	if req.Id == 0 {
 		m[0] = `"id" = 0`
 	}
@@ -28,9 +28,6 @@ func whatMiss(req *apptype.Request) []string {
 	}
 	if req.Req == "" {
 		m[4] = `"request = ""`
-	}
-	if req.Connection == nil {
-		m[5] = `"connection" = nil`
 	}
 	return m
 }
@@ -73,7 +70,7 @@ func mesofErr(req *apptype.Request, kind bool) string {
 // Check for an error
 // Return answer (string) and found (bool)
 func checkError(req *apptype.Request) (mes string, f bool) {
-	if (req.Id == 0) || (req.Act == "") || (req.Language == "") || (req.Limit == 0) || (req.Req == "") || (req.Connection == nil) {
+	if (req.Id == 0) || (req.Act == "") || (req.Language == "") || (req.Limit == 0) || (req.Req == "") {
 		mes = "Not enough data: "
 		mes += mesofErr(req, true)
 		f = true
@@ -106,5 +103,5 @@ func Registration() {
 			}
 		}
 	})
-	router.Run(":8082")
+	router.Run(":8094")
 }

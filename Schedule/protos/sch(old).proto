@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package schedule;
+
+option go_package = "./out";
+
+service Schedule {
+    rpc UpdSchedule(ScheduleRequest) returns (EmptyResponse);
+}
+
+message ScheduleRequest {
+    int64 gameid = 1;
+    string sport = 2;
+    string date = 3;
+    string time = 4;
+    int64 seats = 5;
+    int64 price = 9;
+    string currency = 10;
+    string action = 12; //new, del or change
+}
+
+message EmptyResponse {
+   //Empty
+}

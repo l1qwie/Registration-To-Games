@@ -2,7 +2,6 @@ package apptype
 
 import (
 	"User/fmtogram/types"
-	"database/sql"
 )
 
 type RegToGames struct {
@@ -51,12 +50,11 @@ type User struct {
 }
 
 type WelcomeReq struct {
-	Id         int     `json:"id"`
-	Level      int     `json:"level"`
-	Language   string  `json:"language"`
-	Req        string  `json:"request"`
-	Act        string  `json:"action"`
-	Connection *sql.DB `json:"connection"`
+	Id       int    `json:"id"`
+	Level    int    `json:"level"`
+	Language string `json:"language"`
+	Req      string `json:"request"`
+	Act      string `json:"action"`
 }
 type WelcomeRes struct {
 	Keyboard string `json:"keyboard"`
@@ -68,18 +66,17 @@ type WelcomeRes struct {
 }
 
 type RegistrationReq struct {
-	Id          int     `json:"id"`
-	Level       int     `json:"level"`
-	Language    string  `json:"language"`
-	ExMesId     int     `json:"exmessageid"`
-	Act         string  `json:"action"`
-	Limit       int     `json:"limit"`
-	LaunchPoint int     `json:"launchpoint"`
-	Req         string  `json:"request"`
-	GameId      int     `json:"gameid"`
-	Seats       int     `json:"seats"`
-	Payment     string  `json:"payment"`
-	Connection  *sql.DB `json:"connection"`
+	Id          int    `json:"id"`
+	Level       int    `json:"level"`
+	Language    string `json:"language"`
+	ExMesId     int    `json:"exmessageid"`
+	Act         string `json:"action"`
+	Limit       int    `json:"limit"`
+	LaunchPoint int    `json:"launchpoint"`
+	Req         string `json:"request"`
+	GameId      int    `json:"gameid"`
+	Seats       int    `json:"seats"`
+	Payment     string `json:"payment"`
 }
 
 type RegistrationRes struct {
@@ -126,7 +123,6 @@ type MediaReq struct {
 	TypeOffile   string        `json:"typeoffile"`
 	MediaCounter int           `json:"mediacounter"`
 	Media        []types.Media `json:"media"`
-	Connection   *sql.DB       `json:"connection"`
 }
 
 type MediaRes struct {
@@ -146,16 +142,15 @@ type MediaRes struct {
 }
 
 type SettingsReq struct {
-	Id          int     `json:"id"`
-	Level       int     `json:"level"`
-	Language    string  `json:"language"`
-	Act         string  `json:"action"`
-	Limit       int     `json:"limit"`
-	LaunchPoint int     `json:"launchpoint"`
-	Req         string  `json:"request"`
-	IsChanged   string  `json:"ischanged"`
-	GameId      int     `json:"gameid"`
-	Connection  *sql.DB `json:"connection"`
+	Id          int    `json:"id"`
+	Level       int    `json:"level"`
+	Language    string `json:"language"`
+	Act         string `json:"action"`
+	Limit       int    `json:"limit"`
+	LaunchPoint int    `json:"launchpoint"`
+	Req         string `json:"request"`
+	IsChanged   string `json:"ischanged"`
+	GameId      int    `json:"gameid"`
 }
 
 type SettingsRes struct {
@@ -170,4 +165,15 @@ type SettingsRes struct {
 	GameId      int    `json:"gameid"`
 	ParseMode   string `json:"parsemode"`
 	Error       string `json:"error"`
+}
+
+type Game struct {
+	Id       int    `json:"id"`
+	Sport    string `json:"sport"`
+	Date     string `json:"date"`
+	Time     string `json:"time"`
+	Seats    int    `json:"seats"`
+	Price    int    `json:"price"`
+	Currency string `json:"currency"`
+	Action   string
 }

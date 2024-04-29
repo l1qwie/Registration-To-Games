@@ -18,86 +18,478 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UsersClient is the client API for Users service.
+// ScheduleClient is the client API for Schedule service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UsersClient interface {
-	UpdUserUsers(ctx context.Context, in *UpdUsersRequest, opts ...grpc.CallOption) (*EmptyResponse, error)
+type ScheduleClient interface {
+	// Changes the table Schedule in Schedule (client)
+	UpdSchedule(ctx context.Context, in *ScheduleServRequest, opts ...grpc.CallOption) (*EmptyResponse, error)
 }
 
-type usersClient struct {
+type scheduleClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUsersClient(cc grpc.ClientConnInterface) UsersClient {
-	return &usersClient{cc}
+func NewScheduleClient(cc grpc.ClientConnInterface) ScheduleClient {
+	return &scheduleClient{cc}
 }
 
-func (c *usersClient) UpdUserUsers(ctx context.Context, in *UpdUsersRequest, opts ...grpc.CallOption) (*EmptyResponse, error) {
+func (c *scheduleClient) UpdSchedule(ctx context.Context, in *ScheduleServRequest, opts ...grpc.CallOption) (*EmptyResponse, error) {
 	out := new(EmptyResponse)
-	err := c.cc.Invoke(ctx, "/user.Users/UpdUserUsers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/clientPart.Schedule/UpdSchedule", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UsersServer is the server API for Users service.
-// All implementations must embed UnimplementedUsersServer
+// ScheduleServer is the server API for Schedule service.
+// All implementations must embed UnimplementedScheduleServer
 // for forward compatibility
-type UsersServer interface {
+type ScheduleServer interface {
+	// Changes the table Schedule in Schedule (client)
+	UpdSchedule(context.Context, *ScheduleServRequest) (*EmptyResponse, error)
+	mustEmbedUnimplementedScheduleServer()
+}
+
+// UnimplementedScheduleServer must be embedded to have forward compatible implementations.
+type UnimplementedScheduleServer struct {
+}
+
+func (UnimplementedScheduleServer) UpdSchedule(context.Context, *ScheduleServRequest) (*EmptyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdSchedule not implemented")
+}
+func (UnimplementedScheduleServer) mustEmbedUnimplementedScheduleServer() {}
+
+// UnsafeScheduleServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ScheduleServer will
+// result in compilation errors.
+type UnsafeScheduleServer interface {
+	mustEmbedUnimplementedScheduleServer()
+}
+
+func RegisterScheduleServer(s grpc.ServiceRegistrar, srv ScheduleServer) {
+	s.RegisterService(&Schedule_ServiceDesc, srv)
+}
+
+func _Schedule_UpdSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ScheduleServRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServer).UpdSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/clientPart.Schedule/UpdSchedule",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServer).UpdSchedule(ctx, req.(*ScheduleServRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Schedule_ServiceDesc is the grpc.ServiceDesc for Schedule service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Schedule_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "clientPart.Schedule",
+	HandlerType: (*ScheduleServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UpdSchedule",
+			Handler:    _Schedule_UpdSchedule_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "user.proto",
+}
+
+// RegistrationClient is the client API for Registration service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type RegistrationClient interface {
+	// Changes the table Schedule in Registration (server)
+	UpdReg(ctx context.Context, in *RegServRequest, opts ...grpc.CallOption) (*EmptyResponse, error)
+}
+
+type registrationClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewRegistrationClient(cc grpc.ClientConnInterface) RegistrationClient {
+	return &registrationClient{cc}
+}
+
+func (c *registrationClient) UpdReg(ctx context.Context, in *RegServRequest, opts ...grpc.CallOption) (*EmptyResponse, error) {
+	out := new(EmptyResponse)
+	err := c.cc.Invoke(ctx, "/clientPart.Registration/UpdReg", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RegistrationServer is the server API for Registration service.
+// All implementations must embed UnimplementedRegistrationServer
+// for forward compatibility
+type RegistrationServer interface {
+	// Changes the table Schedule in Registration (server)
+	UpdReg(context.Context, *RegServRequest) (*EmptyResponse, error)
+	mustEmbedUnimplementedRegistrationServer()
+}
+
+// UnimplementedRegistrationServer must be embedded to have forward compatible implementations.
+type UnimplementedRegistrationServer struct {
+}
+
+func (UnimplementedRegistrationServer) UpdReg(context.Context, *RegServRequest) (*EmptyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdReg not implemented")
+}
+func (UnimplementedRegistrationServer) mustEmbedUnimplementedRegistrationServer() {}
+
+// UnsafeRegistrationServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RegistrationServer will
+// result in compilation errors.
+type UnsafeRegistrationServer interface {
+	mustEmbedUnimplementedRegistrationServer()
+}
+
+func RegisterRegistrationServer(s grpc.ServiceRegistrar, srv RegistrationServer) {
+	s.RegisterService(&Registration_ServiceDesc, srv)
+}
+
+func _Registration_UpdReg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegServRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegistrationServer).UpdReg(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/clientPart.Registration/UpdReg",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegistrationServer).UpdReg(ctx, req.(*RegServRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Registration_ServiceDesc is the grpc.ServiceDesc for Registration service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Registration_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "clientPart.Registration",
+	HandlerType: (*RegistrationServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UpdReg",
+			Handler:    _Registration_UpdReg_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "user.proto",
+}
+
+// SettingsClient is the client API for Settings service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type SettingsClient interface {
+	// Changes the table Schedule in Settings (client)
+	UpdSettingSch(ctx context.Context, in *SettingServRequestSch, opts ...grpc.CallOption) (*EmptyResponse, error)
+	// Changes the table GamesWithUsers in Settings (client)
+	UpdSettingGWU(ctx context.Context, in *SettingServRequestGWU, opts ...grpc.CallOption) (*EmptyResponse, error)
+}
+
+type settingsClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewSettingsClient(cc grpc.ClientConnInterface) SettingsClient {
+	return &settingsClient{cc}
+}
+
+func (c *settingsClient) UpdSettingSch(ctx context.Context, in *SettingServRequestSch, opts ...grpc.CallOption) (*EmptyResponse, error) {
+	out := new(EmptyResponse)
+	err := c.cc.Invoke(ctx, "/clientPart.Settings/UpdSettingSch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) UpdSettingGWU(ctx context.Context, in *SettingServRequestGWU, opts ...grpc.CallOption) (*EmptyResponse, error) {
+	out := new(EmptyResponse)
+	err := c.cc.Invoke(ctx, "/clientPart.Settings/UpdSettingGWU", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SettingsServer is the server API for Settings service.
+// All implementations must embed UnimplementedSettingsServer
+// for forward compatibility
+type SettingsServer interface {
+	// Changes the table Schedule in Settings (client)
+	UpdSettingSch(context.Context, *SettingServRequestSch) (*EmptyResponse, error)
+	// Changes the table GamesWithUsers in Settings (client)
+	UpdSettingGWU(context.Context, *SettingServRequestGWU) (*EmptyResponse, error)
+	mustEmbedUnimplementedSettingsServer()
+}
+
+// UnimplementedSettingsServer must be embedded to have forward compatible implementations.
+type UnimplementedSettingsServer struct {
+}
+
+func (UnimplementedSettingsServer) UpdSettingSch(context.Context, *SettingServRequestSch) (*EmptyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdSettingSch not implemented")
+}
+func (UnimplementedSettingsServer) UpdSettingGWU(context.Context, *SettingServRequestGWU) (*EmptyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdSettingGWU not implemented")
+}
+func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
+
+// UnsafeSettingsServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SettingsServer will
+// result in compilation errors.
+type UnsafeSettingsServer interface {
+	mustEmbedUnimplementedSettingsServer()
+}
+
+func RegisterSettingsServer(s grpc.ServiceRegistrar, srv SettingsServer) {
+	s.RegisterService(&Settings_ServiceDesc, srv)
+}
+
+func _Settings_UpdSettingSch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SettingServRequestSch)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).UpdSettingSch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/clientPart.Settings/UpdSettingSch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).UpdSettingSch(ctx, req.(*SettingServRequestSch))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_UpdSettingGWU_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SettingServRequestGWU)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).UpdSettingGWU(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/clientPart.Settings/UpdSettingGWU",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).UpdSettingGWU(ctx, req.(*SettingServRequestGWU))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Settings_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "clientPart.Settings",
+	HandlerType: (*SettingsServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UpdSettingSch",
+			Handler:    _Settings_UpdSettingSch_Handler,
+		},
+		{
+			MethodName: "UpdSettingGWU",
+			Handler:    _Settings_UpdSettingGWU_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "user.proto",
+}
+
+// MediaClient is the client API for Media service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type MediaClient interface {
+	// Changes the table Schedule in Media (client)
+	UpdMediaSch(ctx context.Context, in *MediaServRequestSch, opts ...grpc.CallOption) (*EmptyResponse, error)
+}
+
+type mediaClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewMediaClient(cc grpc.ClientConnInterface) MediaClient {
+	return &mediaClient{cc}
+}
+
+func (c *mediaClient) UpdMediaSch(ctx context.Context, in *MediaServRequestSch, opts ...grpc.CallOption) (*EmptyResponse, error) {
+	out := new(EmptyResponse)
+	err := c.cc.Invoke(ctx, "/clientPart.Media/UpdMediaSch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// MediaServer is the server API for Media service.
+// All implementations must embed UnimplementedMediaServer
+// for forward compatibility
+type MediaServer interface {
+	// Changes the table Schedule in Media (client)
+	UpdMediaSch(context.Context, *MediaServRequestSch) (*EmptyResponse, error)
+	mustEmbedUnimplementedMediaServer()
+}
+
+// UnimplementedMediaServer must be embedded to have forward compatible implementations.
+type UnimplementedMediaServer struct {
+}
+
+func (UnimplementedMediaServer) UpdMediaSch(context.Context, *MediaServRequestSch) (*EmptyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdMediaSch not implemented")
+}
+func (UnimplementedMediaServer) mustEmbedUnimplementedMediaServer() {}
+
+// UnsafeMediaServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MediaServer will
+// result in compilation errors.
+type UnsafeMediaServer interface {
+	mustEmbedUnimplementedMediaServer()
+}
+
+func RegisterMediaServer(s grpc.ServiceRegistrar, srv MediaServer) {
+	s.RegisterService(&Media_ServiceDesc, srv)
+}
+
+func _Media_UpdMediaSch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MediaServRequestSch)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MediaServer).UpdMediaSch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/clientPart.Media/UpdMediaSch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MediaServer).UpdMediaSch(ctx, req.(*MediaServRequestSch))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Media_ServiceDesc is the grpc.ServiceDesc for Media service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Media_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "clientPart.Media",
+	HandlerType: (*MediaServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UpdMediaSch",
+			Handler:    _Media_UpdMediaSch_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "user.proto",
+}
+
+// UserClient is the client API for User service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type UserClient interface {
+	// Changes the table Users in User (server)
+	UpdUserUsers(ctx context.Context, in *UpdUsersRequest, opts ...grpc.CallOption) (*EmptyResponse, error)
+}
+
+type userClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewUserClient(cc grpc.ClientConnInterface) UserClient {
+	return &userClient{cc}
+}
+
+func (c *userClient) UpdUserUsers(ctx context.Context, in *UpdUsersRequest, opts ...grpc.CallOption) (*EmptyResponse, error) {
+	out := new(EmptyResponse)
+	err := c.cc.Invoke(ctx, "/clientPart.User/UpdUserUsers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UserServer is the server API for User service.
+// All implementations must embed UnimplementedUserServer
+// for forward compatibility
+type UserServer interface {
+	// Changes the table Users in User (server)
 	UpdUserUsers(context.Context, *UpdUsersRequest) (*EmptyResponse, error)
-	mustEmbedUnimplementedUsersServer()
+	mustEmbedUnimplementedUserServer()
 }
 
-// UnimplementedUsersServer must be embedded to have forward compatible implementations.
-type UnimplementedUsersServer struct {
+// UnimplementedUserServer must be embedded to have forward compatible implementations.
+type UnimplementedUserServer struct {
 }
 
-func (UnimplementedUsersServer) UpdUserUsers(context.Context, *UpdUsersRequest) (*EmptyResponse, error) {
+func (UnimplementedUserServer) UpdUserUsers(context.Context, *UpdUsersRequest) (*EmptyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdUserUsers not implemented")
 }
-func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
+func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
-// UnsafeUsersServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UsersServer will
+// UnsafeUserServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UserServer will
 // result in compilation errors.
-type UnsafeUsersServer interface {
-	mustEmbedUnimplementedUsersServer()
+type UnsafeUserServer interface {
+	mustEmbedUnimplementedUserServer()
 }
 
-func RegisterUsersServer(s grpc.ServiceRegistrar, srv UsersServer) {
-	s.RegisterService(&Users_ServiceDesc, srv)
+func RegisterUserServer(s grpc.ServiceRegistrar, srv UserServer) {
+	s.RegisterService(&User_ServiceDesc, srv)
 }
 
-func _Users_UpdUserUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _User_UpdUserUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdUsersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServer).UpdUserUsers(ctx, in)
+		return srv.(UserServer).UpdUserUsers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.Users/UpdUserUsers",
+		FullMethod: "/clientPart.User/UpdUserUsers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).UpdUserUsers(ctx, req.(*UpdUsersRequest))
+		return srv.(UserServer).UpdUserUsers(ctx, req.(*UpdUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Users_ServiceDesc is the grpc.ServiceDesc for Users service.
+// User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Users_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.Users",
-	HandlerType: (*UsersServer)(nil),
+var User_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "clientPart.User",
+	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "UpdUserUsers",
-			Handler:    _Users_UpdUserUsers_Handler,
+			Handler:    _User_UpdUserUsers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

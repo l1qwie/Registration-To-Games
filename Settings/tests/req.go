@@ -14,7 +14,6 @@ func mainReq() *apptype.Request {
 		Req:         "",
 		IsChanged:   "",
 		GameId:      0,
-		Connection:  apptype.Db,
 	}
 }
 

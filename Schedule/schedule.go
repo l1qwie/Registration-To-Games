@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	servers.Schedule()
+	go servers.Schedule()
 	servers.Start()
 }

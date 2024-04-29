@@ -37,13 +37,12 @@ func handleDB(con *Connection) {
 }
 
 // Preparing a request
-func handleReq(con *Connection) *types.Request {
+func handleReq() *types.Request {
 	req := new(types.Request)
 	req.Id = 456
 	req.Act = "registration"
 	req.Level = i
 	req.Language = "ru"
-	req.Connection = con.con
 	if j < 2 {
 		req.Req = trash[j]
 	} else {
@@ -58,7 +57,7 @@ func action(con *Connection) {
 		j = 0
 		for j < 3 {
 			handleDB(con)
-			req := handleReq(con)
+			req := handleReq()
 			jsonBytes, err := json.Marshal(req)
 			if err != nil {
 				panic(err)

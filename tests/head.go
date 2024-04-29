@@ -361,20 +361,19 @@ func SendMediaGroup() {
 	mg := make([]types.Media, 3)
 
 	mg[0].Type = "photo"
-	mg[0].Media = "AgACAgIAAxkDAAIN12YECI0n-nb0tvzwNOpQpPUPQXr-AAJI1TEbTcHZSqUQNYC0VYW-AQADAgADcwADNAQ"
+	mg[0].Media = "AgACAgIAAxkBAAIBSWYrxJqFyr9f8rE4OYdmqNduwoAbAAKN1jEbFKBhSc8qtXl_yz70AQADAgADcwADNAQ"
 	mg[1].Type = "photo"
-	mg[1].Media = "AgACAgIAAxkDAAIN12YECI0n-nb0tvzwNOpQpPUPQXr-AAJI1TEbTcHZSqUQNYC0VYW-AQADAgADcwADNAQ"
+	mg[1].Media = "AgACAgIAAxkBAAIBSWYrxJqFyr9f8rE4OYdmqNduwoAbAAKN1jEbFKBhSc8qtXl_yz70AQADAgADcwADNAQ"
 	mg[2].Type = "photo"
-	mg[2].Media = "AgACAgIAAxkDAAIN12YECI0n-nb0tvzwNOpQpPUPQXr-AAJI1TEbTcHZSqUQNYC0VYW-AQADAgADcwADNAQ"
-	/*
-		mg[0].Type = "photo"
-		mg[0].Media = "red.jpg"
-		mg[1].Type = "photo"
-		mg[1].Media = "redd.jpg"
-		mg[2].Type = "photo"
-		mg[2].Media = "reddd.jpg"
-	*/
+	mg[2].Media = "AgACAgIAAxkBAAIBSWYrxJqFyr9f8rE4OYdmqNduwoAbAAKN1jEbFKBhSc8qtXl_yz70AQADAgADcwADNAQ"
+	//mg[0].Type = "photo"
+	//mg[0].Media = "red.jpg"
+	//mg[1].Type = "photo"
+	//mg[1].Media = "redd.jpg"
+	//mg[2].Type = "photo"
+	//mg[2].Media = "reddd.jpg"
 	fm.AddMapOfMedia(mg)
+	//fm.WriteString("HI")
 	fm.WriteChatId(738070596)
 	_, err := fm.Send()
 	if err != nil {

@@ -45,7 +45,6 @@ func handleReq() *apptype.Request {
 	req.Act = "reg to games"
 	req.Level = i
 	req.Language = "ru"
-	req.Connection = types.Db
 	req.Limit = 7
 	if j < 2 {
 		req.Req = trash[j]

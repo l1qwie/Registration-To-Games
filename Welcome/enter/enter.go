@@ -13,7 +13,7 @@ import (
 
 // Make []string of errors (missing data)
 func whatMiss(req *types.Request) []string {
-	mes := make([]string, 4)
+	mes := make([]string, 3)
 	if req.Id == 0 {
 		mes[0] = `id = 0`
 	}
@@ -22,9 +22,6 @@ func whatMiss(req *types.Request) []string {
 	}
 	if req.Language == "" {
 		mes[2] = `language = ""`
-	}
-	if req.Connection == nil {
-		mes[3] = `connection = nil `
 	}
 	return mes
 }
@@ -66,7 +63,7 @@ func mesofErr(req *types.Request, kind bool) string {
 // Check for an error
 // Return answer (string) and found (bool)
 func checkError(req *types.Request) (mes string, f bool) {
-	if req.Id == 0 || req.Act == "" || req.Language == "" || req.Connection == nil {
+	if req.Id == 0 || req.Act == "" || req.Language == "" {
 		mes = "Not enough data: "
 		mes += mesofErr(req, true)
 		f = true

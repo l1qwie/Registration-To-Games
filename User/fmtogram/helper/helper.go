@@ -3,6 +3,7 @@ package helper
 import (
 	"User/fmtogram/types"
 	"fmt"
+	"log"
 )
 
 func ReturnText(telegramResponse *types.TelegramResponse) (text string) {
@@ -150,7 +151,8 @@ func ReturnVideosFileIdfrom(tr *types.TelegramResponse) ([]string, error) {
 
 func ReturnPhotoResp(resp *types.MessageResponse) (fileid string, err error) {
 	if len(resp.Result.Photo) > 0 {
-		if len(resp.Result.Photo) < 2 {
+		log.Print(len(resp.Result.Photo))
+		if len(resp.Result.Photo) < 5 {
 			fileid = resp.Result.Photo[0].FileId
 		} else {
 			err = fmt.Errorf("there is not a one Photo. There are a few. You should use [ReturnMediaResp]")
@@ -163,7 +165,7 @@ func ReturnPhotoResp(resp *types.MessageResponse) (fileid string, err error) {
 
 func ReturnVideoResp(resp *types.MessageResponse) (fileid string, err error) {
 	if len(resp.Result.Video) > 0 {
-		if len(resp.Result.Video) < 2 {
+		if len(resp.Result.Video) < 5 {
 			fileid = resp.Result.Video[0].FileId
 		} else {
 			err = fmt.Errorf("there is not a one Video. There are a few. You should use [ReturnMediaResp]")
@@ -179,7 +181,7 @@ func ReturnMediaResp(resp *types.MessageResponse) ([]types.Media, error) {
 	media := make([]types.Media, (len(resp.Result.Photo) + len(resp.Result.Video)))
 	count := 0
 	if len(resp.Result.Photo) > 0 || len(resp.Result.Video) > 0 {
-		if len(resp.Result.Photo) < 2 && len(resp.Result.Video) < 2 {
+		if len(resp.Result.Photo) < 4 && len(resp.Result.Video) < 4 {
 			if len(resp.Result.Photo) > 1 {
 				for i := range resp.Result.Photo {
 					media[count].Media = resp.Result.Photo[i].FileId

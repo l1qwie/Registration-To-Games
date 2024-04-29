@@ -16,7 +16,6 @@ func mainReq() *apptype.Request {
 		LaunchPoint: 0,
 		Req:         "",
 		GameId:      0,
-		Connection:  apptype.Db,
 	}
 }
 

@@ -3,9 +3,11 @@ package formatter
 import (
 	"RegistrationToGames/fmtogram/types"
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"mime/multipart"
+	"net/textproto"
 	"os"
 )
 
@@ -56,42 +58,42 @@ func (fm *Formatter) AddMapOfMedia(arr []types.Media) {
 
 func (fm *Formatter) createMediaGroup(buf *bytes.Buffer) (string, error) {
 	var (
-		file    *os.File
-		err     error
-		part    io.Writer
-		w, wrtr *multipart.Writer
+		file *os.File
+		err  error
 	)
-	bf := bytes.NewBuffer(nil)
-	w = multipart.NewWriter(bf)
-	for i := 0; i < len(fm.Message.InputMedia); i++ {
-		file, err = os.Open(fm.Message.InputMedia[i].Media)
+	writer := multipart.NewWriter(buf)
+	mgroup := make([]types.Media, len(fm.Message.InputMedia))
+	writer.WriteField("chat_id", fmt.Sprint(fm.Message.ChatID))
+	for i := 0; i < len(fm.Message.InputMedia) && err == nil; i++ {
+		part, err := writer.CreatePart(textproto.MIMEHeader{
+			"Content-Disposition": []string{fmt.Sprintf(`form-data; name="%s"; filename="%s"`, "media", fm.Message.InputMedia[i].Media)},
+			"Content-Type":        []string{"multipart/form-data"}, // Замените "image/jpeg" на нужный вам Content-Type
+		})
 		if err == nil {
-			err = w.WriteField("type", fm.Message.InputMedia[i].Type)
+			//Header.Set("Content-Type", "image/jpeg")
+			file, err = os.Open(fm.Message.InputMedia[i].Media)
 		}
 		if err == nil {
-			part, err = w.CreateFormFile("media", fm.Message.InputMedia[i].Media)
-		}
-		if err == nil {
+			defer file.Close()
 			_, err = io.Copy(part, file)
 		}
-	}
-	wrtr = multipart.NewWriter(buf)
-	err = wrtr.WriteField("chat_id", fmt.Sprint(fm.Message.ChatID))
-	if err == nil {
-		fmt.Println(bf.String())
-		fmt.Println()
-		fmt.Println()
-		fmt.Println()
-		err = wrtr.WriteField("media", bf.String())
-	}
-	if err == nil {
-		err = w.Close()
-	}
-	if err == nil {
-		err = wrtr.Close()
+		if err == nil {
+			media := types.Media{
+				Type:  fm.Message.InputMedia[i].Type,
+				Media: fmt.Sprint("attach://" + fm.Message.InputMedia[i].Media),
+			}
+			mgroup[i] = media
+		}
 	}
 
-	return wrtr.FormDataContentType(), err
+	mjson, err := json.Marshal(mgroup)
+	if err == nil {
+		writer.WriteField("media", string(mjson))
+	}
+	if err == nil {
+		err = writer.Close()
+	}
+	return writer.FormDataContentType(), err
 }
 
 /*

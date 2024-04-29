@@ -19,6 +19,7 @@ type server struct {
 }
 
 func (s *server) UpdMediaSch(ctx context.Context, req *pb.MediaServRequestSch) (*pb.EmptyResponse, error) {
+	log.Print("The server UpdMediaSch:50055 was called by someone")
 	g := new(apptype.Game)
 	date := int(req.GetDate())
 	time := int(req.GetTime())
@@ -26,13 +27,15 @@ func (s *server) UpdMediaSch(ctx context.Context, req *pb.MediaServRequestSch) (
 	stat := int(req.GetStatus())
 	g.Id = int(req.GetGameid())
 	g.Sport = req.GetSport()
+	apptype.Db = apptype.ConnectToDatabase(false)
 	err := handler.UpdateTheSchedule(date, time, stat, g, act)
+	log.Print("The server UpdMediaSch:50055 ended its job")
 	return nil, err
 }
 
 // Starts a gRPC server
 func Start() {
-	lis, err := net.Listen("tcp", ":50052")
+	lis, err := net.Listen("tcp", ":50055")
 	if err != nil {
 		panic(fmt.Sprintf("failed to listen: %v", err))
 	}
@@ -40,7 +43,7 @@ func Start() {
 	pb.RegisterMediaServer(s, &server{})
 	reflection.Register(s)
 
-	log.Println("Server started on port 50052")
+	log.Println("Server started on port 50055")
 	if err := s.Serve(lis); err != nil {
 		panic(fmt.Sprintf("failed to serve: %v", err))
 	}

@@ -109,8 +109,7 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 				}
 
 				//fm.contenttype, err = fm.createMediaGroup(finalBuffer)
-				//fmt.Println(err)
-				//_ = executer.Send(finalBuffer, "sendMediaGroup", fm.contenttype, marshalstatus)
+				_ = executer.Send(finalBuffer, function, fm.contenttype, marshalstatus)
 			} else {
 				if fm.mediatype[0] == "photo" {
 					function = "sendPhoto"

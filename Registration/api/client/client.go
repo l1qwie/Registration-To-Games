@@ -31,13 +31,13 @@ type Upd struct {
 	ActionGWU string
 }
 
-func (u *Upd) schedule() {
-	conn, err := grpc.Dial("localhost:50050", grpc.WithTransportCredentials(insecure.NewCredentials()))
+func (u *Upd) schedule() error {
+	conn, err := grpc.Dial("localhost:50053", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
 		defer conn.Close()
-		client := pb.NewRegistrationClient(conn)
+		client := pb.NewScheduleClient(conn)
 		ctx := context.Background()
 		request := &pb.ScheduleServRequest{
 			Gameid:   int64(u.GameId),
@@ -49,20 +49,22 @@ func (u *Upd) schedule() {
 			Seats:    int64(u.Seats),
 			Action:   u.Action,
 		}
+		log.Print(`Called UpdSchedule:50053 from "Registration"`)
 		_, err = client.UpdSchedule(ctx, request)
 		if err != nil {
 			log.Print(err)
 		}
 	}
+	return err
 }
 
-func (u *Upd) setSchedule() {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+func (u *Upd) setSchedule() error {
+	conn, err := grpc.Dial("localhost:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
 		defer conn.Close()
-		client := pb.NewRegistrationClient(conn)
+		client := pb.NewSettingsClient(conn)
 		ctx := context.Background()
 		request := &pb.SettingServRequestSch{
 			Gameid:   int64(u.GameId),
@@ -75,20 +77,22 @@ func (u *Upd) setSchedule() {
 			Status:   int64(u.Status),
 			Action:   u.Action,
 		}
+		log.Print(`Called UpdSettingSch:50059 from "Registration"`)
 		_, err = client.UpdSettingSch(ctx, request)
 		if err != nil {
 			log.Print(err)
 		}
 	}
+	return err
 }
 
-func (u *Upd) setGWU() {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+func (u *Upd) setGWU() error {
+	conn, err := grpc.Dial("localhost:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
 		defer conn.Close()
-		client := pb.NewRegistrationClient(conn)
+		client := pb.NewSettingsClient(conn)
 		ctx := context.Background()
 		request := &pb.SettingServRequestGWU{
 			Id:      int64(u.Id),
@@ -100,26 +104,30 @@ func (u *Upd) setGWU() {
 			Status:  int64(u.StatusGWU),
 			Action:  u.ActionGWU,
 		}
+		log.Print(`Called UpdSettingGWU:50059 from "Registration"`)
 		_, err = client.UpdSettingGWU(ctx, request)
 		if err != nil {
 			log.Print(err)
 		}
 	}
+	return err
 }
 
-func (u *Upd) settings() {
-	u.setSchedule()
-	u.setGWU()
-
+func (u *Upd) settings() error {
+	err := u.setSchedule()
+	if err == nil {
+		err = u.setGWU()
+	}
+	return err
 }
 
-func (u *Upd) media() {
-	conn, err := grpc.Dial("localhost:50052", grpc.WithTransportCredentials(insecure.NewCredentials()))
+func (u *Upd) media() error {
+	conn, err := grpc.Dial("localhost:50055", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
 		defer conn.Close()
-		client := pb.NewRegistrationClient(conn)
+		client := pb.NewMediaClient(conn)
 		ctx := context.Background()
 		request := &pb.MediaServRequestSch{
 			Gameid: int64(u.GameId),
@@ -129,20 +137,27 @@ func (u *Upd) media() {
 			Status: int64(u.Status),
 			Action: u.Action,
 		}
+		log.Print(`Called UpdMediaSch:50055 from "Registration"`)
 		_, err = client.UpdMediaSch(ctx, request)
 		if err != nil {
 			log.Print(err)
 		}
 	}
+	return err
 }
 
 // Creates request to gRPC function and calls it
-func Updates(u *Upd, dberr error) {
+func Updates(u *Upd, dberr error) (err error) {
 	if dberr == nil {
-		u.schedule()
-		u.settings()
-		u.media()
+		err = u.schedule()
+		if err == nil {
+			err = u.settings()
+			if err == nil {
+				err = u.media()
+			}
+		}
 	} else {
 		log.Printf("You have an error %s", dberr)
 	}
+	return err
 }

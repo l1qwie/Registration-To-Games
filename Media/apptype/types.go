@@ -22,7 +22,6 @@ type Request struct {
 	TypeOffile   string        `json:"typeoffile"`
 	MediaCounter int           `json:"mediacounter"`
 	Media        []types.Media `json:"media"`
-	Connection   *sql.DB       `json:"connection"`
 }
 
 type Response struct {

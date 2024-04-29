@@ -5,7 +5,7 @@ import (
 	"Registraion/app/dict"
 	apptype "Registraion/apptype"
 	"Registraion/fmtogram/formatter"
-	fmapptype "Registraion/fmtogram/types"
+	"Registraion/fmtogram/types"
 	"fmt"
 	"strconv"
 )
@@ -295,15 +295,18 @@ func wishUGoodLuck(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 	setKb(fm, []int{1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}, []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"})
 	result := fmt.Sprintf(dict["RegistrationCompleted"], details.Sport, details.Date, details.Time, req.Seats, req.Payment, cost, details.Currency, details.Address, details.Lattitude, details.Longitude)
 	fm.WriteString(result)
-	fm.WriteParseMode(fmapptype.HTML)
+	fm.WriteParseMode(types.HTML)
 }
 
 // Prepares data to update function (the enter to gRPC)
-func upd(req *apptype.Request) {
+func upd(req *apptype.Request, f func(error)) {
 	u, err := fill(req.GameId, req.Id)
 	u.Action = "change"
 	u.ActionGWU = "new"
-	client.Updates(u, err)
+	err = client.Updates(u, err)
+	if err != nil {
+		f(err)
+	}
 }
 
 // There is a function which can work with gameId, num of seats, and payment
@@ -314,7 +317,7 @@ func bestWishes(req *apptype.Request, res *apptype.Response, fm *formatter.Forma
 		if howManyIsLeft(req.GameId, req.Seats, fm.Error) {
 			completeRegistration(req.Id, req.GameId, req.Seats, req.Payment, fm.Error)
 			wishUGoodLuck(req, res, fm, dict.Dictionary[req.Language])
-			upd(req)
+			upd(req, fm.Error)
 		} else {
 			seatsAreFull(res, fm, dict.Dictionary[req.Language])
 		}
@@ -348,6 +351,7 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 // The directioner
 func RegistrationAct(req *apptype.Request, res *apptype.Response) {
 	fm := new(formatter.Formatter)
+	types.Db = apptype.ConnectToDatabase(false)
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint
 	res.GameId = req.GameId

@@ -15,12 +15,11 @@ type Response struct {
 }
 
 type Request struct {
-	Id         int     `json:"id"`
-	Level      int     `json:"level"`
-	Language   string  `json:"language"`
-	Req        string  `json:"request"`
-	Act        string  `json:"action"`
-	Connection *sql.DB `json:"connection"`
+	Id       int    `json:"id"`
+	Level    int    `json:"level"`
+	Language string `json:"language"`
+	Req      string `json:"request"`
+	Act      string `json:"action"`
 }
 
 func connectData() string {

@@ -1,35 +1,27 @@
 syntax = "proto3";
 
-package clientPart;
+package sett;
 
 option go_package = "./out";
 
-service Schedule {
+service Settings {
+    //Cheange the table Users in User (client)
+    rpc UpdUserUsers(UpdUsersRequest) returns (EmptyResponse);
+
     //Changes the table Schedule in Schedule (client)
     rpc UpdSchedule(ScheduleServRequest) returns (EmptyResponse);
-}
 
-service Registration {
-    //Changes the table Schedule in Registration (server)
+    //Changes the table Schedule in Registration (client)
     rpc UpdReg(RegServRequest) returns (EmptyResponse);
-}
 
-service Settings {
-    //Changes the table Schedule in Settings (client)
-    rpc UpdSettingSch(SettingServRequestSch) returns (EmptyResponse);
-
-    //Changes the table GamesWithUsers in Settings (client)
-    rpc UpdSettingGWU(SettingServRequestGWU) returns (EmptyResponse);
-}
-
-service Media {
     //Changes the table Schedule in Media (client)
     rpc UpdMediaSch(MediaServRequestSch) returns (EmptyResponse);
-}
 
-service User {
-    //Changes the table Users in User (server)
-    rpc UpdUserUsers(UpdUsersRequest) returns (EmptyResponse);
+    //Changes the table Schedule in Settings (server)
+    rpc UpdSettingSch(SettingServRequestSch) returns (EmptyResponse);
+
+    ////Changes the table GamesWithUsers in Settings (server) 
+    rpc UpdSettingGWU(SettingServRequestGWU) returns (EmptyResponse);
 }
 
 message UpdUsersRequest {
@@ -47,6 +39,18 @@ message ScheduleServRequest {
     int64 price = 9;
     string currency = 10;
     string action = 12; //new, del or change
+}
+
+message RegServRequest {
+    int64 gameid = 1;
+    string sport = 2;
+    int64 date = 3;
+    int64 time = 4;
+    int64 seats = 5;
+    int64 price = 6;
+    string currency = 7;
+    int64 status = 8;
+    string action = 9; //new, del or change
 }
 
 message MediaServRequestSch {
@@ -79,18 +83,6 @@ message SettingServRequestGWU {
     int64 statpay = 6;
     int64 status = 7;
     string action = 8; //new, del or change
-}
-
-message RegServRequest {
-    int64 gameid = 1;
-    string sport = 2;
-    int64 date = 3;
-    int64 time = 4;
-    int64 seats = 5;
-    int64 price = 6;
-    string currency = 7;
-    int64 status = 8;
-    string action = 9; //new, del or change
 }
 
 message EmptyResponse {

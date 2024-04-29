@@ -305,7 +305,7 @@ func chMySeats(res *apptype.Response, fm *formatter.Formatter, dict map[string]s
 }
 
 // What will we change?
-// This is the question that the func says to user
+// This is the question that the func asks to user
 func chengeable(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	if req.Req == "payment" {
 		chPayment(res, fm, dict.Dictionary[req.Language], req.Id)
@@ -364,6 +364,7 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 // The head
 // The directioner
 func SettingsAct(req *apptype.Request, res *apptype.Response) {
+	apptype.Db = apptype.ConnectToDatabase(false)
 	fm := new(formatter.Formatter)
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint

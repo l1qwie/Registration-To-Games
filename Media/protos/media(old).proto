@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package media;
+
+option go_package = "./out";
+
+service Media {
+    rpc UpdMediaSch(MediaServRequestSch) returns (EmptyResponse);
+}
+
+message MediaServRequestSch {
+    int64 gameid = 1;
+    string sport = 2;
+    int64 date = 3;
+    int64 time = 4;
+    string action = 5; //new, del or change
+    int64 status = 6;
+}
+
+message EmptyResponse {
+   //Empty
+}

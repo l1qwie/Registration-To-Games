@@ -29,7 +29,6 @@ func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (body 
 		response *http.Response
 		client   *http.Client
 	)
-
 	request, err = http.NewRequest("POST", url, Buffer)
 	if err != nil {
 		panic(err)

@@ -11,7 +11,7 @@ func findAnyMGames(f func(error)) bool {
 	var count int
 	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM Schedule WHERE status = -1").Scan(&count)
 	if err != nil {
-		panic(err)
+		f(err)
 	}
 	return count > 0
 }
@@ -30,7 +30,7 @@ func findEveryGames(f func(error)) (int, int) {
 							WHERE
 								s.status = -1`).Scan(&up, &un)
 	if err != nil {
-		panic(err)
+		f(err)
 	}
 	return un, up
 }
@@ -110,14 +110,14 @@ func selectQuantity(gameId int, f func(error)) int {
 }
 
 // Select max 20 mediafiles from the game
-func selectArrOrMedia(gameId int, f func(error)) []types.Media {
+func selectArrOrMedia(gameId, quan int, f func(error)) []types.Media {
 	var (
 		rows   *sql.Rows
 		err    error
 		id, ty string
 		i      int
 	)
-	fIds := make([]types.Media, 20)
+	fIds := make([]types.Media, quan)
 	rows, err = apptype.Db.Query("SELECT fileId, type FROM MediaRepository WHERE gameId = $1", gameId)
 	if err != nil {
 		f(err)
@@ -189,7 +189,7 @@ func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) erro
 	if act == "new" {
 		request = "INSERT INTO Schedule (gameId, sport, date, time, status) VALUES ($1, $2, $3, $4, $5)"
 	} else if act == "change" {
-		request = "UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, status = $5"
+		request = "UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, status = $5 WHERE gameId = $1"
 	}
 	_, err := apptype.Db.Exec(request, g.Id, g.Sport, date, time, status)
 	return err

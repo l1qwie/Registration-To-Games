@@ -5,6 +5,7 @@ import (
 	"Media/apptype"
 	"Media/fmtogram/formatter"
 	"fmt"
+	"log"
 	"strconv"
 )
 
@@ -206,7 +207,7 @@ func whichWillbeShowed(res *apptype.Response, fm *formatter.Formatter, dict map[
 	res.GameId = gameId
 	quan := selectQuantity(gameId, fm.Error)
 	if quan > 1 {
-		fm.AddMapOfMedia(selectArrOrMedia(gameId, fm.Error))
+		fm.AddMapOfMedia(selectArrOrMedia(gameId, quan, fm.Error))
 	} else {
 		fid, ty := selectOneMedia(gameId, fm.Error)
 		if ty == "photo" {
@@ -235,14 +236,14 @@ func unload(res *apptype.Response, fm *formatter.Formatter, dict map[string]stri
 }
 
 // Saves the media, checks which way would it be
-func saveMedia(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, id, mCounter int) {
+func saveMedia(res *apptype.Response, req *apptype.Request, fm *formatter.Formatter, dict map[string]string) {
 	space, ok := howMuchSpace(res.GameId, fm.Error)
-	if (ok) && (space > mCounter) {
-		res.Level = 4
-		if mCounter > 1 {
-			insertAfewNewMedia(res.Media, res.GameId, id, fm.Error)
+	if ok && (space > req.MediaCounter) {
+		res.Level = 3
+		if req.MediaCounter > 1 {
+			insertAfewNewMedia(req.Media, req.GameId, req.Id, fm.Error)
 		} else {
-			insertOneNewMedia(res.FileId, res.TypeOffile, res.GameId, id, fm.Error)
+			insertOneNewMedia(req.FileId, req.TypeOffile, req.GameId, req.Id, fm.Error)
 		}
 		setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 		fm.WriteString(dict["Succesful"])
@@ -252,9 +253,9 @@ func saveMedia(res *apptype.Response, fm *formatter.Formatter, dict map[string]s
 }
 
 // Checks if there is enough data and redirect to function which save the media
-func upload(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, id, mCounter int) {
-	if ((res.FileId != "") && (res.TypeOffile != "")) || (len(res.Media) != 0) {
-		saveMedia(res, fm, dict, id, mCounter)
+func upload(res *apptype.Response, req *apptype.Request, fm *formatter.Formatter, dict map[string]string) {
+	if ((req.FileId != "") && (req.TypeOffile != "")) || (req.Media != nil) {
+		saveMedia(res, req, fm, dict)
 	} else {
 		waitBody(res, fm, dict, res.GameId)
 	}
@@ -265,7 +266,7 @@ func unloadAndUnload(req *apptype.Request, res *apptype.Response, fm *formatter.
 	if req.MediaDir == "unload" {
 		unload(res, fm, dict.Dictionary[req.Language], req.Req, req.Limit)
 	} else if req.MediaDir == "upload" {
-		upload(res, fm, dict.Dictionary[req.Language], req.Id, req.MediaCounter)
+		upload(res, req, fm, dict.Dictionary[req.Language])
 	}
 }
 
@@ -302,14 +303,12 @@ func media(res *apptype.Response, fm *formatter.Formatter) {
 // Only this func is imported
 func MediaAct(req *apptype.Request, res *apptype.Response) {
 	fm := new(formatter.Formatter)
+	apptype.Db = apptype.ConnectToDatabase(false)
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint
 	res.Act = req.Act
 	res.MediaDir = req.MediaDir
-	res.GameId = req.GameId
-	res.FileId = req.FileId
-	res.TypeOffile = req.TypeOffile
-	res.Media = req.Media
+	log.Print(req.FileId)
 	dir(req, res, fm)
 	fm.ReadyKB()
 	res.Keyboard = fm.Message.ReplyMarkup

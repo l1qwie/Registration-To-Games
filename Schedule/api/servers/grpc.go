@@ -20,7 +20,8 @@ type server struct {
 
 // Create values (date, time [int], and g [*apptype.Game]).
 // Directs to a function which connects to database and does the stuff
-func (s *server) UpdSchedule(ctx context.Context, req *pb.ScheduleRequest) (*pb.EmptyResponse, error) {
+func (s *server) UpdSchedule(ctx context.Context, req *pb.ScheduleServRequest) (*pb.EmptyResponse, error) {
+	log.Print("The server UpdSchedule:50053 was called by someone")
 	g := new(apptype.Game)
 	g.Date = req.GetDate()
 	g.Time = req.GetTime()
@@ -31,20 +32,20 @@ func (s *server) UpdSchedule(ctx context.Context, req *pb.ScheduleRequest) (*pb.
 	g.Price = int(req.GetPrice())
 	g.Currency = req.GetCurrency()
 	err := handler.UpdateTheSchedule(g)
+	log.Print("The server UpdSchedule:50053 ended its job")
 	return nil, err
 }
 
 // Starts a gRPC server
 func Start() {
-	lis, err := net.Listen("tcp", ":50050")
+	lis, err := net.Listen("tcp", ":50053")
 	if err != nil {
 		panic(fmt.Sprintf("failed to listen: %v", err))
 	}
 	s := grpc.NewServer()
 	pb.RegisterScheduleServer(s, &server{})
 	reflection.Register(s)
-
-	log.Println("Server started on port 50052")
+	log.Println("Server started on port 50053")
 	if err := s.Serve(lis); err != nil {
 		panic(fmt.Sprintf("failed to serve: %v", err))
 	}

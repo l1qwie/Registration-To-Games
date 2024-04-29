@@ -27,10 +27,7 @@ func whatMiss(req *apptype.Request) []string {
 		m[3] = `"limit" = 0`
 	}
 	if req.Req == "" {
-		m[4] = `"request = ""`
-	}
-	if req.Connection == nil {
-		m[5] = `"connection" = nil`
+		m[4] = `"request" = ""`
 	}
 	return m
 }
@@ -73,10 +70,12 @@ func mesofErr(req *apptype.Request, kind bool) string {
 // Check for an error
 // Return answer (string) and found (bool)
 func checkError(req *apptype.Request) (mes string, f bool) {
-	if (req.Id == 0) || (req.Act == "") || (req.Language == "") || (req.Limit == 0) || (req.Req == "") || (req.Connection == nil) {
-		mes = "Not enough data: "
-		mes += mesofErr(req, true)
-		f = true
+	if (req.Id == 0) || (req.Act == "") || (req.Language == "") || (req.Limit == 0) || (req.Req == "") {
+		if req.Req == "" && len(req.Media) == 0 && req.FileId == "" {
+			mes = "Not enough data: "
+			mes += mesofErr(req, true)
+			f = true
+		}
 	}
 	if (req.Act != "photos and videos") || (req.Language != "ru" && req.Language != "en" && req.Language != "tur") {
 		mes += "Diffrent data is awaited: "

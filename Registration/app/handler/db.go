@@ -8,11 +8,6 @@ import (
 	"database/sql"
 )
 
-const (
-	update = false
-	insert = true
-)
-
 // Selects the schedule of the app
 func selectTheSchedule(limit, offset int, language string, f func(error)) []*apptype.Game {
 	var (
@@ -163,7 +158,7 @@ func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) erro
 	if act == "new" {
 		request = `INSERT INTO Schedule (gameId, sport, date, time, seats, price, currency, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
 	} else if act == "change" || act == "del" {
-		request = `UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, seats = $5, price = $6, currency = $7, status = $8`
+		request = `UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, seats = $5, price = $6, currency = $7, status = $8 WHERE gameId = $1`
 	}
 	_, err := types.Db.Exec(request, g.Id, g.Sport, date, time, g.Seats, g.Price, g.Currency, status)
 	if err != nil {
@@ -179,7 +174,7 @@ func fill(gameId, userId int) (*client.Upd, error) {
 	if err == nil {
 		u.Datestr = fromIntToStrDate(u.Date)
 		u.Timestr = fromIntToStrTime(u.Time)
-		err = types.Db.QueryRow("SELECT id, userId, gameId, seats, payment, statuspayment, status WHERE userId = $1 AND gameId = $2",
+		err = types.Db.QueryRow("SELECT id, userId, gameId, seats, payment, statuspayment, status FROM GamesWithUsers WHERE userId = $1 AND gameId = $2",
 			userId, gameId).Scan(&u.Id, &u.UserId, &u.GameIdGWU, &u.SeatsGWU, &u.Payment, &u.Statpay, &u.StatusGWU)
 	}
 	return u, err
