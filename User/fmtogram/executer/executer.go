@@ -47,13 +47,12 @@ func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (body 
 
 func heandlerMessage(response []byte, mes *types.MessageResponse) (err error) {
 	err = json.Unmarshal(response, &mes)
-	/*
-		if err == nil {
-			if !mes.Ok {
-				err = fmt.Errorf(fmt.Sprintf("telegram responsed badly: %s", err))
-			}
-		}
-	*/
+	if err != nil {
+		err = nil
+		tr := new(types.TelegramResponse)
+		err = json.Unmarshal(response, &tr)
+		mes.Result.Photo = []types.Photo{{FileId: "TRASHID"}}
+	}
 	return err
 }
 

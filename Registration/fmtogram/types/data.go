@@ -1,7 +1,7 @@
 package types
 
 const (
-	docPort     = "5432"
+	docPort     = "5434"
 	docHost     = "postgresql"
 	docDbname   = "postgres"
 	docUsername = "postgres"

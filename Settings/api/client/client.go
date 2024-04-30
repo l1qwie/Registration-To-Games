@@ -31,7 +31,7 @@ type Upd struct {
 }
 
 func (u *Upd) schedule() {
-	conn, err := grpc.Dial("localhost:50053", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("schedule-app-1:50053", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
@@ -57,7 +57,7 @@ func (u *Upd) schedule() {
 }
 
 func (u *Upd) media() {
-	conn, err := grpc.Dial("localhost:50055", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("media-app-1:50055", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
@@ -81,7 +81,7 @@ func (u *Upd) media() {
 }
 
 func (u *Upd) reg() {
-	conn, err := grpc.Dial("localhost:50054", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("registration-app-1:50054", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
@@ -108,7 +108,7 @@ func (u *Upd) reg() {
 }
 
 func (u *Upd) user() {
-	conn, err := grpc.Dial("localhost:50061", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("user-app-1:50061", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {

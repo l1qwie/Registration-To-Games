@@ -1,4 +1,4 @@
-package enter
+package server
 
 import (
 	"Welcome/app"

@@ -364,7 +364,7 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 // The head
 // The directioner
 func SettingsAct(req *apptype.Request, res *apptype.Response) {
-	apptype.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase(true)
 	fm := new(formatter.Formatter)
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint
@@ -378,4 +378,7 @@ func SettingsAct(req *apptype.Request, res *apptype.Response) {
 	res.Message = fm.Message.Text
 	res.ChatID = fm.Message.ChatID
 	res.ParseMode = fm.Message.ParseMode
+	if fm.Err != nil {
+		res.Error = fmt.Sprint(fm.Err)
+	}
 }

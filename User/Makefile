@@ -12,3 +12,8 @@ up:
 
 rb:
 	docker build . -t user-app
+r: 
+	docker compose stop \
+	&& docker compose rm \
+	&& sudo rm -rf pgdata/
+	docker compose -f docker-compose.yml up --force-recreate

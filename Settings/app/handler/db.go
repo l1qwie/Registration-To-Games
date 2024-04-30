@@ -139,7 +139,7 @@ func updtPayment(gameId, userId int, paymeth string, f func(error)) {
 func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
 	var request string
 	if act == "new" {
-		request = "INSERT INTO Schedule (gameId, sport, date, time, price, currency, seats, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
+		request = "INSERT INTO Schedule (gameId, sport, date, time, seats, price, currency, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
 	} else if act == "change" {
 		request = "UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, price = $5, currency = $6, seats = $7, status = $8 WHERE gameId = $1"
 	}
@@ -155,6 +155,11 @@ func UpdateGWU(g *apptype.GWU, act string) error {
 		request = "UPDATE GamesWithUsers SET id = $1, userId = $2, gameId = $3, seats = $4, payment = $5, statuspayment = $6, status = $7 WHERE gameId = $3"
 	}
 	_, err := apptype.Db.Exec(request, g.Id, g.UserId, g.GameId, g.Seats, g.Payment, g.Statpay, g.Status)
+	return err
+}
+
+func UpdateUsers(userId int, lang string, custlang bool) error {
+	_, err := apptype.Db.Exec("INSERT INTO Users (userId, language, customlanguage) VALUES ($1, $2, $3)", userId, lang, custlang)
 	return err
 }
 

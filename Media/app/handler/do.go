@@ -288,14 +288,16 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 
 // Transfers data changed during the program to the response variable
 func media(res *apptype.Response, fm *formatter.Formatter) {
-	if fm.Message.Photo != "" {
-		res.FileId = fm.Message.Photo
-		res.TypeOffile = "photo"
-	} else if fm.Message.Video != "" {
-		res.FileId = fm.Message.Video
-		res.TypeOffile = "video"
-	} else if len(fm.Message.InputMedia) != 0 {
-		res.Media = fm.Message.InputMedia
+	if res.MediaDir == "unload" {
+		if fm.Message.Photo != "" {
+			res.FileId = fm.Message.Photo
+			res.TypeOffile = "photo"
+		} else if fm.Message.Video != "" {
+			res.FileId = fm.Message.Video
+			res.TypeOffile = "video"
+		} else if len(fm.Message.InputMedia) != 0 {
+			res.Media = fm.Message.InputMedia
+		}
 	}
 }
 
@@ -303,7 +305,7 @@ func media(res *apptype.Response, fm *formatter.Formatter) {
 // Only this func is imported
 func MediaAct(req *apptype.Request, res *apptype.Response) {
 	fm := new(formatter.Formatter)
-	apptype.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase(true)
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint
 	res.Act = req.Act
@@ -316,4 +318,7 @@ func MediaAct(req *apptype.Request, res *apptype.Response) {
 	res.ChatID = fm.Message.ChatID
 	res.ParseMode = fm.Message.ParseMode
 	media(res, fm)
+	if fm.Err != nil {
+		res.Error = fmt.Sprint(fm.Err)
+	}
 }

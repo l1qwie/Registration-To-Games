@@ -21,6 +21,7 @@ type Response struct {
 	Level     int    `json:"level"`
 	Act       string `json:"action"`
 	ParseMode string `json:"parsemode"`
+	Error     string `json:"error"`
 }
 
 type Game struct {
@@ -37,7 +38,7 @@ type Game struct {
 // Opens connection with Redis DB
 func AddCleint() *redis.Client {
 	client := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     "redis:6379",
 		Password: "",
 		DB:       0,
 	})

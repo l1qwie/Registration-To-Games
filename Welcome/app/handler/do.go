@@ -1,9 +1,11 @@
 package handler
 
 import (
+	client "Welcome/api/client"
 	"Welcome/app/dict"
 	"Welcome/fmtogram/formatter"
 	"Welcome/types"
+	"fmt"
 )
 
 const (
@@ -47,9 +49,13 @@ func showRules(req *types.Request, res *types.Response, fm *formatter.Formatter)
 
 // The body of welcomeToMainMenu
 // Prepares all data
-func wtmmBody(res *types.Response, fm *formatter.Formatter, dict map[string]string) {
+func wtmmBody(res *types.Response, fm *formatter.Formatter, dict map[string]string, id int, lang string) {
 	res.Level = 3
 	res.Act = "divarication"
+	err := client.Update(id, lang)
+	if err != nil {
+		fm.Error(err)
+	}
 	setKb(fm, []int{1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}, []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"})
 	fm.WriteString(dict["WelcomeToMainMenu"])
 }
@@ -58,7 +64,7 @@ func wtmmBody(res *types.Response, fm *formatter.Formatter, dict map[string]stri
 // This is the first enter of Main Menu
 func welcomeToMainMenu(req *types.Request, res *types.Response, fm *formatter.Formatter) {
 	if req.Req == "GoNext" {
-		wtmmBody(res, fm, dict.Dictionary[req.Language])
+		wtmmBody(res, fm, dict.Dictionary[req.Language], req.Id, req.Language)
 	} else {
 		srulBody(res, fm, dict.Dictionary[req.Language])
 	}
@@ -87,4 +93,7 @@ func WelcomeAct(req *types.Request, res *types.Response) {
 	res.Keyboard = fm.Message.ReplyMarkup
 	res.Message = fm.Message.Text
 	res.ChatID = req.Id
+	if fm.Err != nil {
+		res.Error = fmt.Sprint(fm.Err)
+	}
 }

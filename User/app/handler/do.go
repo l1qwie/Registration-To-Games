@@ -70,9 +70,10 @@ func mainMenu(user *apptype.User, fm *formatter.Formatter, dict map[string]strin
 }
 
 func send(req, res any, path, name string) error {
+	log.Print("input data", req)
 	jb, err := json.Marshal(req)
 	if err == nil {
-		resp, err := http.Post(fmt.Sprintf("http://localhost:%s/%s", path, name), "application/json", bytes.NewBuffer(jb))
+		resp, err := http.Post(fmt.Sprintf("http://%s/%s", path, name), "application/json", bytes.NewBuffer(jb))
 		if err != nil {
 			log.Print("Ошибка при выполнении запроса:", err)
 		} else {
@@ -80,6 +81,7 @@ func send(req, res any, path, name string) error {
 		}
 		defer resp.Body.Close()
 	}
+	log.Print("output data", res)
 	return err
 }
 
@@ -95,7 +97,7 @@ func welcomeAct(user *apptype.User, fm *formatter.Formatter) {
 	req := new(apptype.WelcomeReq)
 	wreq(user, req)
 	res := new(apptype.WelcomeRes)
-	err := send(req, res, "8081", "Welcome")
+	err := send(req, res, "welcome-app-1:8081", "Welcome")
 	if err == nil {
 		if res.Error == "" {
 			fm.WriteString(res.Message)
@@ -128,7 +130,7 @@ func registrationAct(user *apptype.User, fm *formatter.Formatter) {
 	req := new(apptype.RegistrationReq)
 	rreq(user, req)
 	res := new(apptype.RegistrationRes)
-	err := send(req, res, "8094", "Registration")
+	err := send(req, res, "registration-app-1:8094", "Registration")
 	if err == nil {
 		if res.Error == "" {
 			fm.WriteString(res.Message)
@@ -159,7 +161,7 @@ func scheduleAct(user *apptype.User, fm *formatter.Formatter) {
 	req := new(apptype.ScheduleReq)
 	schreq(user, req)
 	res := new(apptype.ScheduleRes)
-	err := send(req, res, "8083", "Schedule")
+	err := send(req, res, "schedule-app-1:8083", "Schedule")
 	if err == nil {
 		if res.Error == "" {
 			fm.WriteString(res.Message)
@@ -204,7 +206,7 @@ func mediaAct(user *apptype.User, fm *formatter.Formatter) {
 	req := new(apptype.MediaReq)
 	mreq(user, req)
 	res := new(apptype.MediaRes)
-	err := send(req, res, "8085", "Media")
+	err := send(req, res, "media-app-1:8085", "Media")
 	if err == nil {
 		if res.Error == "" {
 			fm.WriteString(res.Message)
@@ -212,12 +214,15 @@ func mediaAct(user *apptype.User, fm *formatter.Formatter) {
 			fm.WriteParseMode(res.ParseMode)
 			if res.TypeOffile == "photo" {
 				fm.WriteDeleteMesId(user.ExMessageId)
+				fm.Message.MessageId = 0
 				fm.AddPhotoFromTG(res.FileId)
 			} else if res.TypeOffile == "video" {
 				fm.WriteDeleteMesId(user.ExMessageId)
+				fm.Message.MessageId = 0
 				fm.AddVideoFromTG(res.FileId)
 			} else if len(res.Media) > 0 {
 				fm.WriteDeleteMesId(user.ExMessageId)
+				fm.Message.MessageId = 0
 				fm.AddMapOfMedia(res.Media)
 			}
 			log.Print(fm.Message.InputMedia)
@@ -252,7 +257,7 @@ func settingsAct(user *apptype.User, fm *formatter.Formatter) {
 	req := new(apptype.SettingsReq)
 	setreq(user, req)
 	res := new(apptype.SettingsRes)
-	err := send(req, res, "8089", "Settings")
+	err := send(req, res, "settings-app-1:8089", "Settings")
 	if err == nil {
 		if res.Error == "" {
 			fm.WriteString(res.Message)

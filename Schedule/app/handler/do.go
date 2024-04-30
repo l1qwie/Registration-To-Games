@@ -77,5 +77,8 @@ func Schedule(req *apptype.Request, res *apptype.Response) *apptype.Response {
 	res.Keyboard = fm.Message.ReplyMarkup
 	res.ChatId = fm.Message.ChatID
 	res.ParseMode = fm.Message.ParseMode
+	if fm.Err != nil {
+		res.Error = fmt.Sprint(fm.Err)
+	}
 	return res
 }

@@ -1,9 +1,7 @@
 package main
 
-import (
-	"Welcome/enter"
-)
+import "Welcome/api/server"
 
 func main() {
-	enter.Welcome()
+	server.Welcome()
 }

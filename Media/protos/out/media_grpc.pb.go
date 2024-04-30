@@ -202,6 +202,8 @@ type SettingsClient interface {
 	UpdSettingSch(ctx context.Context, in *SettingServRequestSch, opts ...grpc.CallOption) (*EmptyResponse, error)
 	// Changes the table GamesWithUsers in Settings (client)
 	UpdSettingGWU(ctx context.Context, in *SettingServRequestGWU, opts ...grpc.CallOption) (*EmptyResponse, error)
+	// Changes the table Users in Settings (client)
+	UpdSettingUser(ctx context.Context, in *SettingServRequestUser, opts ...grpc.CallOption) (*EmptyResponse, error)
 }
 
 type settingsClient struct {
@@ -230,6 +232,15 @@ func (c *settingsClient) UpdSettingGWU(ctx context.Context, in *SettingServReque
 	return out, nil
 }
 
+func (c *settingsClient) UpdSettingUser(ctx context.Context, in *SettingServRequestUser, opts ...grpc.CallOption) (*EmptyResponse, error) {
+	out := new(EmptyResponse)
+	err := c.cc.Invoke(ctx, "/clientPart.Settings/UpdSettingUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -238,6 +249,8 @@ type SettingsServer interface {
 	UpdSettingSch(context.Context, *SettingServRequestSch) (*EmptyResponse, error)
 	// Changes the table GamesWithUsers in Settings (client)
 	UpdSettingGWU(context.Context, *SettingServRequestGWU) (*EmptyResponse, error)
+	// Changes the table Users in Settings (client)
+	UpdSettingUser(context.Context, *SettingServRequestUser) (*EmptyResponse, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -250,6 +263,9 @@ func (UnimplementedSettingsServer) UpdSettingSch(context.Context, *SettingServRe
 }
 func (UnimplementedSettingsServer) UpdSettingGWU(context.Context, *SettingServRequestGWU) (*EmptyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdSettingGWU not implemented")
+}
+func (UnimplementedSettingsServer) UpdSettingUser(context.Context, *SettingServRequestUser) (*EmptyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdSettingUser not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -300,6 +316,24 @@ func _Settings_UpdSettingGWU_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_UpdSettingUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SettingServRequestUser)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).UpdSettingUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/clientPart.Settings/UpdSettingUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).UpdSettingUser(ctx, req.(*SettingServRequestUser))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -314,6 +348,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdSettingGWU",
 			Handler:    _Settings_UpdSettingGWU_Handler,
+		},
+		{
+			MethodName: "UpdSettingUser",
+			Handler:    _Settings_UpdSettingUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

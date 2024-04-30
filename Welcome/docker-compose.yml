@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    ports:
+      - 8087:8080
+    command: ["/app/bin"]

@@ -20,6 +20,9 @@ service Settings {
 
     //Changes the table GamesWithUsers in Settings (client)
     rpc UpdSettingGWU(SettingServRequestGWU) returns (EmptyResponse);
+
+    //Changes the table Users in Settings (client)
+    rpc UpdSettingUser(SettingServRequestUser) returns (EmptyResponse);
 }
 
 service Media {
@@ -79,6 +82,12 @@ message SettingServRequestGWU {
     int64 statpay = 6;
     int64 status = 7;
     string action = 8; //new, del or change
+}
+
+message SettingServRequestUser {
+    int64 userid = 1;
+    string language = 2;
+    bool customlang = 3;
 }
 
 message RegServRequest {

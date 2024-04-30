@@ -30,15 +30,15 @@ func (fm *Formatter) WriteEditMesId(mesId int) {
 }
 
 func (fm *Formatter) Error(err error) {
-	fm.err = err
+	fm.Err = err
 
 }
 
 func (fm *Formatter) Complete() error {
-	if fm.err != nil {
-		errors.MadeMisstake(fm.err)
+	if fm.Err != nil {
+		errors.MadeMisstake(fm.Err)
 	}
-	return fm.err
+	return fm.Err
 }
 
 func (fm *Formatter) CheckDelete() (err error) {

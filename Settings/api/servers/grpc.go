@@ -3,7 +3,6 @@ package servers
 import (
 	"Settings/app/handler"
 	"Settings/apptype"
-	"Settings/fmtogram/types"
 	pb "Settings/protos/out"
 	"context"
 	"fmt"
@@ -30,7 +29,7 @@ func (s *server) UpdSettingSch(ctx context.Context, req *pb.SettingServRequestSc
 	g.Price = int(req.GetPrice())
 	g.Currency = req.GetCurrency()
 	g.Seats = int(req.GetSeats())
-	apptype.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase(true)
 	err := handler.UpdateTheSchedule(date, time, stat, g, act)
 	log.Print("The server UpdSettingSch:50059 ended its job")
 	return nil, err
@@ -47,8 +46,19 @@ func (s *server) UpdSettingGWU(ctx context.Context, req *pb.SettingServRequestGW
 	g.Statpay = int(req.GetStatpay())
 	g.Status = int(req.GetStatus())
 	act := req.GetAction()
-	types.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase(true)
 	err := handler.UpdateGWU(g, act)
+	log.Print("The server UpdSettingGWU:50059 ended its job")
+	return nil, err
+}
+
+func (s *server) UpdSettingUser(ctx context.Context, req *pb.SettingServRequestUser) (*pb.EmptyResponse, error) {
+	log.Print("The server UpdSettingGWU:50059 was called by someone")
+	userId := int(req.GetUserid())
+	language := req.GetLanguage()
+	customlang := req.GetCustomlang()
+	apptype.Db = apptype.ConnectToDatabase(true)
+	err := handler.UpdateUsers(userId, language, customlang)
 	log.Print("The server UpdSettingGWU:50059 ended its job")
 	return nil, err
 }

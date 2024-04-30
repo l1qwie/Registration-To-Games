@@ -351,7 +351,7 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 // The directioner
 func RegistrationAct(req *apptype.Request, res *apptype.Response) {
 	fm := new(formatter.Formatter)
-	types.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase(true)
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint
 	res.GameId = req.GameId
@@ -364,4 +364,7 @@ func RegistrationAct(req *apptype.Request, res *apptype.Response) {
 	res.Message = fm.Message.Text
 	res.ChatID = fm.Message.ChatID
 	res.ParseMode = fm.Message.ParseMode
+	if fm.Err != nil {
+		res.Error = fmt.Sprint(fm.Err)
+	}
 }
