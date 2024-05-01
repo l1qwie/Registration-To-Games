@@ -162,9 +162,15 @@ func insertOneNewMedia(fileId, ty string, gameId, userId int, f func(error)) {
 	if err != nil {
 		f(err)
 	}
-	_, err = apptype.Db.Exec("INSERT INTO MediaRepository (gameId, fileId, type, counter, userId, status) VALUES ($1, $2, $3, $4, $5, 1)", gameId, fileId, ty, count+1, userId)
+	_, err = apptype.Db.Exec("INSERT INTO MediaRepository (id, gameId, fileId, type, counter, userId, status) VALUES (nextval('mediarepository_id_seq'), $1, $2, $3, $4, $5, 1)", gameId, fileId, ty, count+1, userId)
 	if err != nil {
 		f(err)
+	}
+	if err == nil {
+		_, err = apptype.Db.Exec("UPDATE MediaRepository SET counter = $1 WHERE gameId = $2", count+1, gameId)
+		if err != nil {
+			f(err)
+		}
 	}
 }
 
@@ -177,7 +183,13 @@ func insertAfewNewMedia(media []types.Media, gameId, userId int, f func(error)) 
 	}
 	count += len(media)
 	for i := range media {
-		_, err = apptype.Db.Exec("INSERT INTO MediaRepository (gameId, fileId, type, counter, userId, status) VALUES ($1, $2, $3, $4, $5, 1)", gameId, media[i].Media, media[i].Type, count, userId)
+		_, err = apptype.Db.Exec("INSERT INTO MediaRepository (id, gameId, fileId, type, counter, userId, status) VALUES (nextval('mediarepository_id_seq'), $1, $2, $3, $4, $5, 1)", gameId, media[i].Media, media[i].Type, count, userId)
+		if err != nil {
+			f(err)
+		}
+	}
+	if err == nil {
+		_, err = apptype.Db.Exec("UPDATE MediaRepository SET counter = $1 WHERE gameId = $2", count, gameId)
 		if err != nil {
 			f(err)
 		}

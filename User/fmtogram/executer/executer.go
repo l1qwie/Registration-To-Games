@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -29,7 +30,6 @@ func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (body 
 		response *http.Response
 		client   *http.Client
 	)
-
 	request, err = http.NewRequest("POST", url, Buffer)
 	if err != nil {
 		panic(err)
@@ -46,6 +46,7 @@ func GetpostRequest(url string, Buffer *bytes.Buffer, contenttype string) (body 
 }
 
 func heandlerMessage(response []byte, mes *types.MessageResponse) (err error) {
+	log.Print("string(response): ", string(response))
 	err = json.Unmarshal(response, &mes)
 	if err != nil {
 		err = nil
@@ -62,12 +63,14 @@ func Send(buf *bytes.Buffer, function, contenttype string, unmarshal bool) (mes 
 		url  string
 		body []byte
 	)
+	log.Print("THE REQUEST TO TELEGRAM: ", buf.String())
 	url = fmt.Sprintf("%sbot%s/%s", types.HttpsRequest, types.TelebotToken, function)
 	body, err = GetpostRequest(url, buf, contenttype)
-	fmt.Println(string(body))
+	log.Print("THE RESPONSE FROM TELEGRAM: ", string(body))
 	if err == nil && unmarshal {
 		mes = new(types.MessageResponse)
 		err = heandlerMessage(body, mes)
+		log.Print("mes.Result.MessageId: ", mes.Result.MessageId)
 	} else if !unmarshal {
 		mes = &types.MessageResponse{
 			Ok: false,

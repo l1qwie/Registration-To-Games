@@ -78,7 +78,7 @@ func Worker(input chan *types.TelegramResponse, mesoutput chan *types.MessageRes
 
 func pushRequest(requests <-chan *formatter.Formatter, reg *executer.RegTable) {
 	for r := range requests {
-		mes, err := r.Send()
+		mes, err := r.Make()
 		if err != nil {
 			panic(err)
 		}

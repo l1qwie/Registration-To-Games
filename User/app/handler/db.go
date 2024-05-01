@@ -3,6 +3,7 @@ package handler
 import (
 	"User/apptype"
 	"User/fmtogram/types"
+	"log"
 
 	_ "github.com/lib/pq"
 )
@@ -31,6 +32,7 @@ func dbRetrieveUser(user *apptype.User, f func(error)) {
 	if err != nil {
 		f(err)
 	}
+	log.Print("USER ACT: ", user.Act)
 	if user.Act == "reg to games" {
 		user.Reg.GameId = gameId
 	} else if user.Act == "photos and videos" {

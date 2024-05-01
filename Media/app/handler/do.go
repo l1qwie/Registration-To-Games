@@ -310,6 +310,7 @@ func MediaAct(req *apptype.Request, res *apptype.Response) {
 	res.LaunchPoint = req.LaunchPoint
 	res.Act = req.Act
 	res.MediaDir = req.MediaDir
+	res.GameId = req.GameId
 	log.Print(req.FileId)
 	dir(req, res, fm)
 	fm.ReadyKB()

@@ -53,7 +53,7 @@ func edit(user *apptype.User, fm *formatter.Formatter) (exMessageId int) {
 		exMessageId = user.ExMessageId
 		updateExMessageId(exMessageId, user.Id, fm.Error)
 	}
-	if user.Photo == "" && user.Video == "" {
+	if user.Photo == "" && user.Video == "" && user.Media.Photo == "" && user.Media.Video == "" {
 		fm.WriteEditMesId(exMessageId)
 	} else {
 		fm.WriteDeleteMesId(exMessageId)
@@ -70,7 +70,7 @@ func mainMenu(user *apptype.User, fm *formatter.Formatter, dict map[string]strin
 }
 
 func send(req, res any, path, name string) error {
-	log.Print("input data", req)
+	log.Print("input data:", req)
 	jb, err := json.Marshal(req)
 	if err == nil {
 		resp, err := http.Post(fmt.Sprintf("http://%s/%s", path, name), "application/json", bytes.NewBuffer(jb))
@@ -81,7 +81,7 @@ func send(req, res any, path, name string) error {
 		}
 		defer resp.Body.Close()
 	}
-	log.Print("output data", res)
+	log.Print("output data:", res)
 	return err
 }
 

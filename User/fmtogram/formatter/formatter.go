@@ -6,7 +6,7 @@ import (
 	"User/fmtogram/types"
 	"bytes"
 	"encoding/json"
-	"fmt"
+	"log"
 )
 
 func (fm *Formatter) WriteString(lineoftext string) {
@@ -71,6 +71,91 @@ func (fm *Formatter) ReadyKB() {
 	}
 }
 
+func (fm *Formatter) makebuf() (*bytes.Buffer, error) {
+	var buf *bytes.Buffer
+	jsonMessage, err := json.Marshal(fm.Message)
+	if err == nil {
+		fm.contenttype = "application/json"
+		buf = bytes.NewBuffer(jsonMessage)
+	}
+	return buf, err
+}
+
+func (fm *Formatter) sendMessage() (*bytes.Buffer, string, error) {
+	buf, err := fm.makebuf()
+	return buf, "sendMessage", err
+}
+
+func (fm *Formatter) editMessage() (*bytes.Buffer, string, error) {
+	buf, err := fm.makebuf()
+	return buf, "editMessageText", err
+}
+
+func (fm *Formatter) mediaGroup() error {
+	buf, err := fm.makebuf()
+	_ = executer.Send(buf, "sendMediaGroup", "application/json", true)
+	return err
+}
+
+func (fm *Formatter) media() (*bytes.Buffer, string, error) {
+	var (
+		buf *bytes.Buffer
+		err error
+		f   string
+	)
+	if fm.kindofmedia[0] == fromStorage {
+		buf = bytes.NewBuffer(nil)
+		fm.contenttype, err = fm.prepareMedia(buf)
+	} else {
+		if fm.mediatype[0] == "photo" {
+			f = "sendPhoto"
+		} else {
+			f = "sendVideo"
+		}
+		buf, err = fm.makebuf()
+	}
+	return buf, f, err
+}
+
+func (fm *Formatter) Make() (*types.MessageResponse, error) {
+	var (
+		buf     *bytes.Buffer
+		f       string
+		res     *types.MessageResponse
+		mshstat bool
+	)
+	err := fm.CheckDelete()
+	if err == nil {
+		fm.ReadyKB()
+	}
+	if err == nil {
+		if len(fm.Message.InputMedia) == 0 && fm.Message.Photo == "" && fm.Message.Video == "" {
+			mshstat = true
+			if fm.Message.MessageId == 0 {
+				buf, f, err = fm.sendMessage()
+			} else {
+				buf, f, err = fm.editMessage()
+			}
+		} else if len(fm.Message.InputMedia) != 0 || fm.Message.Photo != "" || fm.Message.Video != "" {
+			if len(fm.Message.InputMedia) > 1 {
+				err = fm.mediaGroup()
+				if err == nil {
+					mshstat = true
+					buf, f, err = fm.sendMessage()
+				}
+			} else {
+				buf, f, err = fm.media()
+			}
+		}
+	}
+	if err == nil {
+		log.Print("THE MESSAGE ID DELETE OR EDIT AND MARSHAL STATUS: ", fm.DeleteMessage.MessageId, fm.Message.MessageId, mshstat)
+		res = executer.Send(buf, f, fm.contenttype, mshstat)
+	}
+
+	return res, err
+}
+
 func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 	var (
 		jsonMessage   []byte
@@ -100,16 +185,19 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 			marshalstatus = true
 			if len(fm.Message.InputMedia) > 1 {
 				function = "sendMediaGroup"
+				m := fm.Message.Text
+				fm.Message.Text = ""
 				//finalBuffer = bytes.NewBuffer(nil)
-
 				jsonMessage, err = json.Marshal(fm.Message)
 				if err == nil {
 					fm.contenttype = "application/json"
 					finalBuffer = bytes.NewBuffer(jsonMessage)
 				}
-
 				//fm.contenttype, err = fm.createMediaGroup(finalBuffer)
 				_ = executer.Send(finalBuffer, function, fm.contenttype, marshalstatus)
+				fm.Message.InputMedia = []types.Media{{}}
+				fm.Message.Text = m
+				function = "sendMessage"
 			} else {
 				if fm.mediatype[0] == "photo" {
 					function = "sendPhoto"
@@ -118,7 +206,7 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 				}
 				if fm.kindofmedia[0] == fromStorage {
 					finalBuffer = bytes.NewBuffer(nil)
-					fm.contenttype, err = fm.PrepareMedia(finalBuffer)
+					fm.contenttype, err = fm.prepareMedia(finalBuffer)
 				} else {
 					jsonMessage, err = json.Marshal(fm.Message)
 					if err == nil {
@@ -131,9 +219,6 @@ func (fm *Formatter) Send() (mes *types.MessageResponse, err error) {
 
 	}
 	if err == nil {
-		fmt.Println(finalBuffer.String())
-		fmt.Println()
-		fmt.Println()
 		mes = executer.Send(finalBuffer, function, fm.contenttype, marshalstatus)
 	}
 

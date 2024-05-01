@@ -136,7 +136,7 @@ func (fm *Formatter) createMediaGroup(buf *bytes.Buffer) (string, error) {
 }
 */
 
-func (fm *Formatter) PrepareMedia(buf *bytes.Buffer) (string, error) {
+func (fm *Formatter) prepareMedia(buf *bytes.Buffer) (string, error) {
 	var (
 		file   *os.File
 		part   io.Writer
