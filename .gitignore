@@ -10,8 +10,8 @@ reddd.jpg
 pgdata
 .dockerignore
 logs/postgres.log
-Welcome/types/data.go
-Welcome/fmtogram/types/data.go
+WelcomeUs/types/data.go
+WelcomeUs/fmtogram/types/data.go
 Registration/apptype/data.go
 Registration/fmtogram/types/data.go
 Schedule/fmtogram/types/data.go
@@ -21,3 +21,5 @@ Media/apptype/data.go
 Media/fmtogram/types/data.go
 User/apptype/data.go
 User/fmtogram/types/data.go
+WelcomeAd/apptype/data.go
+WelcomeAd/fmtogram/types/data.go
