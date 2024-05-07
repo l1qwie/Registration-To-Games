@@ -49,7 +49,7 @@ func showRules(req *apptype.Request, res *apptype.Response, fm *formatter.Format
 func goToMainMenu(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
 	res.Level = 3
 	res.Act = "divarication"
-	setKb(fm, []int{1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}, []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"})
+	setKb(fm, []int{1, 1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"], dict["fifth"]}, []string{"Games", "Clients", "Activity", "Finances", "Settings"})
 	fm.WriteString(dict["MainMenu"])
 }
 

@@ -125,5 +125,4 @@ func testList() {
 func Head() {
 	apptype.Db = apptype.ConnectToDatabase(false)
 	testList()
-
 }

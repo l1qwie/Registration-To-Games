@@ -21,10 +21,11 @@ func ru(dict map[string]string) {
 			 Так же именно тут вы сможете увидеть небольшую статистику по всей финансовым оборотам в боте
 	5. <b>Настройки</b>          
 			-Тут вы сможете изменить настрйоки бота. Например язык`
-	dict["first"] = "Просмотр расписания"
-	dict["second"] = "Регистрация на игру"
-	dict["third"] = "Наши фото и видео"
-	dict["fourth"] = "Настройки | Мои игры"
+	dict["first"] = "Игры"
+	dict["second"] = "Клиенты"
+	dict["third"] = "Активность"
+	dict["fourth"] = "Деньги"
+	dict["fifth"] = "Настройки"
 	dict["MainMenu"] = "Главное Меню"
 }
 
@@ -47,10 +48,11 @@ func en(dict map[string]string) {
 			 Also, right here you can view a small statistics on all financial transactions in the bot
 	5. <b>Settings</b>          
 			-Here, you can change the bot settings. For example, the language`
-	dict["first"] = "View schedule"
-	dict["second"] = "Game registration"
-	dict["third"] = "Our photos and videos"
-	dict["fourth"] = "Settings | My games"
+	dict["first"] = "Games"
+	dict["second"] = "Clients"
+	dict["third"] = "Activity"
+	dict["fourth"] = "Finances"
+	dict["fifth"] = "Settings"
 	dict["MainMenu"] = "Main Menu"
 }
 
@@ -73,10 +75,11 @@ func tur(dict map[string]string) {
 			 Ayrıca, tam burada, bot içindeki tüm finansal işlemlere ait küçük bir istatistiği görebilirsiniz
 	5. <b>Ayarlar</b>          
 			-Burada botun ayarlarını değiştirebilirsiniz. Örneğin, dil`
-	dict["first"] = "Programı görüntüle"
-	dict["second"] = "Oyun kaydı"
-	dict["third"] = "Bizim fotoğraflar ve videolar"
-	dict["fourth"] = "Ayarlar | Oyunlarım"
+	dict["first"] = "Oyunlar"
+	dict["second"] = "Müşteriler"
+	dict["third"] = "Aktivite"
+	dict["fourth"] = "Finans"
+	dict["fifth"] = "Ayarlar"
 	dict["MainMenu"] = "Ana menüye"
 }
 
