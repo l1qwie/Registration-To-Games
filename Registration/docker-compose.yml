@@ -1,3 +1,7 @@
+networks:
+  reg-to-games:
+    external: true
+
 services:
 
   postgresql:
@@ -14,11 +18,15 @@ services:
       - ./postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
     ports:
       - 5434:5432
+    networks:
+      - reg-to-games
 
   app:
     build: .
     ports:
       - 8085:8080
+    networks:
+      - reg-to-games
     depends_on:
       - postgresql
     command: ["wait-for-it.sh", "postgresql:5432", "--", "/app/bin"]

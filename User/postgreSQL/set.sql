@@ -1,1 +1,1 @@
-INSERT INTO Users (userid, language, customlanguage, level, action) VALUES (738070596, 'en', false, 3, 'divarication')
+--INSERT INTO Users (userid, language, customlanguage, level, action) VALUES (738070596, 'en', false, 3, 'divarication')

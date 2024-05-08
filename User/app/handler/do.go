@@ -97,7 +97,7 @@ func welcomeAct(user *apptype.User, fm *formatter.Formatter) {
 	req := new(apptype.WelcomeReq)
 	wreq(user, req)
 	res := new(apptype.WelcomeRes)
-	err := send(req, res, "welcome-app-1:8081", "Welcome")
+	err := send(req, res, "welcomeus-app-1:8081", "Welcome")
 	if err == nil {
 		if res.Error == "" {
 			fm.WriteString(res.Message)
