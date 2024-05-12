@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	go consumer.StartConsumer()
+	go consumer.Start()
 	tests.StartTest()
 }

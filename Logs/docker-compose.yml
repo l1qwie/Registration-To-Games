@@ -4,9 +4,9 @@ networks:
 
 services:
   kafka:
-    image: 'bitnami/kafka'
+    image: bitnami/kafka:3.7
     volumes:
-      - /kafkadata:/bitnami/kafka
+      - ./kafkadata:/bitnami
     networks:
       - reg-to-games
     environment:
