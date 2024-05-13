@@ -23,3 +23,4 @@ User/apptype/data.go
 User/fmtogram/types/data.go
 WelcomeAd/apptype/data.go
 WelcomeAd/fmtogram/types/data.go
+Logs/types/data.go

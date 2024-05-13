@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"Logs/tests/database"
 	"Logs/types"
 	"encoding/json"
 	"fmt"
@@ -79,8 +78,9 @@ func createClProd() {
 
 	val := &types.ClientAct{
 		Com:     types.Common{Timestamp: timestamp, LogId: 1},
-		UserId:  129839,
-		Message: "ASL:KDKL:ASDLK:"}
+		UserId:  1283829,
+		Action:  "Registration",
+		Message: "The user has started registration action"}
 
 	jd, err := json.Marshal(val)
 	if err != nil {
@@ -101,14 +101,11 @@ func createClProd() {
 
 func testClientAct() {
 	createClProd()
-	time.Sleep(time.Second)
+	time.Sleep(time.Second * 4)
 	testClData()
-	database.TestDatabase()
 }
 
 func StartTest() {
-	testInternal()
-	//testClientAct()
-	//time.Sleep(time.Second * 3)
-	//testStorage()
+	//testInternal()
+	testClientAct()
 }

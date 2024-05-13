@@ -1,7 +1,8 @@
 rm:
 	docker compose stop \
 	&& docker compose rm \
-	&& sudo rm -rf .kafkadata/
+	&& sudo rm -rf pgdata \
+	&& sudo rm -rf kafkadata/
 
 up:
 	docker compose -f docker-compose.yml up --force-recreate

@@ -41,6 +41,6 @@ func clientActConsumer() {
 }
 
 func Start() {
-	internalConsumer()
+	go internalConsumer()
 	clientActConsumer()
 }

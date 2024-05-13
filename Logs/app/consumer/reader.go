@@ -26,6 +26,7 @@ func internalReader(top string, partcons sarama.PartitionConsumer) {
 }
 
 func clientActReader(top string, partcons sarama.PartitionConsumer) {
+	types.Db = types.ConnectToDatabase()
 	opnd := new(types.ClientAct)
 	for {
 		select {
@@ -34,6 +35,7 @@ func clientActReader(top string, partcons sarama.PartitionConsumer) {
 			if err != nil {
 				log.Print(err)
 			}
+			writer.ClientActivities(opnd)
 		case err := <-partcons.Errors():
 			log.Printf("Error while consuming (topic: %s): %s", top, err)
 		}
