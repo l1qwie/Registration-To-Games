@@ -1,8 +1,10 @@
 package handler
 
 import (
+	"User/api/producer"
 	"User/apptype"
 	"User/fmtogram/types"
+	"fmt"
 	"log"
 
 	_ "github.com/lib/pq"
@@ -10,6 +12,8 @@ import (
 
 func find(id int, f func(error)) bool {
 	var count int
+	producer.InterLogs("Start function User.find()",
+		fmt.Sprintf("UserId: %d, id (int): %d, f (func(error)): %T", id, id, f))
 	err := types.Db.QueryRow("SELECT COUNT(*) FROM Users WHERE userId = $1", id).Scan(&count)
 	if err != nil {
 		f(err)
@@ -19,6 +23,8 @@ func find(id int, f func(error)) bool {
 
 func dbRetrieveUser(user *apptype.User, f func(error)) {
 	var gameId int
+	producer.InterLogs("Start function User.dbRetrieveUser()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, f (func(error)): %T", user.Id, user, f))
 	request := `SELECT userId, language, gameId, launchPoint, action, level,
 				seats, payment, 
 				timeInterval, direction, mlimit, mediagroupId, mediagoupCounter, 
@@ -44,6 +50,8 @@ func dbRetrieveUser(user *apptype.User, f func(error)) {
 
 func dbRetainUser(user *apptype.User, f func(error)) {
 	var gameId int
+	producer.InterLogs("Start function User.dbRetainUser()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, f (func(error)): %T", user.Id, user, f))
 	request := `UPDATE Users SET userId = $1, language = $2, gameId = $3, launchPoint = $4, action = $5, level = $6,
 	seats = $7, payment = $8, 
 	timeInterval = $9, direction = $10, mlimit = $11, mediagroupId = $12, mediagoupCounter = $13, 
@@ -68,14 +76,18 @@ func dbRetainUser(user *apptype.User, f func(error)) {
 }
 
 func createUser(userId int, language string, f func(error)) {
+	producer.InterLogs("Start function User.createUser()",
+		fmt.Sprintf("UserId: %d, userId (int): %d, language (string): %s, f (func(error)): %T", userId, userId, language, f))
 	_, err := types.Db.Exec("INSERT INTO Users (userId, action, language, level) VALUES ($1, $2, $3, $4)", userId, "registration", language, 0) //userId
 	if err != nil {
 		f(err)
 	}
 }
 
-func SelectExMessageId(userId int, f func(error)) int {
+func selectExMessageId(userId int, f func(error)) int {
 	var exmid int
+	producer.InterLogs("Start function User.selectExMessageId()",
+		fmt.Sprintf("UserId: %d, userId (int): %d, f (func(error)): %T", userId, userId, f))
 	err := types.Db.QueryRow("SELECT ExMessageId FROM Users WHERE userId = $1", userId).Scan(&exmid)
 	if err != nil {
 		f(err)
@@ -84,6 +96,8 @@ func SelectExMessageId(userId int, f func(error)) int {
 }
 
 func updateExMessageId(exmid, userId int, f func(error)) {
+	producer.InterLogs("Start function User.updateExMessageId()",
+		fmt.Sprintf("UserId: %d, exmid (int): %d, userId (int): %d, f (func(error)): %T", userId, exmid, userId, f))
 	_, err := types.Db.Exec("UPDATE Users SET ExMessageId = $1 WHERE userId = $2", exmid, userId)
 	if err != nil {
 		f(err)
@@ -91,6 +105,8 @@ func updateExMessageId(exmid, userId int, f func(error)) {
 }
 
 func UpdateTheUser(u *apptype.User, custlang bool) error {
+	producer.InterLogs("Start function User.UpdateTheUser()",
+		fmt.Sprintf("UserId: %d, u (*apptype.User): %v, custlang (bool): %v,", u.Id, u, custlang))
 	_, err := types.Db.Exec("UPDATE Users SET language = $1, customlanguage = $2 WHERE userId = $3", u.Language, custlang, u.Id)
 	return err
 }

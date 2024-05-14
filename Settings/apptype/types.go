@@ -3,6 +3,7 @@ package apptype
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/lib/pq"
 )
@@ -55,6 +56,19 @@ type GWU struct {
 	Payment string
 	Statpay int
 	Status  int
+}
+
+type Internal struct {
+	Timestamp time.Time `json:"timestamp"`
+	Message   string    `json:"message"`
+	Data      string    `json:"data"`
+}
+
+type ClientAct struct {
+	Timestamp time.Time `json:"timestamp"`
+	UserId    int       `json:"userid"`
+	Action    string    `json:"action"`
+	Message   string    `json:"message"`
 }
 
 func connectData() string {

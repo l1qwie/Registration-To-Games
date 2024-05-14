@@ -29,13 +29,6 @@ func callwelcome(body []byte) *types.Response {
 	return result
 }
 
-// Preparing the Database
-func handleDB(con *Connection) {
-	con.UpdateAction()
-	con.UpdateLevel()
-	con.UpdateLevel()
-}
-
 // Preparing a request
 func handleReq() *types.Request {
 	req := new(types.Request)
@@ -52,11 +45,10 @@ func handleReq() *types.Request {
 }
 
 // All main actions happen here
-func action(con *Connection) {
+func action() {
 	for i < 3 {
 		j = 0
 		for j < 3 {
-			handleDB(con)
 			req := handleReq()
 			jsonBytes, err := json.Marshal(req)
 			if err != nil {
@@ -79,10 +71,5 @@ func action(con *Connection) {
 // The head of the directioner
 // Only this function is imported
 func Head() {
-	con := new(Connection)
-	con.con = types.ConnectToDatabase(false)
-	defer con.DeleteUser()
-	con.CreateUser()
-	action(con)
-
+	action()
 }

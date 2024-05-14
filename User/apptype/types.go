@@ -2,6 +2,7 @@ package apptype
 
 import (
 	"User/fmtogram/types"
+	"time"
 )
 
 type RegToGames struct {
@@ -176,4 +177,17 @@ type Game struct {
 	Price    int    `json:"price"`
 	Currency string `json:"currency"`
 	Action   string
+}
+
+type Internal struct {
+	Timestamp time.Time `json:"timestamp"`
+	Message   string    `json:"message"`
+	Data      string    `json:"data"`
+}
+
+type ClientAct struct {
+	Timestamp time.Time `json:"timestamp"`
+	UserId    int       `json:"userid"`
+	Action    string    `json:"action"`
+	Message   string    `json:"message"`
 }

@@ -1,7 +1,11 @@
 package main
 
-import "Welcome/api/server"
+import (
+	"Welcome/api/server"
+	"Welcome/tests"
+)
 
 func main() {
-	server.Welcome()
+	go server.Welcome()
+	tests.Head()
 }

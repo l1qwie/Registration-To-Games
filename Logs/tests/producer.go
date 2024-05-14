@@ -106,6 +106,6 @@ func testClientAct() {
 }
 
 func StartTest() {
-	//testInternal()
+	testInternal()
 	testClientAct()
 }

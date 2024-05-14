@@ -1,11 +1,13 @@
 package app
 
 import (
+	"User/api/producer"
 	"User/app/handler"
 	"User/apptype"
 	"User/fmtogram/formatter"
 	"User/fmtogram/helper"
 	"User/fmtogram/types"
+	"fmt"
 )
 
 func Receiving(tr *types.TelegramResponse, mes *types.MessageResponse) *formatter.Formatter {
@@ -21,6 +23,7 @@ func Receiving(tr *types.TelegramResponse, mes *types.MessageResponse) *formatte
 	user.Media.Photo, _ = helper.ReturnPhotoReq(tr)
 	user.Media.Video, _ = helper.ReturnVideoReq(tr)
 	user.ExMessageId, _ = helper.ReturnMessageId(mes)
+	producer.InterLogs("Start function User.Receiving()", fmt.Sprintf("UserId: %d, tr (*types.TelegramResponse): %v, mes (*types.MessageResponse): %v", user.Id, tr, mes))
 	handler.DispatcherPhrase(user, fm)
 	return fm
 }

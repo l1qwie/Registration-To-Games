@@ -1,13 +1,14 @@
 package app
 
 import (
+	"Settings/api/producer"
 	"Settings/app/handler"
 	"Settings/apptype"
-	"log"
+	"fmt"
 )
 
 func Receiving(req *apptype.Request) *apptype.Response {
-	log.Printf("req.Level = %d, req.Req = %s, req.Id = %d, req.Act = %s", req.Level, req.Req, req.Id, req.Act)
+	producer.InterLogs("Start function Settings.Receiving()", fmt.Sprintf("UserId: %d, req (*apptype.Request): %v", req.Id, req))
 	res := new(apptype.Response)
 	handler.SettingsAct(req, res)
 	return res

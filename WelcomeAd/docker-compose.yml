@@ -1,0 +1,12 @@
+networks:
+  reg-to-games:
+    external: true
+
+services:
+  app:
+    build: .
+    ports:
+      - 8022:8020
+    networks:
+      - reg-to-games
+    command: ["/app/bin"]

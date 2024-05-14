@@ -18,7 +18,7 @@ func initfile(name string) *os.File {
 
 func write(text string, file *os.File) {
 	defer file.Close()
-	_, err := file.WriteString(text)
+	_, err := file.WriteString(text + "\n")
 	if err != nil {
 		log.Print("You have an error when writing to file:", err)
 	}

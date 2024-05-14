@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"User/api/producer"
 	"User/app/dict"
 	"User/apptype"
 	"User/fmtogram/formatter"
@@ -26,6 +27,8 @@ const (
 
 // Sets any keyboard
 func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
+	producer.InterLogs("Start function setKb()",
+		fmt.Sprintf("fm (*formatter.Formatter): %v, crd ([]int): %v, names ([]string): %v, data ([]string): %v", fm, crd, names, data))
 	fm.SetIkbdDim(crd)
 	for i := 0; i < len(crd) && i < len(names); i++ {
 		fm.WriteInlineButtonCmd(names[i], data[i])
@@ -33,6 +36,8 @@ func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
 }
 
 func retrieveUser(user *apptype.User, fm *formatter.Formatter) {
+	producer.InterLogs("Start function User.retrieveUser()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	if find(user.Id, fm.Error) {
 		dbRetrieveUser(user, fm.Error)
 	} else {
@@ -43,12 +48,16 @@ func retrieveUser(user *apptype.User, fm *formatter.Formatter) {
 }
 
 func retainUser(user *apptype.User, fm *formatter.Formatter) {
+	producer.InterLogs("Start function User.retainUser()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	dbRetainUser(user, fm.Error)
 }
 
 func edit(user *apptype.User, fm *formatter.Formatter) (exMessageId int) {
+	producer.InterLogs("Start function User.edit()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	if user.ExMessageId == 0 {
-		exMessageId = SelectExMessageId(user.Id, fm.Error)
+		exMessageId = selectExMessageId(user.Id, fm.Error)
 	} else {
 		exMessageId = user.ExMessageId
 		updateExMessageId(exMessageId, user.Id, fm.Error)
@@ -62,6 +71,8 @@ func edit(user *apptype.User, fm *formatter.Formatter) (exMessageId int) {
 }
 
 func mainMenu(user *apptype.User, fm *formatter.Formatter, dict map[string]string) {
+	producer.InterLogs("Start function User.mainMenu()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	user.Act = "divarication"
 	user.Level = OPTIONS
 	setKb(fm, []int{1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}, []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"})
@@ -70,7 +81,8 @@ func mainMenu(user *apptype.User, fm *formatter.Formatter, dict map[string]strin
 }
 
 func send(req, res any, path, name string) error {
-	log.Print("input data:", req)
+	producer.InterLogs("Start function User.send()",
+		fmt.Sprintf("req (any): %v, res (any): %v, path (string): %s, name (string): %s", req, res, path, name))
 	jb, err := json.Marshal(req)
 	if err == nil {
 		resp, err := http.Post(fmt.Sprintf("http://%s/%s", path, name), "application/json", bytes.NewBuffer(jb))
@@ -86,6 +98,8 @@ func send(req, res any, path, name string) error {
 }
 
 func wreq(user *apptype.User, req *apptype.WelcomeReq) {
+	producer.InterLogs("Start function User.wreq()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, req (*apptype.WelcomeReq): %v", user.Id, user, req))
 	req.Id = user.Id
 	req.Level = user.Level
 	req.Language = user.Language
@@ -94,6 +108,8 @@ func wreq(user *apptype.User, req *apptype.WelcomeReq) {
 }
 
 func welcomeAct(user *apptype.User, fm *formatter.Formatter) {
+	producer.InterLogs("Start function User.welcomeAct()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	req := new(apptype.WelcomeReq)
 	wreq(user, req)
 	res := new(apptype.WelcomeRes)
@@ -114,6 +130,8 @@ func welcomeAct(user *apptype.User, fm *formatter.Formatter) {
 }
 
 func rreq(user *apptype.User, req *apptype.RegistrationReq) {
+	producer.InterLogs("Start function User.rreq()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, req (*apptype.RegistrationReq): %v", user.Id, user, req))
 	req.Id = user.Id
 	req.Level = user.Level
 	req.Language = user.Language
@@ -127,6 +145,8 @@ func rreq(user *apptype.User, req *apptype.RegistrationReq) {
 }
 
 func registrationAct(user *apptype.User, fm *formatter.Formatter) {
+	producer.InterLogs("Start function User.registrationAct()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	req := new(apptype.RegistrationReq)
 	rreq(user, req)
 	res := new(apptype.RegistrationRes)
@@ -152,12 +172,16 @@ func registrationAct(user *apptype.User, fm *formatter.Formatter) {
 }
 
 func schreq(user *apptype.User, req *apptype.ScheduleReq) {
+	producer.InterLogs("Start function User.schreq()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, req (*apptype.ScheduleReq): %v", user.Id, user, req))
 	req.Id = user.Id
 	req.Act = user.Act
 	req.Language = user.Language
 }
 
 func scheduleAct(user *apptype.User, fm *formatter.Formatter) {
+	producer.InterLogs("Start function User.scheduleAct()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	req := new(apptype.ScheduleReq)
 	schreq(user, req)
 	res := new(apptype.ScheduleRes)
@@ -179,6 +203,8 @@ func scheduleAct(user *apptype.User, fm *formatter.Formatter) {
 }
 
 func mreq(user *apptype.User, req *apptype.MediaReq) {
+	producer.InterLogs("Start function User.mreq()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, req (*apptype.MediaReq): %v", user.Id, user, req))
 	if user.Media.Photo != "" {
 		req.FileId = user.Media.Photo
 		req.TypeOffile = "photo"
@@ -203,6 +229,8 @@ func mreq(user *apptype.User, req *apptype.MediaReq) {
 }
 
 func mediaAct(user *apptype.User, fm *formatter.Formatter) {
+	producer.InterLogs("Start function User.mediaAct()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	req := new(apptype.MediaReq)
 	mreq(user, req)
 	res := new(apptype.MediaRes)
@@ -242,6 +270,8 @@ func mediaAct(user *apptype.User, fm *formatter.Formatter) {
 }
 
 func setreq(user *apptype.User, req *apptype.SettingsReq) {
+	producer.InterLogs("Start function User.setreq()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, req (*apptype.SettingsReq): %v", user.Id, user, req))
 	req.Id = user.Id
 	req.Level = user.Level
 	req.Language = user.Language
@@ -254,6 +284,8 @@ func setreq(user *apptype.User, req *apptype.SettingsReq) {
 }
 
 func settingsAct(user *apptype.User, fm *formatter.Formatter) {
+	producer.InterLogs("Start function User.settingsAct()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	req := new(apptype.SettingsReq)
 	setreq(user, req)
 	res := new(apptype.SettingsRes)
@@ -279,6 +311,8 @@ func settingsAct(user *apptype.User, fm *formatter.Formatter) {
 }
 
 func opt(user *apptype.User, fm *formatter.Formatter) {
+	producer.InterLogs("Start function User.opt()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	if user.Request == "Reg to games" {
 		user.Level = START
 		user.Act = "reg to games"
@@ -301,6 +335,8 @@ func opt(user *apptype.User, fm *formatter.Formatter) {
 }
 
 func DispatcherPhrase(user *apptype.User, fm *formatter.Formatter) {
+	producer.InterLogs("Start function User.DispatcherPhrase()",
+		fmt.Sprintf("UserId: %d, user (*apptype.User): %v, fm (*formatter.Formatter): %v", user.Id, user, fm))
 	retrieveUser(user, fm)
 	user.ExMessageId = edit(user, fm)
 	log.Printf(`DispatcherPhrase basic data:				

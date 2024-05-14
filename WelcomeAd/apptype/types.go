@@ -3,6 +3,7 @@ package apptype
 import (
 	"database/sql"
 	"fmt"
+	"time"
 )
 
 type Response struct {
@@ -20,6 +21,19 @@ type Request struct {
 	Language string `json:"language"`
 	Req      string `json:"request"`
 	Act      string `json:"action"`
+}
+
+type Internal struct {
+	Timestamp time.Time `json:"timestamp"`
+	Message   string    `json:"message"`
+	Data      string    `json:"data"`
+}
+
+type ClientAct struct {
+	Timestamp time.Time `json:"timestamp"`
+	UserId    int       `json:"userid"`
+	Action    string    `json:"action"`
+	Message   string    `json:"message"`
 }
 
 func connectData() string {
