@@ -1,6 +1,7 @@
 networks:
   reg-to-games:
     external: true
+  media-net:
 
 services:
 
@@ -15,11 +16,11 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
       - ./postgreSQL/create.sql:/docker-entrypoint-initdb.d/create.sql
-      - ./postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
+      #- ./postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
     ports:
       - 5435:5432
     networks:
-      - reg-to-games
+      - media-net
 
   app:
     build: .
@@ -27,6 +28,7 @@ services:
       - 8086:8080
     networks:
       - reg-to-games
+      - media-net
     depends_on:
       - postgresql
     command: ["wait-for-it.sh", "postgresql:5432", "--", "/app/bin"]

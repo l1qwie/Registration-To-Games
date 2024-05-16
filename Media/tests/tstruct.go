@@ -129,8 +129,8 @@ func (t *TestStuct) logRes() {
 // Call a func if it's not a wrong answer
 func (t *TestStuct) acceptAnswers() {
 	if !t.checkTheWorng() {
-		t.FuncRes[t.TRcount](t.response)
 		t.logRes()
+		t.FuncRes[t.TRcount](t.response)
 	}
 }
 
@@ -142,7 +142,7 @@ func (t *TestStuct) DoTest() {
 		t.Wcounter = 0
 		for t.Trshcount < 3 {
 			t.theHead()
-			t.prepDatabase()
+			//t.prepDatabase()
 			t.doRequest()
 			t.acceptAnswers()
 			t.Trshcount++

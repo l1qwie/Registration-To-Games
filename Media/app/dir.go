@@ -1,13 +1,14 @@
 package app
 
 import (
+	"Media/api/producer"
 	"Media/app/handler"
 	"Media/apptype"
-	"log"
+	"fmt"
 )
 
 func Receiving(req *apptype.Request) *apptype.Response {
-	log.Printf("req.Level = %d, req.Req = %s, req.Id = %d, req.Act = %s", req.Level, req.Req, req.Id, req.Act)
+	producer.InterLogs("Start function Media.Receiving()", fmt.Sprintf("UserId: %d, req (*apptype.Request): %v", req.Id, req))
 	res := new(apptype.Response)
 	handler.MediaAct(req, res)
 	return res

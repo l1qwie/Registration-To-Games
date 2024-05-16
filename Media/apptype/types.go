@@ -4,6 +4,7 @@ import (
 	"Media/fmtogram/types"
 	"database/sql"
 	"fmt"
+	"time"
 )
 
 var Db *sql.DB
@@ -22,6 +23,7 @@ type Request struct {
 	TypeOffile   string        `json:"typeoffile"`
 	MediaCounter int           `json:"mediacounter"`
 	Media        []types.Media `json:"media"`
+	Status       bool          `json:"status"`
 }
 
 type Response struct {
@@ -38,6 +40,7 @@ type Response struct {
 	TypeOffile  string        `json:"typeoffile"`
 	Media       []types.Media `json:"media"`
 	ParseMode   string        `json:"parsemode"`
+	Status      bool          `json:"status"`
 }
 
 type Game struct {
@@ -47,15 +50,28 @@ type Game struct {
 	Time  string
 }
 
+type Internal struct {
+	Timestamp time.Time `json:"timestamp"`
+	Message   string    `json:"message"`
+	Data      string    `json:"data"`
+}
+
+type ClientAct struct {
+	Timestamp time.Time `json:"timestamp"`
+	UserId    int       `json:"userid"`
+	Action    string    `json:"action"`
+	Message   string    `json:"message"`
+}
+
 func ConnectToDatabase(doc bool) *sql.DB {
 	var (
 		db  *sql.DB
 		err error
 	)
 	if doc {
-		db, err = sql.Open("postgres", docConnect())
-	} else {
 		db, err = sql.Open("postgres", connectData())
+	} else {
+		db, err = sql.Open("postgres", docConnect())
 	}
 	if err != nil {
 		panic(err)

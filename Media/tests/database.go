@@ -63,8 +63,8 @@ func DeleteMedia() {
 
 // Creates a game and a mediaGame with one fileId
 func CreateNotFullMediaGame() {
-	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-	VALUES ($1, 'football', 20240212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', -1)`, 10)
+	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, status) 
+	VALUES ($1, 'football', 20240212, 1200, -1)`, 10)
 	if err != nil {
 		panic(err)
 	}
@@ -77,8 +77,8 @@ func CreateNotFullMediaGame() {
 
 // Creates empty media game (just a game in the table "Schedule" with status -1)
 func CreateEmptyMediaGame() {
-	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-	VALUES ($1, 'volleyball', 20240212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', -1)`, 10)
+	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, status) 
+	VALUES ($1, 'volleyball', 20240212, 1200, -1)`, 10)
 	if err != nil {
 		panic(err)
 	}
@@ -105,17 +105,17 @@ func CreateMediaShedule() {
 	var request string
 	for i := 1; i < 5; i++ {
 		if i == 1 {
-			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-				VALUES (1, 'volleyball', 20260212, 1100, 34, 36.893445, 30.709591, 'Кладбище в Анталии', 10, 'POUNDS', -1)`
+			request = `INSERT INTO Schedule (gameId, sport, date, time, status) 
+				VALUES (1, 'volleyball', 20260212, 1100, -1)`
 		} else if i == 2 {
-			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-				VALUES (2, 'football', 20250412, 1800, 14, 36.893445, 30.709591, 'Кладбище в Анталии', 1000, 'USD', -1)`
+			request = `INSERT INTO Schedule (gameId, sport, date, time, status) 
+				VALUES (2, 'football', 20250412, 1800, -1)`
 		} else if i == 3 {
-			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-				VALUES (3, 'volleyball', 20250202, 0800, 77, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'RUB', -1)`
+			request = `INSERT INTO Schedule (gameId, sport, date, time, status) 
+				VALUES (3, 'volleyball', 20250202, 0800, -1)`
 		} else if i == 4 {
-			request = `INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-				VALUES (4, 'volleyball', 20250202, 0800, 77, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'RUB', -1)`
+			request = `INSERT INTO Schedule (gameId, sport, date, time, status) 
+				VALUES (4, 'volleyball', 20250202, 0800, -1)`
 		}
 		_, err := apptype.Db.Exec(request)
 		if err != nil {
@@ -129,29 +129,29 @@ func FillMediaSchedule() {
 	var request string
 	for i := 0; i < 8; i++ {
 		if i == 0 {
-			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
-			VALUES (1, 499, '!@#IOJSJE!@#**()!@#$*()SIOPE!@()#', 'photo', 3, 1)`
+			request = `INSERT INTO MediaRepository (id, gameId, userId, fileId, type, counter, status)
+			VALUES (nextval('mediarepository_id_seq'), 1, 499, '!@#IOJSJE!@#**()!@#$*()SIOPE!@()#', 'photo', 3, 1)`
 		} else if i == 1 {
-			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
-			VALUES (2, 499, '!@#IOJSJE!@#**()!@#$*()SIOPE!@(#!@*(IOOI)', 'photo', 2, 1)`
+			request = `INSERT INTO MediaRepository (id, gameId, userId, fileId, type, counter, status)
+			VALUES (nextval('mediarepository_id_seq'), 2, 499, '!@#IOJSJE!@#**()!@#$*()SIOPE!@(#!@*(IOOI)', 'photo', 2, 1)`
 		} else if i == 2 {
-			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
-			VALUES (3, 499, '!@#IOJSIOJASDGE!@#**()!@#$*()SIOPE!@()#', 'photo', 2, 1)`
+			request = `INSERT INTO MediaRepository (id, gameId, userId, fileId, type, counter, status)
+			VALUES (nextval('mediarepository_id_seq'), 3, 499, '!@#IOJSIOJASDGE!@#**()!@#$*()SIOPE!@()#', 'photo', 2, 1)`
 		} else if i == 3 {
-			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
-			VALUES (4, 499, '!@#IOJSIOJESL:DFK**()!@#$*()SIOPE!@()#', 'photo', 1, 1)`
+			request = `INSERT INTO MediaRepository (id, gameId, userId, fileId, type, counter, status)
+			VALUES (nextval('mediarepository_id_seq'), 4, 499, '!@#IOJSIOJESL:DFK**()!@#$*()SIOPE!@()#', 'photo', 1, 1)`
 		} else if i == 4 {
-			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
-			VALUES (1, 499, '!@#IOJSIOJE!@#**()!@HFF#$*()SIOPE$#@$!@()#', 'photo', 3, 1)`
+			request = `INSERT INTO MediaRepository (id, gameId, userId, fileId, type, counter, status)
+			VALUES (nextval('mediarepository_id_seq'), 1, 499, '!@#IOJSIOJE!@#**()!@HFF#$*()SIOPE$#@$!@()#', 'photo', 3, 1)`
 		} else if i == 5 {
-			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
-			VALUES (2, 499, '!@#IOJSIOJE!@#**()!()()998890-@#$*()SIOPE!@()#', 'photo', 2, 1)`
+			request = `INSERT INTO MediaRepository (id, gameId, userId, fileId, type, counter, status)
+			VALUES (nextval('mediarepository_id_seq'), 2, 499, '!@#IOJSIOJE!@#**()!()()998890-@#$*()SIOPE!@()#', 'photo', 2, 1)`
 		} else if i == 6 {
-			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
-			VALUES (3, 499, '!@#IOJSIOJE!@#**ASDG()!@#$*()SIOPE!@()#', 'photo', 2, 1)`
+			request = `INSERT INTO MediaRepository (id, gameId, userId, fileId, type, counter, status)
+			VALUES (nextval('mediarepository_id_seq'), 3, 499, '!@#IOJSIOJE!@#**ASDG()!@#$*()SIOPE!@()#', 'photo', 2, 1)`
 		} else if i == 7 {
-			request = `INSERT INTO MediaRepository (gameId, userId, fileId, type, counter, status)
-			VALUES (1, 499, '!@#IOJSIOJE!$@!$!@#@#**()!@#$*()SIOPE!@()#', 'photo', 3, 1)`
+			request = `INSERT INTO MediaRepository (id, gameId, userId, fileId, type, counter, status)
+			VALUES (nextval('mediarepository_id_seq'), 1, 499, '!@#IOJSIOJE!$@!$!@#@#**()!@#$*()SIOPE!@()#', 'photo', 3, 1)`
 		}
 		_, err := apptype.Db.Exec(request)
 		if err != nil {

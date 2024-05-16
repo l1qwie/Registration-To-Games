@@ -36,12 +36,10 @@ func initlogs(file string) *os.File {
 
 // Tested the Unload One functional
 func unOne() {
-	defer DeleteUser()
 	defer DeleteGame()
 	defer DeleteMedia()
 	CreateNotFullMediaGame()
-	CreateUser()
-	f := initlogs("unOne.log")
+	//f := initlogs("unOne.log")
 	ts := new(TestStuct)
 	ts.Round = 3
 	ts.Name = "Unload-One-Test"
@@ -50,18 +48,16 @@ func unOne() {
 	ts.FuncTrsh = []func() *apptype.Request{common1, common2, common3, common4, unOnetr3, unOnetr4}
 	ts.UpdtLevel = []int{0, 1, 3}
 	ts.DoTest()
-	defer f.Close()
+	//defer f.Close()
 }
 
 // Tested the Unload a Few functional
 func unAfew() {
-	defer DeleteUser()
 	defer DeleteSchedule()
 	defer DeleteMediaSchedule()
 	CreateMediaShedule()
 	FillMediaSchedule()
-	CreateUser()
-	f := initlogs("unAfew.log")
+	//f := initlogs("unAfew.log")
 	ts := new(TestStuct)
 	ts.Round = 3
 	ts.Name = "Unload-One-Test"
@@ -70,17 +66,15 @@ func unAfew() {
 	ts.FuncTrsh = []func() *apptype.Request{common1, common2, common3, common4, unOnetr3, unOnetr4}
 	ts.UpdtLevel = []int{0, 1, 3}
 	ts.DoTest()
-	defer f.Close()
+	//defer f.Close()
 }
 
 // Tested the Upload One functional
 func upOne() {
-	defer DeleteUser()
 	defer DeleteGame()
 	defer DeleteMedia()
 	CreateEmptyMediaGame()
-	CreateUser()
-	f := initlogs("upOne.log")
+	//f := initlogs("upOne.log")
 	ts := new(TestStuct)
 	ts.Round = 3
 	ts.Name = "Upload-One-Test"
@@ -90,17 +84,15 @@ func upOne() {
 	ts.UpdtLevel = []int{0, 2, 3}
 	onetime = true
 	ts.DoTest()
-	defer f.Close()
+	//defer f.Close()
 }
 
 // Tested the Upload a Few functional
 func upAfew() {
-	defer DeleteUser()
 	defer DeleteSchedule()
 	defer DeleteMediaSchedule()
 	CreateMediaShedule()
-	CreateUser()
-	f := initlogs("upAfew.log")
+	//f := initlogs("upAfew.log")
 	ts := new(TestStuct)
 	ts.Round = 3
 	ts.Name = "Upload-a-few-Test"
@@ -111,7 +103,7 @@ func upAfew() {
 	onetime = true
 	condtition = true
 	ts.DoTest()
-	defer f.Close()
+	//defer f.Close()
 }
 
 // The list of testing functions

@@ -38,6 +38,7 @@ type check struct {
 	typeoffile string
 	media      []types.Media
 	prmode     string
+	status     bool
 	res        *apptype.Response
 }
 
@@ -95,6 +96,9 @@ func (ch *check) maintest() {
 	if ch.res.ParseMode != ch.prmode {
 		panic(fmt.Sprintf(`ch.res.ParseMode != %s because %s`, ch.prmode, fmt.Sprintf(`ch.res.ParseMode == "%s"`, ch.res.ParseMode)))
 	}
+	if ch.res.Status != ch.status {
+		panic(fmt.Sprintf(`ch.res.Status != %v because %v`, ch.status, fmt.Sprintf(`ch.res.Status == "%v"`, ch.res.Status)))
+	}
 }
 
 // The data after the first function of the act
@@ -111,6 +115,7 @@ func ChDirection(res *apptype.Response) {
 	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = false
 	ch.maintest()
 }
 
@@ -128,6 +133,7 @@ func ChMediaGameUn(res *apptype.Response) {
 	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = false
 	ch.maintest()
 }
 
@@ -144,6 +150,7 @@ func UnOne(res *apptype.Response) {
 	ch.gameid = 10
 	ch.prmode = ""
 	ch.res = res
+	ch.status = true
 	ch.maintest()
 }
 
@@ -162,6 +169,7 @@ func NoChOnluUp(res *apptype.Response) {
 	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = false
 	ch.maintest()
 }
 
@@ -179,6 +187,7 @@ func NoChOnluUpSecond(res *apptype.Response) {
 	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = false
 	ch.maintest()
 }
 
@@ -196,6 +205,7 @@ func NochOnluUpAfewSecond(res *apptype.Response) {
 	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = false
 	ch.maintest()
 }
 
@@ -213,6 +223,7 @@ func WaitForMedia(res *apptype.Response) {
 	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = false
 	ch.maintest()
 }
 
@@ -230,6 +241,7 @@ func WaitForMediaAfew(res *apptype.Response) {
 	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = false
 	ch.maintest()
 }
 
@@ -243,10 +255,11 @@ func UpOne(res *apptype.Response) {
 	ch.mediaDir = "upload"
 	ch.gameid = 10
 	ch.prmode = ""
-	ch.fileId = "!@#UIO!@#IOJJKLASEDKLKL#IO!JKLASJKL13419"
-	ch.typeoffile = "photo"
+	ch.fileId = ""
+	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = true
 	ch.maintest()
 	if !checkUploadedMedia() {
 		panic("The media wasn't uploaded")
@@ -267,6 +280,7 @@ func ChMediaGamesUn(res *apptype.Response) {
 	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = false
 	ch.maintest()
 }
 
@@ -282,11 +296,12 @@ func UnAll(res *apptype.Response) {
 	ch.prmode = ""
 	ch.fileId = ""
 	ch.typeoffile = ""
-	ch.media = make([]types.Media, 20)
+	ch.media = make([]types.Media, 3)
 	ch.media[0] = types.Media{Type: "photo", Media: "!@#IOJSJE!@#**()!@#$*()SIOPE!@()#"}
 	ch.media[1] = types.Media{Type: "photo", Media: "!@#IOJSIOJE!@#**()!@HFF#$*()SIOPE$#@$!@()#"}
 	ch.media[2] = types.Media{Type: "photo", Media: "!@#IOJSIOJE!$@!$!@#@#**()!@#$*()SIOPE!@()#"}
 	ch.res = res
+	ch.status = true
 	ch.maintest()
 }
 
@@ -305,6 +320,7 @@ func NoChOnluUpAfew(res *apptype.Response) {
 	ch.typeoffile = ""
 	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = false
 	ch.maintest()
 }
 
@@ -331,10 +347,9 @@ func UpAfew(res *apptype.Response) {
 	ch.prmode = ""
 	ch.fileId = ""
 	ch.typeoffile = ""
-	ch.media = []types.Media{{Type: "photo", Media: "!@#IOJSJE!@#**()!@#$*()SIOPE!@()#"},
-		{Type: "photo", Media: "!@#IOJSIOJE!@#**()!@HFF#$*()SIOPE$#@$!@()#"},
-		{Type: "photo", Media: "!@#IOJSIOJE!$@!$!@#@#**()!@#$*()SIOPE!@()#"}}
+	ch.media = []types.Media{}
 	ch.res = res
+	ch.status = true
 	ch.maintest()
 	checkUploadAfewMedia()
 }

@@ -16,6 +16,7 @@ func mainReq() *apptype.Request {
 		LaunchPoint: 0,
 		Req:         "",
 		GameId:      0,
+		Status:      false,
 	}
 }
 
@@ -24,6 +25,7 @@ func chMediaDir() *apptype.Request {
 	req := mainReq()
 	req.Req = "!OK!"
 	req.Level = 0
+	req.Status = true
 	return req
 }
 
