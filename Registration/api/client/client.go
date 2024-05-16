@@ -1,7 +1,7 @@
 package client
 
 import (
-	pb "Registraion/protos/out"
+	pb "Registration/protos/out"
 	"context"
 	"log"
 

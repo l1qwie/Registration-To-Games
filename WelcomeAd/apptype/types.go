@@ -13,6 +13,7 @@ type Response struct {
 	Act      string `json:"action"`
 	Level    int    `json:"level"`
 	Error    string `json:"error"`
+	Status   bool   `json:"status"`
 }
 
 type Request struct {
@@ -21,6 +22,7 @@ type Request struct {
 	Language string `json:"language"`
 	Req      string `json:"request"`
 	Act      string `json:"action"`
+	Status   bool   `json:"status"`
 }
 
 type Internal struct {

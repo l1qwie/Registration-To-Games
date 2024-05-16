@@ -6,12 +6,15 @@ import (
 	"log"
 )
 
+var onetime bool = true
+
 type check struct {
-	mes   string
-	kb    string
-	act   string
-	level int
-	res   *types.Response
+	mes    string
+	kb     string
+	act    string
+	level  int
+	status bool
+	res    *types.Response
 }
 
 var truefunc = []func(*check){greetingsToUser, showRules, welcomeToMainMenu}
@@ -34,6 +37,9 @@ func (ch *check) maintest() {
 	if ch.res.Level != ch.level {
 		panic(fmt.Sprintf(`ch.res.Level != %d %s %s`, ch.level, "because", fmt.Sprintf(`ch.res.Level == %d`, ch.res.Level)))
 	}
+	if ch.res.Status != ch.status {
+		panic(fmt.Sprintf(`ch.res.Status != %v %s %s`, ch.status, "because", fmt.Sprintf(`ch.res.Status == %v`, ch.res.Status)))
+	}
 }
 
 // Data which I wait after after the function is executed greetingsToUser
@@ -42,6 +48,7 @@ func greetingsToUser(ch *check) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Зарегистрироваться","callback_data":"GoReg","url":""}]]}`
 	ch.level = 1
 	ch.act = "registration"
+	ch.status = false
 	ch.maintest()
 }
 
@@ -57,6 +64,7 @@ func showRules(ch *check) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Все понятно!","callback_data":"GoNext","url":""}]]}`
 	ch.level = 2
 	ch.act = "registration"
+	ch.status = false
 	ch.maintest()
 }
 
@@ -66,6 +74,7 @@ func welcomeToMainMenu(ch *check) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Просмотр расписания","callback_data":"Looking Schedule","url":""}],[{"text":"Регистрация на игру","callback_data":"Reg to games","url":""}],[{"text":"Наши фото и видео","callback_data":"Photo\u0026Video","url":""}],[{"text":"Настройки | Мои игры","callback_data":"My records","url":""}]]}`
 	ch.level = 3
 	ch.act = "divarication"
+	ch.status = true
 	ch.maintest()
 }
 
@@ -76,6 +85,7 @@ func logs(res *types.Response) {
 	log.Printf("res.ChatId = %d", res.ChatID)
 	log.Printf("res.Act = %s", res.Act)
 	log.Printf("res.Level = %d", res.Level)
+	log.Printf("res.Status = %v", res.Status)
 }
 
 // Just directioner

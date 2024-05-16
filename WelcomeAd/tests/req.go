@@ -10,6 +10,7 @@ func mainReq() *apptype.Request {
 		Language: "ru",
 		Act:      "registration",
 		Req:      "",
+		Status:   false,
 	}
 }
 
@@ -17,6 +18,7 @@ func hi() *apptype.Request {
 	req := mainReq()
 	req.Req = "PRIVET VSEM"
 	req.Level = 0
+	req.Status = true
 	return req
 }
 

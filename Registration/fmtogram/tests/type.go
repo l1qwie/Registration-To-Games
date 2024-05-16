@@ -1,6 +1,6 @@
 package tests
 
-import "Registraion/fmtogram/types"
+import "Registration/fmtogram/types"
 
 type Formatter struct {
 	Message     types.SendMessagePayload

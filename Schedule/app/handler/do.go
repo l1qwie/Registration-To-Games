@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"Schedule/api/producer"
 	"Schedule/app/dict"
 	"Schedule/apptype"
 	"Schedule/fmtogram/formatter"
@@ -12,6 +13,8 @@ import (
 
 // make the schedule
 func makeSchedule(client *redis.Client, fm *formatter.Formatter, dict map[string]string, l int) {
+	producer.InterLogs("Start function Schedule.makeSchedule()",
+		fmt.Sprintf("client (*redis.Client): %v, fm (*formatter.Formatter): %v, l (int): %d", client, fm, l))
 	var mes string
 	lsg := selecGames(client, fm.Error, l)
 	for i := 0; i < len(lsg); i++ {
@@ -25,6 +28,8 @@ func makeSchedule(client *redis.Client, fm *formatter.Formatter, dict map[string
 
 // GO to Main Menu
 func goToMain(res *apptype.Response, fm *formatter.Formatter, tresp, lang string) {
+	producer.InterLogs("Start function Schedule.goToMain()",
+		fmt.Sprintf("res (*apptype.Response): %v, fm (*formatter.Formatter): %v, tresp (string): %s, lang (string): %s", res, fm, tresp, lang))
 	res.Level = 3
 	res.Act = "divarication"
 	d := dict.Dictionary[lang]
@@ -40,6 +45,8 @@ func goToMain(res *apptype.Response, fm *formatter.Formatter, tresp, lang string
 
 // The name says itself
 func mainLogic(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, cl *redis.Client) {
+	producer.InterLogs("Start function Schedule.mainLogic()",
+		fmt.Sprintf("req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, cl (*redis.Client): %v", req, res, fm, cl))
 	l := findAnyGame(cl, fm.Error)
 	if l > 0 {
 		makeSchedule(cl, fm, dict.Dictionary[req.Language], l)
@@ -51,6 +58,7 @@ func mainLogic(req *apptype.Request, res *apptype.Response, fm *formatter.Format
 
 // Updates the schedule
 func UpdateTheSchedule(g *apptype.Game) error {
+	producer.InterLogs("Start function Schedule.UpdateTheSchedule()", fmt.Sprintf("g (*apptype.Game): %v", g))
 	cl, err := addClient()
 	if g.Action == "new" {
 		err = newGame(cl, g)
@@ -64,6 +72,7 @@ func UpdateTheSchedule(g *apptype.Game) error {
 
 // Checks are there any games and then redirect to making function
 func Schedule(req *apptype.Request, res *apptype.Response) *apptype.Response {
+	producer.InterLogs("Start function Schedule.Schedule()", fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v", req.Id, req, res))
 	res.Act = req.Act
 	fm := new(formatter.Formatter)
 	cl, err := addClient()
@@ -80,5 +89,6 @@ func Schedule(req *apptype.Request, res *apptype.Response) *apptype.Response {
 	if fm.Err != nil {
 		res.Error = fmt.Sprint(fm.Err)
 	}
+	producer.ActLogs("User started watching in the schedule", req.Id)
 	return res
 }

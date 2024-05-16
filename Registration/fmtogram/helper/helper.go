@@ -1,7 +1,7 @@
 package helper
 
 import (
-	"Registraion/fmtogram/types"
+	"Registration/fmtogram/types"
 	"fmt"
 )
 

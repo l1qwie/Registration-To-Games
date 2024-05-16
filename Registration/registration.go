@@ -1,8 +1,12 @@
 package main
 
-import "Registraion/api/servers"
+import (
+	"Registration/api/servers"
+	"Registration/tests"
+)
 
 func main() {
 	go servers.Registration()
-	servers.Start()
+	go servers.Start()
+	tests.Head()
 }

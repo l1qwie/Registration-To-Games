@@ -12,22 +12,17 @@ import (
 
 var Db *sql.DB
 
-type Common struct {
-	Timestamp time.Time `json:"timestamp"`
-	LogId     int       `json:"id"`
-}
-
 type Internal struct {
-	Com     Common
-	Message string `json:"message"`
-	Data    string `json:"data"`
+	Timestamp time.Time `json:"timestamp"`
+	Message   string    `json:"message"`
+	Data      string    `json:"data"`
 }
 
 type ClientAct struct {
-	Com     Common
-	UserId  int    `json:"userid"`
-	Action  string `json:"action"`
-	Message string `json:"message"`
+	Timestamp time.Time `json:"timestamp"`
+	UserId    int       `json:"userid"`
+	Action    string    `json:"action"`
+	Message   string    `json:"message"`
 }
 
 // Initialization of logs

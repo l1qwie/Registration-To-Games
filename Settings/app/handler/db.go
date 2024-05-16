@@ -199,3 +199,19 @@ func fill(gameId int) (*client.Upd, error) {
 	}
 	return u, err
 }
+
+func firstTime(userId int, f func(error)) bool {
+	var count int
+	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM Users WHERE userId = $1 AND firsttime = true", userId).Scan(&count)
+	if err != nil {
+		f(err)
+	}
+	return count > 0
+}
+
+func chFirstTime(userId int, f func(error)) {
+	_, err := apptype.Db.Exec("UPDATE Users SET firsttime = false WHERE userId = $1", userId)
+	if err != nil {
+		f(err)
+	}
+}

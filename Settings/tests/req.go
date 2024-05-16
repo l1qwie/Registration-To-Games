@@ -14,6 +14,7 @@ func mainReq() *apptype.Request {
 		Req:         "",
 		IsChanged:   "",
 		GameId:      0,
+		Status:      false,
 	}
 }
 
@@ -22,6 +23,7 @@ func chOpt() *apptype.Request {
 	req := mainReq()
 	req.Req = "YA HOCHU CHEGO-NIBUD'"
 	req.Level = 0
+	req.Status = true
 	return req
 }
 

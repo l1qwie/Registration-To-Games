@@ -1,7 +1,7 @@
 package producer
 
 import (
-	"Settings/apptype"
+	"Registration/apptype"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -40,7 +40,7 @@ func ActLogs(text string, userId int) {
 	val := &apptype.ClientAct{
 		Timestamp: time.Now(),
 		UserId:    userId,
-		Action:    "Settings",
+		Action:    "Registration-To-Games",
 		Message:   text}
 	jd, err := json.Marshal(val)
 	if err != nil {

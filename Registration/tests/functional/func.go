@@ -4,7 +4,7 @@ package functional
 // {"inline_keyboard":[[{"text":"","callback_data":"","url":""}],[{"text":"","callback_data":"","url":""}]]}
 
 import (
-	apptype "Registraion/apptype"
+	"Registration/apptype"
 	"fmt"
 	"log"
 )
@@ -19,6 +19,7 @@ type check struct {
 	gameId    int
 	seats     int
 	parseMode string
+	status    bool
 	res       *apptype.Response
 }
 
@@ -59,6 +60,9 @@ func (ch *check) maintest() {
 	if ch.res.ParseMode != ch.parseMode {
 		panic(fmt.Sprintf(`ch.res.ParseMode != %s because %s`, ch.parseMode, fmt.Sprintf(`ch.res.ParseMode == "%s"`, ch.res.ParseMode)))
 	}
+	if ch.res.Status != ch.status {
+		panic(fmt.Sprintf(`ch.res.Status != "%v" because %v`, ch.status, fmt.Sprintf(`ch.res.Status == "%v"`, ch.res.Status)))
+	}
 }
 
 // Data which I wait after after the function is executed presentationScheduele
@@ -72,6 +76,7 @@ func presentationScheduele(ch *check) {
 	ch.seats = 0
 	ch.act = "reg to games"
 	ch.parseMode = ""
+	ch.status = false
 	ch.maintest()
 }
 
@@ -86,6 +91,7 @@ func chooseGame(ch *check) {
 	ch.seats = 0
 	ch.act = "reg to games"
 	ch.parseMode = ""
+	ch.status = false
 	ch.maintest()
 }
 
@@ -100,6 +106,7 @@ func chooseSeats(ch *check) {
 	ch.seats = 2
 	ch.act = "reg to games"
 	ch.parseMode = ""
+	ch.status = false
 	ch.maintest()
 }
 
@@ -114,6 +121,7 @@ func choosePayment(ch *check) {
 	ch.seats = 2
 	ch.act = "reg to games"
 	ch.parseMode = ""
+	ch.status = false
 	ch.maintest()
 }
 
@@ -140,6 +148,8 @@ func bestWishes(ch *check) {
 	ch.seats = 2
 	ch.act = "divarication"
 	ch.parseMode = "HTML"
+	ch.status = true
+	ch.maintest()
 }
 
 // Prints the logs

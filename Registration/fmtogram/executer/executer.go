@@ -1,8 +1,8 @@
 package executer
 
 import (
-	"Registraion/fmtogram/errors"
-	"Registraion/fmtogram/types"
+	"Registration/fmtogram/errors"
+	"Registration/fmtogram/types"
 	"bytes"
 	"encoding/json"
 	"fmt"

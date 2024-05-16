@@ -2,7 +2,8 @@ package formatter
 
 import (
 	//"RegistrationToGames/fmtogram/errors"
-	"Registraion/fmtogram/errors"
+
+	"Registration/fmtogram/errors"
 	"fmt"
 )
 

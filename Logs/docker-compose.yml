@@ -1,6 +1,7 @@
 networks:
   reg-to-games:
     external: true
+  log-net:
 
 services:
   kafka:
@@ -32,12 +33,13 @@ services:
     ports:
       - 5499:5432
     networks:
-      - reg-to-games
+      - log-net
 
   app:
     build: .
     networks:
       - reg-to-games
+      - log-net
     depends_on:
       - kafka
       - postgresql

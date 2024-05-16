@@ -135,7 +135,7 @@ func (t *TestStuct) DoTest() {
 		t.Wcounter = 0
 		for t.Trshcount < 3 {
 			t.theHead()
-			t.prepDatabase()
+			//t.prepDatabase()
 			t.doRequest()
 			t.acceptAnswers()
 			t.Trshcount++

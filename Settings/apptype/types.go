@@ -20,6 +20,7 @@ type Request struct {
 	Req         string `json:"request"`
 	IsChanged   string `json:"ischanged"`
 	GameId      int    `json:"gameid"`
+	Status      bool   `json:"status"`
 }
 
 type Response struct {
@@ -34,6 +35,7 @@ type Response struct {
 	GameId      int    `json:"gameid"`
 	ParseMode   string `json:"parsemode"`
 	Error       string `json:"error"`
+	Status      bool   `json:"status"`
 }
 
 type Game struct {

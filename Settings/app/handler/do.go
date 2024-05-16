@@ -103,6 +103,7 @@ func goToMainMenu(res *apptype.Response, fm *formatter.Formatter, dict map[strin
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, mes (string): %s", res.ChatID, res, fm, mes))
 	res.Level = 3
 	res.Act = "divarication"
+	res.Status = true
 	setKb(fm, []int{1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}, []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"})
 	fm.WriteString(mes)
 	producer.ActLogs("The user has completed settings action", res.ChatID)
@@ -143,12 +144,15 @@ func onlylang(res *apptype.Response, fm *formatter.Formatter, dict map[string]st
 func chooseOptions(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	producer.InterLogs("Start function Settings.chooseOptions()",
 		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
+	if req.Status {
+		producer.ActLogs("The user has started settings action", req.Id)
+		req.Status = false
+	}
 	if findUserGame(req.Id, fm.Error) {
 		schWithlang(res, req, fm, dict.Dictionary[req.Language])
 	} else {
 		onlylang(res, fm, dict.Dictionary[req.Language], dict.Dictionary[req.Language]["NoGames"])
 	}
-	producer.ActLogs("The user has started settings action", req.Id)
 }
 
 // Create a schedule of user's games and send it
@@ -428,6 +432,7 @@ func SettingsAct(req *apptype.Request, res *apptype.Response) {
 	res.Language = req.Language
 	res.GameId = req.GameId
 	res.ChatID = req.Id
+	res.Status = req.Status
 	dir(req, res, fm)
 	fm.ReadyKB()
 	res.Keyboard = fm.Message.ReplyMarkup

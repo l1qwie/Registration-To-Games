@@ -8,7 +8,7 @@ import (
 )
 
 func Receiving(req *apptype.Request) *apptype.Response {
-	producer.InterLogs("Start function Receiving()", fmt.Sprintf("AdminId: %d, req (*apptype.Request): %v", req.Id, req))
+	producer.InterLogs("Start function WelcomeAd.Receiving()", fmt.Sprintf("AdminId: %d, req (*apptype.Request): %v", req.Id, req))
 	resp := new(apptype.Response)
 	handler.WelcomeAct(req, resp)
 	return resp

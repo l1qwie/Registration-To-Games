@@ -2,9 +2,11 @@ package main
 
 import (
 	"Settings/api/servers"
+	"Settings/tests"
 )
 
 func main() {
 	go servers.Start()
-	servers.Settings()
+	go servers.Settings()
+	tests.Head()
 }

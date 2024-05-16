@@ -1,9 +1,9 @@
 package tests
 
 import (
-	apptype "Registraion/apptype"
-	"Registraion/fmtogram/types"
-	"Registraion/tests/functional"
+	"Registration/apptype"
+	"Registration/fmtogram/types"
+	"Registration/tests/functional"
 	"bytes"
 	"encoding/json"
 	"log"
@@ -21,7 +21,7 @@ var (
 // Makes the requst and take a response
 func callreg(body []byte) *apptype.Response {
 	result := new(apptype.Response)
-	resp, err := http.Post("http://localhost:8082/Registration", "application/json", bytes.NewBuffer(body))
+	resp, err := http.Post("http://localhost:8094/Registration", "application/json", bytes.NewBuffer(body))
 	if err != nil {
 		log.Println("Ошибка при выполнении запроса:", err)
 	} else {
@@ -29,13 +29,6 @@ func callreg(body []byte) *apptype.Response {
 	}
 	defer resp.Body.Close()
 	return result
-}
-
-// Preparing the Database
-func handleDB() {
-	UpdateAction()
-	UpdateLevel()
-	UpdateLanguage()
 }
 
 // Preparing a request
@@ -46,6 +39,11 @@ func handleReq() *apptype.Request {
 	req.Level = i
 	req.Language = "ru"
 	req.Limit = 7
+	if i == 0 && j == 0 {
+		req.Status = true
+	} else {
+		req.Status = false
+	}
 	if j < 2 {
 		req.Req = trash[j]
 	} else {
@@ -71,7 +69,6 @@ func action() {
 	for i < 5 {
 		j = 0
 		for j < 3 {
-			handleDB()
 			req := handleReq()
 			jsonBytes, err := json.Marshal(req)
 			if err != nil {
@@ -104,14 +101,12 @@ func initlogs(file string) *os.File {
 // The head of the directioner
 // Only this function is imported
 func Head() {
-	f := initlogs("app.log")
+	//f := initlogs("app.log")
 	types.Db = apptype.ConnectToDatabase(false)
-	defer DeleteUser()
 	defer DeleteGameWithUser()
 	defer DeleteGame()
-	CreateUser()
 	CreateGame()
 	action()
-	f.Close()
+	//f.Close()
 
 }

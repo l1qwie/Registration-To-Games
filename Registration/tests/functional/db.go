@@ -1,7 +1,7 @@
 package functional
 
 import (
-	"Registraion/fmtogram/types"
+	"Registration/fmtogram/types"
 	"database/sql"
 )
 

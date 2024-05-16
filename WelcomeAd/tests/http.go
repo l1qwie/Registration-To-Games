@@ -34,7 +34,7 @@ func initlogs(file string) *os.File {
 }
 
 func welcomeTest() {
-	f := initlogs("welcome.log")
+	//f := initlogs("welcome.log")
 	ts := new(TestStuct)
 	ts.Round = 3
 	ts.Name = "WelcomeTest"
@@ -43,7 +43,7 @@ func welcomeTest() {
 	ts.FuncTrsh = []func() *apptype.Request{trash1, trash2, trash3, trash4, trash5, trash6}
 	ts.UpdtLevel = []int{0, 1, 2}
 	ts.DoTest()
-	defer f.Close()
+	//defer f.Close()
 }
 
 // The head of the directioner

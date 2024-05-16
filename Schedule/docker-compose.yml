@@ -1,6 +1,7 @@
 networks:
   reg-to-games:
     external: true
+  schedule-net:
 
 services:
 
@@ -10,7 +11,7 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - reg-to-games
+      - schedule-net
 
   app:
     build:
@@ -20,6 +21,7 @@ services:
       - "8082:8080"
     networks:
       - reg-to-games
+      - schedule-net
     depends_on:
       - redis
     command: ["wait-for-it.sh", "redis:6379", "--", "/app/bin"]

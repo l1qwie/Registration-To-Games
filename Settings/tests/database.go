@@ -39,7 +39,7 @@ func DeleteUser() {
 
 // Creates a user in the table "Users"
 func CreateUser() {
-	_, err := apptype.Db.Exec("INSERT INTO Users (userId, action, language, level) VALUES ($1, $2, $3, $4)", 899, "reg to games", "ru", 0)
+	_, err := apptype.Db.Exec("INSERT INTO Users (userId, language, customlanguage) VALUES ($1, $2, $3)", 899, "ru", false)
 	if err != nil {
 		panic(err)
 	}
@@ -48,18 +48,18 @@ func CreateUser() {
 // Creates schedule for testing one user
 // Changes the table "Schedule"
 func CreateScheduleForUser() {
-	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-	VALUES (0, 'volleyball', 20250212, 1200, 44, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'POUNDS', 1)`)
+	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, price, currency, status) 
+		VALUES (0, 'volleyball', 20250212, 1200, 44, 100, 'POUNDS', 1)`)
 	if err != nil {
 		panic(err)
 	}
-	_, err = apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-	VALUES (1, 'volleyball', 20251212, 1100, 44, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', 1)`)
+	_, err = apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, price, currency, status) 
+		VALUES (1, 'volleyball', 20251212, 1100, 44, 100, 'USD', 1)`)
 	if err != nil {
 		panic(err)
 	}
-	_, err = apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-	VALUES (2, 'volleyball', 20250612, 1000, 44, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'RUB', 1)`)
+	_, err = apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, price, currency, status) 
+		VALUES (2, 'volleyball', 20250612, 1000, 44, 100, 'RUB', 1)`)
 	if err != nil {
 		panic(err)
 	}
@@ -68,15 +68,15 @@ func CreateScheduleForUser() {
 // Creates a few games with the user
 // Changes the table "GamesWithUsers"
 func CreateUserScehdule() {
-	_, err := apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, statuspayment, status) VALUES (nextval('gameswithusers_id_seq'), $1, 0, 3, 'card', 1, 1)", 899)
+	_, err := apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, statuspayment, status) VALUES (2323, $1, 0, 3, 'card', 1, 1)", 899)
 	if err != nil {
 		panic(err)
 	}
-	_, err = apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, statuspayment, status) VALUES (nextval('gameswithusers_id_seq'), $1, 1, 6, 'card', 0, 1)", 899)
+	_, err = apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, statuspayment, status) VALUES (123154, $1, 1, 6, 'card', 0, 1)", 899)
 	if err != nil {
 		panic(err)
 	}
-	_, err = apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, statuspayment, status) VALUES (nextval('gameswithusers_id_seq'), $1, 2, 7, 'cash', 0, 1)", 899)
+	_, err = apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, statuspayment, status) VALUES (222, $1, 2, 7, 'cash', 0, 1)", 899)
 	if err != nil {
 		panic(err)
 	}

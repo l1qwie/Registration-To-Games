@@ -1,13 +1,14 @@
 package app
 
 import (
-	"Registraion/app/handler"
-	apptype "Registraion/apptype"
-	"log"
+	"Registration/api/producer"
+	"Registration/app/handler"
+	"Registration/apptype"
+	"fmt"
 )
 
 func Receiving(req *apptype.Request) *apptype.Response {
-	log.Printf("req.Level = %d, req.Req = %s, req.Id = %d, req.Act = %s", req.Level, req.Req, req.Id, req.Act)
+	producer.InterLogs("Start function Registration.Receiving()", fmt.Sprintf("UserId: %d, req (*apptype.Request): %v", req.Id, req))
 	res := new(apptype.Response)
 	handler.RegistrationAct(req, res)
 	return res

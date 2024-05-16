@@ -26,11 +26,11 @@ func write(text string, file *os.File) {
 
 func Internal(msg *types.Internal) {
 	file := initfile("internal/internal.log")
-	write(fmt.Sprintf("Time: %s | Id: %d | Message: %s | Data of Message: %s", msg.Com.Timestamp, msg.Com.LogId, msg.Message, msg.Data), file)
+	write(fmt.Sprintf("Time: %s | Message: %s | Data of Message: %s", msg.Timestamp, msg.Message, msg.Data), file)
 }
 
 func ClientActivities(msg *types.ClientAct) {
 	file := initfile("clientact/client-activities.log")
-	write(fmt.Sprintf("Time: %s | Id: %d | User-ID: %d | Action: %s | Message: %s", msg.Com.Timestamp, msg.Com.LogId, msg.UserId, msg.Action, msg.Message), file)
+	write(fmt.Sprintf("Time: %s | User-ID: %d | Action: %s | Message: %s", msg.Timestamp, msg.UserId, msg.Action, msg.Message), file)
 	database.Add(msg)
 }

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"Schedule/api/producer"
 	"Schedule/apptype"
 	"context"
 	"encoding/json"
@@ -13,6 +14,7 @@ import (
 // Adds a new client
 // Open a connection with Redis DB
 func addClient() (*redis.Client, error) {
+	producer.InterLogs("Start function Schedule.addClient()", "no enter data")
 	client := redis.NewClient(&redis.Options{
 		Addr:     "redis:6379",
 		Password: "",
@@ -25,6 +27,7 @@ func addClient() (*redis.Client, error) {
 // Tries to find any game
 // Returns quantity of keys
 func findAnyGame(client *redis.Client, f func(error)) int {
+	producer.InterLogs("Start function Schedule.findAnyGame()", fmt.Sprintf("client (*redis.Client): %v, f (func(error)): %T", client, f))
 	keys, err := client.Keys(context.Background(), "*").Result()
 	if err != nil {
 		f(err)
@@ -34,6 +37,7 @@ func findAnyGame(client *redis.Client, f func(error)) int {
 
 // Selects all games from
 func selecGames(client *redis.Client, f func(error), length int) []*apptype.Game {
+	producer.InterLogs("Start function Schedule.selecGames()", fmt.Sprintf("client (*redis.Client): %v, f (func(error)): %T, length (int): %d", client, f, length))
 	var err error
 	lsG := make([]*apptype.Game, length)
 	for i := 0; i < length && err == nil; i++ {
@@ -59,13 +63,14 @@ func selecGames(client *redis.Client, f func(error), length int) []*apptype.Game
 }
 
 // Creates a new game
-func newGame(cl *redis.Client, g *apptype.Game) error {
+func newGame(client *redis.Client, g *apptype.Game) error {
+	producer.InterLogs("Start function Schedule.newGame()", fmt.Sprintf("client (*redis.Client): %v, g (*apptype.Game): %v", client, g))
 	key := fmt.Sprintf("gameid:%d", g.Id)
 	jsonbyt, err := json.Marshal(g)
 	if err != nil {
 		log.Print(err)
 	} else {
-		err = cl.Set(context.Background(), key, jsonbyt, 0).Err()
+		err = client.Set(context.Background(), key, jsonbyt, 0).Err()
 		if err != nil {
 			log.Print(err)
 		}
@@ -74,9 +79,10 @@ func newGame(cl *redis.Client, g *apptype.Game) error {
 }
 
 // Deletes a game
-func delGame(cl *redis.Client, gid int) error {
+func delGame(client *redis.Client, gid int) error {
+	producer.InterLogs("Start function Schedule.delGame()", fmt.Sprintf("client (*redis.Client): %v, gid (int): %d", client, gid))
 	key := fmt.Sprintf("gameid:%d", gid)
-	err := cl.Del(context.Background(), key).Err()
+	err := client.Del(context.Background(), key).Err()
 	if err != nil {
 		log.Print(err)
 	}
@@ -84,10 +90,11 @@ func delGame(cl *redis.Client, gid int) error {
 }
 
 // "Change a game", but honestly this function just calls [delGame] and [newGame] then
-func changeGame(cl *redis.Client, g *apptype.Game) error {
-	err := delGame(cl, g.Id)
+func changeGame(client *redis.Client, g *apptype.Game) error {
+	producer.InterLogs("Start function Schedule.changeGame()", fmt.Sprintf("client (*redis.Client): %v, g (*apptype.Game): %v", client, g))
+	err := delGame(client, g.Id)
 	if err == nil {
-		err = newGame(cl, g)
+		err = newGame(client, g)
 	}
 	return err
 }

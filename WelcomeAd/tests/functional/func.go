@@ -11,11 +11,12 @@ import (
 var ch = new(check)
 
 type check struct {
-	mes string
-	kb  string
-	lvl int
-	act string
-	res *apptype.Response
+	mes    string
+	kb     string
+	lvl    int
+	act    string
+	status bool
+	res    *apptype.Response
 }
 
 func (ch *check) maintest() {
@@ -34,6 +35,9 @@ func (ch *check) maintest() {
 	if ch.res.Act != ch.act {
 		panic(fmt.Sprintf(`ch.res.Act != ch.act because ch.res.Act == %s and ch.act == %s`, ch.res.Act, ch.act))
 	}
+	if ch.res.Status != ch.status {
+		panic(fmt.Sprintf(`ch.res.Status != ch.status because ch.res.Status == %v and ch.status == %v`, ch.res.Status, ch.status))
+	}
 }
 
 func SayHello(res *apptype.Response) {
@@ -41,6 +45,7 @@ func SayHello(res *apptype.Response) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Зарегистрироваться","callback_data":"GoReg","url":""}]]}`
 	ch.lvl = 1
 	ch.act = "registration"
+	ch.status = false
 	ch.res = res
 	ch.maintest()
 }
@@ -64,6 +69,7 @@ func SendTheRules(res *apptype.Response) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Начнем же!","callback_data":"Start","url":""}]]}`
 	ch.lvl = 2
 	ch.act = "registration"
+	ch.status = false
 	ch.res = res
 	ch.maintest()
 }
@@ -73,6 +79,7 @@ func SendMainMenu(res *apptype.Response) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Игры","callback_data":"Games","url":""}],[{"text":"Клиенты","callback_data":"Clients","url":""}],[{"text":"Активность","callback_data":"Activity","url":""}],[{"text":"Деньги","callback_data":"Finances","url":""}],[{"text":"Настройки","callback_data":"Settings","url":""}]]}`
 	ch.lvl = 3
 	ch.act = "divarication"
+	ch.status = true
 	ch.res = res
 	ch.maintest()
 }

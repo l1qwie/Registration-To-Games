@@ -1,9 +1,9 @@
 package formatter
 
 import (
-	"Registraion/fmtogram/errors"
-	"Registraion/fmtogram/executer"
-	"Registraion/fmtogram/types"
+	"Registration/fmtogram/errors"
+	"Registration/fmtogram/executer"
+	"Registration/fmtogram/types"
 	"bytes"
 	"encoding/json"
 	"fmt"

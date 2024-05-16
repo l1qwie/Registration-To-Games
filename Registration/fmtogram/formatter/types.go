@@ -1,6 +1,6 @@
 package formatter
 
-import "Registraion/fmtogram/types"
+import "Registration/fmtogram/types"
 
 type InlineKeyboard struct {
 	Keyboard [][]btn `json:"inline_keyboard"`

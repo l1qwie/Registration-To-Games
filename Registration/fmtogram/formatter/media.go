@@ -1,7 +1,7 @@
 package formatter
 
 import (
-	"Registraion/fmtogram/types"
+	"Registration/fmtogram/types"
 	"bytes"
 	"fmt"
 	"io"

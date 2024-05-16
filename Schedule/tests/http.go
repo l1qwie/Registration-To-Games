@@ -13,7 +13,7 @@ import (
 // Call the server
 func callSche(body []byte) *apptype.Response {
 	result := new(apptype.Response)
-	resp, err := http.Post("http://localhost:8079/Schedule", "application/json", bytes.NewBuffer(body))
+	resp, err := http.Post("http://localhost:8083/Schedule", "application/json", bytes.NewBuffer(body))
 	if err != nil {
 		log.Println("Ошибка при выполнении запроса:", err)
 	} else {
@@ -58,11 +58,11 @@ func initlogs(file string) *os.File {
 // There is main logic
 // these is the Head of tests
 func Head() {
-	f := initlogs("app.log")
+	//f := initlogs("app.log")
 	apptype.Client = apptype.AddCleint()
 	defer delSch()
 	createSch()
 	action()
-	defer f.Close()
+	//defer f.Close()
 
 }

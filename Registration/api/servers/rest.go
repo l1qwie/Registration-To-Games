@@ -1,8 +1,8 @@
 package servers
 
 import (
-	"Registraion/app"
-	apptype "Registraion/apptype"
+	"Registration/app"
+	"Registration/apptype"
 	"encoding/json"
 	"fmt"
 	"io"

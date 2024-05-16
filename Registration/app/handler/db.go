@@ -1,10 +1,12 @@
 package handler
 
 import (
-	"Registraion/api/client"
-	"Registraion/app/dict"
-	apptype "Registraion/apptype"
+	"Registration/api/client"
+	"Registration/api/producer"
+	"Registration/app/dict"
+	"Registration/apptype"
 	"database/sql"
+	"fmt"
 	"log"
 )
 
@@ -16,6 +18,8 @@ func selectTheSchedule(limit, offset int, language string, f func(error)) []*app
 		request, sport string
 		i, date, time  int
 	)
+	producer.InterLogs("Start function Registration.selectTheSchedule()",
+		fmt.Sprintf("limit (int): %d, offset (int): %d, langauge (string): %s, f (func(error)): %T", limit, offset, language, f))
 	schedule := make([]*apptype.Game, limit)
 	request = `SELECT gameId, sport, date, time, seats FROM Schedule WHERE (status != -1) ORDER BY Schedule DESC LIMIT $1 OFFSET $2`
 	rows, err = apptype.Db.Query(request, limit, offset)
@@ -40,6 +44,8 @@ func selectTheSchedule(limit, offset int, language string, f func(error)) []*app
 // Tries to find any active(status != -1) game
 func findGame(f func(error)) bool {
 	var count int
+	producer.InterLogs("Start function Registration.findGame()",
+		fmt.Sprintf("f (func(error)): %T", f))
 	rows, err := apptype.Db.Query("SELECT gameId FROM Schedule WHERE status != -1")
 	if err != nil {
 		f(err)
@@ -55,6 +61,8 @@ func findGame(f func(error)) bool {
 // Tries to find the game that user choosed
 func findThatGame(gameId int, f func(error)) bool {
 	var count int
+	producer.InterLogs("Start function Registration.findThatGame()",
+		fmt.Sprintf("gameId (int): %d, f (func(error)): %T", gameId, f))
 	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM Schedule WHERE status != -1 AND gameId = $1", gameId).Scan(&count)
 	if err != nil {
 		f(err)
@@ -64,6 +72,8 @@ func findThatGame(gameId int, f func(error)) bool {
 
 // Selects some information about the game
 func selectThePrice(gameId int, f func(error)) (price, space int, currency string) {
+	producer.InterLogs("Start function Registration.selectThePrice()",
+		fmt.Sprintf("gameId (int): %d, f (func(error)): %T", gameId, f))
 	err := apptype.Db.QueryRow("SELECT price, seats, currency FROM Schedule WHERE gameId = $1", gameId).Scan(&price, &space, &currency)
 	if err != nil {
 		f(err)
@@ -74,6 +84,8 @@ func selectThePrice(gameId int, f func(error)) (price, space int, currency strin
 // Checks is there any free seats (space) to registraite the user
 func howManyIsLeft(gameId int, wishfulseats int, f func(error)) bool {
 	var seats int
+	producer.InterLogs("Start function Registration.howManyIsLeft()",
+		fmt.Sprintf("gameId (int): %d, wishfulseats (int): %d, f (func(error)): %T", gameId, wishfulseats, f))
 	err := apptype.Db.QueryRow("SELECT seats FROM Schedule WHERE gameId = $1", gameId).Scan(&seats)
 	if err != nil {
 		f(err)
@@ -85,6 +97,8 @@ func howManyIsLeft(gameId int, wishfulseats int, f func(error)) bool {
 // Updates seats of the game in the table "Schedule"
 func completeRegistration(userId, gameId, seats int, payment string, f func(error)) {
 	var gameSeats int
+	producer.InterLogs("Start function Registration.completeRegistration()",
+		fmt.Sprintf("userId (int): %d, gameId (int): %d, seats (int): %d, payment (string): %s, f (func(error)): %T", userId, gameId, seats, payment, f))
 	_, err := apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, status) VALUES (nextval('gameswithusers_id_seq'), $1, $2, $3, $4, 1)", userId, gameId, seats, payment)
 	if err == nil {
 		err = apptype.Db.QueryRow("SELECT seats FROM Schedule WHERE gameId = $1", gameId).Scan(&gameSeats)
@@ -100,6 +114,8 @@ func completeRegistration(userId, gameId, seats int, payment string, f func(erro
 // Selects all game data
 func selectDetailOfGame(gameId int, language string, f func(error)) *apptype.Game {
 	var date, time int
+	producer.InterLogs("Start function Registration.selectDetailOfGame()",
+		fmt.Sprintf("gameId (int): %d, language (string): %s, f (func(error)): %T", gameId, language, f))
 	details := new(apptype.Game)
 	request := `SELECT gameId, sport, date, time, seats, latitude, longitude, address, price, currency FROM Schedule WHERE gameId = $1`
 	err := apptype.Db.QueryRow(request, gameId).Scan(&details.Id, &details.Sport, &date, &time, &details.Seats, &details.Lattitude, &details.Longitude, &details.Address, &details.Price, &details.Currency)
@@ -114,6 +130,8 @@ func selectDetailOfGame(gameId int, language string, f func(error)) *apptype.Gam
 
 func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
 	var request string
+	producer.InterLogs("Start function Registration.UpdateTheSchedule()",
+		fmt.Sprintf("date (int): %d, time (int): %d, status (int): %d, g (*apptype.Game): %v, act (string): %s", date, time, status, g, act))
 	if act == "new" {
 		request = `INSERT INTO Schedule (gameId, sport, date, time, seats, price, currency, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
 	} else if act == "change" || act == "del" {
@@ -127,6 +145,8 @@ func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) erro
 }
 
 func fill(gameId, userId int) (*client.Upd, error) {
+	producer.InterLogs("Start function Registration.fill()",
+		fmt.Sprintf("gameId (int): %d, userId (int): %d", gameId, userId))
 	u := new(client.Upd)
 	err := apptype.Db.QueryRow("SELECT gameId, sport, date, time, price, currency, seats, status FROM Schedule WHERE gameId = $1",
 		gameId).Scan(&u.GameId, &u.Sport, &u.Date, &u.Time, &u.Price, &u.Currency, &u.Seats, &u.Status)

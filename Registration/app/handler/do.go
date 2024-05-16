@@ -1,11 +1,12 @@
 package handler
 
 import (
-	"Registraion/api/client"
-	"Registraion/app/dict"
-	apptype "Registraion/apptype"
-	"Registraion/fmtogram/formatter"
-	"Registraion/fmtogram/types"
+	"Registration/api/client"
+	"Registration/api/producer"
+	"Registration/app/dict"
+	"Registration/apptype"
+	"Registration/fmtogram/formatter"
+	"Registration/fmtogram/types"
 	"fmt"
 	"strconv"
 )
@@ -29,6 +30,7 @@ type btn struct {
 
 // Chechs the data can become integer or no
 func intCheck(numS string) (bool, int) {
+	producer.InterLogs("Start function Registration.intCheck()", fmt.Sprintf("numS (string): %s", numS))
 	num, err := strconv.Atoi(numS)
 	return err == nil, num
 }
@@ -36,6 +38,7 @@ func intCheck(numS string) (bool, int) {
 // The name of the function speaks for itself
 // Returns date (string) format looks like DD-MM-YYYY
 func fromIntToStrDate(numberDate int) (date string) {
+	producer.InterLogs("Start function Registration.fromIntToStrDate()", fmt.Sprintf("numberDate (int): %d", numberDate))
 	var (
 		year, month, day       int
 		monthString, dayString string
@@ -64,6 +67,7 @@ func fromIntToStrDate(numberDate int) (date string) {
 // The name of the function speaks for itself
 // Returns time (string) format looks like HH:MM
 func fromIntToStrTime(numberTime int) (time string) {
+	producer.InterLogs("Start function Registration.fromIntToStrTime()", fmt.Sprintf("numberTime (int): %d", numberTime))
 	var (
 		hour, minute             int
 		hourString, minuteString string
@@ -91,6 +95,7 @@ func fromIntToStrTime(numberTime int) (time string) {
 
 // Makes previos and/or next page buttons
 func (b *btn) prevNext(req *apptype.Request, length int) {
+	producer.InterLogs("Start function Registration.prevNext()", fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, length (int): %d", req.Id, req, length))
 	if (length > req.Limit) && (req.LaunchPoint == 0) && (length != 0) {
 		b.crd = append(b.crd, 1)
 		b.names = append(b.names, ">>")
@@ -112,6 +117,7 @@ func (b *btn) prevNext(req *apptype.Request, length int) {
 // Make only one data for one button
 // There is the MainMenu button
 func (b *btn) makeMainButt(dict map[string]string) {
+	producer.InterLogs("Start function Registration.makeMainButt()", "mo enter data")
 	b.crd = append(b.crd, 1)
 	b.names = append(b.names, dict["MainMenu"])
 	b.data = append(b.data, "MainMenu")
@@ -119,6 +125,7 @@ func (b *btn) makeMainButt(dict map[string]string) {
 
 // Makes the schedule with selected games
 func (b *btn) selGames(req *apptype.Request, f func(error), dict map[string]string) {
+	producer.InterLogs("Start function Registration.selGames()", fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, f (func(error)): %T", req.Id, req, f))
 	sch := selectTheSchedule(req.Limit, req.LaunchPoint, req.Language, f)
 	for i := 0; sch[i] != nil && i < len(sch); i++ {
 		b.crd = append(b.crd, 1)
@@ -129,6 +136,8 @@ func (b *btn) selGames(req *apptype.Request, f func(error), dict map[string]stri
 
 // Main action about making schedule
 func makeSch(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+	producer.InterLogs("Start function Registration.makeSch()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	b := new(btn)
 	res.Level = 1
 	b.selGames(req, fm.Error, dict.Dictionary[req.Language])
@@ -140,6 +149,8 @@ func makeSch(req *apptype.Request, res *apptype.Response, fm *formatter.Formatte
 
 // Sets any keyboard
 func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
+	producer.InterLogs("Start function Registration.setKb()",
+		fmt.Sprintf("fm (*formatter.Formatter): %v, crd ([]int): %v, names ([]string): %v, data ([]string): %v", fm, crd, names, data))
 	fm.SetIkbdDim(crd)
 	for i := 0; i < len(crd) && i < len(names); i++ {
 		fm.WriteInlineButtonCmd(names[i], data[i])
@@ -148,6 +159,8 @@ func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
 
 // GO to Main Menu
 func goToMain(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, tresp string) {
+	producer.InterLogs("Start function Registration.goToMain()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, tresp (string): %s", req.Id, req, res, fm, tresp))
 	res.Level = 3
 	res.Act = "divarication"
 	d := dict.Dictionary[req.Language]
@@ -161,6 +174,9 @@ func goToMain(req *apptype.Request, res *apptype.Response, fm *formatter.Formatt
 // Checks some information and if everything is allright
 // Directs and compiles schedules
 func presentationScheduele(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+	producer.InterLogs("Start function Registration.presentationScheduele()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
+	res.Level = 3
 	if findGame(fm.Error) {
 		makeSch(req, res, fm)
 	} else {
@@ -171,6 +187,8 @@ func presentationScheduele(req *apptype.Request, res *apptype.Response, fm *form
 
 // Makes some data to a question like "how many seats would you want?"
 func makeDataForChSeats(res *apptype.Response, fm *formatter.Formatter, gameId int, dict map[string]string, sestat bool) {
+	producer.InterLogs("Start function Registration.makeDataForChSeats()",
+		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, gameId (int): %d, seatat (bool): %v", res.ChatID, res, fm, gameId, sestat))
 	var (
 		crd         []int
 		names, data []string
@@ -193,6 +211,8 @@ func makeDataForChSeats(res *apptype.Response, fm *formatter.Formatter, gameId i
 
 // Has to check information about launch poit
 func checkLP(mes string) int {
+	producer.InterLogs("Start function Registration.checkLP()",
+		fmt.Sprintf("mes (string): %s", mes))
 	lp := 0
 	if mes == next {
 		lp = 7
@@ -205,6 +225,8 @@ func checkLP(mes string) int {
 // There is a function which can work with gameId and offers to choose seats
 // Directs the main logic of this task
 func chooseGame(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, sstat bool) {
+	producer.InterLogs("Start function Registration.chooseGame()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, seatat (bool): %v", req.Id, req, res, fm, sstat))
 	det, gid := intCheck(req.Req)
 	if det {
 		if findThatGame(gid, fm.Error) {
@@ -221,6 +243,8 @@ func chooseGame(req *apptype.Request, res *apptype.Response, fm *formatter.Forma
 
 // Makes data to a question like "how will you pay?"
 func makeDataForChPay(res *apptype.Response, fm *formatter.Formatter, seats int, dict map[string]string) {
+	producer.InterLogs("Start function Registration.makeDataForChPay()",
+		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, seats (int): %d", res.ChatID, res, fm, seats))
 	res.Seats = seats
 	res.Level = 3
 	setKb(fm, []int{1, 1, 1}, []string{dict["payByCard"], dict["payByCash"], dict["MainMenu"]}, []string{"card", "cash", "MainMenu"})
@@ -230,6 +254,8 @@ func makeDataForChPay(res *apptype.Response, fm *formatter.Formatter, seats int,
 // There is a function which can work with gameId and num of seats and offers to choose paymethod
 // Directs the main logic of this task
 func chooseSeats(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+	producer.InterLogs("Start function Registration.chooseSeats()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	det, seats := intCheck(req.Req)
 	if det {
 		if howManyIsLeft(req.GameId, seats, fm.Error) {
@@ -245,6 +271,8 @@ func chooseSeats(req *apptype.Request, res *apptype.Response, fm *formatter.Form
 
 // There is a function which can make data to send (only if req.Req was "card")
 func makeDataToPayByCard(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
+	producer.InterLogs("Start function Registration.makeDataToPayByCard()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	res.Level = 4
 	price, _, currency := selectThePrice(req.GameId, fm.Error)
 	cost := price * req.Seats
@@ -259,6 +287,8 @@ func makeDataToPayByCard(req *apptype.Request, res *apptype.Response, fm *format
 
 // There is a function which make data if we don't have more seats to the game
 func seatsAreFull(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
+	producer.InterLogs("Start function Registration.seatsAreFull()",
+		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", res.ChatID, res, fm))
 	res.Level = 5
 	setKb(fm, []int{1, 1}, []string{dict["go-ahead"], dict["no-deleteAll"]}, []string{"Go-ahead", "MainMenu"})
 	fm.WriteString(fmt.Sprintf(dict["SeatsAreFull"], dict["Review"]))
@@ -268,6 +298,8 @@ func seatsAreFull(res *apptype.Response, fm *formatter.Formatter, dict map[strin
 // Offers to pay, or directs to next function that wishs you good luck
 // Directs the main logic of this task
 func choosePayment(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+	producer.InterLogs("Start function Registration.choosePayment()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if (req.Req == "card") || (req.Req == "cash") {
 		if howManyIsLeft(req.GameId, req.Seats, fm.Error) {
 			res.Payment = req.Req
@@ -287,9 +319,11 @@ func choosePayment(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 
 // Makes body for wish
 func wishUGoodLuck(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	//details := new(apptype.Game)
+	producer.InterLogs("Start function Registration.wishUGoodLuck()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	res.Level = 3
 	res.Act = "divarication"
+	res.Status = true
 	details := selectDetailOfGame(req.GameId, req.Language, fm.Error)
 	cost := details.Price * req.Seats
 	setKb(fm, []int{1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}, []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"})
@@ -300,6 +334,8 @@ func wishUGoodLuck(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 
 // Prepares data to update function (the enter to gRPC)
 func upd(req *apptype.Request, f func(error)) {
+	producer.InterLogs("Start function Registration.upd()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, f (func(error)): %T", req.Id, req, f))
 	u, err := fill(req.GameId, req.Id)
 	u.Action = "change"
 	u.ActionGWU = "new"
@@ -313,11 +349,14 @@ func upd(req *apptype.Request, f func(error)) {
 // The main diffrent between this function and previois (choosePayment)
 // Is this function wichs you good luck and directs to MainMenu
 func bestWishes(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+	producer.InterLogs("Start function Registration.bestWishes()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Req == "cash" || req.Req == "Next" {
 		if howManyIsLeft(req.GameId, req.Seats, fm.Error) {
 			completeRegistration(req.Id, req.GameId, req.Seats, req.Payment, fm.Error)
 			wishUGoodLuck(req, res, fm, dict.Dictionary[req.Language])
 			upd(req, fm.Error)
+			producer.ActLogs("The user has completed registration (to game) action", req.Id)
 		} else {
 			seatsAreFull(res, fm, dict.Dictionary[req.Language])
 		}
@@ -330,7 +369,12 @@ func bestWishes(req *apptype.Request, res *apptype.Response, fm *formatter.Forma
 
 // Directioner
 func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+	producer.InterLogs("Start function Registration.dir()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Level == START {
+		if req.Status {
+			producer.ActLogs("The user has started registration (to game) action", req.Id)
+		}
 		presentationScheduele(req, res, fm)
 	} else if req.Level == LEVEL1 {
 		chooseGame(req, res, fm, true)
@@ -350,8 +394,10 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 // The head
 // The directioner
 func RegistrationAct(req *apptype.Request, res *apptype.Response) {
+	producer.InterLogs("Start function Registration.RegistrationAct()",
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v", req.Id, req, res))
 	fm := new(formatter.Formatter)
-	apptype.Db = apptype.ConnectToDatabase(true)
+	apptype.Db = apptype.ConnectToDatabase(false)
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint
 	res.GameId = req.GameId

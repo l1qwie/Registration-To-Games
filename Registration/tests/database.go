@@ -1,8 +1,6 @@
 package tests
 
-import (
-	"Registraion/fmtogram/types"
-)
+import "Registration/fmtogram/types"
 
 // Updates column "action" in table "Users" in the database
 func UpdateAction() {

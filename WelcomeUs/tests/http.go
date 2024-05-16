@@ -36,6 +36,11 @@ func handleReq() *types.Request {
 	req.Act = "registration"
 	req.Level = i
 	req.Language = "ru"
+	if i == 0 && j == 0 {
+		req.Status = true
+	} else {
+		req.Status = false
+	}
 	if j < 2 {
 		req.Req = trash[j]
 	} else {

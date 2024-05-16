@@ -1,9 +1,9 @@
 package fmtogram
 
 import (
-	"Registraion/fmtogram/executer"
-	"Registraion/fmtogram/formatter"
-	"Registraion/fmtogram/types"
+	"Registration/fmtogram/executer"
+	"Registration/fmtogram/formatter"
+	"Registration/fmtogram/types"
 	"time"
 )
 

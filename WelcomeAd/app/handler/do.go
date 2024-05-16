@@ -16,7 +16,7 @@ const (
 
 // Sets any keyboard
 func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
-	producer.InterLogs("Start function setKb()",
+	producer.InterLogs("Start function WelcomeAd.setKb()",
 		fmt.Sprintf("fm (*formatter.Formatter): %v, crd ([]int): %v, names ([]string): %v, data ([]string): %v", fm, crd, names, data))
 	fm.SetIkbdDim(crd)
 	for i := 0; i < len(crd) && i < len(names); i++ {
@@ -27,17 +27,16 @@ func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
 // Greet to admin
 // Says hello
 func greetingsToAdmin(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	producer.InterLogs("Start function greetingsToAdmin()",
+	producer.InterLogs("Start function WelcomeAd.greetingsToAdmin()",
 		fmt.Sprintf("AdminId: %d, res (*types.Response): %v, fm (*formatter.Formatter): %v", res.ChatID, res, fm))
 	res.Level = 1
 	setKb(fm, []int{1}, []string{dict["reg"]}, []string{"GoReg"})
 	fm.WriteString(dict["SayHello"])
-	producer.ActLogs("The admin has started registration", res.ChatID)
 }
 
 // Makes response-body with Rules of the Admin part
 func makeRules(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	producer.InterLogs("Start function makeRules()",
+	producer.InterLogs("Start function WelcomeAd.makeRules()",
 		fmt.Sprintf("AdminId: %d, res (*types.Response): %v, fm (*formatter.Formatter): %v", res.ChatID, res, fm))
 	res.Level = 2
 	setKb(fm, []int{1}, []string{dict["LetsStart"]}, []string{"Start"})
@@ -46,7 +45,7 @@ func makeRules(res *apptype.Response, fm *formatter.Formatter, dict map[string]s
 
 // Checks correct request and then redirect for making body or sending back
 func showRules(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
-	producer.InterLogs("Start function showRules()",
+	producer.InterLogs("Start function WelcomeAd.showRules()",
 		fmt.Sprintf("AdminId: %d, req (*types.Request): %v, res (*types.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Req == "GoReg" {
 		makeRules(res, fm, dict.Dictionary[req.Language])
@@ -57,10 +56,11 @@ func showRules(req *apptype.Request, res *apptype.Response, fm *formatter.Format
 
 // Redirects to Main Menu
 func goToMainMenu(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	producer.InterLogs("Start function goToMainMenu()",
+	producer.InterLogs("Start function WelcomeAd.goToMainMenu()",
 		fmt.Sprintf("AdminId: %d, res (*types.Response): %v, fm (*formatter.Formatter): %v", res.ChatID, res, fm))
 	res.Level = 3
 	res.Act = "divarication"
+	res.Status = true
 	setKb(fm, []int{1, 1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"], dict["fifth"]}, []string{"Games", "Clients", "Activity", "Finances", "Settings"})
 	fm.WriteString(dict["MainMenu"])
 	producer.ActLogs("The admin has completed registration", res.ChatID)
@@ -68,7 +68,7 @@ func goToMainMenu(res *apptype.Response, fm *formatter.Formatter, dict map[strin
 
 // Checks correct request and then redirect for going to Main Menu or sending back
 func welcomeToMainMenu(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
-	producer.InterLogs("Start function welcomeToMainMenu()",
+	producer.InterLogs("Start function WelcomeAd.welcomeToMainMenu()",
 		fmt.Sprintf("AdminId: %d, req (*types.Request): %v, res (*types.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Req == "Start" {
 		goToMainMenu(res, fm, dict.Dictionary[req.Language])
@@ -79,9 +79,13 @@ func welcomeToMainMenu(req *apptype.Request, res *apptype.Response, fm *formatte
 
 // Directioner
 func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
-	producer.InterLogs("Start function dir()",
+	producer.InterLogs("Start function WelcomeAd.dir()",
 		fmt.Sprintf("AdminId: %d, req (*types.Request): %v, res (*types.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Level == START {
+		if req.Status {
+			producer.ActLogs("The admin has started registration", res.ChatID)
+			res.Status = false
+		}
 		greetingsToAdmin(res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL1 {
 		showRules(req, res, fm)
@@ -93,11 +97,12 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 // Start of the Welcome Act for Admin part.
 // Only this function is imported
 func WelcomeAct(req *apptype.Request, res *apptype.Response) {
-	producer.InterLogs("Start function WelcomeAct()", fmt.Sprintf("AdminId: %d, req (*types.Request): %v, res (*types.Response): %v", req.Id, req, res))
+	producer.InterLogs("Start function WelcomeAd.WelcomeAct()", fmt.Sprintf("AdminId: %d, req (*types.Request): %v, res (*types.Response): %v", req.Id, req, res))
 	fm := new(formatter.Formatter)
 	res.Level = req.Level
 	res.Act = req.Act
 	res.ChatID = req.Id
+	res.Status = req.Status
 	dir(req, res, fm)
 	fm.ReadyKB()
 	res.Keyboard = fm.Message.ReplyMarkup

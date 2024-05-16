@@ -1,8 +1,9 @@
-package types
+package apptype
 
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/lib/pq"
 )
@@ -21,6 +22,7 @@ type Request struct {
 	GameId      int    `json:"gameid"`
 	Seats       int    `json:"seats"`
 	Payment     string `json:"payment"`
+	Status      bool   `json:"status"`
 }
 
 type Response struct {
@@ -35,6 +37,7 @@ type Response struct {
 	Payment     string `json:"payment"`
 	Act         string `json:"action"`
 	ParseMode   string `json:"parsemode"`
+	Status      bool   `json:"status"`
 }
 
 type Game struct {
@@ -61,6 +64,19 @@ type Updates struct {
 	Status  int
 }
 
+type Internal struct {
+	Timestamp time.Time `json:"timestamp"`
+	Message   string    `json:"message"`
+	Data      string    `json:"data"`
+}
+
+type ClientAct struct {
+	Timestamp time.Time `json:"timestamp"`
+	UserId    int       `json:"userid"`
+	Action    string    `json:"action"`
+	Message   string    `json:"message"`
+}
+
 func connectData() string {
 	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, "disable")
 }
@@ -81,9 +97,9 @@ func ConnectToDatabase(doc bool) *sql.DB {
 		err error
 	)
 	if doc {
-		db, err = sql.Open("postgres", docConnect())
-	} else {
 		db, err = sql.Open("postgres", connectData())
+	} else {
+		db, err = sql.Open("postgres", docConnect())
 	}
 	if err != nil {
 		panic(err)

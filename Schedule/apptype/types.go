@@ -2,6 +2,7 @@ package apptype
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -33,6 +34,19 @@ type Game struct {
 	Price    int    `json:"price"`
 	Currency string `json:"currency"`
 	Action   string
+}
+
+type Internal struct {
+	Timestamp time.Time `json:"timestamp"`
+	Message   string    `json:"message"`
+	Data      string    `json:"data"`
+}
+
+type ClientAct struct {
+	Timestamp time.Time `json:"timestamp"`
+	UserId    int       `json:"userid"`
+	Action    string    `json:"action"`
+	Message   string    `json:"message"`
 }
 
 // Opens connection with Redis DB
