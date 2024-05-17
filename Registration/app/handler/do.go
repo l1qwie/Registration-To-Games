@@ -404,11 +404,11 @@ func RegistrationAct(req *apptype.Request, res *apptype.Response) {
 	res.Seats = req.Seats
 	res.Payment = req.Payment
 	res.Act = req.Act
+	res.ChatID = req.Id
 	dir(req, res, fm)
 	fm.ReadyKB()
 	res.Keyboard = fm.Message.ReplyMarkup
 	res.Message = fm.Message.Text
-	res.ChatID = fm.Message.ChatID
 	res.ParseMode = fm.Message.ParseMode
 	if fm.Err != nil {
 		res.Error = fmt.Sprint(fm.Err)

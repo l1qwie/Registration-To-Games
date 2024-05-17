@@ -24,3 +24,5 @@ User/fmtogram/types/data.go
 WelcomeAd/apptype/data.go
 WelcomeAd/fmtogram/types/data.go
 Logs/types/data.go
+Game/fmtogram/types/data.go
+Game/apptype/data.go
