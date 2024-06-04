@@ -2,6 +2,7 @@ package apptype
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 )
 
@@ -56,4 +57,26 @@ type ClientAct struct {
 	UserId    int       `json:"userid"`
 	Action    string    `json:"action"`
 	Message   string    `json:"message"`
+}
+
+func ConnectToDatabase() *sql.DB {
+	db, err := sql.Open("postgres", docConnect())
+	if err != nil {
+		panic(err)
+	}
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+	return db
+}
+
+func docConnect() string {
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		docHost,
+		docPort,
+		docUsername,
+		docPass,
+		docDbname,
+		docSslmode)
 }

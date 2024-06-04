@@ -4,7 +4,7 @@ import (
 	"Media/apptype"
 )
 
-// Updates column "action" in table "Users" in the database
+// UpdateAction updates column "action" in table "Users" in the database
 func UpdateAction() {
 	_, err := apptype.Db.Exec("UPDATE Users SET action = $1 WHERE userId = $2", "reg to games", 899)
 	if err != nil {
@@ -12,7 +12,7 @@ func UpdateAction() {
 	}
 }
 
-// Updates column "language" in the table "Users" in the database
+// UpdateLanguage updates column "language" in the table "Users" in the database
 func UpdateLanguage() {
 	_, err := apptype.Db.Exec("UPDATE Users SET language = $1 WHERE userId = $2", "ru", 899)
 	if err != nil {
@@ -20,7 +20,7 @@ func UpdateLanguage() {
 	}
 }
 
-// Updates column "level" in the table "Users" in the database
+// UpdateLevel updates column "level" in the table "Users" in the database
 func UpdateLevel(level int) {
 	_, err := apptype.Db.Exec("UPDATE Users SET level = $1 WHERE userId = $2", level, 899)
 	if err != nil {
@@ -29,7 +29,7 @@ func UpdateLevel(level int) {
 
 }
 
-// Deletes a user from the table "Users"
+// DeleteUser deletes a user from the table "Users"
 func DeleteUser() {
 	_, err := apptype.Db.Exec("DELETE FROM Users WHERE userId = $1", 899)
 	if err != nil {
@@ -37,7 +37,7 @@ func DeleteUser() {
 	}
 }
 
-// Creates a user in the table "Users"
+// CreateUser creates a user in the table "Users"
 func CreateUser() {
 	_, err := apptype.Db.Exec("INSERT INTO Users (userId, action, language, level) VALUES ($1, $2, $3, $4)", 899, "reg to games", "ru", 0)
 	if err != nil {
@@ -45,7 +45,7 @@ func CreateUser() {
 	}
 }
 
-// Deletes a Game from the table "Schedule"
+// DeleteGame deletes a Game from the table "Schedule"
 func DeleteGame() {
 	_, err := apptype.Db.Exec("DELETE FROM Schedule WHERE gameId = $1", 10)
 	if err != nil {
@@ -53,7 +53,7 @@ func DeleteGame() {
 	}
 }
 
-// Deletes media from the table "MediaRepository"
+// DeleteMedia deletes media from the table "MediaRepository"
 func DeleteMedia() {
 	_, err := apptype.Db.Exec("DELETE FROM MediaRepository WHERE gameId = $1", 10)
 	if err != nil {
@@ -61,7 +61,7 @@ func DeleteMedia() {
 	}
 }
 
-// Creates a game and a mediaGame with one fileId
+// CreateNotFullMediaGame creates a game and a mediaGame with one fileId
 func CreateNotFullMediaGame() {
 	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, status) 
 	VALUES ($1, 'football', 20240212, 1200, -1)`, 10)
@@ -75,7 +75,7 @@ func CreateNotFullMediaGame() {
 	}
 }
 
-// Creates empty media game (just a game in the table "Schedule" with status -1)
+// CreateEmptyMediaGame creates empty media game (just a game in the table "Schedule" with status -1)
 func CreateEmptyMediaGame() {
 	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, status) 
 	VALUES ($1, 'volleyball', 20240212, 1200, -1)`, 10)
@@ -84,7 +84,7 @@ func CreateEmptyMediaGame() {
 	}
 }
 
-// Deletes a schedule from the table "Schedule"
+// DeleteSchedule deletes a schedule from the table "Schedule"
 func DeleteSchedule() {
 	_, err := apptype.Db.Exec("DELETE FROM Schedule WHERE gameId = 0 OR gameId = 1 OR gameId = 2 OR gameId = 3 OR gameId = 4")
 	if err != nil {
@@ -92,7 +92,7 @@ func DeleteSchedule() {
 	}
 }
 
-// Deletes a media inf from the table "MediaRepository"
+// DeleteMediaSchedule deletes a media inf from the table "MediaRepository"
 func DeleteMediaSchedule() {
 	_, err := apptype.Db.Exec("DELETE FROM MediaRepository WHERE gameId = 1 OR gameId = 2 OR gameId = 3 OR gameId = 4")
 	if err != nil {
@@ -100,7 +100,7 @@ func DeleteMediaSchedule() {
 	}
 }
 
-// Creates a media schedule on the table "MediaRepository"
+// CreateMediaShedule creates a media schedule on the table "MediaRepository"
 func CreateMediaShedule() {
 	var request string
 	for i := 1; i < 5; i++ {
@@ -124,7 +124,7 @@ func CreateMediaShedule() {
 	}
 }
 
-// Fills the media
+// FillMediaSchedule fills the media
 func FillMediaSchedule() {
 	var request string
 	for i := 0; i < 8; i++ {

@@ -18,9 +18,7 @@ func ru(dict map[string]string) {
 	dict["writeprice"] = "Введите цену за одно место в формате цифры на эту игру"
 	dict["writecurrency"] = "Введите имя валюты. Я не никак не контралирую то название, которое вы введете, так что советую вводить так, чтобы все понимали. Пример: USD EURO TL и тд"
 	dict["ShowTotalprice"] = "<b>Цена на одно место:</b> %d %s"
-	dict["writelink"] = `Пршлите ссылку с Google Maps с тем местом, где будет проходить игра. Очень важно, чтоб в ссылке были координаты. 
-	Если у вас не будет получатся коректная ссылка, то могу предложить скопировать пример ссылки и вписать на место пропусков координаты вручную. 
-	https://www.google.com/maps?q=<i>Тут место для широты</i>,<i>Тут место для долготы</i>`
+	dict["writelink"] = "Пршлите ссылку с Google Maps с тем местом, где будет проходить игра"
 	dict["ShowLink"] = "<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=%s,%s"
 	dict["writeaddress"] = "Введите название адреса"
 	dict["ShowAddress"] = "<b>Название адреса:</b> %s"
@@ -67,9 +65,7 @@ func en(dict map[string]string) {
 	dict["writeprice"] = "Enter the price for one seat in numeric format for this game"
 	dict["writecurrency"] = "Enter the currency name. I have no control over the name you enter, so I advise entering it in a way that everyone understands. Example: USD, EURO, TL, etc"
 	dict["ShowTotalprice"] = "<b>Price for one seat:</b> %d %s"
-	dict["writelink"] = `Send a link from Google Maps with the location of the game. It is very important that the link contains coordinates. 
-	If you cannot generate a correct link, I can suggest copying the example link and manually entering the coordinates in the placeholders. 
-	https://www.google.com/maps?q=<i>Here goes latitude</i>,<i>Here goes longitude</i>`
+	dict["writelink"] = "Please send a Google Maps link with the location where the game will take place"
 	dict["ShowLink"] = "<b>Location link:</b> https://www.google.com/maps?q=%s,%s"
 	dict["writeaddress"] = "Enter the name of the address"
 	dict["ShowAddress"] = "<b>Address name:</b> %s"
@@ -116,9 +112,7 @@ func tur(dict map[string]string) {
 	dict["writeprice"] = "Bu oyun için bir koltuk için fiyatı sayısal formatta girin"
 	dict["writecurrency"] = "Para birimi adını girin. Girdiğiniz isim üzerinde kontrolüm yok, bu yüzden herkesin anlayabileceği bir şekilde girmenizi öneririm. Örnek: USD, EURO, TL, vb"
 	dict["ShowTotalprice"] = "<b>Bir koltuk için fiyat:</b> %d %s"
-	dict["writelink"] = `Oyunun gerçekleşeceği yerin Google Haritalar'dan bir bağlantısını gönderin. Bağlantının koordinatlar içermesi çok önemlidir. 
-	Eğer doğru bir bağlantı oluşturamazsanız, örnek bağlantıyı kopyalayıp yer tutuculara koordinatları el ile girmeyi önerebilirim. 
-	https://www.google.com/maps?q=<i>Buraya enlem</i>,<i>Buraya boylam</i>`
+	dict["writelink"] = "Lütfen oyunun gerçekleşeceği yeri gösteren Google Haritalar bağlantısını gönderin"
 	dict["ShowLink"] = "<b>Yer bağlantısı:</b> https://www.google.com/maps?q=%s,%s"
 	dict["writeaddress"] = "Adresin adını girin"
 	dict["ShowAddress"] = "<b>Adres adı:</b> %s"

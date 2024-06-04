@@ -48,8 +48,8 @@ type check struct {
 }
 
 func (ch *check) maintest() {
-	if ch.res.ChatID != 0000 {
-		panic(fmt.Sprintf("ch.res.ChatID != 0000 because ch.res.ChatID = %d", ch.res.ChatID))
+	if ch.res.ChatID != 1111 {
+		panic(fmt.Sprintf("ch.res.ChatID != 1111 because ch.res.ChatID = %d", ch.res.ChatID))
 	}
 	if ch.res.Keyboard != ch.kb {
 		panic(fmt.Sprintf("ch.res.Keyboard != ch.kb because ch.res.Keyboard = %s but ch.kb = %s", ch.res.Keyboard, ch.kb))
@@ -65,6 +65,21 @@ func (ch *check) maintest() {
 	}
 	if ch.res.LaunchPoint != ch.launchpoint {
 		panic(fmt.Sprintf("ch.res.LaunchPoint != ch.launchpoint because ch.res.LaunchPoint = %d but ch.launchpoint = %d", ch.res.LaunchPoint, ch.launchpoint))
+	}
+	if ch.res.Sport != ch.sport {
+		panic(fmt.Sprintf("ch.res.Sport != ch.sport because ch.res.Sport = %s but ch.sport = %s", ch.res.Sport, ch.sport))
+	}
+	if ch.res.Date != ch.date {
+		panic(fmt.Sprintf("ch.res.Date != ch.date because ch.res.Date = %d but ch.date = %d", ch.res.Date, ch.date))
+	}
+	if ch.res.Time != ch.time {
+		panic(fmt.Sprintf("ch.res.Time != ch.time because ch.res.Time = %d but ch.time = %d", ch.res.Time, ch.time))
+	}
+	if ch.res.Seats != ch.seats {
+		panic(fmt.Sprintf("ch.res.Seats != ch.seats because ch.res.Seats = %d but ch.seats = %d", ch.res.Seats, ch.seats))
+	}
+	if ch.res.Price != ch.price {
+		panic(fmt.Sprintf("ch.res.Price != ch.price because ch.res.Price = %d but ch.price = %d", ch.res.Price, ch.price))
 	}
 }
 
@@ -181,9 +196,7 @@ func SelectCurrency(res *apptype.Response) {
 
 func SelectLink(res *apptype.Response) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
-	ch.mes = fmt.Sprint("<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n\n\n", `Пршлите ссылку с Google Maps с тем местом, где будет проходить игра. Очень важно, чтоб в ссылке были координаты. 
-	Если у вас не будет получатся коректная ссылка, то могу предложить скопировать пример ссылки и вписать на место пропусков координаты вручную. 
-	https://www.google.com/maps?q=<i>Тут место для широты</i>,<i>Тут место для долготы</i>`)
+	ch.mes = fmt.Sprint("<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n\n\n", `Пршлите ссылку с Google Maps с тем местом, где будет проходить игра`)
 	ch.level = 8
 	ch.act = "game"
 	ch.launchpoint = 0
@@ -218,7 +231,7 @@ func SelectAddress(res *apptype.Response) {
 }
 
 func SemiFinal(res *apptype.Response) {
-	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nВы закончили заполнять информацию для создания новой игры. Сохраните эту игру, если все данные верны"
 	ch.level = 10
 	ch.act = "game"

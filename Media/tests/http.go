@@ -10,14 +10,14 @@ import (
 	"os"
 )
 
-// Makes the requst and take a response
+// Makes the request and take a response
 func callmedia(body []byte) *apptype.Response {
 	result := new(apptype.Response)
 	resp, err := http.Post("http://localhost:8085/Media", "application/json", bytes.NewBuffer(body))
 	if err != nil {
 		log.Println("Ошибка при выполнении запроса:", err)
 	} else {
-		json.NewDecoder(resp.Body).Decode(&result)
+		err = json.NewDecoder(resp.Body).Decode(&result)
 	}
 	defer resp.Body.Close()
 	return result
@@ -25,7 +25,10 @@ func callmedia(body []byte) *apptype.Response {
 
 // Initialization of logs
 func initlogs(file string) *os.File {
-	os.Remove(file)
+	err = os.Remove(file)
+	if err != nil {
+		panic(err)
+	}
 	lf, err := os.OpenFile(file, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		panic(err)
@@ -114,7 +117,7 @@ func testList() {
 	upAfew()
 }
 
-// The head of the directioner
+// Head of the directioner
 // Only this function is imported
 func Head() {
 	apptype.Db = apptype.ConnectToDatabase(false)

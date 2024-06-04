@@ -63,7 +63,7 @@ func (ch *check) compareMedia() {
 // Takes data from struct ckeck and ckecks it between Response and what I want
 func (ch *check) maintest() {
 	if ch.res.ChatID != 499 {
-		panic((fmt.Sprintf(`ch.res.ChatID != 499 because %s`, fmt.Sprintf("ch.res.ChatID == %d", ch.res.ChatID))))
+		panic(fmt.Sprintf(`ch.res.ChatID != 499 because ch.res.ChatID == %d`, ch.res.ChatID))
 	}
 	if ch.res.Message != ch.mes {
 		panic(fmt.Sprintf(`ch.res.Message != "%s" because %s`, ch.mes, fmt.Sprintf(`ch.res.Message == "%s"`, ch.res.Message)))
@@ -101,7 +101,7 @@ func (ch *check) maintest() {
 	}
 }
 
-// The data after the first function of the act
+// ChDirection the data after the first function of the act
 func ChDirection(res *apptype.Response) {
 	ch.mes = "Вы хотите загрузить или посмотреть?"
 	ch.kb = `{"inline_keyboard":[[{"text":"Посмотреть","callback_data":"unload","url":""}],[{"text":"Загрузить","callback_data":"upload","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
@@ -119,7 +119,7 @@ func ChDirection(res *apptype.Response) {
 	ch.maintest()
 }
 
-// The data after "chooseMediaGame" unload (only one game)
+// ChMediaGameUn the data after "chooseMediaGame" unload (only one game)
 func ChMediaGameUn(res *apptype.Response) {
 	ch.mes = "Выберите интересующую вас игру"
 	ch.kb = `{"inline_keyboard":[[{"text":"Футбол 12-02-2024 12:00","callback_data":"10","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
@@ -137,7 +137,7 @@ func ChMediaGameUn(res *apptype.Response) {
 	ch.maintest()
 }
 
-// The data after "unloadAndUnload" unload (only one game)
+// UnOne the data after "unloadAndUnload" unload (only one game)
 func UnOne(res *apptype.Response) {
 	ch.mes = "Вот все медиа по это игре"
 	ch.fileId = "!@#IOJSIOJE!@#**()!@#$*()SIOPE!@()#"
@@ -154,7 +154,7 @@ func UnOne(res *apptype.Response) {
 	ch.maintest()
 }
 
-// The data after the first function of the act,
+// NoChOnluUp the data after the first function of the act,
 // but without games to unload. Only with one game
 func NoChOnluUp(res *apptype.Response) {
 	ch.mes = "Игр с уже загруженными медиафайлами еще нет, но вы можете стать первым!\nВыберите интересующую вас игру"
@@ -173,7 +173,7 @@ func NoChOnluUp(res *apptype.Response) {
 	ch.maintest()
 }
 
-// The data after "chooseMediaGame" upload (only one game)
+// NoChOnluUpSecond the data after "chooseMediaGame" upload (only one game)
 func NoChOnluUpSecond(res *apptype.Response) {
 	ch.mes = "Выберите интересующую вас игру"
 	ch.kb = `{"inline_keyboard":[[{"text":"Волейбол 12-02-2024 12:00","callback_data":"10","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`

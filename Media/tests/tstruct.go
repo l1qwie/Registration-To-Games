@@ -11,13 +11,13 @@ var onetime, condtition bool
 
 const wrongAnswers int = 2
 
-// This stuct only for Update functions to update database
+// Update .. This stuct only for Update functions to update database
 type Update struct {
 	Act, Lang     string
 	Level, UserId int
 }
 
-// This stuct is for all tests. The main thought is you can use it anywhere
+// TestStuct .. This stuct is for all tests. The main thought is you can use it anywhere
 type TestStuct struct {
 	TRcount, Trshcount, Round, Wcounter, inficount int
 	FuncReq                                        []func() *apptype.Request
@@ -125,7 +125,7 @@ func (t *TestStuct) logRes() {
 	log.Print()
 }
 
-// Accept bot answers
+// Accept bot answers.
 // Call a func if it's not a wrong answer
 func (t *TestStuct) acceptAnswers() {
 	if !t.checkTheWorng() {
@@ -134,7 +134,7 @@ func (t *TestStuct) acceptAnswers() {
 	}
 }
 
-// The body for all tests
+// DoTest is a body for all tests.
 // Only this function could be imported
 func (t *TestStuct) DoTest() {
 	for t.TRcount < t.Round {

@@ -35,8 +35,8 @@ func whatMiss(req *apptype.Request) []string {
 // Make []string of errors (diffrent data is awaited)
 func whatDif(req *apptype.Request) []string {
 	m := make([]string, 2)
-	if req.Act != "photos and videos" {
-		m[0] = `"action" isn't equal "photos and videos"`
+	if req.Act != "game" {
+		m[0] = `"action" isn't equal "game"`
 	}
 	if (req.Language != "ru") && (req.Language != "en") && (req.Language != "tur") {
 		m[1] = `"language" isn't equal "ru" or "en" or "tur"`
@@ -77,7 +77,7 @@ func checkError(req *apptype.Request) (mes string, f bool) {
 			f = true
 		}
 	}
-	if (req.Act != "photos and videos") || (req.Language != "ru" && req.Language != "en" && req.Language != "tur") {
+	if (req.Act != "game") || (req.Language != "ru" && req.Language != "en" && req.Language != "tur") {
 		mes += "Diffrent data is awaited: "
 		mes += mesofErr(req, false)
 		f = true
@@ -85,7 +85,7 @@ func checkError(req *apptype.Request) (mes string, f bool) {
 	return mes, f
 }
 
-// Starts the server.
+// Game starts the server.
 // Main logic of the server
 func Game() {
 	router := gin.Default()

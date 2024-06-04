@@ -5,21 +5,21 @@ import (
 	"fmt"
 )
 
-func (tfm *Formatter) AssertPhoto(path string, condition bool) (err error) {
+func (fm *Formatter) AssertPhoto(path string, condition bool) (err error) {
 	var function string
-	if len(tfm.Message.Photo) > 0 {
-		if tfm.Message.Photo != path {
-			if tfm.kindofmedia[0] == fromStorage {
+	if len(fm.Message.Photo) > 0 {
+		if fm.Message.Photo != path {
+			if fm.kindofmedia[0] == fromStorage {
 				function = "AddPhotoFromStorage"
-			} else if tfm.kindofmedia[0] == fromInternet {
+			} else if fm.kindofmedia[0] == fromInternet {
 				function = "AddPhotoFromInternet"
-			} else if tfm.kindofmedia[0] == fromTelegram {
+			} else if fm.kindofmedia[0] == fromTelegram {
 				function = "AddPhotoFromTG"
 			}
-			err = errors.AssertTest(tfm.Message.Photo, function, path, "AssertPhoto")
+			err = errors.AssertTest(fm.Message.Photo, function, path, "AssertPhoto")
 		}
 	} else {
-		err = errors.AssertTest(fmt.Sprint(tfm.Message.Photo), function, path, "AssertPhoto")
+		err = errors.AssertTest(fmt.Sprint(fm.Message.Photo), function, path, "AssertPhoto")
 	}
 	if condition {
 		if err != nil {
@@ -29,21 +29,21 @@ func (tfm *Formatter) AssertPhoto(path string, condition bool) (err error) {
 	return err
 }
 
-func (tfm *Formatter) AssertVideo(path string, condition bool) (err error) {
+func (fm *Formatter) AssertVideo(path string, condition bool) (err error) {
 	var function string
-	if len(tfm.Message.Video) > 0 {
-		if tfm.Message.Video != path {
-			if tfm.kindofmedia[0] == fromStorage {
+	if len(fm.Message.Video) > 0 {
+		if fm.Message.Video != path {
+			if fm.kindofmedia[0] == fromStorage {
 				function = "AddVideoFromStorage"
-			} else if tfm.kindofmedia[0] == fromInternet {
+			} else if fm.kindofmedia[0] == fromInternet {
 				function = "AddVideoFromInternet"
-			} else if tfm.kindofmedia[0] == fromTelegram {
+			} else if fm.kindofmedia[0] == fromTelegram {
 				function = "AddVideoFromTG"
 			}
-			err = errors.AssertTest(tfm.Message.Video, function, path, "AssertVideo")
+			err = errors.AssertTest(fm.Message.Video, function, path, "AssertVideo")
 		}
 	} else {
-		err = errors.AssertTest(fmt.Sprint(tfm.Message.Video), function, path, "AssertPhoto")
+		err = errors.AssertTest(fmt.Sprint(fm.Message.Video), function, path, "AssertPhoto")
 	}
 	if condition {
 		if err != nil {
@@ -53,14 +53,14 @@ func (tfm *Formatter) AssertVideo(path string, condition bool) (err error) {
 	return err
 }
 
-func (tfm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, typeofbuttons []string, condition bool) (err error) {
+func (fm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, typeofbuttons []string, condition bool) (err error) {
 	var (
 		dim     []int
 		counter int
 	)
 
-	for i := 0; i < len(tfm.Keyboard.Keyboard); i++ {
-		dim = append(dim, len(tfm.Keyboard.Keyboard[i]))
+	for i := 0; i < len(fm.Keyboard.Keyboard); i++ {
+		dim = append(dim, len(fm.Keyboard.Keyboard[i]))
 	}
 	if len(testdim) == len(dim) {
 		for i := 0; i < len(dim); i++ {
@@ -74,18 +74,18 @@ func (tfm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, type
 		if len(kbNames) == len(kbDatas) && len(kbNames) == len(typeofbuttons) && err == nil {
 			for i := 0; i < len(testdim); i++ {
 				for j := 0; j < testdim[i]; j++ {
-					if tfm.Keyboard.Keyboard[i][j].Label != kbNames[counter] {
-						err = errors.AssertTest(fmt.Sprint("name of buttons is ", tfm.Keyboard.Keyboard[i][j].Label), "WriteInlineButtonUrl/WriteInlineButtonCmd", fmt.Sprint("name of buttons is ", kbNames[counter]), "AssertInlineKeyboard")
+					if fm.Keyboard.Keyboard[i][j].Label != kbNames[counter] {
+						err = errors.AssertTest(fmt.Sprint("name of buttons is ", fm.Keyboard.Keyboard[i][j].Label), "WriteInlineButtonUrl/WriteInlineButtonCmd", fmt.Sprint("name of buttons is ", kbNames[counter]), "AssertInlineKeyboard")
 						if condition {
 							panic(err)
 						}
-					} else if typeofbuttons[i] == "url" && tfm.Keyboard.Keyboard[i][j].Url != kbDatas[counter] {
-						err = errors.AssertTest(fmt.Sprint("url of button is ", tfm.Keyboard.Keyboard[i][j].Url), "WriteInlineButtonUrl", fmt.Sprint("url of button is ", kbDatas[counter]), "AssertInlineKeyboard")
+					} else if typeofbuttons[i] == "url" && fm.Keyboard.Keyboard[i][j].Url != kbDatas[counter] {
+						err = errors.AssertTest(fmt.Sprint("url of button is ", fm.Keyboard.Keyboard[i][j].Url), "WriteInlineButtonUrl", fmt.Sprint("url of button is ", kbDatas[counter]), "AssertInlineKeyboard")
 						if condition {
 							panic(err)
 						}
-					} else if typeofbuttons[i] == "cmd" && tfm.Keyboard.Keyboard[i][j].Cmd != kbDatas[counter] {
-						err = errors.AssertTest(fmt.Sprint("cmd of button is ", tfm.Keyboard.Keyboard[i][j].Cmd), "WriteInlineButtonCmd", fmt.Sprint("cmd of button is ", kbDatas[counter]), "AssertInlineKeyboard")
+					} else if typeofbuttons[i] == "cmd" && fm.Keyboard.Keyboard[i][j].Cmd != kbDatas[counter] {
+						err = errors.AssertTest(fmt.Sprint("cmd of button is ", fm.Keyboard.Keyboard[i][j].Cmd), "WriteInlineButtonCmd", fmt.Sprint("cmd of button is ", kbDatas[counter]), "AssertInlineKeyboard")
 						if condition {
 							panic(err)
 						}
@@ -109,9 +109,9 @@ func (tfm *Formatter) AssertInlineKeyboard(testdim []int, kbNames, kbDatas, type
 	return err
 }
 
-func (tfm *Formatter) AssertString(lineoftext string, condition bool) (err error) {
-	if tfm.Message.Text != lineoftext {
-		err = errors.AssertTest(fmt.Sprint(tfm.Message.Text), "WriteString", fmt.Sprint(lineoftext), "AssertString")
+func (fm *Formatter) AssertString(lineoftext string, condition bool) (err error) {
+	if fm.Message.Text != lineoftext {
+		err = errors.AssertTest(fmt.Sprint(fm.Message.Text), "WriteString", fmt.Sprint(lineoftext), "AssertString")
 	}
 	if condition {
 		if err != nil {
@@ -122,9 +122,9 @@ func (tfm *Formatter) AssertString(lineoftext string, condition bool) (err error
 	return err
 }
 
-func (tfm *Formatter) AssertChatId(chatID int, condition bool) (err error) {
-	if tfm.Message.ChatID != chatID {
-		err = errors.AssertTest(fmt.Sprint(tfm.Message.ChatID), "WriteChatId", fmt.Sprint(chatID), "AssertChatId")
+func (fm *Formatter) AssertChatId(chatID int, condition bool) (err error) {
+	if fm.Message.ChatID != chatID {
+		err = errors.AssertTest(fmt.Sprint(fm.Message.ChatID), "WriteChatId", fmt.Sprint(chatID), "AssertChatId")
 	}
 	if condition {
 		if err != nil {
@@ -134,9 +134,9 @@ func (tfm *Formatter) AssertChatId(chatID int, condition bool) (err error) {
 	return err
 }
 
-func (tfm *Formatter) AssertParseMode(parseMode string, condition bool) (err error) {
-	if tfm.Message.ParseMode != parseMode {
-		err = errors.AssertTest(fmt.Sprintf(tfm.Message.ParseMode), "WriteParseMode", fmt.Sprint(parseMode), "AssertParseMode")
+func (fm *Formatter) AssertParseMode(parseMode string, condition bool) (err error) {
+	if fm.Message.ParseMode != parseMode {
+		err = errors.AssertTest(fmt.Sprintf(fm.Message.ParseMode), "WriteParseMode", fmt.Sprint(parseMode), "AssertParseMode")
 	}
 	if condition {
 		if err != nil {
@@ -146,9 +146,9 @@ func (tfm *Formatter) AssertParseMode(parseMode string, condition bool) (err err
 	return err
 }
 
-func (tfm *Formatter) AssertEditMessageId(messageId int, condition bool) (err error) {
-	if tfm.Message.MessageId != messageId {
-		err = errors.AssertTest(fmt.Sprint(tfm.Message.MessageId), "WriteEditMesId", fmt.Sprint(messageId), "AssertEditMessageId")
+func (fm *Formatter) AssertEditMessageId(messageId int, condition bool) (err error) {
+	if fm.Message.MessageId != messageId {
+		err = errors.AssertTest(fmt.Sprint(fm.Message.MessageId), "WriteEditMesId", fmt.Sprint(messageId), "AssertEditMessageId")
 	}
 	if condition {
 		if err != nil {
@@ -158,9 +158,9 @@ func (tfm *Formatter) AssertEditMessageId(messageId int, condition bool) (err er
 	return err
 }
 
-func (tfm *Formatter) AssertDeleteMessageId(messageId int, condition bool) (err error) {
-	if tfm.DeleteMessage.MessageId != messageId {
-		err = errors.AssertTest(fmt.Sprint(tfm.DeleteMessage.MessageId), "WriteDeleteMesId", fmt.Sprint(messageId), "AssertDeleteMessageId")
+func (fm *Formatter) AssertDeleteMessageId(messageId int, condition bool) (err error) {
+	if fm.DeleteMessage.MessageId != messageId {
+		err = errors.AssertTest(fmt.Sprint(fm.DeleteMessage.MessageId), "WriteDeleteMesId", fmt.Sprint(messageId), "AssertDeleteMessageId")
 	}
 	if condition {
 		if err != nil {
@@ -170,22 +170,22 @@ func (tfm *Formatter) AssertDeleteMessageId(messageId int, condition bool) (err 
 	return err
 }
 
-func (tfm *Formatter) AssertMapOfMedia(group map[string]string, con bool) (err error) {
-	if len(tfm.Message.InputMedia) != len(group) {
-		err = errors.AssertTest(fmt.Sprint("length of map is ", (len(tfm.Message.Photo)+len(tfm.Message.Video))), "AddMapOfMedia", fmt.Sprint("length of map is ", len(group)), "AssertMapOfMedia")
+func (fm *Formatter) AssertMapOfMedia(group map[string]string, con bool) (err error) {
+	if len(fm.Message.InputMedia) != len(group) {
+		err = errors.AssertTest(fmt.Sprint("length of map is ", (len(fm.Message.Photo)+len(fm.Message.Video))), "AddMapOfMedia", fmt.Sprint("length of map is ", len(group)), "AssertMapOfMedia")
 	} else {
 		for key := range group {
 			found := false
 			_, ok := group[key]
 			if ok {
-				for i := 0; i < len(tfm.Message.InputMedia) && !found; i++ {
-					if tfm.Message.InputMedia[i].Media == key {
+				for i := 0; i < len(fm.Message.InputMedia) && !found; i++ {
+					if fm.Message.InputMedia[i].Media == key {
 						found = true
 					}
 				}
 			}
 			if !found {
-				err = errors.AssertTest(fmt.Sprint(tfm.Message.InputMedia), "AddMapOfMedia", fmt.Sprint(group), "AssertMapOfMedia")
+				err = errors.AssertTest(fmt.Sprint(fm.Message.InputMedia), "AddMapOfMedia", fmt.Sprint(group), "AssertMapOfMedia")
 			}
 		}
 	}

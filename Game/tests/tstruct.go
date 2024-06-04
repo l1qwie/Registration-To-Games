@@ -68,11 +68,15 @@ func (t *TestStuct) logReq() {
 	log.Printf(`req.Limit = %d`, t.request.Limit)
 	log.Printf(`req.LaunchPoint = %d`, t.request.LaunchPoint)
 	log.Printf(`req.Req = "%s"`, t.request.Req)
-	log.Printf(`req.MediaDir = "%s"`, t.request.MediaDir)
-	log.Printf(`req.GameId = %d`, t.request.GameId)
-	log.Printf(`req.FileId = "%s"`, t.request.FileId)
-	log.Printf(`req.TypeOffile = "%s"`, t.request.TypeOffile)
-	log.Printf(`req.Media = "%s"`, t.request.Media)
+	log.Printf(`req.Sport = "%s"`, t.request.Sport)
+	log.Printf(`req.Date = %d`, t.request.Date)
+	log.Printf(`req.Time = "%d"`, t.request.Time)
+	log.Printf(`req.Seats = "%d"`, t.request.Seats)
+	log.Printf(`req.Price = "%d"`, t.request.Price)
+	log.Printf(`req.Currency = "%s"`, t.request.Currency)
+	log.Printf(`req.Link = "%s"`, t.request.Link)
+	log.Printf(`req.Address = "%s"`, t.request.Address)
+	log.Printf(`req.Status = "%v"`, t.request.Status)
 	log.Print()
 }
 
@@ -98,25 +102,29 @@ func (t *TestStuct) logRes() {
 	log.Printf(`res.level = %d`, t.response.Level)
 	log.Printf(`res.LaunchPoint = %d`, t.response.LaunchPoint)
 	log.Printf(`res.Act = "%s"`, t.response.Act)
-	log.Printf(`req.MediaDir = "%s"`, t.response.MediaDir)
-	log.Printf(`req.GameId = %d`, t.response.GameId)
-	log.Printf(`req.FileId = "%s"`, t.response.FileId)
-	log.Printf(`req.TypeOffile = "%s"`, t.response.TypeOffile)
-	log.Printf(`req.Media = "%s"`, t.response.Media)
-	log.Printf(`res.ParseMode = "%s"`, t.response.ParseMode)
+	log.Printf(`req.Sport = "%s"`, t.response.Sport)
+	log.Printf(`req.Date = %d`, t.response.Date)
+	log.Printf(`req.Time = "%d"`, t.response.Time)
+	log.Printf(`req.Seats = "%d"`, t.response.Seats)
+	log.Printf(`req.Price = "%d"`, t.response.Price)
+	log.Printf(`req.Currency = "%s"`, t.response.Currency)
+	log.Printf(`req.Link = "%s"`, t.response.Link)
+	log.Printf(`req.Address = "%s"`, t.response.Address)
+	log.Printf(`req.Error = "%s"`, t.response.Error)
+	log.Printf(`req.Status = %v`, t.response.Status)
 	log.Print()
 }
 
 // Accept bot answers
 // Call a func if it's not a wrong answer
 func (t *TestStuct) acceptAnswers() {
+	t.logRes()
 	if !t.checkTheWorng() {
-		t.logRes()
 		t.FuncRes[t.TRcount](t.response)
 	}
 }
 
-// The body for all tests
+// DoTest is a body for all tests
 // Only this function could be imported
 func (t *TestStuct) DoTest() {
 	for t.TRcount < t.Round {
