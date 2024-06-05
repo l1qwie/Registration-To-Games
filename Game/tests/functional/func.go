@@ -251,20 +251,20 @@ func SemiFinal(res *apptype.Response) {
 func Final(res *apptype.Response) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
-	ch.level = 3
+	ch.level = 10
 	ch.act = "divarication"
 	ch.launchpoint = 0
-	ch.sport = ""
-	ch.date = 0
-	ch.time = 0
-	ch.seats = 0
-	ch.price = 0
-	ch.currency = ""
-	ch.link = ""
-	ch.address = ""
+	ch.sport = "volleyball"
+	ch.date = 20241209
+	ch.time = 1900
+	ch.seats = 15
+	ch.price = 1000
+	ch.currency = "RUB"
+	ch.link = "https://www.google.com/maps?q=36.893445,30.709591"
+	ch.address = "Игровая Площадка"
 	ch.res = res
 	ch.maintest()
-	if gameSaved() {
+	if !gameSaved() {
 		panic("The game was't saved in the database")
 	}
 }

@@ -1,10 +1,5 @@
-CREATE SEQUENCE gameswithusers_id_seq
-    INCREMENT 1
-    START 1
-;
-
 CREATE TABLE Schedule (
-    gameId integer NOT NULL PRIMARY KEY DEFAULT 0,
+    gameId serial PRIMARY KEY,
     sport text DEFAULT '',
     date integer DEFAULT 0,
     time integer DEFAULT 0,

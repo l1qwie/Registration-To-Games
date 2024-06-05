@@ -5,6 +5,7 @@ import (
 	"Game/apptype"
 	"Game/fmtogram/formatter"
 	"fmt"
+	"log"
 	"regexp"
 	"strconv"
 	"time"
@@ -118,7 +119,7 @@ func showGamesOrCreate(req *apptype.Request, res *apptype.Response, fm *formatte
 func writeDate(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, sport string) {
 	res.Level = 3
 	res.Sport = sport
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[sport]), "\n\n\n", dict["writedate"]))
+	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n\n\n", dict["writedate"]))
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 }
 
@@ -138,7 +139,7 @@ func validDate(date string) bool {
 }
 
 // realDateTime is a universual function to find correct number to a date or a time
-func realDateTime(input, pattern string) (int, int, int) {
+func realDateTime(input, pattern string) (int, int, int, bool) {
 	var components []string
 	match, _ := regexp.MatchString(pattern, input)
 	if match {
@@ -148,19 +149,19 @@ func realDateTime(input, pattern string) (int, int, int) {
 		day, _ := strconv.Atoi(components[0])
 		month, _ := strconv.Atoi(components[1])
 		year, _ := strconv.Atoi(components[2])
-		return day, month, year
+		return day, month, year, match
 	} else if len(components) == 2 {
 		minutes, _ := strconv.Atoi(components[0])
 		hours, _ := strconv.Atoi(components[1])
-		return minutes, hours, 0
+		return minutes, hours, 0, match
 	}
-	return 0, 0, 0
+	return 0, 0, 0, match
 }
 
 // checkDate checks the input data and tries to find a real date in it.
 // Uses pattern to do it
 func checkDate(input string) (date int, success bool) {
-	day, month, year := realDateTime(input, datepattern)
+	day, month, year, _ := realDateTime(input, datepattern)
 	if validDate(fmt.Sprintf("%04d-%02d-%02d", year, month, day)) {
 		inputDate := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
 		if inputDate.After(time.Now()) || inputDate.Equal(time.Now()) {
@@ -175,7 +176,7 @@ func checkDate(input string) (date int, success bool) {
 func writeTime(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, date int) {
 	res.Level = 4
 	res.Date = date
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]),
+	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
 		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)),
 		"\n\n\n", dict["writetime"]))
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
@@ -191,15 +192,21 @@ func isItDate(req *apptype.Request, res *apptype.Response, fm *formatter.Formatt
 	}
 }
 
-// checkTime checks the input data and tries to find a real time in it.
+// CheckTime checks the input data and tries to find a real time in it.
 // Uses pattern to do it
-func checkTime(input string) (timeint int, success bool) {
-	hour, minute, _ := realDateTime(input, timepattern)
-	if hour >= 0 && hour < 24 && minute >= 0 && minute < 60 {
-		inputDateTime := time.Now().Add(time.Hour*time.Duration(hour) + time.Minute*time.Duration(minute))
-		if inputDateTime.After(time.Now()) {
-			timeint = (hour * 100) + minute
-			success = true
+func checkTime(input, dateInput string) (timeint int, success bool) {
+	date, err := time.Parse("02-01-2006", dateInput)
+	log.Print(err)
+	if err == nil {
+		hour, minute, _, match := realDateTime(input, timepattern)
+		if match {
+			if hour >= 0 && hour < 24 && minute >= 0 && minute < 60 {
+				inputDateTime := time.Date(date.Year(), date.Month(), date.Day(), hour, minute, 0, 0, date.Location())
+				if inputDateTime.After(time.Now()) {
+					timeint = (hour * 100) + minute
+					success = true
+				}
+			}
 		}
 	}
 	return timeint, success
@@ -209,8 +216,8 @@ func checkTime(input string) (timeint int, success bool) {
 func writeSeats(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, timeint int) {
 	res.Level = 5
 	res.Time = timeint
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]),
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)),
+	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
+		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
 		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)),
 		"\n\n\n", dict["writeseats"]))
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
@@ -218,7 +225,8 @@ func writeSeats(res *apptype.Response, fm *formatter.Formatter, dict map[string]
 
 // isItTime checks if it's a real time by calling other functions and then redirect to a correct way
 func isItTime(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	timeint, success := checkTime(req.Req)
+	timeint, success := checkTime(req.Req, fromIntToStrDate(req.Date))
+	log.Print(timeint, success, "PAMAGITI")
 	if success {
 		writeSeats(res, fm, dict, timeint)
 	} else {
@@ -236,9 +244,9 @@ func intCheck(phrase string) (int, bool) {
 func writePrice(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, seats int) {
 	res.Level = 6
 	res.Seats = seats
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]),
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)),
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)),
+	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
+		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
+		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
 		fmt.Sprintf(dict["ShowSeats"], seats),
 		"\n\n\n", dict["writeprice"]))
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
@@ -258,9 +266,9 @@ func isItSeats(req *apptype.Request, res *apptype.Response, fm *formatter.Format
 func writeCurrency(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, price int) {
 	res.Level = 7
 	res.Price = price
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]),
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)),
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)),
+	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
+		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
+		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
 		fmt.Sprintf(dict["ShowSeats"], res.Seats),
 		"\n\n\n", dict["writecurrency"]))
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
@@ -280,10 +288,10 @@ func isItPrice(req *apptype.Request, res *apptype.Response, fm *formatter.Format
 func writeLink(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, currency string) {
 	res.Level = 8
 	res.Currency = currency
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]),
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)),
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)),
-		fmt.Sprintf(dict["ShowSeats"], res.Seats),
+	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
+		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
+		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
+		fmt.Sprintf(dict["ShowSeats"], res.Seats), "\n",
 		fmt.Sprintf(dict["ShowTotalprice"], res.Price, currency),
 		"\n\n\n", dict["writelink"]))
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
@@ -293,12 +301,13 @@ func writeLink(res *apptype.Response, fm *formatter.Formatter, dict map[string]s
 func writeAddress(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, link string) {
 	res.Level = 9
 	res.Link = link
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]),
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)),
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)),
-		fmt.Sprintf(dict["ShowSeats"], res.Seats),
-		fmt.Sprintf(dict["ShowTotalprice"], res.Price, res.Currency),
-		fmt.Sprintf(dict["Showlink"], link),
+	log.Print(fmt.Sprintf(dict["ShowLink"], link), dict["ShowLink"], link)
+	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
+		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
+		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
+		fmt.Sprintf(dict["ShowSeats"], res.Seats), "\n",
+		fmt.Sprintf(dict["ShowTotalprice"], res.Price, res.Currency), "\n",
+		fmt.Sprintf(dict["ShowLink"], link),
 		"\n\n\n", dict["writeaddress"]))
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 }
@@ -306,12 +315,12 @@ func writeAddress(res *apptype.Response, fm *formatter.Formatter, dict map[strin
 func checkAllGameInf(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, address string) {
 	res.Level = 10
 	res.Address = address
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]),
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)),
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)),
-		fmt.Sprintf(dict["ShowSeats"], res.Seats),
-		fmt.Sprintf(dict["ShowTotalprice"], res.Price, res.Currency),
-		fmt.Sprintf(dict["Showlink"], res.Link),
+	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
+		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
+		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
+		fmt.Sprintf(dict["ShowSeats"], res.Seats), "\n",
+		fmt.Sprintf(dict["ShowTotalprice"], res.Price, res.Currency), "\n",
+		fmt.Sprintf(dict["ShowLink"], res.Link), "\n",
 		fmt.Sprintf(dict["ShowAddress"], address),
 		"\n\n\n", dict["clarification"]))
 	setKb(fm, []int{1, 1}, []string{dict["save"], dict["MainMenu"]}, []string{"save", "MainMenu"})

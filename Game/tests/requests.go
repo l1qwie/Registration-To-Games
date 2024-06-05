@@ -47,7 +47,7 @@ func sendDate() *apptype.Request {
 
 func sendTime() *apptype.Request {
 	req := mainReq()
-	req.Req = "1900"
+	req.Req = "19-00"
 	req.Sport = "volleyball"
 	req.Date = 20241209
 	req.Level = 4

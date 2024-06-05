@@ -25,7 +25,7 @@ func callmedia(body []byte) *apptype.Response {
 
 // Initialization of logs
 func initlogs(file string) *os.File {
-	err = os.Remove(file)
+	err := os.Remove(file)
 	if err != nil {
 		panic(err)
 	}

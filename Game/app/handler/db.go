@@ -12,9 +12,9 @@ func isThereAnyGame(f func(error)) bool {
 }
 
 func saveToDatabase(res *apptype.Response, f func(error)) {
-	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameid, sport, date, time, seats, price, currency, link, address)
-		VALUES (nextval(gameswithusers_id_seq), $1, $2, $3, $4, $5, $6, $7, $8, $9 )`,
-		res.Sport, res.Date, res.Time, res.Sport, res.Price, res.Currency, res.Level, res.Address)
+	_, err := apptype.Db.Exec(`INSERT INTO Schedule (sport, date, time, seats, price, currency, link, address, status)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+		res.Sport, res.Date, res.Time, res.Seats, res.Price, res.Currency, res.Link, res.Address, 1)
 	if err != nil {
 		f(err)
 	}

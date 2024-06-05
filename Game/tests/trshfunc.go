@@ -30,21 +30,21 @@ func trash4() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 3
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	return req
 }
 func trash5() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 3
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	return req
 }
 func trash6() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 4
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	req.Date = 20241209
 	return req
 }
@@ -52,7 +52,7 @@ func trash7() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 4
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	req.Date = 20241209
 	return req
 }
@@ -60,7 +60,7 @@ func trash8() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 5
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	req.Date = 20241209
 	req.Time = 1900
 	return req
@@ -69,7 +69,7 @@ func trash9() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 5
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	req.Date = 20241209
 	req.Time = 1900
 	return req
@@ -78,7 +78,7 @@ func trash10() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 6
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	req.Date = 20241209
 	req.Time = 1900
 	req.Seats = 15
@@ -88,7 +88,7 @@ func trash11() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 6
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	req.Date = 20241209
 	req.Time = 1900
 	req.Seats = 15
@@ -98,7 +98,7 @@ func trash12() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 7
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	req.Date = 20241209
 	req.Time = 1900
 	req.Seats = 15
@@ -109,7 +109,7 @@ func trash13() *apptype.Request {
 	req := mainReq()
 	req.Req = "я хочу питсы"
 	req.Level = 7
-	req.Sport = "vollyeball"
+	req.Sport = "volleyball"
 	req.Date = 20241209
 	req.Time = 1900
 	req.Seats = 15

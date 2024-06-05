@@ -8,13 +8,16 @@ import (
 
 const wrongAnswers int = 2
 
-// This stuct only for Update functions to update database
+// Update stuct only for Update functions to update database
 type Update struct {
 	Act, Lang     string
 	Level, UserId int
 }
 
-// This stuct is for all tests. The main thought is you can use it anywhere
+var onetime bool
+var twotimes int
+
+// TestStuct stuct is for all tests. The main thought is you can use it anywhere
 type TestStuct struct {
 	TRcount, Trshcount, Round, Wcounter, inficount int
 	FuncReq                                        []func() *apptype.Request
@@ -30,23 +33,24 @@ type TestStuct struct {
 // Check trash-query, call a func and return true
 // else - return false
 func (t *TestStuct) checkTheTrash() bool {
-	if t.Trshcount < 2 {
+	if t.Trshcount < 2 && t.TRcount != 6 && t.TRcount != 7 && t.TRcount != 8 {
 		t.request = t.FuncTrsh[t.inficount]()
 		t.inficount++
+	} else {
 	}
-	return t.Trshcount < 2
+	return t.Trshcount < 2 && t.TRcount != 6 && t.TRcount != 7 && t.TRcount != 8
 }
 
 // The fucntion has to check what answer is and if it's worng answer - call a func and return true
 // else - return false
 // only if the main counter != 0
 func (t *TestStuct) checkTheWorng() bool {
-	if t.Wcounter < wrongAnswers {
+	if t.Wcounter < wrongAnswers && t.TRcount != 6 && t.TRcount != 7 && t.TRcount != 8 {
 		if t.TRcount != 0 {
 			t.FuncRes[t.TRcount-1](t.response)
 		}
 	}
-	return (t.Wcounter < wrongAnswers) && (t.TRcount != 0)
+	return (t.Wcounter < wrongAnswers) && (t.TRcount != 0) && t.TRcount != 6 && t.TRcount != 7 && t.TRcount != 8
 }
 
 // The head of making a query from 'user' to bot
