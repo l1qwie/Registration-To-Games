@@ -10,3 +10,18 @@ func deleteGame() {
 		panic(err)
 	}
 }
+
+func deleteChGame() {
+	_, err := apptype.Db.Exec("DELETE FROM Schedule WHERE gameid = $1", 6667)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func createTestGame() {
+	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameid, sport, date, time, seats, price, currency, link, address, status)
+		VALUES (6667, 'volleyball', 20241209, 1900, 15, 1000, 'RUB', 'https://www.google.com/maps?q=36.893445,30.709591', 'Игровая Площадка', 1)`)
+	if err != nil {
+		panic(err)
+	}
+}

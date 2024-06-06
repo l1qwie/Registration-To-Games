@@ -47,6 +47,7 @@ func ru(dict map[string]string) {
 	dict["deleteGame"] = "Удалить игру"
 	dict["gameDirections"] = "Выберите направление связаное с играми"
 	dict["chooseGame"] = "Выберите игру"
+	dict["woulduliketosave"] = "Сохранить данные?"
 }
 
 func en(dict map[string]string) {
@@ -94,6 +95,7 @@ func en(dict map[string]string) {
 	dict["deleteGame"] = "Delete game"
 	dict["gameDirections"] = "Choose the option related to games"
 	dict["chooseGame"] = "Choose a game"
+	dict["woulduliketosave"] = "Save data?"
 }
 
 func tur(dict map[string]string) {
@@ -141,6 +143,7 @@ func tur(dict map[string]string) {
 	dict["deleteGame"] = "Oyunu sil"
 	dict["gameDirections"] = "Oyunlarla ilgili bir seçenek seçin"
 	dict["chooseGame"] = "Bir oyun seçin"
+	dict["woulduliketosave"] = "Verileri kaydetmek mi?"
 }
 
 func init() {

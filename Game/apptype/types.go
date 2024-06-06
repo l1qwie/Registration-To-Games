@@ -67,7 +67,7 @@ type ClientAct struct {
 }
 
 type Change interface {
-	Offer(res *Response, fm *formatter.Formatter, dict map[string]string, val string)
+	Offer(res *Response, fm *formatter.Formatter, dict map[string]string)
 	Accept(res *Response, fm *formatter.Formatter, dict map[string]string, val string)
 	Save(res *Response, fm *formatter.Formatter, dict map[string]string, val string)
 }

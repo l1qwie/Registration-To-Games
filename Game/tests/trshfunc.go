@@ -1,6 +1,8 @@
 package tests
 
-import "Game/apptype"
+import (
+	"Game/apptype"
+)
 
 func trash() *apptype.Request {
 	req := mainReq()
@@ -30,6 +32,7 @@ func chtrash3() *apptype.Request {
 
 func chtrash4() *apptype.Request {
 	req := mainReq()
+	req.Direction = "change"
 	req.Req = "я хочу питсы"
 	req.Level = 2
 	return req
@@ -37,8 +40,69 @@ func chtrash4() *apptype.Request {
 
 func chtrash5() *apptype.Request {
 	req := mainReq()
+	req.Direction = "change"
 	req.Req = "я хочу питсы"
 	req.Level = 2
+	return req
+}
+
+func chtrash6() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Req = "я хочу питсы"
+	req.Level = 3
+	return req
+}
+
+func chtrash7() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Req = "я хочу питсы"
+	req.Level = 3
+	return req
+}
+
+func chtrash8() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "sport"
+	req.Req = "я хочу питсы"
+	req.Level = 4
+	return req
+}
+
+func chtrash9() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "sport"
+	req.Req = "я хочу питсы"
+	req.Level = 4
+	return req
+}
+
+func chtrash10() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "sport"
+	req.Sport = "football"
+	req.Req = "я хочу питсы"
+	req.Level = 5
+	return req
+}
+
+func chtrash11() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "sport"
+	req.Sport = "football"
+	req.Req = "я хочу питсы"
+	req.Level = 5
 	return req
 }
 

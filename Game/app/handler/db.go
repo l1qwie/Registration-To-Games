@@ -1,6 +1,9 @@
 package handler
 
-import "Game/apptype"
+import (
+	"Game/apptype"
+	"fmt"
+)
 
 func isThereAnyGame(f func(error)) bool {
 	var count int
@@ -22,7 +25,7 @@ func saveToDatabase(res *apptype.Response, f func(error)) {
 
 func selectDateTime(f func(error)) ([]string, []string, []int) {
 	var (
-		length       int
+		length, d, t int
 		dates, times []string
 		gameids      []int
 	)
@@ -39,10 +42,12 @@ func selectDateTime(f func(error)) ([]string, []string, []int) {
 			f(err)
 		}
 		for rows.Next() && err == nil {
-			err = rows.Scan(&dates[i], &times[i], &gameids[i])
+			err = rows.Scan(&gameids[i], &d, &t)
 			if err != nil {
 				f(err)
 			}
+			dates[i] = fromIntToStrDate(d)
+			times[i] = fromIntToStrTime(t)
 			i++
 		}
 	}
@@ -56,4 +61,27 @@ func findGame(gameid int, f func(error)) bool {
 		f(err)
 	}
 	return count > 0
+}
+
+func updateDBStr(column, input string, gameid int, f func(error)) {
+	_, err := apptype.Db.Exec(fmt.Sprintf("UPDATE Schedule SET %s = $1 WHERE gameid = $2", column), input, gameid)
+	if err != nil {
+		f(err)
+	}
+}
+
+func updateDBInt(column string, input, gameid int, f func(error)) {
+	_, err := apptype.Db.Exec(fmt.Sprintf("UPDATE Schedule SET %s = $1 WHERE gameid = $2", column), input, gameid)
+	if err != nil {
+		f(err)
+	}
+}
+
+func selecAllGameInf(gameid int, f func(error)) (date, time, seats, price int, sport, currency, link, address string) {
+	err := apptype.Db.QueryRow("SELECT sport, date, time, seats, price, currency, link, address FROM Schedule WHERE gameid = $1",
+		gameid).Scan(&sport, &date, &time, &seats, &price, &currency, &link, &address)
+	if err != nil {
+		f(err)
+	}
+	return date, time, seats, price, sport, currency, link, address
 }

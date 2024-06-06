@@ -30,24 +30,37 @@ func sendHello() *apptype.Request {
 	return req
 }
 
+func sendDiretionChange() *apptype.Request {
+	req := mainReq()
+	req.Req = "change"
+	req.Level = 1
+	return req
+}
+
 func choseSport() *apptype.Request {
 	req := mainReq()
+	req.Direction = "change"
 	req.Req = "sport"
-	req.Level = 2
+	req.GameId = 6667
+	req.Level = 3
 	return req
 }
 
 func chsendSport() *apptype.Request {
 	req := mainReq()
+	req.Direction = "change"
 	req.Req = "football"
-	req.Level = 3
+	req.GameId = 6667
+	req.Changeable = "sport"
+	req.Level = 4
 	return req
 }
 
 func sendGame() *apptype.Request {
 	req := mainReq()
+	req.Direction = "change"
 	req.Req = "6667"
-	req.Level = 1
+	req.Level = 2
 	return req
 }
 
@@ -162,6 +175,10 @@ func sendSave() *apptype.Request {
 func sendChSave() *apptype.Request {
 	req := mainReq()
 	req.Req = "save"
-	req.Level = 4
+	req.Direction = "change"
+	req.Changeable = "sport"
+	req.GameId = 6667
+	req.Sport = "football"
+	req.Level = 5
 	return req
 }

@@ -101,17 +101,21 @@ func chooseGameDir(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 
 // showGames prepares a message (text and keyboard) to an admin to choose a game
 func showGames(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, direct string) {
-	res.Level = 3
+	res.Level = 2
 	res.Direction = direct
+	log.Print("res.Direction =", res.Direction, "direct =", direct, "AAAAAAAAAAAALOOOOOOOOOOOOOOo")
 	dates, times, gameIds := selectDateTime(fm.Error)
-	crd := make([]int, len(dates))
-	names := make([]string, len(dates))
-	data := make([]string, len(dates))
+	crd := make([]int, len(dates)+1)
+	names := make([]string, len(dates)+1)
+	data := make([]string, len(dates)+1)
 	for i, date := range dates {
 		crd[i] = 1
 		names[i] = fmt.Sprintf("%s %s", date, times[i])
 		data[i] = fmt.Sprint(gameIds[i])
 	}
+	crd[len(crd)-1] = 1
+	names[len(names)-1] = dict["MainMenu"]
+	data[len(data)-1] = "MainMenu"
 	setKb(fm, crd, names, data)
 	fm.WriteString(dict["chooseGame"])
 }
@@ -142,7 +146,11 @@ func createOrElse(req *apptype.Request, res *apptype.Response, fm *formatter.For
 				} else {
 					//something about delete game
 				}
+			} else {
+				showGames(res, fm, dict, res.Direction)
 			}
+		} else {
+			showGames(res, fm, dict, res.Direction)
 		}
 	}
 }
@@ -197,11 +205,30 @@ func writeTime(res *apptype.Response, fm *formatter.Formatter, dict map[string]s
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 }
 
+// createOrChange is a function just for knowing which way should be choosed changeClient() or isItDate()
 func createOrChange(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
 	if req.Direction == "create" {
 		isItDate(req, res, fm, dict)
 	} else {
-		changeCLient(res, fm, dict, req.Req, "")
+		changeClient(res, fm, dict, req.Req, "")
+	}
+}
+
+// chClientOrTime is a function just for knowing which way should be choosed changeClient() or isItTime()
+func chClientOrTime(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
+	if req.Direction == "create" {
+		isItTime(req, res, fm, dict)
+	} else {
+		changeClient(res, fm, dict, req.Changeable, req.Req)
+	}
+}
+
+// chClientOrSeats is a function just for knowing which way should be choosed changeClient() or isItSeats()
+func chClientOrSeats(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
+	if req.Direction == "create" {
+		isItSeats(req, res, fm, dict)
+	} else {
+		changeClient(res, fm, dict, req.Changeable, req.Req)
 	}
 }
 
@@ -241,9 +268,9 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	} else if req.Level == LEVEL3 {
 		createOrChange(req, res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL4 {
-		isItTime(req, res, fm, dict.Dictionary[req.Language])
+		chClientOrTime(req, res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL5 {
-		isItSeats(req, res, fm, dict.Dictionary[req.Language])
+		chClientOrSeats(req, res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL6 {
 		isItPrice(req, res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL7 {

@@ -136,6 +136,7 @@ func writeAddress(res *apptype.Response, fm *formatter.Formatter, dict map[strin
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 }
 
+// checkAllGameInf prepares a message (text, keybaord) to an admin to save the game address of the new game
 func checkAllGameInf(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, address string) {
 	res.Level = 10
 	res.Address = address
@@ -150,6 +151,7 @@ func checkAllGameInf(res *apptype.Response, fm *formatter.Formatter, dict map[st
 	setKb(fm, []int{1, 1}, []string{dict["save"], dict["MainMenu"]}, []string{"save", "MainMenu"})
 }
 
+// save is a function which saves data from res *apptype.Response to database (schedule table)
 func save(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
 	saveToDatabase(res, fm.Error)
 	res.Act = "divarication"
@@ -157,6 +159,7 @@ func save(res *apptype.Response, fm *formatter.Formatter, dict map[string]string
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 }
 
+// saveTheGame checks req.Req and if correct redirect to save
 func saveTheGame(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
 	if req.Req == "save" {
 		save(res, fm, dict)

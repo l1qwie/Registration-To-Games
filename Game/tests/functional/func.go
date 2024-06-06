@@ -3,6 +3,7 @@ package functional
 import (
 	"Game/apptype"
 	"fmt"
+	"log"
 )
 
 // [{"text":"","callback_data":"","url":""}]
@@ -96,7 +97,7 @@ func (ch *check) maintest() {
 }
 
 func ChooseOneOfThree(res *apptype.Response) {
-	ch.kb = `{"inline_keyboard":[[{"text":"Создать","callback_data":"create","url":""}],[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Удалить","callback_data":"delete","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.kb = `{"inline_keyboard":[[{"text":"Создать игру","callback_data":"create","url":""}],[{"text":"Изменить игру","callback_data":"change","url":""}],[{"text":"Удалить игру","callback_data":"delete","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Выберите направление связаное с играми"
 	ch.level = 1
 	ch.act = "game"
@@ -105,49 +106,66 @@ func ChooseOneOfThree(res *apptype.Response) {
 }
 
 func ChooseGame(res *apptype.Response) {
-	ch.kb = `{"inline_keyboard":[[{"text":"2024-09-22 18:00","callback_data":"6667","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.kb = `{"inline_keyboard":[[{"text":"09-12-2024 19:00","callback_data":"6667","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Выберите игру"
-	ch.level = 1
+	ch.level = 2
 	ch.act = "game"
 	ch.direction = "change"
 	ch.res = res
+	log.Print(ch.direction, ch.res.Direction, "AAAAAAAAAAAAAA< HHHHHHHHHHHHHHHHELP!")
 	ch.maintest()
 }
 
 func ChooseChangeable(res *apptype.Response) {
-	ch.kb = `{"inline_keyboard":[[{"text":"Спорт","callback_data":"sport","url":""}],[{"text":"Дата","callback_data":"date","url":""}],[{"text":"Время","callback_data":"time","url":""}],[{"text":"Количество мест","callback_data":"seats","url":""}],[{"text":"Цена","callback_data":"price&currency","url":""}],[{"text":"Ссылка","callback_data":"link","url":""}],[{"text":"Адрес","callback_data":"address","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.kb = `{"inline_keyboard":[[{"text":"Спорт","callback_data":"sport","url":""}],[{"text":"Дата","callback_data":"date","url":""}],[{"text":"Время","callback_data":"time","url":""}],[{"text":"Места","callback_data":"seats","url":""}],[{"text":"Цена (цифра)","callback_data":"price","url":""}],[{"text":"Валюта","callback_data":"currency","url":""}],[{"text":"Ссылка","callback_data":"link","url":""}],[{"text":"Название адреса","callback_data":"address","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Выберите что хотите изменить"
-	ch.level = 2
-	ch.act = "game"
-	ch.direction = "change"
-	ch.gameid = 6667
-	ch.res = res
-	ch.maintest()
-}
-
-func ChSportSemiFinal(res *apptype.Response) {
-	ch.kb = `{"inline_keyboard":[[{"text":"Волейбол","callback_data":"volleyball","url":""}],[{"text":"Футбол","callback_data":"football","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
-	ch.mes = "Выберите вид спорта"
 	ch.level = 3
 	ch.act = "game"
 	ch.direction = "change"
-	ch.changeable = "sport"
 	ch.gameid = 6667
 	ch.res = res
 	ch.maintest()
 }
 
-func ChFinal(res *apptype.Response) {
-	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
-	ch.mes = "<b>Вид спорта:</b> Футбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nИгра сохранена и теперь доступна вашим клиентам для регистрации"
-	ch.level = 2
-	ch.act = "game"
+func ChSport(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Волейбол","callback_data":"volleyball","url":""}],[{"text":"Футбол","callback_data":"football","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Выберите вид спорта"
+	ch.level = 4
 	ch.act = "game"
 	ch.direction = "change"
 	ch.changeable = "sport"
 	ch.gameid = 6667
 	ch.res = res
 	ch.maintest()
+}
+
+func ChSemiFinalSport(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "<b>Вид спорта:</b> Футбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
+	ch.level = 5
+	ch.act = "game"
+	ch.sport = "football"
+	ch.direction = "change"
+	ch.changeable = "sport"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+}
+
+func ChFinalSport(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
+	ch.level = 2
+	ch.act = "game"
+	ch.sport = "football"
+	ch.direction = "change"
+	ch.changeable = "sport"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+	if !checkChangedGame() {
+		panic("The app didn't change the sport in the game")
+	}
 }
 
 func SelectSport(res *apptype.Response) {

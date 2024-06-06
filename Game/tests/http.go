@@ -39,14 +39,17 @@ func createGame() {
 }
 
 func changeSport() {
-	defer deleteGame()
+	apptype.Db = apptype.ConnectToDatabase()
+	createTestGame()
+	defer deleteChGame()
 	ts := new(TestStuct)
-	ts.Round = 0
+	ts.Round = 6
 	ts.Name = "ChangeSport-Game-Test"
-	ts.FuncReq = []func() *apptype.Request{sendHello, sendGame, choseSport, chsendSport, sendChSave}
-	ts.FuncRes = []func(*apptype.Response){functional.ChooseOneOfThree, functional.ChooseGame, functional.ChooseChangeable, functional.ChSportSemiFinal, functional.ChFinal}
-	ts.FuncTrsh = []func() *apptype.Request{trash, trash1, chtrash2, chtrash3, chtrash4, chtrash5}
-	ts.UpdtLevel = []int{0, 1, 2, 3}
+	ts.FuncReq = []func() *apptype.Request{sendHello, sendDiretionChange, sendGame, choseSport, chsendSport, sendChSave}
+	ts.FuncRes = []func(*apptype.Response){functional.ChooseOneOfThree, functional.ChooseGame, functional.ChooseChangeable,
+		functional.ChSport, functional.ChSemiFinalSport, functional.ChFinalSport}
+	ts.FuncTrsh = []func() *apptype.Request{trash, trash1, chtrash2, chtrash3, chtrash4, chtrash5, chtrash6, chtrash7, chtrash8, chtrash9, chtrash10, chtrash11}
+	ts.UpdtLevel = []int{0, 1, 2, 3, 4, 5}
 	ts.DoTest()
 }
 
@@ -62,7 +65,7 @@ func changeGame() {
 }
 
 func Start() {
-	createGame()
-	//changeGame()
+	//createGame()
+	changeGame()
 	//deleteGame()
 }
