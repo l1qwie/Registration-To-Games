@@ -38,6 +38,29 @@ func createGame() {
 	ts.DoTest()
 }
 
+func changeSport() {
+	defer deleteGame()
+	ts := new(TestStuct)
+	ts.Round = 0
+	ts.Name = "ChangeSport-Game-Test"
+	ts.FuncReq = []func() *apptype.Request{sendHello, sendGame, choseSport, chsendSport, sendChSave}
+	ts.FuncRes = []func(*apptype.Response){functional.ChooseOneOfThree, functional.ChooseGame, functional.ChooseChangeable, functional.ChSportSemiFinal, functional.ChFinal}
+	ts.FuncTrsh = []func() *apptype.Request{trash, trash1, chtrash2, chtrash3, chtrash4, chtrash5}
+	ts.UpdtLevel = []int{0, 1, 2, 3}
+	ts.DoTest()
+}
+
+func changeGame() {
+	changeSport()
+	//changeDate()
+	//changeTime()
+	//changeSeats()
+	//changePrice()
+	//changeCurency()
+	//changeLink()
+	//changeAddress()
+}
+
 func Start() {
 	createGame()
 	//changeGame()

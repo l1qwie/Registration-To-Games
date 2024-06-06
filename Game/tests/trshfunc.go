@@ -14,20 +14,51 @@ func trash1() *apptype.Request {
 	req.Level = 0
 	return req
 }
+func chtrash2() *apptype.Request {
+	req := mainReq()
+	req.Req = "я хочу питсы"
+	req.Level = 1
+	return req
+}
+
+func chtrash3() *apptype.Request {
+	req := mainReq()
+	req.Req = "я хочу питсы"
+	req.Level = 1
+	return req
+}
+
+func chtrash4() *apptype.Request {
+	req := mainReq()
+	req.Req = "я хочу питсы"
+	req.Level = 2
+	return req
+}
+
+func chtrash5() *apptype.Request {
+	req := mainReq()
+	req.Req = "я хочу питсы"
+	req.Level = 2
+	return req
+}
+
 func trash2() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 2
 	return req
 }
 func trash3() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 2
 	return req
 }
 func trash4() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 3
 	req.Sport = "volleyball"
@@ -35,6 +66,7 @@ func trash4() *apptype.Request {
 }
 func trash5() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 3
 	req.Sport = "volleyball"
@@ -42,6 +74,7 @@ func trash5() *apptype.Request {
 }
 func trash6() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 4
 	req.Sport = "volleyball"
@@ -50,6 +83,7 @@ func trash6() *apptype.Request {
 }
 func trash7() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 4
 	req.Sport = "volleyball"
@@ -58,6 +92,7 @@ func trash7() *apptype.Request {
 }
 func trash8() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 5
 	req.Sport = "volleyball"
@@ -67,6 +102,7 @@ func trash8() *apptype.Request {
 }
 func trash9() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 5
 	req.Sport = "volleyball"
@@ -76,6 +112,7 @@ func trash9() *apptype.Request {
 }
 func trash10() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 6
 	req.Sport = "volleyball"
@@ -86,6 +123,7 @@ func trash10() *apptype.Request {
 }
 func trash11() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 6
 	req.Sport = "volleyball"
@@ -168,6 +206,7 @@ func trash17() *apptype.Request {
 }
 func trash18() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 10
 	req.Sport = "volleyball"
@@ -182,6 +221,7 @@ func trash18() *apptype.Request {
 }
 func trash19() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "я хочу питсы"
 	req.Level = 10
 	req.Sport = "volleyball"

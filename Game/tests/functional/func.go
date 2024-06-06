@@ -33,6 +33,9 @@ type check struct {
 	kb          string
 	mes         string
 	level       int
+	direction   string
+	changeable  string
+	gameid      int
 	act         string
 	launchpoint int
 	sport       string
@@ -60,6 +63,15 @@ func (ch *check) maintest() {
 	if ch.res.Level != ch.level {
 		panic(fmt.Sprintf("ch.res.Level != ch.level because ch.res.Level = %d but ch.level = %d", ch.res.Level, ch.level))
 	}
+	if ch.res.Direction != ch.direction {
+		panic(fmt.Sprintf("ch.res.Direction != ch.direction because ch.res.Direction = %s but ch.direction = %s", ch.res.Direction, ch.direction))
+	}
+	if ch.res.Changeable != ch.changeable {
+		panic(fmt.Sprintf("ch.res.Changeable != ch.changeable because ch.res.Changeable = %s but ch.changeable = %s", ch.res.Changeable, ch.changeable))
+	}
+	if ch.res.GameId != ch.gameid {
+		panic(fmt.Sprintf("ch.res.GameId != ch.gameid because ch.res.GameId = %d but ch.gameid = %d", ch.res.GameId, ch.gameid))
+	}
 	if ch.res.Act != ch.act {
 		panic(fmt.Sprintf("ch.res.Act != ch.act because ch.res.Act = %s but ch.act = %s", ch.res.Act, ch.act))
 	}
@@ -84,6 +96,58 @@ func (ch *check) maintest() {
 }
 
 func ChooseOneOfThree(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Создать","callback_data":"create","url":""}],[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Удалить","callback_data":"delete","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Выберите направление связаное с играми"
+	ch.level = 1
+	ch.act = "game"
+	ch.res = res
+	ch.maintest()
+}
+
+func ChooseGame(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"2024-09-22 18:00","callback_data":"6667","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Выберите игру"
+	ch.level = 1
+	ch.act = "game"
+	ch.direction = "change"
+	ch.res = res
+	ch.maintest()
+}
+
+func ChooseChangeable(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Спорт","callback_data":"sport","url":""}],[{"text":"Дата","callback_data":"date","url":""}],[{"text":"Время","callback_data":"time","url":""}],[{"text":"Количество мест","callback_data":"seats","url":""}],[{"text":"Цена","callback_data":"price&currency","url":""}],[{"text":"Ссылка","callback_data":"link","url":""}],[{"text":"Адрес","callback_data":"address","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Выберите что хотите изменить"
+	ch.level = 2
+	ch.act = "game"
+	ch.direction = "change"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+}
+
+func ChSportSemiFinal(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Волейбол","callback_data":"volleyball","url":""}],[{"text":"Футбол","callback_data":"football","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Выберите вид спорта"
+	ch.level = 3
+	ch.act = "game"
+	ch.direction = "change"
+	ch.changeable = "sport"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+}
+
+func ChFinal(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "<b>Вид спорта:</b> Футбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nИгра сохранена и теперь доступна вашим клиентам для регистрации"
+	ch.level = 2
+	ch.act = "game"
+	ch.act = "game"
+	ch.direction = "change"
+	ch.changeable = "sport"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
 }
 
 func SelectSport(res *apptype.Response) {
@@ -91,15 +155,7 @@ func SelectSport(res *apptype.Response) {
 	ch.mes = "Выберите вид спорта"
 	ch.level = 2
 	ch.act = "game"
-	ch.launchpoint = 0
-	ch.sport = ""
-	ch.date = 0
-	ch.time = 0
-	ch.seats = 0
-	ch.price = 0
-	ch.currency = ""
-	ch.link = ""
-	ch.address = ""
+	ch.direction = "create"
 	ch.res = res
 	ch.maintest()
 }
@@ -109,15 +165,8 @@ func SelectDate(res *apptype.Response) {
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n\n\nВведите дату проведения игры в формате ДДММГГГГ используя любой разделитель"
 	ch.level = 3
 	ch.act = "game"
-	ch.launchpoint = 0
 	ch.sport = "volleyball"
-	ch.date = 0
-	ch.time = 0
-	ch.seats = 0
-	ch.price = 0
-	ch.currency = ""
-	ch.link = ""
-	ch.address = ""
+	ch.direction = "create"
 	ch.res = res
 	ch.maintest()
 }
@@ -127,15 +176,9 @@ func SelectTime(res *apptype.Response) {
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n\n\nВведите время проведения игры в формате ЧЧММ используя любой разделитель"
 	ch.level = 4
 	ch.act = "game"
-	ch.launchpoint = 0
+	ch.direction = "create"
 	ch.sport = "volleyball"
 	ch.date = 20241209
-	ch.time = 0
-	ch.seats = 0
-	ch.price = 0
-	ch.currency = ""
-	ch.link = ""
-	ch.address = ""
 	ch.res = res
 	ch.maintest()
 }
@@ -145,15 +188,10 @@ func SelectSeats(res *apptype.Response) {
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n\n\nВведите количество свободных мест на эту игру"
 	ch.level = 5
 	ch.act = "game"
-	ch.launchpoint = 0
+	ch.direction = "create"
 	ch.sport = "volleyball"
 	ch.date = 20241209
 	ch.time = 1900
-	ch.seats = 0
-	ch.price = 0
-	ch.currency = ""
-	ch.link = ""
-	ch.address = ""
 	ch.res = res
 	ch.maintest()
 }
@@ -163,15 +201,11 @@ func SelectPrice(res *apptype.Response) {
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n\n\nВведите цену за одно место в формате цифры на эту игру"
 	ch.level = 6
 	ch.act = "game"
-	ch.launchpoint = 0
+	ch.direction = "create"
 	ch.sport = "volleyball"
 	ch.date = 20241209
 	ch.time = 1900
 	ch.seats = 15
-	ch.price = 0
-	ch.currency = ""
-	ch.link = ""
-	ch.address = ""
 	ch.res = res
 	ch.maintest()
 }
@@ -181,15 +215,12 @@ func SelectCurrency(res *apptype.Response) {
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n\n\nВведите имя валюты. Я не никак не контралирую то название, которое вы введете, так что советую вводить так, чтобы все понимали. Пример: USD EURO TL и тд"
 	ch.level = 7
 	ch.act = "game"
-	ch.launchpoint = 0
+	ch.direction = "create"
 	ch.sport = "volleyball"
 	ch.date = 20241209
 	ch.time = 1900
 	ch.seats = 15
 	ch.price = 1000
-	ch.currency = ""
-	ch.link = ""
-	ch.address = ""
 	ch.res = res
 	ch.maintest()
 }
@@ -199,15 +230,13 @@ func SelectLink(res *apptype.Response) {
 	ch.mes = fmt.Sprint("<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n\n\n", `Пршлите ссылку с Google Maps с тем местом, где будет проходить игра`)
 	ch.level = 8
 	ch.act = "game"
-	ch.launchpoint = 0
+	ch.direction = "create"
 	ch.sport = "volleyball"
 	ch.date = 20241209
 	ch.time = 1900
 	ch.seats = 15
 	ch.price = 1000
 	ch.currency = "RUB"
-	ch.link = ""
-	ch.address = ""
 	ch.res = res
 	ch.maintest()
 }
@@ -217,7 +246,7 @@ func SelectAddress(res *apptype.Response) {
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n\n\nВведите название адреса"
 	ch.level = 9
 	ch.act = "game"
-	ch.launchpoint = 0
+	ch.direction = "create"
 	ch.sport = "volleyball"
 	ch.date = 20241209
 	ch.time = 1900
@@ -225,7 +254,6 @@ func SelectAddress(res *apptype.Response) {
 	ch.price = 1000
 	ch.currency = "RUB"
 	ch.link = "https://www.google.com/maps?q=36.893445,30.709591"
-	ch.address = ""
 	ch.res = res
 	ch.maintest()
 }
@@ -235,7 +263,7 @@ func SemiFinal(res *apptype.Response) {
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nВы закончили заполнять информацию для создания новой игры. Сохраните эту игру, если все данные верны"
 	ch.level = 10
 	ch.act = "game"
-	ch.launchpoint = 0
+	ch.direction = "create"
 	ch.sport = "volleyball"
 	ch.date = 20241209
 	ch.time = 1900
@@ -253,6 +281,7 @@ func Final(res *apptype.Response) {
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
 	ch.level = 10
 	ch.act = "divarication"
+	ch.direction = "create"
 	ch.launchpoint = 0
 	ch.sport = "volleyball"
 	ch.date = 20241209

@@ -1,6 +1,7 @@
 package apptype
 
 import (
+	"Game/fmtogram/formatter"
 	"database/sql"
 	"fmt"
 	"time"
@@ -13,6 +14,9 @@ type Request struct {
 	Level       int    `json:"level"`
 	Req         string `json:"request"`
 	Language    string `json:"language"`
+	Direction   string `json:"direction"`
+	Changeable  string `json:"changeable"`
+	GameId      int    `json:"gameid"`
 	Act         string `json:"action"`
 	LaunchPoint int    `json:"launchpoint"`
 	Limit       int    `json:"limit"`
@@ -32,6 +36,9 @@ type Response struct {
 	Message     string `json:"message"`
 	ChatID      int    `json:"chatid"`
 	Level       int    `json:"level"`
+	Direction   string `json:"direction"`
+	Changeable  string `json:"changeable"`
+	GameId      int    `json:"gameid"`
 	Act         string `json:"action"`
 	LaunchPoint int    `json:"launchpoint"`
 	Sport       string `json:"sport"`
@@ -57,6 +64,12 @@ type ClientAct struct {
 	UserId    int       `json:"userid"`
 	Action    string    `json:"action"`
 	Message   string    `json:"message"`
+}
+
+type Change interface {
+	Offer(res *Response, fm *formatter.Formatter, dict map[string]string, val string)
+	Accept(res *Response, fm *formatter.Formatter, dict map[string]string, val string)
+	Save(res *Response, fm *formatter.Formatter, dict map[string]string, val string)
 }
 
 func ConnectToDatabase() *sql.DB {

@@ -30,15 +30,38 @@ func sendHello() *apptype.Request {
 	return req
 }
 
+func choseSport() *apptype.Request {
+	req := mainReq()
+	req.Req = "sport"
+	req.Level = 2
+	return req
+}
+
+func chsendSport() *apptype.Request {
+	req := mainReq()
+	req.Req = "football"
+	req.Level = 3
+	return req
+}
+
+func sendGame() *apptype.Request {
+	req := mainReq()
+	req.Req = "6667"
+	req.Level = 1
+	return req
+}
+
 func sendSport() *apptype.Request {
 	req := mainReq()
 	req.Req = "volleyball"
+	req.Direction = "create"
 	req.Level = 2
 	return req
 }
 
 func sendDate() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "09-12-2024"
 	req.Sport = "volleyball"
 	req.Level = 3
@@ -47,6 +70,7 @@ func sendDate() *apptype.Request {
 
 func sendTime() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "19-00"
 	req.Sport = "volleyball"
 	req.Date = 20241209
@@ -56,6 +80,7 @@ func sendTime() *apptype.Request {
 
 func sendSeats() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "15"
 	req.Sport = "volleyball"
 	req.Date = 20241209
@@ -66,6 +91,7 @@ func sendSeats() *apptype.Request {
 
 func sendPrice() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "1000"
 	req.Sport = "volleyball"
 	req.Date = 20241209
@@ -77,6 +103,7 @@ func sendPrice() *apptype.Request {
 
 func sendCurrency() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "RUB"
 	req.Sport = "volleyball"
 	req.Date = 20241209
@@ -89,6 +116,7 @@ func sendCurrency() *apptype.Request {
 
 func sendLink() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "https://www.google.com/maps?q=36.893445,30.709591"
 	req.Sport = "volleyball"
 	req.Date = 20241209
@@ -102,6 +130,7 @@ func sendLink() *apptype.Request {
 
 func sendAddress() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "Игровая Площадка"
 	req.Sport = "volleyball"
 	req.Date = 20241209
@@ -116,6 +145,7 @@ func sendAddress() *apptype.Request {
 
 func sendSave() *apptype.Request {
 	req := mainReq()
+	req.Direction = "create"
 	req.Req = "save"
 	req.Sport = "volleyball"
 	req.Date = 20241209
@@ -126,5 +156,12 @@ func sendSave() *apptype.Request {
 	req.Link = "https://www.google.com/maps?q=36.893445,30.709591"
 	req.Address = "Игровая Площадка"
 	req.Level = 10
+	return req
+}
+
+func sendChSave() *apptype.Request {
+	req := mainReq()
+	req.Req = "save"
+	req.Level = 4
 	return req
 }

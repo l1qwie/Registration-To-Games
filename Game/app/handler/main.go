@@ -35,7 +35,7 @@ func fromIntToStrDate(numberDate int) (date string) {
 	)
 	year = numberDate / 10000
 	month = (numberDate - (year * 10000)) / 100
-	day = (numberDate - (year * 10000) - (month * 100))
+	day = numberDate - (year * 10000) - (month * 100)
 	if month <= 10 {
 		monthString = fmt.Sprintf("%d%d", 0, month)
 	}
@@ -88,13 +88,6 @@ func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
 	}
 }
 
-// startCreate starts the create action and prepares a message (text, keyboard) to an admin to choose a sport
-func startCreate(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	res.Level = 2
-	fm.WriteString(dict["writesport"])
-	setKb(fm, []int{1, 1, 1}, []string{dict["volleyball"], dict["football"], dict["MainMenu"]}, []string{"volleyball", "football", "MainMenu"})
-}
-
 // chooseGameDir prepares a message (text and keyboard) to an admin to choose Game direction
 func chooseGameDir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
 	if isThereAnyGame(fm.Error) {
@@ -106,29 +99,51 @@ func chooseGameDir(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 	}
 }
 
+// showGames prepares a message (text and keyboard) to an admin to choose a game
+func showGames(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, direct string) {
+	res.Level = 3
+	res.Direction = direct
+	dates, times, gameIds := selectDateTime(fm.Error)
+	crd := make([]int, len(dates))
+	names := make([]string, len(dates))
+	data := make([]string, len(dates))
+	for i, date := range dates {
+		crd[i] = 1
+		names[i] = fmt.Sprintf("%s %s", date, times[i])
+		data[i] = fmt.Sprint(gameIds[i])
+	}
+	setKb(fm, crd, names, data)
+	fm.WriteString(dict["chooseGame"])
+}
+
 // showGamesOrCreate decides in which way an admin will go next
 func showGamesOrCreate(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	if req.Req != "create" {
-		//showGames()
+	if req.Req == "create" || req.Req == "change" || req.Req == "delete" {
+		if req.Req != "create" {
+			showGames(res, fm, dict, req.Req)
+		} else {
+			startCreate(res, fm, dict)
+		}
 	} else {
-		startCreate(res, fm, dict)
+		chooseGameDir(req, res, fm, dict)
 	}
 }
 
-// writeDate prepares a message (text, keybaord) to an admin to write a date of the new game
-func writeDate(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, sport string) {
-	res.Level = 3
-	res.Sport = sport
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n\n\n", dict["writedate"]))
-	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
-}
-
-// isItSport decides if in req.Req is a right request and if yes then it redirects to another function
-func isItSport(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	if req.Req == "volleyball" || req.Req == "football" {
-		writeDate(res, fm, dict, req.Req)
+// createOrElse decides what req.Direction is equal and then it redirects to another function
+func createOrElse(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
+	num, ok := intCheck(req.Req)
+	if req.Direction == "create" {
+		isItSport(req, res, fm, dict)
 	} else {
-		startCreate(res, fm, dict)
+		if ok {
+			if findGame(num, fm.Error) {
+				if req.Direction == "change" {
+					showOptions(res, fm, dict, num)
+				} else {
+					//something about delete game
+				}
+			}
+		}
 	}
 }
 
@@ -182,13 +197,11 @@ func writeTime(res *apptype.Response, fm *formatter.Formatter, dict map[string]s
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 }
 
-// isItDate checks if it's a real date by calling other functions and then redirect to a correct way
-func isItDate(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	date, success := checkDate(req.Req)
-	if success {
-		writeTime(res, fm, dict, date)
+func createOrChange(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
+	if req.Direction == "create" {
+		isItDate(req, res, fm, dict)
 	} else {
-		writeDate(res, fm, dict, req.Sport)
+		changeCLient(res, fm, dict, req.Req, "")
 	}
 }
 
@@ -212,133 +225,10 @@ func checkTime(input, dateInput string) (timeint int, success bool) {
 	return timeint, success
 }
 
-// writeSeats prepares a message (text, keybaord) to an admin to write seats of the new game
-func writeSeats(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, timeint int) {
-	res.Level = 5
-	res.Time = timeint
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)),
-		"\n\n\n", dict["writeseats"]))
-	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
-}
-
-// isItTime checks if it's a real time by calling other functions and then redirect to a correct way
-func isItTime(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	timeint, success := checkTime(req.Req, fromIntToStrDate(req.Date))
-	log.Print(timeint, success, "PAMAGITI")
-	if success {
-		writeSeats(res, fm, dict, timeint)
-	} else {
-		writeTime(res, fm, dict, req.Date)
-	}
-}
-
 // intCheck checks whether the phrase has some potential to become an int value
 func intCheck(phrase string) (int, bool) {
 	num, err := strconv.Atoi(phrase)
 	return num, err == nil
-}
-
-// writePrice prepares a message (text, keybaord) to an admin to write a price of the new game
-func writePrice(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, seats int) {
-	res.Level = 6
-	res.Seats = seats
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
-		fmt.Sprintf(dict["ShowSeats"], seats),
-		"\n\n\n", dict["writeprice"]))
-	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
-}
-
-// isItSeats checks if it's a real int value by calling other functions and then redirect to a correct way
-func isItSeats(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	seats, success := intCheck(req.Req)
-	if success {
-		writePrice(res, fm, dict, seats)
-	} else {
-		writeSeats(res, fm, dict, req.Time)
-	}
-}
-
-// writeCurrency prepares a message (text, keybaord) to an admin to write a currency of the new game
-func writeCurrency(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, price int) {
-	res.Level = 7
-	res.Price = price
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
-		fmt.Sprintf(dict["ShowSeats"], res.Seats),
-		"\n\n\n", dict["writecurrency"]))
-	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
-}
-
-// isItPrice checks if it's a real int value by calling other functions and then redirect to a correct way
-func isItPrice(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	price, success := intCheck(req.Req)
-	if success {
-		writeCurrency(res, fm, dict, price)
-	} else {
-		writePrice(res, fm, dict, req.Seats)
-	}
-}
-
-// writeLink prepares a message (text, keybaord) to an admin to write a link of the location of the new game
-func writeLink(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, currency string) {
-	res.Level = 8
-	res.Currency = currency
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
-		fmt.Sprintf(dict["ShowSeats"], res.Seats), "\n",
-		fmt.Sprintf(dict["ShowTotalprice"], res.Price, currency),
-		"\n\n\n", dict["writelink"]))
-	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
-}
-
-// writeAddress prepares a message (text, keybaord) to an admin to write a name address of the new game
-func writeAddress(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, link string) {
-	res.Level = 9
-	res.Link = link
-	log.Print(fmt.Sprintf(dict["ShowLink"], link), dict["ShowLink"], link)
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
-		fmt.Sprintf(dict["ShowSeats"], res.Seats), "\n",
-		fmt.Sprintf(dict["ShowTotalprice"], res.Price, res.Currency), "\n",
-		fmt.Sprintf(dict["ShowLink"], link),
-		"\n\n\n", dict["writeaddress"]))
-	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
-}
-
-func checkAllGameInf(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, address string) {
-	res.Level = 10
-	res.Address = address
-	fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[res.Sport]), "\n",
-		fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(res.Date)), "\n",
-		fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(res.Time)), "\n",
-		fmt.Sprintf(dict["ShowSeats"], res.Seats), "\n",
-		fmt.Sprintf(dict["ShowTotalprice"], res.Price, res.Currency), "\n",
-		fmt.Sprintf(dict["ShowLink"], res.Link), "\n",
-		fmt.Sprintf(dict["ShowAddress"], address),
-		"\n\n\n", dict["clarification"]))
-	setKb(fm, []int{1, 1}, []string{dict["save"], dict["MainMenu"]}, []string{"save", "MainMenu"})
-}
-
-func save(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	saveToDatabase(res, fm.Error)
-	res.Act = "divarication"
-	fm.WriteString(dict["gameWasSaved"])
-	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
-}
-
-func saveTheGame(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
-	if req.Req == "save" {
-		save(res, fm, dict)
-	} else {
-		checkAllGameInf(res, fm, dict, res.Address)
-	}
 }
 
 func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
@@ -347,9 +237,9 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	} else if req.Level == LEVEL1 {
 		showGamesOrCreate(req, res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL2 {
-		isItSport(req, res, fm, dict.Dictionary[req.Language])
+		createOrElse(req, res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL3 {
-		isItDate(req, res, fm, dict.Dictionary[req.Language])
+		createOrChange(req, res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL4 {
 		isItTime(req, res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL5 {
@@ -371,6 +261,9 @@ func fromReqToRes(req *apptype.Request, res *apptype.Response) {
 	res.ChatID = req.Id
 	res.Level = req.Level
 	res.Act = req.Act
+	res.Direction = req.Direction
+	res.Changeable = req.Changeable
+	res.GameId = req.GameId
 	res.LaunchPoint = req.LaunchPoint
 	res.Sport = req.Sport
 	res.Date = req.Date
