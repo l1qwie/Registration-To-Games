@@ -82,6 +82,15 @@ func chosePrice() *apptype.Request {
 	return req
 }
 
+func choseCurrency() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "currency"
+	req.GameId = 6667
+	req.Level = 3
+	return req
+}
+
 func chsendSport() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -128,6 +137,16 @@ func chsendPrice() *apptype.Request {
 	req.Req = "199"
 	req.GameId = 6667
 	req.Changeable = "price"
+	req.Level = 4
+	return req
+}
+
+func chsendCurrency() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "USDT"
+	req.GameId = 6667
+	req.Changeable = "currency"
 	req.Level = 4
 	return req
 }
@@ -298,6 +317,17 @@ func sendChSavePrice() *apptype.Request {
 	req.Changeable = "price"
 	req.GameId = 6667
 	req.Price = 199
+	req.Level = 5
+	return req
+}
+
+func sendChSaveCurrency() *apptype.Request {
+	req := mainReq()
+	req.Req = "save"
+	req.Direction = "change"
+	req.Changeable = "currency"
+	req.GameId = 6667
+	req.Currency = "USDT"
 	req.Level = 5
 	return req
 }

@@ -104,6 +104,26 @@ func chtrashprice8() *apptype.Request {
 	return req
 }
 
+func chtrashcurrency8() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "currency"
+	req.Req = "я хочу питсы"
+	req.Level = 4
+	return req
+}
+
+func chtrashcurrency9() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "currency"
+	req.Req = "я хочу питсы"
+	req.Level = 4
+	return req
+}
+
 func chtrashdate9() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -188,6 +208,17 @@ func chtrashtprice10() *apptype.Request {
 	return req
 }
 
+func chtrashtcurrency10() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "currency"
+	req.Req = "я хочу питсы"
+	req.Currency = "USDT"
+	req.Level = 5
+	return req
+}
+
 func chtrashdate11() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -228,6 +259,17 @@ func chtrashprice11() *apptype.Request {
 	req.Changeable = "price"
 	req.Req = "я хочу питсы"
 	req.Price = 199
+	req.Level = 5
+	return req
+}
+
+func chtrashcurrency11() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "currency"
+	req.Req = "я хочу питсы"
+	req.Currency = "USDT"
 	req.Level = 5
 	return req
 }

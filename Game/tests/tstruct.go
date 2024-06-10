@@ -16,6 +16,7 @@ type Update struct {
 
 var onetime bool
 var twotimes int
+var unverifiable bool
 
 // TestStuct stuct is for all tests. The main thought is you can use it anywhere
 type TestStuct struct {
@@ -33,24 +34,31 @@ type TestStuct struct {
 // Check trash-query, call a func and return true
 // else - return false
 func (t *TestStuct) checkTheTrash() bool {
-	if t.Trshcount < 2 && t.TRcount != 6 && t.TRcount != 7 && t.TRcount != 8 {
-		t.request = t.FuncTrsh[t.inficount]()
-		t.inficount++
-	} else {
+	var condition bool
+	if t.Trshcount < 2 && t.TRcount < 6 && t.TRcount > 8 {
+		if !unverifiable && t.TRcount < 3 {
+			condition = true
+			t.request = t.FuncTrsh[t.inficount]()
+			t.inficount++
+		}
 	}
-	return t.Trshcount < 2 && t.TRcount != 6 && t.TRcount != 7 && t.TRcount != 8
+	return condition
 }
 
 // The fucntion has to check what answer is and if it's worng answer - call a func and return true
 // else - return false
 // only if the main counter != 0
 func (t *TestStuct) checkTheWorng() bool {
-	if t.Wcounter < wrongAnswers && t.TRcount != 6 && t.TRcount != 7 && t.TRcount != 8 {
-		if t.TRcount != 0 {
-			t.FuncRes[t.TRcount-1](t.response)
+	var condition bool
+	if t.Wcounter < wrongAnswers && t.TRcount < 6 && t.TRcount > 8 {
+		if !unverifiable && t.TRcount < 3 {
+			if t.TRcount != 0 {
+				condition = true
+				t.FuncRes[t.TRcount-1](t.response)
+			}
 		}
 	}
-	return (t.Wcounter < wrongAnswers) && (t.TRcount != 0) && t.TRcount != 6 && t.TRcount != 7 && t.TRcount != 8
+	return condition
 }
 
 // The head of making a query from 'user' to bot
