@@ -236,7 +236,6 @@ func chClientOrSeats(req *apptype.Request, res *apptype.Response, fm *formatter.
 // Uses pattern to do it
 func checkTime(input, dateInput string) (timeint int, success bool) {
 	date, err := time.Parse("02-01-2006", dateInput)
-	log.Print(err)
 	if err == nil {
 		hour, minute, _, match := realDateTime(input, timepattern)
 		if match {

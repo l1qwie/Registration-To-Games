@@ -149,6 +149,18 @@ func ChDate(res *apptype.Response) {
 	ch.maintest()
 }
 
+func ChTime(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Введите время проведения игры в формате ЧЧММ используя любой разделитель"
+	ch.level = 4
+	ch.act = "game"
+	ch.direction = "change"
+	ch.changeable = "time"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+}
+
 func ChSemiFinalSport(res *apptype.Response) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Футбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
@@ -170,6 +182,19 @@ func ChSemiFinalDate(res *apptype.Response) {
 	ch.date = 20241212
 	ch.direction = "change"
 	ch.changeable = "date"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+}
+
+func ChSemiFinalTime(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 20:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
+	ch.level = 5
+	ch.act = "game"
+	ch.time = 2000
+	ch.direction = "change"
+	ch.changeable = "time"
 	ch.gameid = 6667
 	ch.res = res
 	ch.maintest()
@@ -203,7 +228,23 @@ func ChFinalDate(res *apptype.Response) {
 	ch.res = res
 	ch.maintest()
 	if !checkChangedGameDate() {
-		panic("The app didn't change the sport in the game")
+		panic("The app didn't change the date in the game")
+	}
+}
+
+func ChFinalTime(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
+	ch.level = 2
+	ch.act = "game"
+	ch.time = 2000
+	ch.direction = "change"
+	ch.changeable = "time"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+	if !checkChangedGameTime() {
+		panic("The app didn't change the time in the game")
 	}
 }
 

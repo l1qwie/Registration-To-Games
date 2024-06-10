@@ -85,3 +85,12 @@ func selecAllGameInf(gameid int, f func(error)) (date, time, seats, price int, s
 	}
 	return date, time, seats, price, sport, currency, link, address
 }
+
+func selectDate(gameid int, f func(error)) int {
+	var date int
+	err := apptype.Db.QueryRow("SELECT date FROM Schedule WHERE gameid = $1 and status != -1", gameid).Scan(&date)
+	if err != nil {
+		f(err)
+	}
+	return date
+}

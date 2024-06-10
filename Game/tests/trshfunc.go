@@ -73,11 +73,32 @@ func chtrashdate8() *apptype.Request {
 	req.Level = 4
 	return req
 }
+
+func chtrashtime8() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "time"
+	req.Req = "я хочу питсы"
+	req.Level = 4
+	return req
+}
+
 func chtrashdate9() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
 	req.GameId = 6667
 	req.Changeable = "date"
+	req.Req = "я хочу питсы"
+	req.Level = 4
+	return req
+}
+
+func chtrashtime9() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "time"
 	req.Req = "я хочу питсы"
 	req.Level = 4
 	return req
@@ -94,6 +115,17 @@ func chtrashdate10() *apptype.Request {
 	return req
 }
 
+func chtrashtime10() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "time"
+	req.Req = "я хочу питсы"
+	req.Time = 2000
+	req.Level = 5
+	return req
+}
+
 func chtrashdate11() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -101,6 +133,17 @@ func chtrashdate11() *apptype.Request {
 	req.Changeable = "date"
 	req.Req = "я хочу питсы"
 	req.Date = 20241212
+	req.Level = 5
+	return req
+}
+
+func chtrashtime11() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "time"
+	req.Req = "я хочу питсы"
+	req.Time = 2000
 	req.Level = 5
 	return req
 }
