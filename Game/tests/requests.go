@@ -46,12 +46,31 @@ func choseSport() *apptype.Request {
 	return req
 }
 
+func choseDate() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "date"
+	req.GameId = 6667
+	req.Level = 3
+	return req
+}
+
 func chsendSport() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
 	req.Req = "football"
 	req.GameId = 6667
 	req.Changeable = "sport"
+	req.Level = 4
+	return req
+}
+
+func chsendDate() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "12-12-2024"
+	req.GameId = 6667
+	req.Changeable = "date"
 	req.Level = 4
 	return req
 }
@@ -172,13 +191,24 @@ func sendSave() *apptype.Request {
 	return req
 }
 
-func sendChSave() *apptype.Request {
+func sendChSaveSport() *apptype.Request {
 	req := mainReq()
 	req.Req = "save"
 	req.Direction = "change"
 	req.Changeable = "sport"
 	req.GameId = 6667
 	req.Sport = "football"
+	req.Level = 5
+	return req
+}
+
+func sendChSaveDate() *apptype.Request {
+	req := mainReq()
+	req.Req = "save"
+	req.Direction = "change"
+	req.Changeable = "date"
+	req.GameId = 6667
+	req.Date = 20241212
 	req.Level = 5
 	return req
 }

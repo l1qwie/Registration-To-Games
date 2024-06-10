@@ -15,12 +15,12 @@ func callgame(body []byte) *apptype.Response {
 	if err != nil {
 		log.Println("Ошибка при выполнении запроса:", err)
 	} else {
+		defer resp.Body.Close()
 		err = json.NewDecoder(resp.Body).Decode(&result)
 		if err != nil {
 			panic(err)
 		}
 	}
-	defer resp.Body.Close()
 	return result
 }
 
@@ -45,7 +45,7 @@ func changeSport() {
 	ts := new(TestStuct)
 	ts.Round = 6
 	ts.Name = "ChangeSport-Game-Test"
-	ts.FuncReq = []func() *apptype.Request{sendHello, sendDiretionChange, sendGame, choseSport, chsendSport, sendChSave}
+	ts.FuncReq = []func() *apptype.Request{sendHello, sendDiretionChange, sendGame, choseSport, chsendSport, sendChSaveSport}
 	ts.FuncRes = []func(*apptype.Response){functional.ChooseOneOfThree, functional.ChooseGame, functional.ChooseChangeable,
 		functional.ChSport, functional.ChSemiFinalSport, functional.ChFinalSport}
 	ts.FuncTrsh = []func() *apptype.Request{trash, trash1, chtrash2, chtrash3, chtrash4, chtrash5, chtrash6, chtrash7, chtrash8, chtrash9, chtrash10, chtrash11}
@@ -53,9 +53,24 @@ func changeSport() {
 	ts.DoTest()
 }
 
+func changeDate() {
+	apptype.Db = apptype.ConnectToDatabase()
+	createTestGame()
+	defer deleteChGame()
+	ts := new(TestStuct)
+	ts.Round = 6
+	ts.Name = "ChangeDate-Game-Test"
+	ts.FuncReq = []func() *apptype.Request{sendHello, sendDiretionChange, sendGame, choseDate, chsendDate, sendChSaveDate}
+	ts.FuncRes = []func(*apptype.Response){functional.ChooseOneOfThree, functional.ChooseGame, functional.ChooseChangeable,
+		functional.ChDate, functional.ChSemiFinalDate, functional.ChFinalDate}
+	ts.FuncTrsh = []func() *apptype.Request{trash, trash1, chtrash2, chtrash3, chtrash4, chtrash5, chtrash6, chtrash7, chtrashdate8, chtrashdate9, chtrashdate10, chtrashdate11}
+	ts.UpdtLevel = []int{0, 1, 2, 3, 4, 5}
+	ts.DoTest()
+}
+
 func changeGame() {
-	changeSport()
-	//changeDate()
+	//changeSport()
+	changeDate()
 	//changeTime()
 	//changeSeats()
 	//changePrice()
