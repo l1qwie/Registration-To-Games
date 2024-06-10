@@ -197,6 +197,18 @@ func ChCurrency(res *apptype.Response) {
 	ch.maintest()
 }
 
+func ChLink(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Пршлите ссылку с Google Maps с тем местом, где будет проходить игра"
+	ch.level = 4
+	ch.act = "game"
+	ch.direction = "change"
+	ch.changeable = "link"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+}
+
 func ChSemiFinalSport(res *apptype.Response) {
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Футбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
@@ -270,6 +282,19 @@ func ChSemiFinalCurrency(res *apptype.Response) {
 	ch.currency = "USDT"
 	ch.direction = "change"
 	ch.changeable = "currency"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+}
+
+func ChSemiFinalLink(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps/place/31%C2%B051'47.5%22N+34%C2%B051'50.8%22E/@31.863181,34.8626321,17\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
+	ch.level = 5
+	ch.act = "game"
+	ch.link = "https://www.google.com/maps/place/31%C2%B051'47.5%22N+34%C2%B051'50.8%22E/@31.863181,34.8626321,17"
+	ch.direction = "change"
+	ch.changeable = "link"
 	ch.gameid = 6667
 	ch.res = res
 	ch.maintest()
@@ -368,6 +393,22 @@ func ChFinalCurrency(res *apptype.Response) {
 	ch.maintest()
 	if !checkChangedGameCurrency() {
 		panic("The app didn't change the currency in the game")
+	}
+}
+
+func ChFinalLink(res *apptype.Response) {
+	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
+	ch.level = 2
+	ch.act = "game"
+	ch.link = "https://www.google.com/maps/place/31%C2%B051'47.5%22N+34%C2%B051'50.8%22E/@31.863181,34.8626321,17"
+	ch.direction = "change"
+	ch.changeable = "link"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+	if !checkChangedGameLink() {
+		panic("The app didn't change the link in the game")
 	}
 }
 

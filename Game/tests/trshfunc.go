@@ -219,6 +219,17 @@ func chtrashtcurrency10() *apptype.Request {
 	return req
 }
 
+func chtrashtlink10() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "link"
+	req.Req = "я хочу питсы"
+	req.Link = "https://www.google.com/maps/place/31%C2%B051'47.5%22N+34%C2%B051'50.8%22E/@31.863181,34.8626321,17"
+	req.Level = 5
+	return req
+}
+
 func chtrashdate11() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -270,6 +281,17 @@ func chtrashcurrency11() *apptype.Request {
 	req.Changeable = "currency"
 	req.Req = "я хочу питсы"
 	req.Currency = "USDT"
+	req.Level = 5
+	return req
+}
+
+func chtrashlink11() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "link"
+	req.Req = "я хочу питсы"
+	req.Link = "https://www.google.com/maps/place/31%C2%B051'47.5%22N+34%C2%B051'50.8%22E/@31.863181,34.8626321,17"
 	req.Level = 5
 	return req
 }

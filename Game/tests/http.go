@@ -129,14 +129,30 @@ func changeCurency() {
 	ts.DoTest()
 }
 
+func changeLink() {
+	apptype.Db = apptype.ConnectToDatabase()
+	createTestGame()
+	defer deleteChGame()
+	unverifiable = true
+	ts := new(TestStuct)
+	ts.Round = 6
+	ts.Name = "ChangeLink-Game-Test"
+	ts.FuncReq = []func() *apptype.Request{sendHello, sendDiretionChange, sendGame, choseLink, chsendLink, sendChSaveLink}
+	ts.FuncRes = []func(*apptype.Response){functional.ChooseOneOfThree, functional.ChooseGame, functional.ChooseChangeable,
+		functional.ChLink, functional.ChSemiFinalLink, functional.ChFinalLink}
+	ts.FuncTrsh = []func() *apptype.Request{trash, trash1, chtrash2, chtrash3, chtrash4, chtrash5, chtrash6, chtrash7, chtrashtlink10, chtrashlink11}
+	ts.UpdtLevel = []int{0, 1, 2, 3, 4, 5}
+	ts.DoTest()
+}
+
 func changeGame() {
 	//changeSport()
 	//changeDate()
 	//changeTime()
 	//changeSeats()
 	//changePrice()
-	changeCurency()
-	//changeLink()
+	//changeCurency()
+	changeLink()
 	//changeAddress()
 }
 
