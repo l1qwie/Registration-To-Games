@@ -50,6 +50,10 @@ func selectDateTime(f func(error)) ([]string, []string, []int) {
 			times[i] = fromIntToStrTime(t)
 			i++
 		}
+		err = rows.Close()
+		if err != nil {
+			f(err)
+		}
 	}
 	return dates, times, gameids
 }

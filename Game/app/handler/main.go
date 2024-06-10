@@ -306,7 +306,7 @@ func fromReqToRes(req *apptype.Request, res *apptype.Response) {
 // It makes a few values like formatter.Formatter and it opens connection to database
 func GameAction(req *apptype.Request, res *apptype.Response) {
 	fm := new(formatter.Formatter)
-	apptype.Db = apptype.ConnectToDatabase()
+	//apptype.Db = apptype.ConnectToDatabase()
 	fromReqToRes(req, res)
 	dir(req, res, fm)
 	fm.ReadyKB()

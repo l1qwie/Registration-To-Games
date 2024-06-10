@@ -230,6 +230,28 @@ func chtrashtlink10() *apptype.Request {
 	return req
 }
 
+func chtrashaddress10() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "address"
+	req.Req = "я хочу питсы"
+	req.Address = "Кудыкина Гора"
+	req.Level = 5
+	return req
+}
+
+func chtrashaddress11() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "address"
+	req.Req = "я хочу питсы"
+	req.Address = "Кудыкина Гора"
+	req.Level = 5
+	return req
+}
+
 func chtrashdate11() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"

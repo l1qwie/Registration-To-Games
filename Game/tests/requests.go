@@ -100,6 +100,15 @@ func choseLink() *apptype.Request {
 	return req
 }
 
+func choseAddress() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "address"
+	req.GameId = 6667
+	req.Level = 3
+	return req
+}
+
 func chsendSport() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -166,6 +175,16 @@ func chsendLink() *apptype.Request {
 	req.Req = "https://www.google.com/maps/place/31%C2%B051'47.5%22N+34%C2%B051'50.8%22E/@31.863181,34.8626321,17"
 	req.GameId = 6667
 	req.Changeable = "link"
+	req.Level = 4
+	return req
+}
+
+func chsendAddress() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "Кудыкина Гора"
+	req.GameId = 6667
+	req.Changeable = "address"
 	req.Level = 4
 	return req
 }
@@ -358,6 +377,17 @@ func sendChSaveLink() *apptype.Request {
 	req.Changeable = "link"
 	req.GameId = 6667
 	req.Link = "https://www.google.com/maps/place/31%C2%B051'47.5%22N+34%C2%B051'50.8%22E/@31.863181,34.8626321,17"
+	req.Level = 5
+	return req
+}
+
+func sendChSaveAddress() *apptype.Request {
+	req := mainReq()
+	req.Req = "save"
+	req.Direction = "change"
+	req.Changeable = "address"
+	req.GameId = 6667
+	req.Address = "Кудыкина Гора"
 	req.Level = 5
 	return req
 }

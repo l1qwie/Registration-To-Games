@@ -27,8 +27,6 @@ import (
 
 */
 
-var ch = new(check)
-
 type check struct {
 	kb          string
 	mes         string
@@ -96,6 +94,7 @@ func (ch *check) maintest() {
 }
 
 func ChooseOneOfThree(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Создать игру","callback_data":"create","url":""}],[{"text":"Изменить игру","callback_data":"change","url":""}],[{"text":"Удалить игру","callback_data":"delete","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Выберите направление связаное с играми"
 	ch.level = 1
@@ -105,6 +104,7 @@ func ChooseOneOfThree(res *apptype.Response) {
 }
 
 func ChooseGame(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"09-12-2024 19:00","callback_data":"6667","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Выберите игру"
 	ch.level = 2
@@ -115,6 +115,7 @@ func ChooseGame(res *apptype.Response) {
 }
 
 func ChooseChangeable(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Спорт","callback_data":"sport","url":""}],[{"text":"Дата","callback_data":"date","url":""}],[{"text":"Время","callback_data":"time","url":""}],[{"text":"Места","callback_data":"seats","url":""}],[{"text":"Цена (цифра)","callback_data":"price","url":""}],[{"text":"Валюта","callback_data":"currency","url":""}],[{"text":"Ссылка","callback_data":"link","url":""}],[{"text":"Название адреса","callback_data":"address","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Выберите что хотите изменить"
 	ch.level = 3
@@ -126,6 +127,7 @@ func ChooseChangeable(res *apptype.Response) {
 }
 
 func ChSport(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Волейбол","callback_data":"volleyball","url":""}],[{"text":"Футбол","callback_data":"football","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Выберите вид спорта"
 	ch.level = 4
@@ -138,6 +140,7 @@ func ChSport(res *apptype.Response) {
 }
 
 func ChDate(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Введите дату проведения игры в формате ДДММГГГГ используя любой разделитель"
 	ch.level = 4
@@ -150,6 +153,7 @@ func ChDate(res *apptype.Response) {
 }
 
 func ChTime(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Введите время проведения игры в формате ЧЧММ используя любой разделитель"
 	ch.level = 4
@@ -162,6 +166,7 @@ func ChTime(res *apptype.Response) {
 }
 
 func ChSeats(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Введите количество свободных мест на эту игру"
 	ch.level = 4
@@ -174,6 +179,7 @@ func ChSeats(res *apptype.Response) {
 }
 
 func ChPrice(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Введите цену за одно место в формате цифры на эту игру"
 	ch.level = 4
@@ -186,6 +192,7 @@ func ChPrice(res *apptype.Response) {
 }
 
 func ChCurrency(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Введите имя валюты. Я не никак не контралирую то название, которое вы введете, так что советую вводить так, чтобы все понимали. Пример: USD EURO TL и тд"
 	ch.level = 4
@@ -198,6 +205,7 @@ func ChCurrency(res *apptype.Response) {
 }
 
 func ChLink(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Пршлите ссылку с Google Maps с тем местом, где будет проходить игра"
 	ch.level = 4
@@ -209,7 +217,21 @@ func ChLink(res *apptype.Response) {
 	ch.maintest()
 }
 
+func ChAddress(res *apptype.Response) {
+	ch := new(check)
+	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Введите название адреса"
+	ch.level = 4
+	ch.act = "game"
+	ch.direction = "change"
+	ch.changeable = "address"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+}
+
 func ChSemiFinalSport(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Футбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
 	ch.level = 5
@@ -223,6 +245,7 @@ func ChSemiFinalSport(res *apptype.Response) {
 }
 
 func ChSemiFinalDate(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 12-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
 	ch.level = 5
@@ -236,6 +259,7 @@ func ChSemiFinalDate(res *apptype.Response) {
 }
 
 func ChSemiFinalTime(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 20:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
 	ch.level = 5
@@ -249,6 +273,7 @@ func ChSemiFinalTime(res *apptype.Response) {
 }
 
 func ChSemiFinalSeats(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 99\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
 	ch.level = 5
@@ -262,6 +287,7 @@ func ChSemiFinalSeats(res *apptype.Response) {
 }
 
 func ChSemiFinalPrice(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 199 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
 	ch.level = 5
@@ -275,6 +301,7 @@ func ChSemiFinalPrice(res *apptype.Response) {
 }
 
 func ChSemiFinalCurrency(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 USDT\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
 	ch.level = 5
@@ -288,6 +315,7 @@ func ChSemiFinalCurrency(res *apptype.Response) {
 }
 
 func ChSemiFinalLink(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps/place/31%C2%B051'47.5%22N+34%C2%B051'50.8%22E/@31.863181,34.8626321,17\n<b>Название адреса:</b> Игровая Площадка\n\n\nСохранить данные?"
 	ch.level = 5
@@ -300,7 +328,22 @@ func ChSemiFinalLink(res *apptype.Response) {
 	ch.maintest()
 }
 
+func ChSemiFinalAddress(res *apptype.Response) {
+	ch := new(check)
+	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Кудыкина Гора\n\n\nСохранить данные?"
+	ch.level = 5
+	ch.act = "game"
+	ch.address = "Кудыкина Гора"
+	ch.direction = "change"
+	ch.changeable = "address"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+}
+
 func ChFinalSport(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
 	ch.level = 2
@@ -317,6 +360,7 @@ func ChFinalSport(res *apptype.Response) {
 }
 
 func ChFinalDate(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
 	ch.level = 2
@@ -333,6 +377,7 @@ func ChFinalDate(res *apptype.Response) {
 }
 
 func ChFinalTime(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
 	ch.level = 2
@@ -349,6 +394,7 @@ func ChFinalTime(res *apptype.Response) {
 }
 
 func ChFinalSeats(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
 	ch.level = 2
@@ -365,6 +411,7 @@ func ChFinalSeats(res *apptype.Response) {
 }
 
 func ChFinalPrice(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
 	ch.level = 2
@@ -381,6 +428,7 @@ func ChFinalPrice(res *apptype.Response) {
 }
 
 func ChFinalCurrency(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
 	ch.level = 2
@@ -397,6 +445,7 @@ func ChFinalCurrency(res *apptype.Response) {
 }
 
 func ChFinalLink(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
 	ch.level = 2
@@ -412,7 +461,25 @@ func ChFinalLink(res *apptype.Response) {
 	}
 }
 
+func ChFinalAddress(res *apptype.Response) {
+	ch := new(check)
+	ch.kb = `{"inline_keyboard":[[{"text":"Изменить","callback_data":"change","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
+	ch.level = 2
+	ch.act = "game"
+	ch.address = "Кудыкина Гора"
+	ch.direction = "change"
+	ch.changeable = "address"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+	if !checkChangedGameAddress() {
+		panic("The app didn't address the link in the game")
+	}
+}
+
 func SelectSport(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Волейбол","callback_data":"volleyball","url":""}],[{"text":"Футбол","callback_data":"football","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Выберите вид спорта"
 	ch.level = 2
@@ -423,6 +490,7 @@ func SelectSport(res *apptype.Response) {
 }
 
 func SelectDate(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n\n\nВведите дату проведения игры в формате ДДММГГГГ используя любой разделитель"
 	ch.level = 3
@@ -434,6 +502,7 @@ func SelectDate(res *apptype.Response) {
 }
 
 func SelectTime(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n\n\nВведите время проведения игры в формате ЧЧММ используя любой разделитель"
 	ch.level = 4
@@ -446,6 +515,7 @@ func SelectTime(res *apptype.Response) {
 }
 
 func SelectSeats(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n\n\nВведите количество свободных мест на эту игру"
 	ch.level = 5
@@ -459,6 +529,7 @@ func SelectSeats(res *apptype.Response) {
 }
 
 func SelectPrice(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n\n\nВведите цену за одно место в формате цифры на эту игру"
 	ch.level = 6
@@ -473,6 +544,7 @@ func SelectPrice(res *apptype.Response) {
 }
 
 func SelectCurrency(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n\n\nВведите имя валюты. Я не никак не контралирую то название, которое вы введете, так что советую вводить так, чтобы все понимали. Пример: USD EURO TL и тд"
 	ch.level = 7
@@ -488,6 +560,7 @@ func SelectCurrency(res *apptype.Response) {
 }
 
 func SelectLink(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = fmt.Sprint("<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n\n\n", `Пршлите ссылку с Google Maps с тем местом, где будет проходить игра`)
 	ch.level = 8
@@ -504,6 +577,7 @@ func SelectLink(res *apptype.Response) {
 }
 
 func SelectAddress(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n\n\nВведите название адреса"
 	ch.level = 9
@@ -521,6 +595,7 @@ func SelectAddress(res *apptype.Response) {
 }
 
 func SemiFinal(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Сохранить","callback_data":"save","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "<b>Вид спорта:</b> Волейбол\n<b>Дата:</b> 09-12-2024\n<b>Время:</b> 19:00\n<b>Всего свободных мест:</b> 15\n<b>Цена на одно место:</b> 1000 RUB\n<b>Ссылка на место проведения:</b> https://www.google.com/maps?q=36.893445,30.709591\n<b>Название адреса:</b> Игровая Площадка\n\n\nВы закончили заполнять информацию для создания новой игры. Сохраните эту игру, если все данные верны"
 	ch.level = 10
@@ -539,6 +614,7 @@ func SemiFinal(res *apptype.Response) {
 }
 
 func Final(res *apptype.Response) {
+	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
 	ch.mes = "Игра сохранена и теперь доступна вашим клиентам для регистрации"
 	ch.level = 10

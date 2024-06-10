@@ -25,6 +25,8 @@ func callgame(body []byte) *apptype.Response {
 }
 
 func createGame() {
+	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
 	defer deleteGame()
 	ts := new(TestStuct)
 	ts.Round = 10
@@ -40,6 +42,7 @@ func createGame() {
 
 func changeSport() {
 	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
 	createTestGame()
 	defer deleteChGame()
 	ts := new(TestStuct)
@@ -55,6 +58,7 @@ func changeSport() {
 
 func changeDate() {
 	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
 	createTestGame()
 	defer deleteChGame()
 	ts := new(TestStuct)
@@ -70,6 +74,7 @@ func changeDate() {
 
 func changeTime() {
 	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
 	createTestGame()
 	defer deleteChGame()
 	ts := new(TestStuct)
@@ -85,6 +90,7 @@ func changeTime() {
 
 func changeSeats() {
 	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
 	createTestGame()
 	defer deleteChGame()
 	ts := new(TestStuct)
@@ -100,6 +106,7 @@ func changeSeats() {
 
 func changePrice() {
 	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
 	createTestGame()
 	defer deleteChGame()
 	ts := new(TestStuct)
@@ -115,6 +122,7 @@ func changePrice() {
 
 func changeCurency() {
 	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
 	createTestGame()
 	defer deleteChGame()
 	unverifiable = true
@@ -131,6 +139,7 @@ func changeCurency() {
 
 func changeLink() {
 	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
 	createTestGame()
 	defer deleteChGame()
 	unverifiable = true
@@ -145,19 +154,36 @@ func changeLink() {
 	ts.DoTest()
 }
 
+func changeAddress() {
+	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
+	createTestGame()
+	defer deleteChGame()
+	unverifiable = true
+	ts := new(TestStuct)
+	ts.Round = 6
+	ts.Name = "ChangeAddress-Game-Test"
+	ts.FuncReq = []func() *apptype.Request{sendHello, sendDiretionChange, sendGame, choseAddress, chsendAddress, sendChSaveAddress}
+	ts.FuncRes = []func(*apptype.Response){functional.ChooseOneOfThree, functional.ChooseGame, functional.ChooseChangeable,
+		functional.ChAddress, functional.ChSemiFinalAddress, functional.ChFinalAddress}
+	ts.FuncTrsh = []func() *apptype.Request{trash, trash1, chtrash2, chtrash3, chtrash4, chtrash5, chtrash6, chtrash7, chtrashaddress10, chtrashaddress11}
+	ts.UpdtLevel = []int{0, 1, 2, 3, 4, 5}
+	ts.DoTest()
+}
+
 func changeGame() {
-	//changeSport()
-	//changeDate()
-	//changeTime()
-	//changeSeats()
-	//changePrice()
-	//changeCurency()
+	changeSport()
+	changeDate()
+	changeTime()
+	changeSeats()
+	changePrice()
+	changeCurency()
 	changeLink()
-	//changeAddress()
+	changeAddress()
 }
 
 func Start() {
-	//createGame()
+	createGame()
 	changeGame()
 	//deleteGame()
 }
