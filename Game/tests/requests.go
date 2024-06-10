@@ -37,6 +37,13 @@ func sendDiretionChange() *apptype.Request {
 	return req
 }
 
+func sendDiretionDel() *apptype.Request {
+	req := mainReq()
+	req.Req = "delete"
+	req.Level = 1
+	return req
+}
+
 func choseSport() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -192,6 +199,14 @@ func chsendAddress() *apptype.Request {
 func sendGame() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
+	req.Req = "6667"
+	req.Level = 2
+	return req
+}
+
+func sendDelGame() *apptype.Request {
+	req := mainReq()
+	req.Direction = "delete"
 	req.Req = "6667"
 	req.Level = 2
 	return req

@@ -35,8 +35,8 @@ type TestStuct struct {
 // else - return false
 func (t *TestStuct) checkTheTrash() bool {
 	var condition bool
-	if t.Trshcount < 2 && t.TRcount < 6 && t.TRcount > 8 {
-		if !unverifiable && t.TRcount < 3 {
+	if t.Trshcount < 2 && (t.TRcount < 6 || t.TRcount > 8) {
+		if !unverifiable || unverifiable && t.TRcount < 3 {
 			condition = true
 			t.request = t.FuncTrsh[t.inficount]()
 			t.inficount++
@@ -50,8 +50,8 @@ func (t *TestStuct) checkTheTrash() bool {
 // only if the main counter != 0
 func (t *TestStuct) checkTheWorng() bool {
 	var condition bool
-	if t.Wcounter < wrongAnswers && t.TRcount < 6 && t.TRcount > 8 {
-		if !unverifiable && t.TRcount < 3 {
+	if t.Wcounter < wrongAnswers && (t.TRcount < 6 || t.TRcount > 8) {
+		if !unverifiable || unverifiable && t.TRcount < 3 {
 			if t.TRcount != 0 {
 				condition = true
 				t.FuncRes[t.TRcount-1](t.response)

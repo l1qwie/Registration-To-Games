@@ -38,6 +38,22 @@ func chtrash4() *apptype.Request {
 	return req
 }
 
+func chtrashdel4() *apptype.Request {
+	req := mainReq()
+	req.Direction = "delete"
+	req.Req = "я хочу питсы"
+	req.Level = 2
+	return req
+}
+
+func chtrashdel5() *apptype.Request {
+	req := mainReq()
+	req.Direction = "delete"
+	req.Req = "я хочу питсы"
+	req.Level = 2
+	return req
+}
+
 func chtrash5() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"

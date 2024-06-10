@@ -114,6 +114,17 @@ func ChooseGame(res *apptype.Response) {
 	ch.maintest()
 }
 
+func ChooseDelGame(res *apptype.Response) {
+	ch := new(check)
+	ch.kb = `{"inline_keyboard":[[{"text":"09-12-2024 19:00","callback_data":"6667","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Выберите игру"
+	ch.level = 2
+	ch.act = "game"
+	ch.direction = "delete"
+	ch.res = res
+	ch.maintest()
+}
+
 func ChooseChangeable(res *apptype.Response) {
 	ch := new(check)
 	ch.kb = `{"inline_keyboard":[[{"text":"Спорт","callback_data":"sport","url":""}],[{"text":"Дата","callback_data":"date","url":""}],[{"text":"Время","callback_data":"time","url":""}],[{"text":"Места","callback_data":"seats","url":""}],[{"text":"Цена (цифра)","callback_data":"price","url":""}],[{"text":"Валюта","callback_data":"currency","url":""}],[{"text":"Ссылка","callback_data":"link","url":""}],[{"text":"Название адреса","callback_data":"address","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
@@ -475,6 +486,21 @@ func ChFinalAddress(res *apptype.Response) {
 	ch.maintest()
 	if !checkChangedGameAddress() {
 		panic("The app didn't address the link in the game")
+	}
+}
+
+func FinalDel(res *apptype.Response) {
+	ch := new(check)
+	ch.kb = `{"inline_keyboard":[[{"text":"Создать игру","callback_data":"create","url":""}],[{"text":"Изменить игру","callback_data":"change","url":""}],[{"text":"Удалить игру","callback_data":"delete","url":""}],[{"text":"Главное Меню","callback_data":"MainMenu","url":""}]]}`
+	ch.mes = "Игра удалена. Желаете сделать что-то еще?"
+	ch.level = 1
+	ch.act = "game"
+	ch.direction = "delete"
+	ch.gameid = 6667
+	ch.res = res
+	ch.maintest()
+	if !checkDeletedGame() {
+		panic("The app didn't delete the game")
 	}
 }
 

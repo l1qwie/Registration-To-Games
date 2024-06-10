@@ -5,7 +5,6 @@ import (
 	"Game/apptype"
 	"Game/fmtogram/formatter"
 	"fmt"
-	"log"
 	"regexp"
 	"strconv"
 	"time"
@@ -103,7 +102,6 @@ func chooseGameDir(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 func showGames(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, direct string) {
 	res.Level = 2
 	res.Direction = direct
-	log.Print("res.Direction =", res.Direction, "direct =", direct, "AAAAAAAAAAAALOOOOOOOOOOOOOOo")
 	dates, times, gameIds := selectDateTime(fm.Error)
 	crd := make([]int, len(dates)+1)
 	names := make([]string, len(dates)+1)
@@ -144,7 +142,7 @@ func createOrElse(req *apptype.Request, res *apptype.Response, fm *formatter.For
 				if req.Direction == "change" {
 					showOptions(res, fm, dict, num)
 				} else {
-					//something about delete game
+					deleteTheGame(res, fm, dict, num)
 				}
 			} else {
 				showGames(res, fm, dict, res.Direction)

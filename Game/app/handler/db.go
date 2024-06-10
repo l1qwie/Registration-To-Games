@@ -98,3 +98,10 @@ func selectDate(gameid int, f func(error)) int {
 	}
 	return date
 }
+
+func deleteGameDB(gameid int, f func(error)) {
+	_, err := apptype.Db.Exec("UPDATE Schedule SET status = -1 WHERE gameid = $1", gameid)
+	if err != nil {
+		f(err)
+	}
+}

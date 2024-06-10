@@ -27,7 +27,7 @@ func callgame(body []byte) *apptype.Response {
 func createGame() {
 	apptype.Db = apptype.ConnectToDatabase()
 	defer apptype.Db.Close()
-	defer deleteGame()
+	defer deleteTGame()
 	ts := new(TestStuct)
 	ts.Round = 10
 	ts.Name = "Create-Game-Test"
@@ -171,6 +171,22 @@ func changeAddress() {
 	ts.DoTest()
 }
 
+func deleteGame() {
+	apptype.Db = apptype.ConnectToDatabase()
+	defer apptype.Db.Close()
+	createTestGame()
+	defer deleteChGame()
+	unverifiable = false
+	ts := new(TestStuct)
+	ts.Round = 3
+	ts.Name = "Delete-Game-Test"
+	ts.FuncReq = []func() *apptype.Request{sendHello, sendDiretionDel, sendDelGame}
+	ts.FuncRes = []func(*apptype.Response){functional.ChooseOneOfThree, functional.ChooseDelGame, functional.FinalDel}
+	ts.FuncTrsh = []func() *apptype.Request{trash, trash1, chtrash2, chtrash3, chtrashdel4, chtrashdel5}
+	ts.UpdtLevel = []int{0, 1, 2}
+	ts.DoTest()
+}
+
 func changeGame() {
 	changeSport()
 	changeDate()
@@ -185,5 +201,5 @@ func changeGame() {
 func Start() {
 	createGame()
 	changeGame()
-	//deleteGame()
+	deleteGame()
 }
