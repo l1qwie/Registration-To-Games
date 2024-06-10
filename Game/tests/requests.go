@@ -64,6 +64,15 @@ func choseTime() *apptype.Request {
 	return req
 }
 
+func choseSeats() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "seats"
+	req.GameId = 6667
+	req.Level = 3
+	return req
+}
+
 func chsendSport() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -90,6 +99,16 @@ func chsendTime() *apptype.Request {
 	req.Req = "20:00"
 	req.GameId = 6667
 	req.Changeable = "time"
+	req.Level = 4
+	return req
+}
+
+func chsendSeats() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "99"
+	req.GameId = 6667
+	req.Changeable = "seats"
 	req.Level = 4
 	return req
 }
@@ -238,6 +257,17 @@ func sendChSaveTime() *apptype.Request {
 	req.Changeable = "time"
 	req.GameId = 6667
 	req.Time = 2000
+	req.Level = 5
+	return req
+}
+
+func sendChSaveSeats() *apptype.Request {
+	req := mainReq()
+	req.Req = "save"
+	req.Direction = "change"
+	req.Changeable = "seats"
+	req.GameId = 6667
+	req.Seats = 99
 	req.Level = 5
 	return req
 }
