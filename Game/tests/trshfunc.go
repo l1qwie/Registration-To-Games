@@ -94,6 +94,16 @@ func chtrashseats8() *apptype.Request {
 	return req
 }
 
+func chtrashprice8() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "price"
+	req.Req = "я хочу питсы"
+	req.Level = 4
+	return req
+}
+
 func chtrashdate9() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -119,6 +129,16 @@ func chtrashseats9() *apptype.Request {
 	req.Direction = "change"
 	req.GameId = 6667
 	req.Changeable = "seats"
+	req.Req = "я хочу питсы"
+	req.Level = 4
+	return req
+}
+
+func chtrashprice9() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "price"
 	req.Req = "я хочу питсы"
 	req.Level = 4
 	return req
@@ -157,6 +177,17 @@ func chtrashtseats10() *apptype.Request {
 	return req
 }
 
+func chtrashtprice10() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "price"
+	req.Req = "я хочу питсы"
+	req.Price = 199
+	req.Level = 5
+	return req
+}
+
 func chtrashdate11() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -186,6 +217,17 @@ func chtrashseats11() *apptype.Request {
 	req.Changeable = "seats"
 	req.Req = "я хочу питсы"
 	req.Seats = 99
+	req.Level = 5
+	return req
+}
+
+func chtrashprice11() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.GameId = 6667
+	req.Changeable = "price"
+	req.Req = "я хочу питсы"
+	req.Price = 199
 	req.Level = 5
 	return req
 }

@@ -73,6 +73,15 @@ func choseSeats() *apptype.Request {
 	return req
 }
 
+func chosePrice() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "price"
+	req.GameId = 6667
+	req.Level = 3
+	return req
+}
+
 func chsendSport() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -109,6 +118,16 @@ func chsendSeats() *apptype.Request {
 	req.Req = "99"
 	req.GameId = 6667
 	req.Changeable = "seats"
+	req.Level = 4
+	return req
+}
+
+func chsendPrice() *apptype.Request {
+	req := mainReq()
+	req.Direction = "change"
+	req.Req = "199"
+	req.GameId = 6667
+	req.Changeable = "price"
 	req.Level = 4
 	return req
 }
@@ -268,6 +287,17 @@ func sendChSaveSeats() *apptype.Request {
 	req.Changeable = "seats"
 	req.GameId = 6667
 	req.Seats = 99
+	req.Level = 5
+	return req
+}
+
+func sendChSavePrice() *apptype.Request {
+	req := mainReq()
+	req.Req = "save"
+	req.Direction = "change"
+	req.Changeable = "price"
+	req.GameId = 6667
+	req.Price = 199
 	req.Level = 5
 	return req
 }

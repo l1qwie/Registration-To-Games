@@ -10,6 +10,7 @@ type sportStruct struct{}
 type dateStruct struct{}
 type timeStruct struct{}
 type seatsStruct struct{}
+type priceStruct struct{}
 
 func (s *sportStruct) Offer(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
 	res.Level = 4
@@ -37,6 +38,13 @@ func (s *seatsStruct) Offer(res *apptype.Response, fm *formatter.Formatter, dict
 	res.Changeable = "seats"
 	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 	fm.WriteString(dict["writeseats"])
+}
+
+func (p *priceStruct) Offer(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
+	res.Level = 4
+	res.Changeable = "price"
+	setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
+	fm.WriteString(dict["writeprice"])
 }
 
 func (s *sportStruct) Accept(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, val string) {
@@ -118,6 +126,26 @@ func (s *seatsStruct) Accept(res *apptype.Response, fm *formatter.Formatter, dic
 	}
 }
 
+func (p *priceStruct) Accept(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, val string) {
+	price, ok := intCheck(val)
+	if ok {
+		res.Level = 5
+		res.Price = price
+		setKb(fm, []int{1, 1}, []string{dict["save"], dict["MainMenu"]}, []string{"save", "MainMenu"})
+		date, time, seats, _, sport, currency, link, address := selecAllGameInf(res.GameId, fm.Error)
+		fm.WriteString(fmt.Sprint(fmt.Sprintf(dict["ShowSport"], dict[sport]), "\n",
+			fmt.Sprintf(dict["ShowDate"], fromIntToStrDate(date)), "\n",
+			fmt.Sprintf(dict["ShowTime"], fromIntToStrTime(time)), "\n",
+			fmt.Sprintf(dict["ShowSeats"], seats), "\n",
+			fmt.Sprintf(dict["ShowTotalprice"], res.Price, currency), "\n",
+			fmt.Sprintf(dict["ShowLink"], link), "\n",
+			fmt.Sprintf(dict["ShowAddress"], address),
+			"\n\n\n", dict["woulduliketosave"]))
+	} else {
+		p.Offer(res, fm, dict)
+	}
+}
+
 func (s *sportStruct) Save(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, val string) {
 	if val == "save" {
 		res.Level = 2
@@ -162,12 +190,24 @@ func (s *seatsStruct) Save(res *apptype.Response, fm *formatter.Formatter, dict 
 	}
 }
 
+func (p *priceStruct) Save(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, val string) {
+	if val == "save" {
+		res.Level = 2
+		updateDBInt("price", res.Price, res.GameId, fm.Error)
+		setKb(fm, []int{1, 1}, []string{dict["change"], dict["MainMenu"]}, []string{"change", "MainMenu"})
+		fm.WriteString(dict["gameWasSaved"])
+	} else {
+		p.Accept(res, fm, dict, fmt.Sprint(res.Price))
+	}
+}
+
 func initMap() map[string]apptype.Change {
 	variables := make(map[string]apptype.Change)
 	variables["sport"] = new(sportStruct)
 	variables["date"] = new(dateStruct)
 	variables["time"] = new(timeStruct)
 	variables["seats"] = new(seatsStruct)
+	variables["price"] = new(priceStruct)
 	return variables
 }
 

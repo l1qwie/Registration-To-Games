@@ -98,12 +98,27 @@ func changeSeats() {
 	ts.DoTest()
 }
 
+func changePrice() {
+	apptype.Db = apptype.ConnectToDatabase()
+	createTestGame()
+	defer deleteChGame()
+	ts := new(TestStuct)
+	ts.Round = 6
+	ts.Name = "ChangePrice-Game-Test"
+	ts.FuncReq = []func() *apptype.Request{sendHello, sendDiretionChange, sendGame, chosePrice, chsendPrice, sendChSavePrice}
+	ts.FuncRes = []func(*apptype.Response){functional.ChooseOneOfThree, functional.ChooseGame, functional.ChooseChangeable,
+		functional.ChPrice, functional.ChSemiFinalPrce, functional.ChFinalPrice}
+	ts.FuncTrsh = []func() *apptype.Request{trash, trash1, chtrash2, chtrash3, chtrash4, chtrash5, chtrash6, chtrash7, chtrashprice8, chtrashprice9, chtrashtprice10, chtrashprice11}
+	ts.UpdtLevel = []int{0, 1, 2, 3, 4, 5}
+	ts.DoTest()
+}
+
 func changeGame() {
 	//changeSport()
 	//changeDate()
 	//changeTime()
-	changeSeats()
-	//changePrice()
+	//changeSeats()
+	changePrice()
 	//changeCurency()
 	//changeLink()
 	//changeAddress()
