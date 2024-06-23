@@ -26,8 +26,6 @@ func ConnectToDatabase(doc bool) *sql.DB {
 	)
 	if doc {
 		db, err = sql.Open("postgres", docConnect())
-	} else {
-		db, err = sql.Open("postgres", connectData())
 	}
 	if err != nil {
 		panic(err)
@@ -41,6 +39,7 @@ func ConnectToDatabase(doc bool) *sql.DB {
 
 type InfMessage struct {
 	TypeFrom User    `json:"from"`
+	Chat     Chat    `json:"chat"`
 	Text     string  `json:"text"`
 	Photo    []Photo `json:"photo"`
 	Video    []Video `json:"video"`
@@ -53,6 +52,7 @@ type User struct {
 	LastName string `json:"last_name"`
 	Username string `json:"username"`
 	Language string `json:"language_code"`
+	Phone    string `json:"phone_number"`
 }
 
 type TelegramUpdate struct {
@@ -63,8 +63,9 @@ type TelegramUpdate struct {
 }
 
 type Callback struct {
-	TypeFrom User   `json:"from"`
-	Data     string `json:"data"`
+	TypeFrom User    `json:"from"`
+	Data     string  `json:"data"`
+	Message  Message `json:"message"`
 }
 
 type TelegramError struct {
@@ -77,6 +78,12 @@ type TelegramResponse struct {
 	Result []TelegramUpdate `json:"result"`
 	Error  *TelegramError   `json:"error,omitempty"`
 	AppErr *chan error
+}
+
+type BadResponse struct {
+	Ok          bool   `json:"ok"`
+	ErrorCode   int    `json:"error_code"`
+	Description string `json:"description"`
 }
 
 type JustForUpdate struct {
@@ -94,14 +101,14 @@ type Media struct {
 }
 
 type SendMessagePayload struct {
-	ChatID      int     `json:"chat_id"`
-	Text        string  `json:"text"`
-	ReplyMarkup string  `json:"reply_markup"`
-	Photo       string  `json:"photo"`
-	Video       string  `json:"video"`
-	ParseMode   string  `json:"parse_mode"`
-	MessageId   int     `json:"message_id"`
-	InputMedia  []Media `json:"media"`
+	ChatID      interface{} `json:"chat_id"`
+	Text        string      `json:"text"`
+	ReplyMarkup string      `json:"reply_markup"`
+	Photo       string      `json:"photo"`
+	Video       string      `json:"video"`
+	ParseMode   string      `json:"parse_mode"`
+	MessageId   int         `json:"message_id"`
+	InputMedia  []Media     `json:"media"`
 }
 
 type DelMessage struct {
@@ -110,7 +117,8 @@ type DelMessage struct {
 }
 
 type Chat struct {
-	Id int `json:"id"`
+	Id   int    `json:"id"`
+	Type string `json:"type"`
 }
 
 type Photo struct {
@@ -155,9 +163,6 @@ type Responser interface {
 	Updates(string, *int, *TelegramResponse) error
 }
 
-func connectData() string {
-	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, sslmode)
-}
 func docConnect() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		docHost,

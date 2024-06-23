@@ -3,7 +3,6 @@ package producer
 import (
 	"Media/apptype"
 	"encoding/json"
-	"fmt"
 	"log"
 	"time"
 
@@ -19,7 +18,7 @@ func send(jd []byte, topic string, producer sarama.AsyncProducer) {
 	case producer.Input() <- msg:
 		log.Print("Message has been sent")
 	case <-producer.Errors():
-		log.Println("Failed to send message")
+		log.Print("Failed to send message")
 	}
 }
 
@@ -32,21 +31,21 @@ func ActLogs(text string, userId int) {
 	brokers := []string{"logs-kafka-1:9092"}
 	producer, err := sarama.NewAsyncProducer(brokers, producerConfig)
 	if err != nil {
-		panic(fmt.Sprintf("Failed to start producer: %s", err))
-	}
-	defer producer.Close()
-	log.Printf("TIME: %v", time.Now())
+		log.Printf("Failed to start producer: %s", err)
+	} else {
+		defer producer.Close()
 
-	val := &apptype.ClientAct{
-		Timestamp: time.Now(),
-		UserId:    userId,
-		Action:    "Registration-To-Games",
-		Message:   text}
-	jd, err := json.Marshal(val)
-	if err != nil {
-		panic(err)
+		val := &apptype.ClientAct{
+			Timestamp: time.Now(),
+			UserId:    userId,
+			Action:    "Registration-To-Games",
+			Message:   text}
+		jd, err := json.Marshal(val)
+		if err != nil {
+			log.Printf("KAFKA ERROR ActLogs(): %s", err)
+		}
+		send(jd, topic, producer)
 	}
-	send(jd, topic, producer)
 }
 
 func InterLogs(text, data string) {
@@ -58,18 +57,18 @@ func InterLogs(text, data string) {
 	brokers := []string{"logs-kafka-1:9092"}
 	producer, err := sarama.NewAsyncProducer(brokers, producerConfig)
 	if err != nil {
-		panic(fmt.Sprintf("Failed to start producer: %s", err))
-	}
-	defer producer.Close()
+		log.Printf("Failed to start producer: %s", err)
+	} else {
+		defer producer.Close()
+		val := &apptype.Internal{
+			Timestamp: time.Now(),
+			Message:   text,
+			Data:      data}
 
-	val := &apptype.Internal{
-		Timestamp: time.Now(),
-		Message:   text,
-		Data:      data}
-
-	jd, err := json.Marshal(val)
-	if err != nil {
-		panic(err)
+		jd, err := json.Marshal(val)
+		if err != nil {
+			log.Printf("KAFKA ERROR InterLogs(): %s", err)
+		}
+		send(jd, topic, producer)
 	}
-	send(jd, topic, producer)
 }

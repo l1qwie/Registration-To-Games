@@ -3,7 +3,6 @@ package helper
 import (
 	"User/fmtogram/types"
 	"fmt"
-	"log"
 )
 
 func ReturnText(telegramResponse *types.TelegramResponse) (text string) {
@@ -49,6 +48,15 @@ func ReturnUsername(telegramResponse *types.TelegramResponse) (username string) 
 		username = telegramResponse.Result[0].Query.TypeFrom.Username
 	}
 	return username
+}
+
+func ReturnPhone(tr *types.TelegramResponse) (phone string) {
+	if tr.Result[0].Message.TypeFrom.Phone != "" {
+		phone = tr.Result[0].Message.TypeFrom.Phone
+	} else if tr.Result[0].Query.TypeFrom.Phone != "" {
+		phone = tr.Result[0].Query.TypeFrom.Phone
+	}
+	return phone
 }
 
 func ReturnLanguage(telegramResponse *types.TelegramResponse) (language string) {
@@ -151,7 +159,6 @@ func ReturnVideosFileIdfrom(tr *types.TelegramResponse) ([]string, error) {
 
 func ReturnPhotoResp(resp *types.MessageResponse) (fileid string, err error) {
 	if len(resp.Result.Photo) > 0 {
-		log.Print(len(resp.Result.Photo))
 		if len(resp.Result.Photo) < 5 {
 			fileid = resp.Result.Photo[0].FileId
 		} else {
@@ -260,4 +267,14 @@ func ReturnMediaReq(req *types.TelegramResponse) ([]types.Media, error) {
 		err = fmt.Errorf("we don't have any Videos or Photos")
 	}
 	return media, err
+}
+
+func ReturnTypeOfChat(req *types.TelegramResponse) string {
+	var res string
+	if req.Result[0].Query.Message.Chat.Type != "" {
+		res = req.Result[0].Query.Message.Chat.Type
+	} else if req.Result[0].Message.Chat.Type != "" {
+		res = req.Result[0].Message.Chat.Type
+	}
+	return res
 }

@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package clientPart;
+
+option go_package = "./result";
+
+service Schedule {
+    //Changes the table Schedule in Schedule (client)
+    rpc UpdSchedule(ScheduleServRequest) returns (EmptyResponse);
+}
+
+service Registration {
+    //Changes the table Schedule in Registration (server)
+    rpc UpdReg(RegServRequest) returns (EmptyResponse);
+}
+
+service Settings {
+    //Changes the table Schedule in Settings (client)
+    rpc UpdSettingSch(SettingServRequestSch) returns (EmptyResponse);
+
+    //Changes the table GamesWithUsers in Settings (client)
+    rpc UpdSettingGWU(SettingServRequestGWU) returns (EmptyResponse);
+
+    //Changes the table Users in Settings (client)
+    rpc UpdSettingUser(SettingServRequestUser) returns (EmptyResponse);
+}
+
+service Media {
+    //Changes the table Schedule in Media (client)
+    rpc UpdMediaSch(MediaServRequestSch) returns (EmptyResponse);
+}
+
+service User {
+    //Changes the table Users in User (server)
+    rpc UpdUserUsers(UpdUsersRequest) returns (EmptyResponse);
+}
+
+message UpdUsersRequest {
+    int64 userid = 1;
+    string language = 2;
+    bool customlang = 3;
+}
+
+message ScheduleServRequest {
+    int64 gameid = 1;
+    string sport = 2;
+    string date = 3;
+    string time = 4;
+    int64 seats = 5;
+    int64 price = 9;
+    string currency = 10;
+    string action = 12; //new, del or change
+}
+
+message MediaServRequestSch {
+    int64 gameid = 1;
+    string sport = 2;
+    int64 date = 3;
+    int64 time = 4;
+    string action = 5; //new, del or change
+    int64 status = 6;
+}
+
+message SettingServRequestSch {
+    int64 gameid = 1;
+    string sport = 2;
+    int64 date = 3;
+    int64 time = 4;
+    int64 price = 5;
+    string currency = 6;
+    int64 seats = 7;
+    int64 status = 8;
+    string action = 9; //new, del or change
+}
+
+message SettingServRequestGWU {
+    int64 id = 1;
+    int64 userid = 2;
+    int64 gameid = 3;
+    int64 seats = 4;
+    string payment = 5;
+    int64 statpay = 6;
+    int64 status = 7;
+    string action = 8; //new, del or change
+}
+
+message SettingServRequestUser {
+    int64 userid = 1;
+    string language = 2;
+    bool customlang = 3;
+}
+
+message RegServRequest {
+    int64 gameid = 1;
+    string sport = 2;
+    int64 date = 3;
+    int64 time = 4;
+    int64 seats = 5;
+    int64 price = 6;
+    string currency = 7;
+    int64 status = 8;
+    string action = 9; //new, del or change
+}
+
+message EmptyResponse {
+   //Empty
+}

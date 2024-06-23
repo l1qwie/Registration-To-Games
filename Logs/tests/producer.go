@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"Logs/types"
+	"Logs/apptype"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -29,10 +29,10 @@ func createInterProd() {
 		panic(fmt.Sprintf("Ошибка при парсинге времени: %s", err))
 	}
 
-	val := &types.Internal{
-		Com:     types.Common{Timestamp: timestamp, LogId: 1},
-		Message: "function Receiving in Media microservice was called",
-		Data:    "req *types.Request was given"}
+	val := &apptype.Internal{
+		Timestamp: timestamp,
+		Message:   "function Receiving in Media microservice was called",
+		Data:      "req *apptype.Request was given"}
 
 	jd, err := json.Marshal(val)
 	if err != nil {
@@ -76,11 +76,11 @@ func createClProd() {
 		panic(fmt.Sprintf("Ошибка при парсинге времени: %s", err))
 	}
 
-	val := &types.ClientAct{
-		Com:     types.Common{Timestamp: timestamp, LogId: 1},
-		UserId:  1283829,
-		Action:  "Registration",
-		Message: "The user has started registration action"}
+	val := &apptype.ClientAct{
+		Timestamp: timestamp,
+		UserId:    1283829,
+		Action:    "Registration",
+		Message:   "The user has started registration action"}
 
 	jd, err := json.Marshal(val)
 	if err != nil {

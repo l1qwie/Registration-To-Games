@@ -50,8 +50,8 @@ func change(ctx context.Context, cl pb.MediaClient) {
 }
 
 func testServer() {
-	apptype.Db = apptype.ConnectToDatabase(false)
-	conn, err := grpc.Dial("localhost:50057", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	apptype.Db = apptype.ConnectToDatabase()
+	conn, err := grpc.NewClient("localhost:50057", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {

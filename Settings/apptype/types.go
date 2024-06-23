@@ -73,9 +73,6 @@ type ClientAct struct {
 	Message   string    `json:"message"`
 }
 
-func connectData() string {
-	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", username, password, dbname, sslmode)
-}
 func docConnect() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		docHost,
@@ -86,16 +83,8 @@ func docConnect() string {
 		docSslmode)
 }
 
-func ConnectToDatabase(doc bool) *sql.DB {
-	var (
-		db  *sql.DB
-		err error
-	)
-	if doc {
-		db, err = sql.Open("postgres", docConnect())
-	} else {
-		db, err = sql.Open("postgres", connectData())
-	}
+func ConnectToDatabase() *sql.DB {
+	db, err := sql.Open("postgres", docConnect())
 	if err != nil {
 		panic(err)
 	}

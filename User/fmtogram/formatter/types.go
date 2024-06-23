@@ -23,7 +23,7 @@ type Formatter struct {
 	Message       types.SendMessagePayload
 	Keyboard      InlineKeyboard
 	DeleteMessage types.DelMessage
-	err           error
+	Err           error
 	contenttype   string
 	kindofmedia   []int
 	mediatype     []string

@@ -33,22 +33,6 @@ func common4() *apptype.Request {
 	return req
 }
 
-func unOnetr1() *apptype.Request {
-	req := mainReq()
-	req.Req = "PARASYATA HRU HRU HRU"
-	req.Level = 1
-	req.MediaDir = "unload"
-	return req
-}
-
-func unOnetr2() *apptype.Request {
-	req := mainReq()
-	req.Req = "NU DAITE UJE zagruzit' hot' shto-to"
-	req.Level = 1
-	req.MediaDir = "unload"
-	return req
-}
-
 func unOnetr3() *apptype.Request {
 	req := mainReq()
 	req.Req = "nu i cho?"

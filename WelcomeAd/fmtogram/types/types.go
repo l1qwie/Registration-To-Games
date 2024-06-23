@@ -1,41 +1,11 @@
 package types
 
-import (
-	"database/sql"
-	"fmt"
-
-	_ "github.com/lib/pq"
-)
-
 const HttpsRequest = "https://api.telegram.org/"
-
-var (
-	//ConnectTot func() *sql.DB = connect
-	Db *sql.DB
-)
 
 const (
 	Markdown string = "Markdown"
 	HTML     string = "HTML"
 )
-
-func ConnectToDatabase(doc bool) *sql.DB {
-	var (
-		db  *sql.DB
-		err error
-	)
-	if doc {
-		db, err = sql.Open("postgres", docConnect())
-	}
-	if err != nil {
-		panic(err)
-	}
-	err = db.Ping()
-	if err != nil {
-		panic(err)
-	}
-	return db
-}
 
 type InfMessage struct {
 	TypeFrom User    `json:"from"`
@@ -151,14 +121,4 @@ type FMTRS interface {
 type Responser interface {
 	RequestOffset(string, *int) error
 	Updates(string, *int, *TelegramResponse) error
-}
-
-func docConnect() string {
-	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
-		docHost,
-		docPort,
-		docUsername,
-		docPass,
-		docDbname,
-		docSslmode)
 }

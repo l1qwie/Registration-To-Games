@@ -357,7 +357,7 @@ func media(res *apptype.Response, fm *formatter.Formatter) {
 func MediaAct(req *apptype.Request, res *apptype.Response) {
 	producer.InterLogs("Start function Media.MediaAct()", fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v", req.Id, req, res))
 	fm := new(formatter.Formatter)
-	apptype.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase()
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint
 	res.Act = req.Act

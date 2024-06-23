@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"os"
 )
 
 // Makes the requst and take a response
@@ -23,22 +22,10 @@ func callreg(body []byte) *apptype.Response {
 	return result
 }
 
-// Initialization of logs
-func initlogs(file string) *os.File {
-	os.Remove(file)
-	lf, err := os.OpenFile(file, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		panic(err)
-	}
-	log.SetOutput(lf)
-	return lf
-}
-
 // Tests Change the Language functional
 func language() {
 	defer DeleteUser()
 	CreateUser()
-	//f := initlogs("applang.log")
 	ts := new(TestStuct)
 	ts.Round = 2
 	ts.Name = "ChangeLanguageTest"
@@ -49,7 +36,6 @@ func language() {
 	onetime = true
 	ts.DoTest()
 	onetime = false
-	//defer f.Close()
 }
 
 // Tests Delete a Game functional
@@ -60,7 +46,6 @@ func delGame() {
 	CreateScheduleForUser()
 	CreateUserScehdule()
 	CreateUser()
-	//f := initlogs("appdelGame.log")
 	ts := new(TestStuct)
 	ts.Round = 4
 	ts.Name = "DeleteGameTest"
@@ -69,7 +54,6 @@ func delGame() {
 	ts.FuncTrsh = []func() *apptype.Request{commontrash, commontrash2, dGametr2, dGametr3, dGametr4, dGametr5, dGametr6, dGametr7}
 	ts.UpdtLevel = []int{0, 1, 2, 3}
 	ts.DoTest()
-	//defer f.Close()
 }
 
 // Tests Change the Seats functional
@@ -80,7 +64,6 @@ func chSeats() {
 	CreateScheduleForUser()
 	CreateUserScehdule()
 	CreateUser()
-	//f := initlogs("appchSeats.log")
 	ts := new(TestStuct)
 	ts.Round = 6
 	ts.Name = "ChangeSeatsTest"
@@ -89,7 +72,6 @@ func chSeats() {
 	ts.FuncTrsh = []func() *apptype.Request{commontrash, commontrash2, chSeatstr2, chSeatstr3, chSeatstr4, chSeatstr5, chSeatstr6, chSeatstr7, chSeatstr8, chSeatstr9, chSeatstr10, chSeatstr11}
 	ts.UpdtLevel = []int{0, 1, 2, 3, 4, 5}
 	ts.DoTest()
-	//defer f.Close()
 }
 
 // Tests Change the Paymethod functional
@@ -100,7 +82,6 @@ func chPayment() {
 	CreateScheduleForUser()
 	CreateUserScehdule()
 	CreateUser()
-	//f := initlogs("appchPay.log")
 	ts := new(TestStuct)
 	ts.Round = 5
 	ts.Name = "ChangePaymentTest"
@@ -109,7 +90,6 @@ func chPayment() {
 	ts.FuncTrsh = []func() *apptype.Request{commontrash, commontrash2, chSeatstr2, chSeatstr3, chSeatstr4, chSeatstr5, chSeatstr6, chSeatstr7, chPay1, chPay}
 	ts.UpdtLevel = []int{0, 1, 2, 3, 4}
 	ts.DoTest()
-	//defer f.Close()
 }
 
 // The list of testing functions
@@ -123,6 +103,6 @@ func testList() {
 // The head of the directioner
 // Only this function is imported
 func Head() {
-	apptype.Db = apptype.ConnectToDatabase(true)
+	apptype.Db = apptype.ConnectToDatabase()
 	testList()
 }

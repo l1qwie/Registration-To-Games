@@ -148,15 +148,6 @@ func chPay1() *apptype.Request {
 	return req
 }
 
-func chPay2() *apptype.Request {
-	req := mainReq()
-	req.Level = 4
-	req.Req = "AKSDKASDKASDKASKDKDASKDDASKDAKSDAKSDAKSDKAS"
-	req.IsChanged = "records"
-	req.GameId = 2
-	return req
-}
-
 func chSeatstr9() *apptype.Request {
 	req := mainReq()
 	req.Level = 4

@@ -8,7 +8,6 @@ import (
 
 	"Registration/app/handler"
 	"Registration/apptype"
-	"Registration/fmtogram/types"
 	pb "Registration/protos/out"
 
 	"google.golang.org/grpc"
@@ -33,7 +32,7 @@ func (s *server) UpdReg(ctx context.Context, req *pb.RegServRequest) (*pb.EmptyR
 	g.Seats = int(req.GetSeats())
 	g.Price = int(req.GetPrice())
 	g.Currency = req.GetCurrency()
-	types.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase()
 	err := handler.UpdateTheSchedule(date, time, stat, g, act)
 	log.Print("The server UpdReg:50054 ended its job")
 	return nil, err

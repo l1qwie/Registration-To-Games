@@ -2,7 +2,7 @@ package consumer
 
 import (
 	"Logs/app/handler/writer"
-	"Logs/types"
+	"Logs/apptype"
 	"encoding/json"
 	"log"
 
@@ -10,7 +10,7 @@ import (
 )
 
 func internalReader(top string, partcons sarama.PartitionConsumer) {
-	intrnl := new(types.Internal)
+	intrnl := new(apptype.Internal)
 	for {
 		select {
 		case msg := <-partcons.Messages():
@@ -26,8 +26,8 @@ func internalReader(top string, partcons sarama.PartitionConsumer) {
 }
 
 func clientActReader(top string, partcons sarama.PartitionConsumer) {
-	types.Db = types.ConnectToDatabase()
-	opnd := new(types.ClientAct)
+	apptype.Db = apptype.ConnectToDatabase()
+	opnd := new(apptype.ClientAct)
 	for {
 		select {
 		case msg := <-partcons.Messages():

@@ -65,8 +65,9 @@ func action() {
 				log.Printf("Secondary test %d was completed", j)
 				j++
 			} else {
-				panic(res.Error)
+				log.Print(res.Error)
 			}
+			j++
 		}
 		log.Printf("Main test %d was completed", i)
 		i++

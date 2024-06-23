@@ -35,9 +35,8 @@ func testInterData() {
 	}
 
 	res := openAndRead("internal/internal.log")
-	log.Print(res)
-	if res != fmt.Sprintf("Time: %s | Id: %d | Message: %s | Data of Message: %s", timestamp, 1, "function Receiving in Media microservice was called", "req *types.Request was given") {
-		panic(fmt.Sprintf("The result doesn't match the expectation. \n\nResult = %s\n\n", res))
+	if res != fmt.Sprintf("Time: %v | Message: function Receiving in Media microservice was called | Data of Message: req *apptype.Request was given\n", timestamp) {
+		panic(fmt.Sprintf("The result doesn't match the expectation. \n\nResult = %s", res))
 	}
 	log.Print("EVERYTHING IS OKAY! TEST WAS COMPLETED!")
 }
@@ -51,8 +50,8 @@ func testClData() {
 	defer database.DeleteDb(timestamp)
 	res := openAndRead("clientact/client-activities.log")
 	log.Print(res)
-	if res != fmt.Sprintf("Time: %s | Id: %d | User-ID: %d | Action: %s | Message: %s", timestamp, 1, 1283829, "Registration", "The user has started registration action") {
-		panic(fmt.Sprintf("The result doesn't match the expectation. \n\nResult = %s\n\n", res))
+	if res != fmt.Sprintf("Time: %v | User-ID: %d | Action: %s | Message: %s\n", timestamp, 1283829, "Registration", "The user has started registration action") {
+		panic(fmt.Sprintf("The result doesn't match the expectation. \n\nResult = %s", res))
 	}
 	if !database.ChechDb(timestamp) {
 		panic("The data in the database isn't match the expectation")

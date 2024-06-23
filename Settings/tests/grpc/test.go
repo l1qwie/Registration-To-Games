@@ -1,6 +1,6 @@
 package grpc
 
 func Start() {
-	//testClient()
+	testClient()
 	testServer()
 }

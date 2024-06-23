@@ -2,7 +2,7 @@ package writer
 
 import (
 	"Logs/app/handler/database"
-	"Logs/types"
+	"Logs/apptype"
 	"fmt"
 	"log"
 	"os"
@@ -24,13 +24,13 @@ func write(text string, file *os.File) {
 	}
 }
 
-func Internal(msg *types.Internal) {
+func Internal(msg *apptype.Internal) {
 	file := initfile("internal/internal.log")
-	write(fmt.Sprintf("Time: %s | Message: %s | Data of Message: %s", msg.Timestamp, msg.Message, msg.Data), file)
+	write(fmt.Sprintf("Time: %v | Message: %s | Data of Message: %s", msg.Timestamp, msg.Message, msg.Data), file)
 }
 
-func ClientActivities(msg *types.ClientAct) {
+func ClientActivities(msg *apptype.ClientAct) {
 	file := initfile("clientact/client-activities.log")
-	write(fmt.Sprintf("Time: %s | User-ID: %d | Action: %s | Message: %s", msg.Timestamp, msg.UserId, msg.Action, msg.Message), file)
+	write(fmt.Sprintf("Time: %v | User-ID: %d | Action: %s | Message: %s", msg.Timestamp, msg.UserId, msg.Action, msg.Message), file)
 	database.Add(msg)
 }

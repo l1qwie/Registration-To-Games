@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"os"
 )
 
 // Makes the request and take a response
@@ -17,24 +16,13 @@ func callmedia(body []byte) *apptype.Response {
 	if err != nil {
 		log.Println("Ошибка при выполнении запроса:", err)
 	} else {
+		defer resp.Body.Close()
 		err = json.NewDecoder(resp.Body).Decode(&result)
+		if err != nil {
+			panic(err)
+		}
 	}
-	defer resp.Body.Close()
 	return result
-}
-
-// Initialization of logs
-func initlogs(file string) *os.File {
-	err := os.Remove(file)
-	if err != nil {
-		panic(err)
-	}
-	lf, err := os.OpenFile(file, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		panic(err)
-	}
-	log.SetOutput(lf)
-	return lf
 }
 
 // Tested the Unload One functional
@@ -120,6 +108,6 @@ func testList() {
 // Head of the directioner
 // Only this function is imported
 func Head() {
-	apptype.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase()
 	testList()
 }

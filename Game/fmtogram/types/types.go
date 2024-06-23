@@ -159,11 +159,10 @@ func connectData() string {
 	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", "username", "password", "dbname", "sslmode")
 }
 func docConnect() string {
-	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s",
 		docHost,
 		docPort,
 		docUsername,
 		docPass,
-		docDbname,
-		docSslmode)
+		docDbname)
 }

@@ -423,7 +423,7 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 func SettingsAct(req *apptype.Request, res *apptype.Response) {
 	producer.InterLogs("Start function Settings.SettingsAct()",
 		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v", req.Id, req, res))
-	apptype.Db = apptype.ConnectToDatabase(true)
+	apptype.Db = apptype.ConnectToDatabase()
 	fm := new(formatter.Formatter)
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint

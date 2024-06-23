@@ -56,7 +56,7 @@ func changeSch(ctx context.Context, cl pb.SettingsClient) {
 }
 
 func schedule() {
-	conn, err := grpc.Dial("localhost:50055", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("localhost:50055", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
@@ -113,7 +113,7 @@ func changeGWU(ctx context.Context, cl pb.SettingsClient) {
 }
 
 func gamesWithUsers() {
-	conn, err := grpc.Dial("localhost:50055", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("localhost:50055", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
@@ -126,7 +126,7 @@ func gamesWithUsers() {
 }
 
 func testServer() {
-	apptype.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase()
 	schedule()
 	gamesWithUsers()
 	log.Print("Server's tests were successfuly completed")

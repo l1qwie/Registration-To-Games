@@ -1,10 +1,9 @@
 package grpc
 
 import (
-	apptype "Registraion/apptype"
-	"Registraion/fmtogram/types"
-
-	pb "Registraion/protos/out"
+	"Registration/apptype"
+	"Registration/fmtogram/types"
+	pb "Registration/protos/out"
 	"context"
 	"log"
 
@@ -58,8 +57,8 @@ func upd(client pb.RegistrationClient, ctx context.Context) {
 }
 
 func testServer() {
-	types.Db = apptype.ConnectToDatabase(false)
-	conn, err := grpc.Dial("localhost:50050", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	types.Db = apptype.ConnectToDatabase()
+	conn, err := grpc.NewClient("localhost:50050", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		panic(err)
 	}

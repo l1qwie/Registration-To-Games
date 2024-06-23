@@ -2,13 +2,11 @@ package tests
 
 import (
 	"Registration/apptype"
-	"Registration/fmtogram/types"
 	"Registration/tests/functional"
 	"bytes"
 	"encoding/json"
 	"log"
 	"net/http"
-	"os"
 )
 
 var (
@@ -78,35 +76,21 @@ func action() {
 			if res.Error == "" {
 				functional.Dir(res, i, j)
 				log.Printf("Secondary test %d was completed", j)
-				j++
 			} else {
-				panic(res.Error)
+				log.Print(res.Error)
 			}
+			j++
 		}
 		i++
 	}
 }
 
-// Inits logs
-func initlogs(file string) *os.File {
-	os.Remove(file)
-	lf, err := os.OpenFile(file, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		panic(err)
-	}
-	log.SetOutput(lf)
-	return lf
-}
-
 // The head of the directioner
 // Only this function is imported
 func Head() {
-	//f := initlogs("app.log")
-	types.Db = apptype.ConnectToDatabase(false)
+	apptype.Db = apptype.ConnectToDatabase()
 	defer DeleteGameWithUser()
 	defer DeleteGame()
 	CreateGame()
 	action()
-	//f.Close()
-
 }

@@ -22,11 +22,14 @@ func pollResponse(output chan *formatter.Formatter, reg *executer.RegTable) {
 	err = executer.RequestOffset(types.TelebotToken, &offset)
 	for err != nil {
 		err = executer.RequestOffset(types.TelebotToken, &offset)
+		time.Sleep(time.Second / 10)
 	}
+	log.Print("The bot has found the first request from Telegram")
 	for {
 		telegramResponse = new(types.TelegramResponse)
 		err = executer.Updates(&offset, telegramResponse)
 		if len(telegramResponse.Result) != 0 && err == nil {
+			log.Print("The bots has found some information about user without any misstakes")
 			chatID = helper.ReturnChatId(telegramResponse)
 			index = reg.Seeker(chatID)
 			if index != executer.None {
@@ -37,15 +40,16 @@ func pollResponse(output chan *formatter.Formatter, reg *executer.RegTable) {
 				reg.Reg[index].Chu = make(chan *types.TelegramResponse, 1)
 				reg.Reg[index].Chu <- telegramResponse
 			}
-			go Worker(reg.Reg[index].Chu, reg.Reg[index].Chb, output)
+			go worker(reg.Reg[index].Chu, reg.Reg[index].Chb, output)
 			offset = offset + 1
 		} else if err != nil {
-			log.Fatal(err)
+			log.Print("ERR FROM Updates():", err)
 		}
+		time.Sleep(time.Second / 10)
 	}
 }
 
-func Worker(input chan *types.TelegramResponse, mesoutput chan *types.MessageResponse, output chan *formatter.Formatter) {
+func worker(input chan *types.TelegramResponse, mesoutput chan *types.MessageResponse, output chan *formatter.Formatter) {
 	var (
 		fm         *formatter.Formatter
 		userstruct *types.TelegramResponse
@@ -75,12 +79,11 @@ func Worker(input chan *types.TelegramResponse, mesoutput chan *types.MessageRes
 		}
 	}
 }
-
 func pushRequest(requests <-chan *formatter.Formatter, reg *executer.RegTable) {
 	for r := range requests {
 		mes, err := r.Make()
 		if err != nil {
-			panic(err)
+			log.Print(err)
 		}
 		if mes.Ok {
 			index := reg.Seeker(mes.Result.Chat.Id)
@@ -91,15 +94,11 @@ func pushRequest(requests <-chan *formatter.Formatter, reg *executer.RegTable) {
 }
 
 func Start() {
-	var (
-		requests chan *formatter.Formatter
-		reg      *executer.RegTable
-	)
-	requests = make(chan *formatter.Formatter)
-	reg = new(executer.RegTable)
+	log.Print("The bot has been turned on")
+	requests := make(chan *formatter.Formatter)
+	reg := new(executer.RegTable)
 	go pollResponse(requests, reg)
 	go pushRequest(requests, reg)
-
 	for {
 		time.Sleep(time.Second)
 	}

@@ -1,5 +1,3 @@
-go.mod
-go.sum
 fmtogram/types/data.go
 1.png
 2.png
@@ -8,7 +6,6 @@ red.jpg
 redd.jpg
 reddd.jpg
 pgdata
-.dockerignore
 logs/postgres.log
 WelcomeUs/types/data.go
 WelcomeUs/fmtogram/types/data.go
@@ -26,4 +23,3 @@ WelcomeAd/fmtogram/types/data.go
 Logs/types/data.go
 Game/fmtogram/types/data.go
 Game/apptype/data.go
-.idea

@@ -69,13 +69,6 @@ func (t *TestStuct) theHead() {
 	}
 }
 
-// Preparation the datbase. Just the routine
-func (t *TestStuct) prepDatabase() {
-	UpdateAction()
-	UpdateLanguage()
-	UpdateLevel(t.UpdtLevel[t.TRcount])
-}
-
 // Logs data from Request
 func (t *TestStuct) logReq() {
 	log.Print("Request:")
