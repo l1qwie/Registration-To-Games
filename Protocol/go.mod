@@ -1,4 +1,4 @@
-module Protocol
+module github.com/l1qwie/RegistrationToGames-Golang-/tree/master/Protocol
 
 go 1.22.4
 
