@@ -8,7 +8,8 @@ import (
 
 	"Registration/app/handler"
 	"Registration/apptype"
-	pb "Registration/protos/out"
+
+	pb "github.com/l1qwie/Proto-RTG/result"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

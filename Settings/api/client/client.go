@@ -1,7 +1,7 @@
 package client
 
 import (
-	pb "Settings/protos/out"
+	pb "github.com/l1qwie/Proto-RTG/result"
 
 	"context"
 	"log"

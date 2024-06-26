@@ -1,10 +1,10 @@
-package types
+package apptype
 
 const (
-	docPort     = "5434"
 	docHost     = "postgresql"
-	docDbname   = "postgres"
+	docPort     = "5432"
 	docUsername = "postgres"
 	docPass     = "postgres"
+	docDbname   = "postgres"
 	docSslmode  = "disable"
 )

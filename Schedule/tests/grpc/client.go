@@ -2,11 +2,12 @@ package main
 
 import (
 	apptype "Schedule/apptype"
-	pb "Schedule/protos/out"
 	"context"
 	"encoding/json"
 	"fmt"
 	"log"
+
+	pb "github.com/l1qwie/Proto-RTG/result"
 
 	"github.com/go-redis/redis/v8"
 	"google.golang.org/grpc"

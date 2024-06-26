@@ -4,11 +4,12 @@ import (
 	"User/apptype"
 	"User/fmtogram/formatter"
 	"User/fmtogram/types"
-	pb "User/protos/out"
 	"context"
 	"encoding/json"
 	"fmt"
 	"log"
+
+	pb "github.com/l1qwie/Proto-RTG/result"
 
 	"github.com/go-redis/redis/v8"
 	"google.golang.org/grpc"

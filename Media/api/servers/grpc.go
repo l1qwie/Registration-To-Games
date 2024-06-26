@@ -4,11 +4,12 @@ import (
 	"Media/app/handler"
 	"Media/apptype"
 
-	pb "Media/protos/out"
 	"context"
 	"fmt"
 	"log"
 	"net"
+
+	pb "github.com/l1qwie/Proto-RTG/result"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
