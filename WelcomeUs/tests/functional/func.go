@@ -1,7 +1,7 @@
 package functional
 
 import (
-	"Welcome/types"
+	"Welcome/apptype"
 	"fmt"
 	"log"
 )
@@ -14,7 +14,7 @@ type check struct {
 	act    string
 	level  int
 	status bool
-	res    *types.Response
+	res    *apptype.Response
 }
 
 var truefunc = []func(*check){greetingsToUser, showRules, welcomeToMainMenu}
@@ -79,7 +79,7 @@ func welcomeToMainMenu(ch *check) {
 }
 
 // Prints the logs
-func logs(res *types.Response) {
+func logs(res *apptype.Response) {
 	log.Printf("res.Message = %s", res.Message)
 	log.Printf("res.Keyboard = %s", res.Keyboard)
 	log.Printf("res.ChatId = %d", res.ChatID)
@@ -90,7 +90,7 @@ func logs(res *types.Response) {
 
 // Just directioner
 // Only this function is imported
-func Dir(i, j int, res *types.Response) {
+func Dir(i, j int, res *apptype.Response) {
 	logs(res)
 	ch := new(check)
 	ch.res = res

@@ -1,8 +1,8 @@
 package tests
 
 import (
+	"Welcome/apptype"
 	"Welcome/tests/functional"
-	"Welcome/types"
 	"bytes"
 	"encoding/json"
 	"log"
@@ -17,8 +17,8 @@ var (
 )
 
 // Makes the requst and take a response
-func callwelcome(body []byte) *types.Response {
-	result := new(types.Response)
+func callwelcome(body []byte) *apptype.Response {
+	result := new(apptype.Response)
 	resp, err := http.Post("http://localhost:8081/Welcome", "application/json", bytes.NewBuffer(body))
 	if err != nil {
 		log.Println("Ошибка при выполнении запроса:", err)
@@ -30,8 +30,8 @@ func callwelcome(body []byte) *types.Response {
 }
 
 // Preparing a request
-func handleReq() *types.Request {
-	req := new(types.Request)
+func handleReq() *apptype.Request {
+	req := new(apptype.Request)
 	req.Id = 456
 	req.Act = "registration"
 	req.Level = i

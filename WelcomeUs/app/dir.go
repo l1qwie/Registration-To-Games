@@ -3,13 +3,13 @@ package app
 import (
 	"Welcome/api/producer"
 	"Welcome/app/handler"
-	"Welcome/types"
+	"Welcome/apptype"
 	"fmt"
 )
 
-func Receiving(req *types.Request) *types.Response {
+func Receiving(req *apptype.Request) *apptype.Response {
 	producer.InterLogs("Start function WelcomeUs.Receiving()", fmt.Sprintf("UserId: %d, req (*types.Request): %v", req.Id, req))
-	resp := new(types.Response)
+	resp := new(apptype.Response)
 	handler.WelcomeAct(req, resp)
 	return resp
 }

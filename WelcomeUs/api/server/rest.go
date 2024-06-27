@@ -2,7 +2,7 @@ package server
 
 import (
 	"Welcome/app"
-	"Welcome/types"
+	"Welcome/apptype"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -12,7 +12,7 @@ import (
 )
 
 // Make []string of errors (missing data)
-func whatMiss(req *types.Request) []string {
+func whatMiss(req *apptype.Request) []string {
 	mes := make([]string, 3)
 	if req.Id == 0 {
 		mes[0] = `id = 0`
@@ -27,7 +27,7 @@ func whatMiss(req *types.Request) []string {
 }
 
 // Make []string of errors (diffrent data is awaited)
-func whatDif(req *types.Request) []string {
+func whatDif(req *apptype.Request) []string {
 	mes := make([]string, 2)
 	if req.Act != "registration" {
 		mes[0] = `"action" isn't equal "registration"`
@@ -50,7 +50,7 @@ func fromArrToStr(mes []string) (message string) {
 
 // Error message wording
 // Starts from []string and then make it to string
-func mesofErr(req *types.Request, kind bool) string {
+func mesofErr(req *apptype.Request, kind bool) string {
 	var m []string
 	if kind {
 		m = whatMiss(req)
@@ -62,7 +62,7 @@ func mesofErr(req *types.Request, kind bool) string {
 
 // Check for an error
 // Return answer (string) and found (bool)
-func checkError(req *types.Request) (mes string, f bool) {
+func checkError(req *apptype.Request) (mes string, f bool) {
 	if req.Id == 0 || req.Act == "" || req.Language == "" {
 		mes = "Not enough data: "
 		mes += mesofErr(req, true)
@@ -82,7 +82,7 @@ func Welcome() {
 	router := gin.Default()
 	router.POST("/Welcome", func(c *gin.Context) {
 		//router get a post request
-		req := new(types.Request)
+		req := new(apptype.Request)
 		body, err := io.ReadAll(c.Request.Body)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})

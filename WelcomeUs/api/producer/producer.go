@@ -1,7 +1,7 @@
 package producer
 
 import (
-	"Welcome/types"
+	"Welcome/apptype"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -36,7 +36,7 @@ func ActLogs(text string, userId int) {
 	}
 	defer producer.Close()
 
-	val := &types.ClientAct{
+	val := &apptype.ClientAct{
 		Timestamp: time.Now(),
 		UserId:    userId,
 		Action:    "Registration",
@@ -61,7 +61,7 @@ func InterLogs(text, data string) {
 	}
 	defer producer.Close()
 
-	val := &types.Internal{
+	val := &apptype.Internal{
 		Timestamp: time.Now(),
 		Message:   text,
 		Data:      data}

@@ -4,9 +4,10 @@ import (
 	client "Welcome/api/client"
 	"Welcome/api/producer"
 	"Welcome/app/dict"
-	"Welcome/fmtogram/formatter"
-	"Welcome/types"
+	"Welcome/apptype"
 	"fmt"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 )
 
 const (
@@ -27,9 +28,9 @@ func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
 
 // Greet to user
 // Says hello
-func greetingsToUser(res *types.Response, fm *formatter.Formatter, dict map[string]string) {
+func greetingsToUser(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
 	producer.InterLogs("Start function WelcomeUs.greetingsToUser()",
-		fmt.Sprintf("UserId: %d, res (*types.Response): %v, fm (*formatter.Formatter): %v", res.ChatID, res, fm))
+		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", res.ChatID, res, fm))
 	res.Level = 1
 	setKb(fm, []int{1}, []string{dict["reg"]}, []string{"GoReg"})
 	fm.WriteString(dict["WelcomeToBot"])
@@ -37,18 +38,18 @@ func greetingsToUser(res *types.Response, fm *formatter.Formatter, dict map[stri
 
 // The body of showRules
 // Prepares all data
-func srulBody(res *types.Response, fm *formatter.Formatter, dict map[string]string) {
+func srulBody(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
 	producer.InterLogs("Start function WelcomeUs.srulBody()",
-		fmt.Sprintf("UserId: %d, res (*types.Response): %v, fm (*formatter.Formatter): %v", res.ChatID, res, fm))
+		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", res.ChatID, res, fm))
 	res.Level = 2
 	setKb(fm, []int{1}, []string{dict["allright"]}, []string{"GoNext"})
 	fm.WriteString(dict["BotRules"])
 }
 
 // Sows the rules of the app
-func showRules(req *types.Request, res *types.Response, fm *formatter.Formatter) {
+func showRules(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	producer.InterLogs("Start function WelcomeUs.showRules()",
-		fmt.Sprintf("UserId: %d, req (*types.Request): %v, res (*types.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Req == "GoReg" {
 		srulBody(res, fm, dict.Dictionary[req.Language])
 	} else {
@@ -58,9 +59,9 @@ func showRules(req *types.Request, res *types.Response, fm *formatter.Formatter)
 
 // The body of welcomeToMainMenu
 // Prepares all data
-func wtmmBody(res *types.Response, fm *formatter.Formatter, dict map[string]string, id int, lang string) {
+func wtmmBody(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, id int, lang string) {
 	producer.InterLogs("Start function WelcomeUs.wtmmBody()",
-		fmt.Sprintf("UserId: %d, res (*types.Response): %v, fm (*formatter.Formatter): %v,id (int): %d, lang (string): %s", res.ChatID, res, fm, id, lang))
+		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v,id (int): %d, lang (string): %s", res.ChatID, res, fm, id, lang))
 	res.Level = 3
 	res.Act = "divarication"
 	res.Status = true
@@ -75,9 +76,9 @@ func wtmmBody(res *types.Response, fm *formatter.Formatter, dict map[string]stri
 
 // Redirect to Main Menu
 // This is the first enter of Main Menu
-func welcomeToMainMenu(req *types.Request, res *types.Response, fm *formatter.Formatter) {
+func welcomeToMainMenu(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	producer.InterLogs("Start function WelcomeUs.welcomeToMainMenu()",
-		fmt.Sprintf("UserId: %d, req (*types.Request): %v, res (*types.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Req == "GoNext" {
 		wtmmBody(res, fm, dict.Dictionary[req.Language], req.Id, req.Language)
 	} else {
@@ -86,9 +87,9 @@ func welcomeToMainMenu(req *types.Request, res *types.Response, fm *formatter.Fo
 }
 
 // Directioner
-func dir(req *types.Request, res *types.Response, fm *formatter.Formatter) {
+func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	producer.InterLogs("Start function WelcomeUs.dir()",
-		fmt.Sprintf("UserId: %d, req (*types.Request): %v, res (*types.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
+		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Level == START {
 		if req.Status {
 			producer.ActLogs("The user has started registration", res.ChatID)
@@ -105,8 +106,8 @@ func dir(req *types.Request, res *types.Response, fm *formatter.Formatter) {
 // The main
 // The head
 // The directioner
-func WelcomeAct(req *types.Request, res *types.Response) {
-	producer.InterLogs("Start function WelcomeUs.WelcomeAct()", fmt.Sprintf("UserId: %d, req (*types.Request): %v, res (*types.Response): %v", req.Id, req, res))
+func WelcomeAct(req *apptype.Request, res *apptype.Response) {
+	producer.InterLogs("Start function WelcomeUs.WelcomeAct()", fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v", req.Id, req, res))
 	fm := new(formatter.Formatter)
 	res.Level = req.Level
 	res.Act = req.Act
