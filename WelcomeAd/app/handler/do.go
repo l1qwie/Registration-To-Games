@@ -4,8 +4,10 @@ import (
 	"Welcome/api/producer"
 	"Welcome/app/dict"
 	"Welcome/apptype"
-	"Welcome/fmtogram/formatter"
+
 	"fmt"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 )
 
 const (
