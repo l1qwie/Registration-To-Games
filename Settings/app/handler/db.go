@@ -34,14 +34,14 @@ func findThatUserGame(gameId, userId int, f func(error)) bool {
 }
 
 // Updates the app's language in the database
-func updtLanguage(userId int, lang string, f func(error)) string {
+func updtLanguage(userId int, lang string, f func(error)) (string, bool) {
 	producer.InterLogs("Start function Settings.updtLanguage()",
 		fmt.Sprintf("UserId: %d, userId (int): %d, lang (string): %s, f (func(error))): %T", userId, userId, lang, f))
 	_, err := apptype.Db.Exec("UPDATE Users SET language = $1, customlanguage = True WHERE userId = $2", lang, userId)
 	if err != nil {
 		f(err)
 	}
-	return lang
+	return lang, err == nil
 }
 
 // Prepares the schedule of user's games
@@ -91,18 +91,33 @@ func findSomeSeats(gameId, userId, wantS int, f func(error)) (int, int, bool) {
 	return schs, uss, (schs + uss) >= wantS
 }
 
+func endOfTransaction(err error, f func(error)) {
+	var res string
+	if err != nil {
+		res = "ROLLBACK"
+	} else {
+		res = "COMMIT"
+	}
+	_, err = apptype.Db.Exec(res)
+	if err != nil {
+		f(err)
+	}
+}
+
 // Deletes the game in the database
-func delTheGame(seats, gameId, userId int, f func(error)) {
+func delTheGame(seats, gameId, userId int, f func(error)) bool {
+	var err error
 	producer.InterLogs("Start function Settings.delTheGame()",
 		fmt.Sprintf("UserId: %d, seats (int): %d, gameId (int): %d, userId (int): %d, f (func(error))): %T", userId, seats, gameId, userId, f))
-	_, err := apptype.Db.Exec("UPDATE GamesWithUsers SET status = -1 WHERE gameId = $1 AND userId = $2", gameId, userId)
-	if err != nil {
-		f(err)
+	_, err = apptype.Db.Exec("START TRANSACTION")
+	if err == nil {
+		_, err = apptype.Db.Exec("UPDATE GamesWithUsers SET status = -1 WHERE gameId = $1 AND userId = $2", gameId, userId)
 	}
-	_, err = apptype.Db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", seats, gameId)
-	if err != nil {
-		f(err)
+	if err == nil {
+		_, err = apptype.Db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", seats, gameId)
 	}
+	defer endOfTransaction(err, f)
+	return err == nil
 }
 
 // Select the statistics of pay status
@@ -118,17 +133,19 @@ func statPayment(gameId, userId int, f func(error)) bool {
 }
 
 // Updates the seats of the user of the user's game
-func updtSeats(gameId, userId, genS, oldS, newS int, f func(error)) {
+func updtSeats(gameId, userId, genS, oldS, newS int, f func(error)) bool {
+	var err error
 	producer.InterLogs("Start function Settings.updtSeats()",
 		fmt.Sprintf("UserId: %d, gameId (int): %d, userId (int): %d, genS (int): %d, oldS (int): %d, newS (int): %d, f (func(error))): %T", userId, gameId, userId, genS, oldS, newS, f))
-	_, err := apptype.Db.Exec("UPDATE GamesWithUsers SET seats = $1 WHERE gameId = $2 AND userId = $3", newS, gameId, userId)
-	if err != nil {
-		f(err)
+	_, err = apptype.Db.Exec("START TRANSACTION")
+	if err == nil {
+		_, err = apptype.Db.Exec("UPDATE GamesWithUsers SET seats = $1 WHERE gameId = $2 AND userId = $3", newS, gameId, userId)
 	}
-	_, err = apptype.Db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", (genS+oldS)-newS, gameId)
-	if err != nil {
-		f(err)
+	if err == nil {
+		_, err = apptype.Db.Exec("UPDATE Schedule SET seats = $2 WHERE gameId = $1;", gameId, (genS+oldS)-newS)
 	}
+	defer endOfTransaction(err, f)
+	return err == nil
 }
 
 // Select the paymethod and compare it with "card"
@@ -198,20 +215,4 @@ func fill(gameId int) (*client.Upd, error) {
 		u.Timestr = fromIntToStrTime(u.Time)
 	}
 	return u, err
-}
-
-func firstTime(userId int, f func(error)) bool {
-	var count int
-	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM Users WHERE userId = $1 AND firsttime = true", userId).Scan(&count)
-	if err != nil {
-		f(err)
-	}
-	return count > 0
-}
-
-func chFirstTime(userId int, f func(error)) {
-	_, err := apptype.Db.Exec("UPDATE Users SET firsttime = false WHERE userId = $1", userId)
-	if err != nil {
-		f(err)
-	}
 }

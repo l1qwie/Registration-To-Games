@@ -89,7 +89,7 @@ func setKb(fm *formatter.Formatter, crd []int, names, data []string) {
 }
 
 // chooseGameDir prepares a message (text and keyboard) to an admin to choose Game direction
-func chooseGameDir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
+func chooseGameDir(res *apptype.Response, fm *formatter.Formatter, dict map[string]string) {
 	if isThereAnyGame(fm.Error) {
 		res.Level = 1
 		fm.WriteString(dict["gameDirections"])
@@ -128,7 +128,7 @@ func showGamesOrCreate(req *apptype.Request, res *apptype.Response, fm *formatte
 			startCreate(res, fm, dict)
 		}
 	} else {
-		chooseGameDir(req, res, fm, dict)
+		chooseGameDir(res, fm, dict)
 	}
 }
 
@@ -258,7 +258,7 @@ func intCheck(phrase string) (int, bool) {
 
 func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	if req.Level == START {
-		chooseGameDir(req, res, fm, dict.Dictionary[req.Language])
+		chooseGameDir(res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL1 {
 		showGamesOrCreate(req, res, fm, dict.Dictionary[req.Language])
 	} else if req.Level == LEVEL2 {

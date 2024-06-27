@@ -41,7 +41,7 @@ func ru(dict map[string]string) {
 	dict["second"] = "Регистрация на игру"
 	dict["third"] = "Наши фото и видео"
 	dict["fourth"] = "Настройки | Мои игры"
-
+	dict["Oops!"] = "Ой! Кажется, что-то внутри сломалось! Повторите попытку позже. Если проблема не исчезнет, обратитесь к администратору!"
 }
 
 func en(dict map[string]string) {
@@ -83,7 +83,7 @@ func en(dict map[string]string) {
 	dict["second"] = "Game registration"
 	dict["third"] = "Our photos and videos"
 	dict["fourth"] = "Settings | My games"
-
+	dict["Oops!"] = "Oops! It looks like something broke inside! Please try again later. If the problem persists, contact the administrator!"
 }
 
 func tur(dict map[string]string) {
@@ -125,7 +125,7 @@ func tur(dict map[string]string) {
 	dict["second"] = "Oyun kaydı"
 	dict["third"] = "Bizim fotoğraflar ve videolar"
 	dict["fourth"] = "Ayarlar | Oyunlarım"
-
+	dict["Oops!"] = "Aman! İçeride bir şey kırıldı gibi görünüyor! Lütfen daha sonra tekrar deneyin. Sorun devam ederse, yöneticiye başvurun!"
 }
 
 func init() {

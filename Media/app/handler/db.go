@@ -176,41 +176,59 @@ func howMuchSpace(gameId int, f func(error)) (int, bool) {
 	return 20 - res, (20 - res) > 0
 }
 
-// Saves the mediafile to the game
-func insertOneNewMedia(fileId, ty string, gameId, userId int, f func(error)) {
-	var count int
-	producer.InterLogs("Start function Media.insertOneNewMedia()",
-		fmt.Sprintf("fileId (string): %s, ty (string): %s, gameId (int): %d, userId (int): %d, f (func(error)): %T", fileId, ty, gameId, userId, f))
-	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 1", gameId).Scan(&count)
+func endOfTransaction(err error, f func(error)) {
+	var res string
+	if err != nil {
+		res = "ROLLBACK"
+	} else {
+		res = "COMMIT"
+	}
+	_, err = apptype.Db.Exec(res)
 	if err != nil {
 		f(err)
-	}
-	_, err = apptype.Db.Exec("INSERT INTO MediaRepository (id, gameId, fileId, type, counter, userId, status) VALUES (nextval('mediarepository_id_seq'), $1, $2, $3, $4, $5, 1)", gameId, fileId, ty, count+1, userId)
-	if err != nil {
-		f(err)
-	}
-	if err == nil {
-		_, err = apptype.Db.Exec("UPDATE MediaRepository SET counter = $1 WHERE gameId = $2", count+1, gameId)
-		if err != nil {
-			f(err)
-		}
 	}
 }
 
+// Saves the mediafile to the game
+func insertOneNewMedia(fileId, ty string, gameId, userId int, f func(error)) bool {
+	var count int
+	producer.InterLogs("Start function Media.insertOneNewMedia()",
+		fmt.Sprintf("fileId (string): %s, ty (string): %s, gameId (int): %d, userId (int): %d, f (func(error)): %T", fileId, ty, gameId, userId, f))
+	_, err := apptype.Db.Exec("START TRANSACTION")
+	if err == nil {
+		err = apptype.Db.QueryRow("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 1", gameId).Scan(&count)
+	}
+	if err == nil {
+		_, err = apptype.Db.Exec(`
+			INSERT INTO MediaRepository 
+			(id, gameId, fileId, type, counter, userId, status)
+			VALUES
+			(nextval('mediarepository_id_seq'), $1, $2, $3, $4, $5, 1)`, gameId, fileId, ty, count+1, userId)
+	}
+	if err == nil {
+		_, err = apptype.Db.Exec("UPDATE MediaRepository SET counter = $1 WHERE gameId = $2", count+1, gameId)
+	}
+	defer endOfTransaction(err, f)
+	return err == nil
+}
+
 // Saves a lot of media (array media) to the game
-func insertAfewNewMedia(media []types.Media, gameId, userId int, f func(error)) {
+func insertAfewNewMedia(media []types.Media, gameId, userId int, f func(error)) bool {
 	var count int
 	producer.InterLogs("Start function Media.insertAfewNewMedia()",
 		fmt.Sprintf("media ([]types.Media): %v, gameId (int): %d, userId (int): %d, f (func(error)): %T", media, gameId, userId, f))
-	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 1", gameId).Scan(&count)
-	if err != nil {
-		f(err)
+	_, err := apptype.Db.Exec("START TRANSACTION")
+	if err == nil {
+		err = apptype.Db.QueryRow("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 1", gameId).Scan(&count)
 	}
-	count += len(media)
-	for i := range media {
-		_, err = apptype.Db.Exec("INSERT INTO MediaRepository (id, gameId, fileId, type, counter, userId, status) VALUES (nextval('mediarepository_id_seq'), $1, $2, $3, $4, $5, 1)", gameId, media[i].Media, media[i].Type, count, userId)
-		if err != nil {
-			f(err)
+	if err == nil {
+		count += len(media)
+		for i := 0; i < len(media) && err == nil; i++ {
+			_, err = apptype.Db.Exec(`
+				INSERT INTO MediaRepository 
+				(id, gameId, fileId, type, counter, userId, status)
+				VALUES 
+				(nextval('mediarepository_id_seq'), $1, $2, $3, $4, $5, 1)`, gameId, media[i].Media, media[i].Type, count, userId)
 		}
 	}
 	if err == nil {
@@ -219,6 +237,8 @@ func insertAfewNewMedia(media []types.Media, gameId, userId int, f func(error)) 
 			f(err)
 		}
 	}
+	defer endOfTransaction(err, f)
+	return err == nil
 }
 
 func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {

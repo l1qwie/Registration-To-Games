@@ -93,22 +93,37 @@ func howManyIsLeft(gameId int, wishfulseats int, f func(error)) bool {
 	return wishfulseats < seats
 }
 
+func endOfTransaction(err error, f func(error)) {
+	var res string
+	if err != nil {
+		res = "ROLLBACK"
+	} else {
+		res = "COMMIT"
+	}
+	_, err = apptype.Db.Exec(res)
+	if err != nil {
+		f(err)
+	}
+}
+
 // Adds a new string in the table "GamesWithUsers"
 // Updates seats of the game in the table "Schedule"
-func completeRegistration(userId, gameId, seats int, payment string, f func(error)) {
+func completeRegistration(userId, gameId, seats int, payment string, f func(error)) bool {
 	var gameSeats int
 	producer.InterLogs("Start function Registration.completeRegistration()",
 		fmt.Sprintf("userId (int): %d, gameId (int): %d, seats (int): %d, payment (string): %s, f (func(error)): %T", userId, gameId, seats, payment, f))
-	_, err := apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, status) VALUES (nextval('gameswithusers_id_seq'), $1, $2, $3, $4, 1)", userId, gameId, seats, payment)
+	_, err := apptype.Db.Exec("START TRANSACTION")
+	if err == nil {
+		_, err = apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, status) VALUES (nextval('gameswithusers_id_seq'), $1, $2, $3, $4, 1)", userId, gameId, seats, payment)
+	}
 	if err == nil {
 		err = apptype.Db.QueryRow("SELECT seats FROM Schedule WHERE gameId = $1", gameId).Scan(&gameSeats)
 	}
 	if err == nil {
 		_, err = apptype.Db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", gameSeats-seats, gameId)
 	}
-	if err != nil {
-		f(err)
-	}
+	defer endOfTransaction(err, f)
+	return err == nil
 }
 
 // Selects all game data

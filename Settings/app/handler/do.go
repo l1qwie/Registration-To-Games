@@ -205,15 +205,24 @@ func whatWay(req *apptype.Request, res *apptype.Response, fm *formatter.Formatte
 
 // Changes the app's language and redirect to MainMenu
 func changeLanguge(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, lang string, id int) {
+	var (
+		ok  bool
+		mes string
+	)
 	producer.InterLogs("Start function Settings.changeLanguge()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, lang (string): %s, id (int): %d", id, res, fm, lang, id))
-	res.Language = updtLanguage(id, lang, fm.Error)
-	u := new(client.Upd)
-	u.UserId = id
-	u.Language = lang
-	u.Customlang = true
-	client.Updates(u, "user", nil)
-	goToMainMenu(res, fm, dict, dict["Lanchanged"])
+	res.Language, ok = updtLanguage(id, lang, fm.Error)
+	if ok {
+		u := new(client.Upd)
+		u.UserId = id
+		u.Language = lang
+		u.Customlang = true
+		client.Updates(u, "user", nil)
+		mes = dict["Lanchanged"]
+	} else {
+		mes = dict["Oops!"]
+	}
+	goToMainMenu(res, fm, dict, mes)
 }
 
 // Would you like change or delete?
@@ -283,12 +292,18 @@ func upd(gameId int) {
 
 // Deletes the game
 func del(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+	var mes string
 	producer.InterLogs("Start function Settings.del()",
 		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	schs, uss, _ := findSomeSeats(req.GameId, req.Id, 3, fm.Error) //jsut a random number becuse the number influences to the bool var and I don't need it here
-	delTheGame(schs+uss, req.GameId, req.Id, fm.Error)
-	upd(req.GameId)
-	goToMainMenu(res, fm, dict.Dictionary[req.Language], fmt.Sprint(dict.Dictionary[req.Language]["GameDeleted"], dict.Dictionary[req.Language]["MainMenu"]))
+	ok := delTheGame(schs+uss, req.GameId, req.Id, fm.Error)
+	if ok {
+		upd(req.GameId)
+		mes = dict.Dictionary[req.Language]["GameDeleted"]
+	} else {
+		mes = dict.Dictionary[req.Language]["Oops!"]
+	}
+	goToMainMenu(res, fm, dict.Dictionary[req.Language], fmt.Sprint(mes, "\n\n", dict.Dictionary[req.Language]["MainMenu"]))
 }
 
 // Directioner of records
@@ -325,7 +340,7 @@ func chPayment(res *apptype.Response, fm *formatter.Formatter, dict map[string]s
 		changeToCard(res, fm, dict, "card", id)
 	} else {
 		updtPayment(res.GameId, id, "cash", fm.Error)
-		goToMainMenu(res, fm, dict, fmt.Sprint(dict["ThxForChange"], dict["MainMenu"]))
+		goToMainMenu(res, fm, dict, fmt.Sprint(dict["ThxForChange"], "\n\n", dict["MainMenu"]))
 	}
 }
 
@@ -370,15 +385,21 @@ func chengeable(req *apptype.Request, res *apptype.Response, fm *formatter.Forma
 
 // Confirm the changes of seats
 func confMySeats(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, phrase string, id int) {
+	var mes string
 	producer.InterLogs("Start function Settings.confMySeats()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v,  phrase (string): %s, id (int): %d", res.ChatID, res, fm, phrase, id))
 	det, num := intCheck(phrase)
 	if det {
 		schs, uss, freeS := findSomeSeats(res.GameId, id, num, fm.Error)
 		if freeS {
-			updtSeats(res.GameId, id, schs, uss, num, fm.Error)
-			goToMainMenu(res, fm, dict, fmt.Sprint(dict["ThxForChange"], dict["MainMenu"]))
-			upd(res.GameId)
+			ok := updtSeats(res.GameId, id, schs, uss, num, fm.Error)
+			if ok {
+				upd(res.GameId)
+				mes = dict["ThxForChange"]
+			} else {
+				mes = dict["Oops!"]
+			}
+			goToMainMenu(res, fm, dict, fmt.Sprint(mes, "\n\n", dict["MainMenu"]))
 		}
 	} else {
 		chMySeats(res, fm, dict, id)

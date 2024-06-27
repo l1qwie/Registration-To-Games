@@ -25,16 +25,16 @@ func ru(dict map[string]string) {
 	dict["ChangeOrDel"] = "Вы хотите изменить или удалить?"
 	dict["Change"] = "Изменить игру"
 	dict["DelGame"] = "Удалить игру"
-	dict["GameDeleted"] = "Ваша бронь на игру успешно удалена\n\n"
+	dict["GameDeleted"] = "Ваша бронь на игру успешно удалена"
 	dict["Paid"] = "Оплачено"
 	dict["WaitForPaid"] = "Не оплачено"
 	dict["WhatUWhantToCh"] = "Что вы хотите изменить?"
 	dict["Payment"] = "Способ оплаты"
 	dict["Seats"] = "Количество человек со мной"
-	dict["GameDeleted"] = "Ваша бронь на игру успешно удалена\n\n"
 	dict["ChooseSeat"] = "Выберите или напишите мне количество мест на игру, которые вы хоите занять. На эту игру есть свободных мест %d. У вас уже есть бронь на %d. После ввода ваша бронь на %d мест будет снята. Всего мест, если не учитывать вашу бронь %d"
-	dict["ThxForChange"] = "Все успешно изменено\n\n"
+	dict["ThxForChange"] = "Все успешно изменено"
 	dict["pay"] = "Оплатить"
+	dict["Oops!"] = "Ой! Кажется, что-то внутри сломалось! Повторите попытку позже. Если проблема не исчезнет, обратитесь к администратору!"
 }
 
 func en(dict map[string]string) {
@@ -60,16 +60,16 @@ func en(dict map[string]string) {
 	dict["ChangeOrDel"] = "Do you want to change or delete?"
 	dict["Change"] = "Change the game"
 	dict["DelGame"] = "Delete the game"
-	dict["GameDeleted"] = "Your game reservation has been successfully deleted\n\n"
+	dict["GameDeleted"] = "Your game reservation has been successfully deleted"
 	dict["Paid"] = "Paid"
 	dict["WaitForPaid"] = "Not paid"
 	dict["WhatUWhantToCh"] = "What do you want to change?"
 	dict["Payment"] = "Payment method"
 	dict["Seats"] = "The number of people with me"
-	dict["GameDeleted"] = "Your game reservation has been successfully deleted\n\n"
 	dict["ChooseSeat"] = "Choose or write to me the number of seats for the game you want to occupy. There are %d available seats for this game. You already have a reservation for %d. After entering, your reservation for %d seats will be canceled. Total seats, excluding your reservation: %d"
-	dict["ThxForChange"] = "Everything has been successfully changed\n\n"
+	dict["ThxForChange"] = "Everything has been successfully changed"
 	dict["pay"] = "Pay"
+	dict["Oops!"] = "Oops! It looks like something broke inside! Please try again later. If the problem persists, contact the administrator!"
 }
 
 func tur(dict map[string]string) {
@@ -95,16 +95,16 @@ func tur(dict map[string]string) {
 	dict["WhatUWhantToCh"] = "Ne değiştirmek istiyorsunuz?"
 	dict["Payment"] = "Ödeme yöntemi"
 	dict["Seats"] = "Benimle birlikteki kişi sayısı"
-	dict["GameDeleted"] = "Oyun rezervasyonunuz başarıyla silindi\n\n"
+	dict["GameDeleted"] = "Oyun rezervasyonunuz başarıyla silindi"
 	dict["Paid"] = "Ödendi"
 	dict["WaitForPaid"] = "Ödenmedi"
 	dict["WhatUWhantToCh"] = "Ne değiştirmek istiyorsunuz?"
 	dict["Payment"] = "Ödeme yöntemi"
 	dict["Seats"] = "Benimle birlikteki kişi sayısı"
-	dict["GameDeleted"] = "Oyun rezervasyonunuz başarıyla silindi\n\n"
 	dict["ChooseSeat"] = "Oyunda kapmak istediğiniz koltuk sayısını seçin veya yazın. Bu oyunda %d boş koltuk var. Zaten %d için bir rezervasyonunuz var. Girdikten sonra, %d koltuk için rezervasyonunuz iptal edilecek. Toplam koltuk sayısı, rezervasyonunuz hariç: %d"
-	dict["ThxForChange"] = "Hepsi başarıyla değiştirildi\n\n"
+	dict["ThxForChange"] = "Hepsi başarıyla değiştirildi"
 	dict["pay"] = "Ödeme Yap"
+	dict["Oops!"] = "Aman! İçeride bir şey kırıldı gibi görünüyor! Lütfen daha sonra tekrar deneyin. Sorun devam ederse, yöneticiye başvurun!"
 }
 
 func init() {

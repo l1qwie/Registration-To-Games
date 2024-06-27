@@ -354,9 +354,13 @@ func bestWishes(req *apptype.Request, res *apptype.Response, fm *formatter.Forma
 		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Req == "cash" || req.Req == "Next" {
 		if howManyIsLeft(req.GameId, req.Seats, fm.Error) {
-			completeRegistration(req.Id, req.GameId, req.Seats, req.Payment, fm.Error)
-			wishUGoodLuck(req, res, fm, dict.Dictionary[req.Language])
-			upd(req, fm.Error)
+			ok := completeRegistration(req.Id, req.GameId, req.Seats, req.Payment, fm.Error)
+			if ok {
+				wishUGoodLuck(req, res, fm, dict.Dictionary[req.Language])
+				upd(req, fm.Error)
+			} else {
+				goToMain(req, res, fm, fmt.Sprint(dict.Dictionary[req.Language]["Oops!"], "\n\n", dict.Dictionary[req.Language]["MainMenu"]))
+			}
 			producer.ActLogs("The user has completed registration (to game) action", req.Id)
 		} else {
 			seatsAreFull(res, fm, dict.Dictionary[req.Language])

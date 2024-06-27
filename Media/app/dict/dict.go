@@ -21,6 +21,7 @@ func ru(dict map[string]string) {
 	dict["WaitForYourFiles"] = "Прекрасно! Вы выбрали игру. У нее осталось %d свободных мест для медиафайлов (максимум 20). Присылайте ваших фотографий или видео, которые были сделаны на этой игре. За один раз можно прислать не более 10 фалов. Кончено же, желательно, чтобы это число не привышало свободных мест"
 	dict["NotEnoughSpace"] = "К сожалению, похоже что у меня не осталось свободного места для загрузки ваших файлов на эту игру"
 	dict["Succesful"] = "Все файлы успешно загружены"
+	dict["Oops!"] = "Ой! Кажется, что-то внутри сломалось! Повторите попытку позже. Если проблема не исчезнет, обратитесь к администратору!"
 }
 
 func en(dict map[string]string) {
@@ -42,6 +43,7 @@ func en(dict map[string]string) {
 	dict["WaitForYourFiles"] = "Great! You've selected the game. It has %d free slots for media files (maximum 20). Send your photos or videos taken in this game. You can send up to 10 files at a time. Of course, it's preferable that this number doesn't exceed the available slots"
 	dict["NotEnoughSpace"] = "Unfortunately, it seems that I don't have enough space left to upload your files for this game"
 	dict["Succesful"] = "All files have been successfully uploaded"
+	dict["Oops!"] = "Oops! It looks like something broke inside! Please try again later. If the problem persists, contact the administrator!"
 }
 
 func tur(dict map[string]string) {
@@ -63,6 +65,7 @@ func tur(dict map[string]string) {
 	dict["WaitForYourFiles"] = "Harika! Oyunu seçtiniz. Onun için %d medya dosyası için boş yer var (maksimum 20). Bu oyunda çekilen fotoğraflarınızı veya videolarınızı gönderin. Bir seferde en fazla 10 dosya gönderebilirsiniz. Tabii ki, bu sayının boş yerleri aşmaması tercih edilir"
 	dict["NotEnoughSpace"] = "Maalesef, görünüşe göre bu oyun için dosyalarınızı yüklemek için yeterli alanım kalmadı"
 	dict["Succesful"] = "Tüm dosyalar başarıyla yüklendi"
+	dict["Oops!"] = "Aman! İçeride bir şey kırıldı gibi görünüyor! Lütfen daha sonra tekrar deneyin. Sorun devam ederse, yöneticiye başvurun!"
 }
 
 func init() {

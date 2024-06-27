@@ -273,6 +273,7 @@ func unload(res *apptype.Response, fm *formatter.Formatter, dict map[string]stri
 
 // Saves the media, checks which way would it be
 func saveMedia(res *apptype.Response, req *apptype.Request, fm *formatter.Formatter, dict map[string]string) {
+	var mes string
 	producer.InterLogs("Start function Media.saveMedia()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, req (*apptype.Request): %v, fm (*formatter.Formatter): %v", req.Id, res, req, fm))
 	space, ok := howMuchSpace(res.GameId, fm.Error)
@@ -280,12 +281,17 @@ func saveMedia(res *apptype.Response, req *apptype.Request, fm *formatter.Format
 		res.Level = 4
 		res.Status = true
 		if req.MediaCounter > 1 {
-			insertAfewNewMedia(req.Media, req.GameId, req.Id, fm.Error)
+			ok = insertAfewNewMedia(req.Media, req.GameId, req.Id, fm.Error)
 		} else {
-			insertOneNewMedia(req.FileId, req.TypeOffile, req.GameId, req.Id, fm.Error)
+			ok = insertOneNewMedia(req.FileId, req.TypeOffile, req.GameId, req.Id, fm.Error)
 		}
 		setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
-		fm.WriteString(dict["Succesful"])
+		if ok {
+			mes = dict["Succesful"]
+		} else {
+			mes = dict["Oops!"]
+		}
+		fm.WriteString(mes)
 		producer.ActLogs("User has completed media action", res.ChatID)
 	} else {
 		waitBody(res, fm, dict, res.GameId)
