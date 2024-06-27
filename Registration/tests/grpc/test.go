@@ -2,11 +2,11 @@ package grpc
 
 import (
 	"Registration/apptype"
-	"Registration/fmtogram/types"
-	pb "Registration/protos/out"
 	"context"
 	"log"
 
+	"github.com/l1qwie/Fmtogram/types"
+	pb "github.com/l1qwie/Proto-RTG/result"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

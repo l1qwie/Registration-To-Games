@@ -1,10 +1,11 @@
 package apptype
 
 import (
-	"Media/fmtogram/types"
 	"database/sql"
 	"fmt"
 	"time"
+
+	"github.com/l1qwie/Fmtogram/types"
 )
 
 var Db *sql.DB

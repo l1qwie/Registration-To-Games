@@ -4,12 +4,13 @@ import (
 	"User/api/producer"
 	"User/app/dict"
 	"User/apptype"
-	"User/fmtogram/formatter"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 )
 
 const (

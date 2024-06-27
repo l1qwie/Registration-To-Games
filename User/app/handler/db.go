@@ -3,9 +3,9 @@ package handler
 import (
 	"User/api/producer"
 	"User/apptype"
-	"User/fmtogram/types"
 	"fmt"
 
+	"github.com/l1qwie/Fmtogram/types"
 	_ "github.com/lib/pq"
 )
 

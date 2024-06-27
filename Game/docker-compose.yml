@@ -18,7 +18,7 @@ services:
       - ./postgreSQL/create.sql:/docker-entrypoint-initdb.d/create.sql
       #- ./postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
     ports:
-      - 5499:5432
+      - 5491:5432
     networks:
       - game-net
 

@@ -1,10 +1,11 @@
 package apptype
 
 import (
-	"Game/fmtogram/formatter"
 	"database/sql"
 	"fmt"
 	"time"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 )
 
 var Db *sql.DB

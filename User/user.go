@@ -2,13 +2,18 @@ package main
 
 import (
 	"User/api/server"
-	"User/fmtogram"
-	"User/fmtogram/types"
+	"User/app"
+	"User/apptype"
+
+	"github.com/l1qwie/Fmtogram/fmtogram"
+	"github.com/l1qwie/Fmtogram/types"
 )
 
 func main() {
 	//defer grpc.DelEnv()
-	types.Db = types.ConnectToDatabase(true)
+	apptype.Db = apptype.ConnectToDatabase()
+	fmtogram.StartFunc = app.Receiving
+	types.BotID = apptype.Id
 	//client := grpc.AddCleint()
 	//grpc.CreateSchRedis(client)
 	//grpc.CreateEnv()

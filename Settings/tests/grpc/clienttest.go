@@ -2,9 +2,10 @@ package grpc
 
 import (
 	"Settings/apptype"
-	pb "Settings/protos/out"
 	"context"
 	"log"
+
+	pb "github.com/l1qwie/Proto-RTG/result"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

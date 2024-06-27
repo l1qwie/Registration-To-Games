@@ -3,11 +3,12 @@ package handler
 import (
 	"Game/app/dict"
 	"Game/apptype"
-	"Game/fmtogram/formatter"
 	"fmt"
 	"regexp"
 	"strconv"
 	"time"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 )
 
 const (

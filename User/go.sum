@@ -39,6 +39,8 @@ github.com/jcmturner/rpc/v2 v2.0.3 h1:7FXXj8Ti1IaVFpSAziCZWNzbNuZmnvw/i6CqLNdWfZ
 github.com/jcmturner/rpc/v2 v2.0.3/go.mod h1:VUJYCIDm3PVOEHw8sgt091/20OJjskO/YJki3ELg/Hc=
 github.com/klauspost/compress v1.17.8 h1:YcnTYrq7MikUT7k0Yb5eceMmALQPYBW/Xltxn0NAMnU=
 github.com/klauspost/compress v1.17.8/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
+github.com/l1qwie/Fmtogram v0.0.0-20240626194834-08f13cb63b72 h1:V8k7kKi3IxA6mIij3CmtRAW/e6aUO04Lb+1ffLN1jxk=
+github.com/l1qwie/Fmtogram v0.0.0-20240626194834-08f13cb63b72/go.mod h1:9ctUXx+IMRNaeyftS6r5nQ37jzDt9G7iJ/RGHzfVQdM=
 github.com/l1qwie/Proto-RTG v0.0.0-20240626180234-d5ed1056087f h1:8UZdfuvgtYdHx3D+lc4GTUKDtcD+3caxZLTiP82sIKM=
 github.com/l1qwie/Proto-RTG v0.0.0-20240626180234-d5ed1056087f/go.mod h1:5x+e3MrfdjJvMcl8w4fuV/eyUJSvD7crfZ416LySRk0=
 github.com/lib/pq v1.10.9 h1:YXG7RB+JIjhP29X+OtkiDnYaXQwpS4JEWq7dtCCRUEw=

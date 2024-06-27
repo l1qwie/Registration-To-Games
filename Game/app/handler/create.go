@@ -2,9 +2,10 @@ package handler
 
 import (
 	"Game/apptype"
-	"Game/fmtogram/formatter"
 	"fmt"
 	"log"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 )
 
 // startCreate starts the create action and prepares a message (text, keyboard) to an admin to choose a sport

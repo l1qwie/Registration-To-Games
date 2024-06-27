@@ -62,6 +62,8 @@ github.com/klauspost/cpuid/v2 v2.0.9/go.mod h1:FInQzS24/EEf25PyTYn52gqo7WaD8xa02
 github.com/klauspost/cpuid/v2 v2.2.7 h1:ZWSB3igEs+d0qvnxR/ZBzXVmxkgt8DdzP6m9pfuVLDM=
 github.com/klauspost/cpuid/v2 v2.2.7/go.mod h1:Lcz8mBdAVJIBVzewtcLocK12l3Y+JytZYpaMropDUws=
 github.com/knz/go-libedit v1.10.1/go.mod h1:MZTVkCWyz0oBc7JOWP3wNAzd002ZbM/5hgShxwh4x8M=
+github.com/l1qwie/Fmtogram v0.0.0-20240626194834-08f13cb63b72 h1:V8k7kKi3IxA6mIij3CmtRAW/e6aUO04Lb+1ffLN1jxk=
+github.com/l1qwie/Fmtogram v0.0.0-20240626194834-08f13cb63b72/go.mod h1:9ctUXx+IMRNaeyftS6r5nQ37jzDt9G7iJ/RGHzfVQdM=
 github.com/l1qwie/Proto-RTG v0.0.0-20240626180234-d5ed1056087f h1:8UZdfuvgtYdHx3D+lc4GTUKDtcD+3caxZLTiP82sIKM=
 github.com/l1qwie/Proto-RTG v0.0.0-20240626180234-d5ed1056087f/go.mod h1:5x+e3MrfdjJvMcl8w4fuV/eyUJSvD7crfZ416LySRk0=
 github.com/leodido/go-urn v1.4.0 h1:WT9HwE9SGECu3lg4d/dIA+jxlljEa1/ffXKmRjqdmIQ=

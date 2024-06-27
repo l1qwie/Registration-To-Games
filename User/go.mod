@@ -21,6 +21,7 @@ require (
 	github.com/jcmturner/gokrb5/v8 v8.4.4 // indirect
 	github.com/jcmturner/rpc/v2 v2.0.3 // indirect
 	github.com/klauspost/compress v1.17.8 // indirect
+	github.com/l1qwie/Fmtogram v0.0.0-20240626194834-08f13cb63b72 // indirect
 	github.com/l1qwie/Proto-RTG v0.0.0-20240626180234-d5ed1056087f // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/pierrec/lz4/v4 v4.1.21 // indirect

@@ -5,10 +5,11 @@ import (
 	"Registration/api/producer"
 	"Registration/app/dict"
 	"Registration/apptype"
-	"Registration/fmtogram/formatter"
-	"Registration/fmtogram/types"
 	"fmt"
 	"strconv"
+
+	"github.com/l1qwie/Fmtogram/formatter"
+	"github.com/l1qwie/Fmtogram/types"
 )
 
 const (

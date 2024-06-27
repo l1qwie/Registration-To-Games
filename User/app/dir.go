@@ -4,13 +4,14 @@ import (
 	"User/api/producer"
 	"User/app/handler"
 	"User/apptype"
-	"User/fmtogram/formatter"
-	"User/fmtogram/helper"
-	"User/fmtogram/types"
 	"fmt"
+
+	"github.com/l1qwie/Fmtogram/formatter"
+	"github.com/l1qwie/Fmtogram/helper"
+	"github.com/l1qwie/Fmtogram/types"
 )
 
-func Receiving(tr *types.TelegramResponse, mes *types.MessageResponse) *formatter.Formatter {
+func Receiving(tr *types.Telegram, mes *types.Returned) *formatter.Formatter {
 	user := new(apptype.User)
 	fm := new(formatter.Formatter)
 	user.Request = helper.ReturnText(tr)

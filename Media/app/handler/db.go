@@ -3,9 +3,10 @@ package handler
 import (
 	"Media/api/producer"
 	"Media/apptype"
-	"Media/fmtogram/types"
 	"database/sql"
 	"fmt"
+
+	"github.com/l1qwie/Fmtogram/types"
 )
 
 // Finds any game to upload/unload media

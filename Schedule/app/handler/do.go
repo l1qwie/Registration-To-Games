@@ -4,11 +4,12 @@ import (
 	"Schedule/api/producer"
 	"Schedule/app/dict"
 	"Schedule/apptype"
-	"Schedule/fmtogram/formatter"
-	"Schedule/fmtogram/types"
+
 	"fmt"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/l1qwie/Fmtogram/formatter"
+	"github.com/l1qwie/Fmtogram/types"
 )
 
 // make the schedule
@@ -53,7 +54,6 @@ func mainLogic(req *apptype.Request, res *apptype.Response, fm *formatter.Format
 	} else {
 		goToMain(res, fm, dict.Dictionary[req.Language]["NoGames"], req.Language)
 	}
-	fm.WriteChatId(req.Id)
 }
 
 // Updates the schedule
@@ -84,7 +84,7 @@ func Schedule(req *apptype.Request, res *apptype.Response) *apptype.Response {
 	fm.ReadyKB()
 	res.Message = fm.Message.Text
 	res.Keyboard = fm.Message.ReplyMarkup
-	res.ChatId = fm.Message.ChatID
+	res.ChatId = req.Id
 	res.ParseMode = fm.Message.ParseMode
 	if fm.Err != nil {
 		res.Error = fmt.Sprint(fm.Err)

@@ -2,7 +2,8 @@ package handler
 
 import (
 	"Game/apptype"
-	"Game/fmtogram/formatter"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 )
 
 func deleteTheGame(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, gameid int) {

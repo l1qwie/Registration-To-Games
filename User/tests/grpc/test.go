@@ -2,13 +2,14 @@ package grpc
 
 import (
 	"User/apptype"
-	"User/fmtogram/formatter"
-	"User/fmtogram/types"
 	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 
+	"github.com/l1qwie/Fmtogram/types"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 	pb "github.com/l1qwie/Proto-RTG/result"
 
 	"github.com/go-redis/redis/v8"
@@ -43,7 +44,7 @@ func testServer() {
 }
 
 func Start() {
-	types.Db = types.ConnectToDatabase(false)
+	types.Db = apptype.ConnectToDatabase()
 	testServer()
 }
 

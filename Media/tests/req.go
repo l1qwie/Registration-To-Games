@@ -2,7 +2,8 @@ package tests
 
 import (
 	"Media/apptype"
-	"Media/fmtogram/types"
+
+	"github.com/l1qwie/Fmtogram/types"
 )
 
 // All defaul data makes here

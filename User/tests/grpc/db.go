@@ -1,8 +1,9 @@
 package grpc
 
 import (
-	"User/fmtogram/types"
 	"context"
+
+	"github.com/l1qwie/Fmtogram/types"
 
 	"github.com/go-redis/redis/v8"
 )

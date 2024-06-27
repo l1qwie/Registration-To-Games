@@ -2,8 +2,9 @@ package functional
 
 import (
 	"Media/apptype"
-	"Media/fmtogram/types"
 	"fmt"
+
+	"github.com/l1qwie/Fmtogram/types"
 )
 
 // [{"text":"","callback_data":"","url":""}]

@@ -2,8 +2,9 @@ package handler
 
 import (
 	"Game/apptype"
-	"Game/fmtogram/formatter"
 	"fmt"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 )
 
 type sportStruct struct{}

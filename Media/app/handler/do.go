@@ -4,9 +4,10 @@ import (
 	"Media/api/producer"
 	"Media/app/dict"
 	"Media/apptype"
-	"Media/fmtogram/formatter"
 	"fmt"
 	"strconv"
+
+	"github.com/l1qwie/Fmtogram/formatter"
 )
 
 const (
@@ -332,7 +333,6 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 	} else if req.Level == LEVEL4 {
 		goToMainMenu(res, fm, dict.Dictionary[req.Language], dict.Dictionary[req.Language]["MainMenu"])
 	}
-	fm.WriteChatId(req.Id)
 }
 
 // Transfers data changed during the program to the response variable
@@ -368,7 +368,7 @@ func MediaAct(req *apptype.Request, res *apptype.Response) {
 	fm.ReadyKB()
 	res.Keyboard = fm.Message.ReplyMarkup
 	res.Message = fm.Message.Text
-	res.ChatID = fm.Message.ChatID
+	res.ChatID = req.Id
 	res.ParseMode = fm.Message.ParseMode
 	media(res, fm)
 	if fm.Err != nil {

@@ -1,9 +1,14 @@
 package apptype
 
 import (
-	"User/fmtogram/types"
+	"database/sql"
+	"fmt"
 	"time"
+
+	"github.com/l1qwie/Fmtogram/types"
 )
+
+var Db *sql.DB
 
 type RegToGames struct {
 	GameId  int
@@ -190,4 +195,26 @@ type ClientAct struct {
 	UserId    int       `json:"userid"`
 	Action    string    `json:"action"`
 	Message   string    `json:"message"`
+}
+
+func docConnect() string {
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		docHost,
+		docPort,
+		docUsername,
+		docPass,
+		docDbname,
+		docSslmode)
+}
+
+func ConnectToDatabase() *sql.DB {
+	db, err := sql.Open("postgres", docConnect())
+	if err != nil {
+		panic(err)
+	}
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+	return db
 }
