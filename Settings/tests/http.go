@@ -103,6 +103,6 @@ func testList() {
 // The head of the directioner
 // Only this function is imported
 func Head() {
-	apptype.Db = apptype.ConnectToDatabase()
+	apptype.TestDb = apptype.ConnectToDatabase()
 	testList()
 }

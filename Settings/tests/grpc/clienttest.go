@@ -127,7 +127,7 @@ func gamesWithUsers() {
 }
 
 func testServer() {
-	apptype.Db = apptype.ConnectToDatabase()
+	apptype.TestDb = apptype.ConnectToDatabase()
 	schedule()
 	gamesWithUsers()
 	log.Print("Server's tests were successfuly completed")

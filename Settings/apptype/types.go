@@ -8,7 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var Db *sql.DB
+var TestDb *sql.DB
 
 type Request struct {
 	Id          int    `json:"id"`

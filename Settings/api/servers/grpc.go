@@ -30,8 +30,9 @@ func (s *server) UpdSettingSch(ctx context.Context, req *pb.SettingServRequestSc
 	g.Price = int(req.GetPrice())
 	g.Currency = req.GetCurrency()
 	g.Seats = int(req.GetSeats())
-	apptype.Db = apptype.ConnectToDatabase()
-	err := handler.UpdateTheSchedule(date, time, stat, g, act)
+	ac := new(handler.ApiConn)
+	ac.DB = apptype.ConnectToDatabase()
+	err := ac.UpdateTheSchedule(date, time, stat, g, act)
 	log.Print("The server UpdSettingSch:50059 ended its job")
 	return nil, err
 }
@@ -47,8 +48,9 @@ func (s *server) UpdSettingGWU(ctx context.Context, req *pb.SettingServRequestGW
 	g.Statpay = int(req.GetStatpay())
 	g.Status = int(req.GetStatus())
 	act := req.GetAction()
-	apptype.Db = apptype.ConnectToDatabase()
-	err := handler.UpdateGWU(g, act)
+	ac := new(handler.ApiConn)
+	ac.DB = apptype.ConnectToDatabase()
+	err := ac.UpdateGWU(g, act)
 	log.Print("The server UpdSettingGWU:50059 ended its job")
 	return nil, err
 }
@@ -58,8 +60,9 @@ func (s *server) UpdSettingUser(ctx context.Context, req *pb.SettingServRequestU
 	userId := int(req.GetUserid())
 	language := req.GetLanguage()
 	customlang := req.GetCustomlang()
-	apptype.Db = apptype.ConnectToDatabase()
-	err := handler.UpdateUsers(userId, language, customlang)
+	ac := new(handler.ApiConn)
+	ac.DB = apptype.ConnectToDatabase()
+	err := ac.UpdateUsers(userId, language, customlang)
 	log.Print("The server UpdSettingGWU:50059 ended its job")
 	return nil, err
 }

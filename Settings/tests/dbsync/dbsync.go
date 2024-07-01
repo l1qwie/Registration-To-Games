@@ -36,14 +36,14 @@ func endOfTransaction(err error, db *sql.DB) {
 }
 
 func clean() {
-	_, err := apptype.Db.Exec("TRUNCATE TABLE Schedule")
+	_, err := apptype.TestDb.Exec("TRUNCATE TABLE Schedule")
 	if err != nil {
 		panic(err)
 	}
 }
 
 func createTestGame() {
-	_, err := apptype.Db.Exec(`
+	_, err := apptype.TestDb.Exec(`
 			INSERT INTO Schedule 
 			(gameid, sport, date, time, seats, price, currency, status)
 			VALUES 
@@ -166,14 +166,14 @@ func startTransaction() {
 		rows  *sql.Rows
 		count int
 	)
-	_, err := apptype.Db.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
-	defer endOfTransaction(err, apptype.Db)
+	_, err := apptype.TestDb.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
+	defer endOfTransaction(err, apptype.TestDb)
 	if err == nil {
-		err = apptype.Db.QueryRow("SELECT COUNT(*) FROM Schedule").Scan(&count)
+		err = apptype.TestDb.QueryRow("SELECT COUNT(*) FROM Schedule").Scan(&count)
 	}
 	if err == nil {
 		log.Printf("Rows in Schedule from transaction 1 = %d", count)
-		_, err = apptype.Db.Exec(`
+		_, err = apptype.TestDb.Exec(`
 			INSERT INTO Schedule 
 			(gameid, sport, date, time, seats, price, currency, status)
 			VALUES 
@@ -181,7 +181,7 @@ func startTransaction() {
 	}
 	if err == nil {
 		time.Sleep(time.Second)
-		rows, err = apptype.Db.Query("SELECT * FROM Schedule WHERE status != -1")
+		rows, err = apptype.TestDb.Query("SELECT * FROM Schedule WHERE status != -1")
 		if err == nil {
 			defer rows.Close()
 			i := 0
@@ -325,7 +325,7 @@ func checkIns() {
 
 // Tests for concurrent use of the database
 func Start() {
-	apptype.Db = apptype.ConnectToDatabase()
+	apptype.TestDb = apptype.ConnectToDatabase()
 	tDB = apptype.ConnectToDatabase()
 	checkSel()
 	checkUpd()

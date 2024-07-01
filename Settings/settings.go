@@ -1,12 +1,13 @@
 package main
 
 import (
-	"Settings/tests/dbsync"
+	"Settings/api/servers"
+	"Settings/tests"
 )
 
 func main() {
-	//go servers.Start()
-	//go servers.Settings()
-	//tests.Head()
-	dbsync.Start()
+	go servers.Start()
+	go servers.Settings()
+	tests.Head()
+	//dbsync.Start()
 }
