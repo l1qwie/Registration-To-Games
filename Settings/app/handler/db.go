@@ -5,6 +5,7 @@ import (
 	"Settings/api/producer"
 	"Settings/apptype"
 	"fmt"
+	"log"
 
 	_ "github.com/lib/pq"
 )
@@ -109,7 +110,7 @@ func delTheGame(seats, gameId, userId int, f func(error)) bool {
 	var err error
 	producer.InterLogs("Start function Settings.delTheGame()",
 		fmt.Sprintf("UserId: %d, seats (int): %d, gameId (int): %d, userId (int): %d, f (func(error))): %T", userId, seats, gameId, userId, f))
-	_, err = apptype.Db.Exec("START TRANSACTION")
+	_, err = apptype.Db.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
 	if err == nil {
 		_, err = apptype.Db.Exec("UPDATE GamesWithUsers SET status = -1 WHERE gameId = $1 AND userId = $2", gameId, userId)
 	}
@@ -137,7 +138,7 @@ func updtSeats(gameId, userId, genS, oldS, newS int, f func(error)) bool {
 	var err error
 	producer.InterLogs("Start function Settings.updtSeats()",
 		fmt.Sprintf("UserId: %d, gameId (int): %d, userId (int): %d, genS (int): %d, oldS (int): %d, newS (int): %d, f (func(error))): %T", userId, gameId, userId, genS, oldS, newS, f))
-	_, err = apptype.Db.Exec("START TRANSACTION")
+	_, err = apptype.Db.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
 	if err == nil {
 		_, err = apptype.Db.Exec("UPDATE GamesWithUsers SET seats = $1 WHERE gameId = $2 AND userId = $3", newS, gameId, userId)
 	}
@@ -180,7 +181,11 @@ func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) erro
 	} else if act == "change" {
 		request = "UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, price = $5, currency = $6, seats = $7, status = $8 WHERE gameId = $1"
 	}
-	_, err := apptype.Db.Exec(request, g.Id, g.Sport, date, time, g.Price, g.Currency, g.Seats, status)
+	_, err := apptype.Db.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
+	if err == nil {
+		_, err = apptype.Db.Exec(request, g.Id, g.Sport, date, time, g.Price, g.Currency, g.Seats, status)
+	}
+	defer endOfTransaction(err, func(err error) { log.Print(err) })
 	return err
 }
 
@@ -193,14 +198,22 @@ func UpdateGWU(g *apptype.GWU, act string) error {
 	} else if act == "change" {
 		request = "UPDATE GamesWithUsers SET id = $1, userId = $2, gameId = $3, seats = $4, payment = $5, statuspayment = $6, status = $7 WHERE gameId = $3"
 	}
-	_, err := apptype.Db.Exec(request, g.Id, g.UserId, g.GameId, g.Seats, g.Payment, g.Statpay, g.Status)
+	_, err := apptype.Db.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
+	if err == nil {
+		_, err = apptype.Db.Exec(request, g.Id, g.UserId, g.GameId, g.Seats, g.Payment, g.Statpay, g.Status)
+	}
+	defer endOfTransaction(err, func(err error) { log.Print(err) })
 	return err
 }
 
 func UpdateUsers(userId int, lang string, custlang bool) error {
 	producer.InterLogs("Start function Settings.UpdateUsers()",
 		fmt.Sprintf("userId (int): %d, lang (string): %s, custlang (bool): %v", userId, lang, custlang))
-	_, err := apptype.Db.Exec("INSERT INTO Users (userId, language, customlanguage) VALUES ($1, $2, $3)", userId, lang, custlang)
+	_, err := apptype.Db.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
+	if err == nil {
+		_, err = apptype.Db.Exec("INSERT INTO Users (userId, language, customlanguage) VALUES ($1, $2, $3)", userId, lang, custlang)
+	}
+	defer endOfTransaction(err, func(err error) { log.Print(err) })
 	return err
 }
 
