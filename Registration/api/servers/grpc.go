@@ -33,8 +33,9 @@ func (s *server) UpdReg(ctx context.Context, req *pb.RegServRequest) (*pb.EmptyR
 	g.Seats = int(req.GetSeats())
 	g.Price = int(req.GetPrice())
 	g.Currency = req.GetCurrency()
-	apptype.Db = apptype.ConnectToDatabase()
-	err := handler.UpdateTheSchedule(date, time, stat, g, act)
+	con := new(handler.Conn)
+	con.Db = apptype.ConnectToDatabase()
+	err := con.UpdateTheSchedule(date, time, stat, g, act)
 	log.Print("The server UpdReg:50054 ended its job")
 	return nil, err
 }

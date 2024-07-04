@@ -10,8 +10,12 @@ import (
 	"log"
 )
 
+type Conn struct {
+	Db *sql.DB
+}
+
 // Selects the schedule of the app
-func selectTheSchedule(limit, offset int, language string, f func(error)) []*apptype.Game {
+func (c *Conn) selectTheSchedule(limit, offset int, language string, f func(error)) []*apptype.Game {
 	var (
 		rows           *sql.Rows
 		err            error
@@ -22,7 +26,7 @@ func selectTheSchedule(limit, offset int, language string, f func(error)) []*app
 		fmt.Sprintf("limit (int): %d, offset (int): %d, langauge (string): %s, f (func(error)): %T", limit, offset, language, f))
 	schedule := make([]*apptype.Game, limit)
 	request = `SELECT gameId, sport, date, time, seats FROM Schedule WHERE (status != -1) ORDER BY Schedule DESC LIMIT $1 OFFSET $2`
-	rows, err = apptype.Db.Query(request, limit, offset)
+	rows, err = c.Db.Query(request, limit, offset)
 	if err != nil {
 		f(err)
 	}
@@ -42,11 +46,11 @@ func selectTheSchedule(limit, offset int, language string, f func(error)) []*app
 }
 
 // Tries to find any active(status != -1) game
-func findGame(f func(error)) bool {
+func (c *Conn) findGame(f func(error)) bool {
 	var count int
 	producer.InterLogs("Start function Registration.findGame()",
 		fmt.Sprintf("f (func(error)): %T", f))
-	rows, err := apptype.Db.Query("SELECT gameId FROM Schedule WHERE status != -1")
+	rows, err := c.Db.Query("SELECT gameId FROM Schedule WHERE status != -1")
 	if err != nil {
 		f(err)
 	}
@@ -59,11 +63,11 @@ func findGame(f func(error)) bool {
 }
 
 // Tries to find the game that user choosed
-func findThatGame(gameId int, f func(error)) bool {
+func (c *Conn) findThatGame(gameId int, f func(error)) bool {
 	var count int
 	producer.InterLogs("Start function Registration.findThatGame()",
 		fmt.Sprintf("gameId (int): %d, f (func(error)): %T", gameId, f))
-	err := apptype.Db.QueryRow("SELECT COUNT(*) FROM Schedule WHERE status != -1 AND gameId = $1", gameId).Scan(&count)
+	err := c.Db.QueryRow("SELECT COUNT(*) FROM Schedule WHERE status != -1 AND gameId = $1", gameId).Scan(&count)
 	if err != nil {
 		f(err)
 	}
@@ -71,10 +75,10 @@ func findThatGame(gameId int, f func(error)) bool {
 }
 
 // Selects some information about the game
-func selectThePrice(gameId int, f func(error)) (price, space int, currency string) {
+func (c *Conn) selectThePrice(gameId int, f func(error)) (price, space int, currency string) {
 	producer.InterLogs("Start function Registration.selectThePrice()",
 		fmt.Sprintf("gameId (int): %d, f (func(error)): %T", gameId, f))
-	err := apptype.Db.QueryRow("SELECT price, seats, currency FROM Schedule WHERE gameId = $1", gameId).Scan(&price, &space, &currency)
+	err := c.Db.QueryRow("SELECT price, seats, currency FROM Schedule WHERE gameId = $1", gameId).Scan(&price, &space, &currency)
 	if err != nil {
 		f(err)
 	}
@@ -82,25 +86,25 @@ func selectThePrice(gameId int, f func(error)) (price, space int, currency strin
 }
 
 // Checks is there any free seats (space) to registraite the user
-func howManyIsLeft(gameId int, wishfulseats int, f func(error)) bool {
+func (c *Conn) howManyIsLeft(gameId int, wishfulseats int, f func(error)) bool {
 	var seats int
 	producer.InterLogs("Start function Registration.howManyIsLeft()",
 		fmt.Sprintf("gameId (int): %d, wishfulseats (int): %d, f (func(error)): %T", gameId, wishfulseats, f))
-	err := apptype.Db.QueryRow("SELECT seats FROM Schedule WHERE gameId = $1", gameId).Scan(&seats)
+	err := c.Db.QueryRow("SELECT seats FROM Schedule WHERE gameId = $1", gameId).Scan(&seats)
 	if err != nil {
 		f(err)
 	}
 	return wishfulseats < seats
 }
 
-func endOfTransaction(err error, f func(error)) {
+func (c *Conn) endOfTransaction(err error, f func(error)) {
 	var res string
 	if err != nil {
 		res = "ROLLBACK"
 	} else {
 		res = "COMMIT"
 	}
-	_, err = apptype.Db.Exec(res)
+	_, err = c.Db.Exec(res)
 	if err != nil {
 		f(err)
 	}
@@ -108,32 +112,32 @@ func endOfTransaction(err error, f func(error)) {
 
 // Adds a new string in the table "GamesWithUsers"
 // Updates seats of the game in the table "Schedule"
-func completeRegistration(userId, gameId, seats int, payment string, f func(error)) bool {
+func (c *Conn) completeRegistration(userId, gameId, seats int, payment string, f func(error)) bool {
 	var gameSeats int
 	producer.InterLogs("Start function Registration.completeRegistration()",
 		fmt.Sprintf("userId (int): %d, gameId (int): %d, seats (int): %d, payment (string): %s, f (func(error)): %T", userId, gameId, seats, payment, f))
-	_, err := apptype.Db.Exec("START TRANSACTION")
+	_, err := c.Db.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
 	if err == nil {
-		_, err = apptype.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, status) VALUES (nextval('gameswithusers_id_seq'), $1, $2, $3, $4, 1)", userId, gameId, seats, payment)
+		_, err = c.Db.Exec("INSERT INTO GamesWithUsers (id, userId, gameId, seats, payment, status) VALUES (nextval('gameswithusers_id_seq'), $1, $2, $3, $4, 1)", userId, gameId, seats, payment)
 	}
 	if err == nil {
-		err = apptype.Db.QueryRow("SELECT seats FROM Schedule WHERE gameId = $1", gameId).Scan(&gameSeats)
+		err = c.Db.QueryRow("SELECT seats FROM Schedule WHERE gameId = $1", gameId).Scan(&gameSeats)
 	}
 	if err == nil {
-		_, err = apptype.Db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", gameSeats-seats, gameId)
+		_, err = c.Db.Exec("UPDATE Schedule SET seats = $1 WHERE gameId = $2", gameSeats-seats, gameId)
 	}
-	defer endOfTransaction(err, f)
+	defer c.endOfTransaction(err, f)
 	return err == nil
 }
 
 // Selects all game data
-func selectDetailOfGame(gameId int, language string, f func(error)) *apptype.Game {
+func (c *Conn) selectDetailOfGame(gameId int, language string, f func(error)) *apptype.Game {
 	var date, time int
 	producer.InterLogs("Start function Registration.selectDetailOfGame()",
 		fmt.Sprintf("gameId (int): %d, language (string): %s, f (func(error)): %T", gameId, language, f))
 	details := new(apptype.Game)
 	request := `SELECT gameId, sport, date, time, seats, latitude, longitude, address, price, currency FROM Schedule WHERE gameId = $1`
-	err := apptype.Db.QueryRow(request, gameId).Scan(&details.Id, &details.Sport, &date, &time, &details.Seats, &details.Lattitude, &details.Longitude, &details.Address, &details.Price, &details.Currency)
+	err := c.Db.QueryRow(request, gameId).Scan(&details.Id, &details.Sport, &date, &time, &details.Seats, &details.Lattitude, &details.Longitude, &details.Address, &details.Price, &details.Currency)
 	if err != nil {
 		f(err)
 	}
@@ -143,7 +147,7 @@ func selectDetailOfGame(gameId int, language string, f func(error)) *apptype.Gam
 	return details
 }
 
-func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
+func (c *Conn) UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
 	var request string
 	producer.InterLogs("Start function Registration.UpdateTheSchedule()",
 		fmt.Sprintf("date (int): %d, time (int): %d, status (int): %d, g (*apptype.Game): %v, act (string): %s", date, time, status, g, act))
@@ -152,23 +156,23 @@ func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) erro
 	} else if act == "change" || act == "del" {
 		request = `UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, seats = $5, price = $6, currency = $7, status = $8 WHERE gameId = $1`
 	}
-	_, err := apptype.Db.Exec(request, g.Id, g.Sport, date, time, g.Seats, g.Price, g.Currency, status)
+	_, err := c.Db.Exec(request, g.Id, g.Sport, date, time, g.Seats, g.Price, g.Currency, status)
 	if err != nil {
 		panic(err)
 	}
 	return err
 }
 
-func fill(gameId, userId int) (*client.Upd, error) {
+func (c *Conn) fill(gameId, userId int) (*client.Upd, error) {
 	producer.InterLogs("Start function Registration.fill()",
 		fmt.Sprintf("gameId (int): %d, userId (int): %d", gameId, userId))
 	u := new(client.Upd)
-	err := apptype.Db.QueryRow("SELECT gameId, sport, date, time, price, currency, seats, status FROM Schedule WHERE gameId = $1",
+	err := c.Db.QueryRow("SELECT gameId, sport, date, time, price, currency, seats, status FROM Schedule WHERE gameId = $1",
 		gameId).Scan(&u.GameId, &u.Sport, &u.Date, &u.Time, &u.Price, &u.Currency, &u.Seats, &u.Status)
 	if err == nil {
 		u.Datestr = fromIntToStrDate(u.Date)
 		u.Timestr = fromIntToStrTime(u.Time)
-		err = apptype.Db.QueryRow("SELECT id, userId, gameId, seats, payment, statuspayment, status FROM GamesWithUsers WHERE userId = $1 AND gameId = $2",
+		err = c.Db.QueryRow("SELECT id, userId, gameId, seats, payment, statuspayment, status FROM GamesWithUsers WHERE userId = $1 AND gameId = $2",
 			userId, gameId).Scan(&u.Id, &u.UserId, &u.GameIdGWU, &u.SeatsGWU, &u.Payment, &u.Statpay, &u.StatusGWU)
 	}
 	return u, err

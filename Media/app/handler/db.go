@@ -9,8 +9,12 @@ import (
 	"github.com/l1qwie/Fmtogram/types"
 )
 
+type Conn struct {
+	Db *sql.DB
+}
+
 // Finds any game to upload/unload media
-func findAnyMGames(f func(error)) bool {
+func (c *Conn) findAnyMGames(f func(error)) bool {
 	var count int
 	producer.InterLogs("Start function Media.findAnyMGames()",
 		fmt.Sprintf("f (func(error)): %T", f))
@@ -23,7 +27,7 @@ func findAnyMGames(f func(error)) bool {
 
 // Finds every game that the user could upload or unload.
 // Returns two int values
-func findEveryGames(f func(error)) (int, int) {
+func (c *Conn) findEveryGames(f func(error)) (int, int) {
 	var un, up int
 	producer.InterLogs("Start function Media.findEveryGames()",
 		fmt.Sprintf("f (func(error)): %T", f))
@@ -43,7 +47,7 @@ func findEveryGames(f func(error)) (int, int) {
 }
 
 // Make a query for unload games
-func queryUnload(limit, lp int, f func(error)) (rows *sql.Rows) {
+func (c *Conn) queryUnload(limit, lp int, f func(error)) (rows *sql.Rows) {
 	producer.InterLogs("Start function Media.queryUnload()",
 		fmt.Sprintf("limit (int): %d, lp (int): %d, f (func(error)): %T", limit, lp, f))
 	rows, err := apptype.Db.Query(`
@@ -59,7 +63,7 @@ func queryUnload(limit, lp int, f func(error)) (rows *sql.Rows) {
 }
 
 // Make a query for upload games
-func queryUpload(limit, lp int, f func(error)) (rows *sql.Rows) {
+func (c *Conn) queryUpload(limit, lp int, f func(error)) (rows *sql.Rows) {
 	producer.InterLogs("Start function Media.queryUpload()",
 		fmt.Sprintf("limit (int): %d, lp (int): %d, f (func(error)): %T", limit, lp, f))
 	rows, err := apptype.Db.Query(`SELECT DISTINCT(gameId), sport, date, time 
@@ -73,7 +77,7 @@ func queryUpload(limit, lp int, f func(error)) (rows *sql.Rows) {
 }
 
 // Selects all games inf depens on upload or unload option
-func selectGamesInf(limit, lp int, vector bool, f func(error)) []*apptype.Game {
+func (c *Conn) selectGamesInf(limit, lp int, vector bool, f func(error)) []*apptype.Game {
 	var (
 		rows          *sql.Rows
 		err           error
@@ -83,9 +87,9 @@ func selectGamesInf(limit, lp int, vector bool, f func(error)) []*apptype.Game {
 		fmt.Sprintf("limit (int): %d, lp (int): %d, vector (bool): %v, f (func(error)): %T", limit, lp, vector, f))
 	schedule := make([]*apptype.Game, limit)
 	if vector {
-		rows = queryUnload(limit, lp, f)
+		rows = c.queryUnload(limit, lp, f)
 	} else {
-		rows = queryUpload(limit, lp, f)
+		rows = c.queryUpload(limit, lp, f)
 	}
 	for rows.Next() {
 		schedule[i] = &apptype.Game{}
@@ -102,7 +106,7 @@ func selectGamesInf(limit, lp int, vector bool, f func(error)) []*apptype.Game {
 }
 
 // Finds the media game
-func findMediaGame(gameId int, f func(error)) bool {
+func (c *Conn) findMediaGame(gameId int, f func(error)) bool {
 	var count int
 	producer.InterLogs("Start function Media.findMediaGame()",
 		fmt.Sprintf("gameId (int): %d, f (func(error)): %T", gameId, f))
@@ -114,7 +118,7 @@ func findMediaGame(gameId int, f func(error)) bool {
 }
 
 // Selects the quantity of the game
-func selectQuantity(gameId int, f func(error)) int {
+func (c *Conn) selectQuantity(gameId int, f func(error)) int {
 	var res int
 	producer.InterLogs("Start function Media.selectQuantity()",
 		fmt.Sprintf("gameId (int): %d, f (func(error)): %T", gameId, f))
@@ -127,7 +131,7 @@ func selectQuantity(gameId int, f func(error)) int {
 }
 
 // Select max 20 mediafiles from the game
-func selectArrOrMedia(gameId, quan int, f func(error)) []types.Media {
+func (c *Conn) selectArrOrMedia(gameId, quan int, f func(error)) []types.Media {
 	var (
 		id, ty string
 		i      int
@@ -153,7 +157,7 @@ func selectArrOrMedia(gameId, quan int, f func(error)) []types.Media {
 }
 
 // Selects only one mediafile from the game
-func selectOneMedia(gameId int, f func(error)) (string, string) {
+func (c *Conn) selectOneMedia(gameId int, f func(error)) (string, string) {
 	var fId, ty string
 	producer.InterLogs("Start function Media.selectOneMedia()",
 		fmt.Sprintf("gameId (int): %d, f (func(error)): %T", gameId, f))
@@ -165,7 +169,7 @@ func selectOneMedia(gameId int, f func(error)) (string, string) {
 }
 
 // Finds how mutch space we have for the game
-func howMuchSpace(gameId int, f func(error)) (int, bool) {
+func (c *Conn) howMuchSpace(gameId int, f func(error)) (int, bool) {
 	var res int
 	producer.InterLogs("Start function Media.howMuchSpace()",
 		fmt.Sprintf("gameId (int): %d, f (func(error)): %T", gameId, f))
@@ -176,7 +180,7 @@ func howMuchSpace(gameId int, f func(error)) (int, bool) {
 	return 20 - res, (20 - res) > 0
 }
 
-func endOfTransaction(err error, f func(error)) {
+func (c *Conn) endOfTransaction(err error, f func(error)) {
 	var res string
 	if err != nil {
 		res = "ROLLBACK"
@@ -190,11 +194,11 @@ func endOfTransaction(err error, f func(error)) {
 }
 
 // Saves the mediafile to the game
-func insertOneNewMedia(fileId, ty string, gameId, userId int, f func(error)) bool {
+func (c *Conn) insertOneNewMedia(fileId, ty string, gameId, userId int, f func(error)) bool {
 	var count int
 	producer.InterLogs("Start function Media.insertOneNewMedia()",
 		fmt.Sprintf("fileId (string): %s, ty (string): %s, gameId (int): %d, userId (int): %d, f (func(error)): %T", fileId, ty, gameId, userId, f))
-	_, err := apptype.Db.Exec("START TRANSACTION")
+	_, err := apptype.Db.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
 	if err == nil {
 		err = apptype.Db.QueryRow("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 1", gameId).Scan(&count)
 	}
@@ -208,16 +212,16 @@ func insertOneNewMedia(fileId, ty string, gameId, userId int, f func(error)) boo
 	if err == nil {
 		_, err = apptype.Db.Exec("UPDATE MediaRepository SET counter = $1 WHERE gameId = $2", count+1, gameId)
 	}
-	defer endOfTransaction(err, f)
+	defer c.endOfTransaction(err, f)
 	return err == nil
 }
 
 // Saves a lot of media (array media) to the game
-func insertAfewNewMedia(media []types.Media, gameId, userId int, f func(error)) bool {
+func (c *Conn) insertAfewNewMedia(media []types.Media, gameId, userId int, f func(error)) bool {
 	var count int
 	producer.InterLogs("Start function Media.insertAfewNewMedia()",
 		fmt.Sprintf("media ([]types.Media): %v, gameId (int): %d, userId (int): %d, f (func(error)): %T", media, gameId, userId, f))
-	_, err := apptype.Db.Exec("START TRANSACTION")
+	_, err := apptype.Db.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
 	if err == nil {
 		err = apptype.Db.QueryRow("SELECT COUNT(*) FROM MediaRepository WHERE gameId = $1 AND status = 1", gameId).Scan(&count)
 	}
@@ -237,11 +241,11 @@ func insertAfewNewMedia(media []types.Media, gameId, userId int, f func(error)) 
 			f(err)
 		}
 	}
-	defer endOfTransaction(err, f)
+	defer c.endOfTransaction(err, f)
 	return err == nil
 }
 
-func UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
+func (c *Conn) UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
 	var request string
 	producer.InterLogs("Start function Media.UpdateTheSchedule()",
 		fmt.Sprintf("date (int): %d, time (int): %d, status (int): %d, g (*apptype.Game): %v, act (string): %s", date, time, status, g, act))

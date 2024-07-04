@@ -6,16 +6,11 @@ import (
 	"Settings/apptype"
 	"database/sql"
 	"fmt"
-	"log"
 
 	_ "github.com/lib/pq"
 )
 
 type UsuallConn struct {
-	DB *sql.DB
-}
-
-type ApiConn struct {
 	DB *sql.DB
 }
 
@@ -181,7 +176,7 @@ func (uc *UsuallConn) updtPayment(gameId, userId int, paymeth string, f func(err
 	}
 }
 
-func (ac *ApiConn) UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
+func (uc *UsuallConn) UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
 	var request string
 	producer.InterLogs("Start function Settings.UpdateTheSchedule()",
 		fmt.Sprintf("date (int): %d, time (int): %d, status (int): %d, g (*apptype.Game): %v, act (string): %s", date, time, status, g, act))
@@ -190,15 +185,11 @@ func (ac *ApiConn) UpdateTheSchedule(date, time, status int, g *apptype.Game, ac
 	} else if act == "change" {
 		request = "UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, price = $5, currency = $6, seats = $7, status = $8 WHERE gameId = $1"
 	}
-	_, err := ac.DB.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
-	if err == nil {
-		_, err = ac.DB.Exec(request, g.Id, g.Sport, date, time, g.Price, g.Currency, g.Seats, status)
-	}
-	defer endOfTransaction(err, ac.DB, func(err error) { log.Print(err) })
+	_, err := uc.DB.Exec(request, g.Id, g.Sport, date, time, g.Price, g.Currency, g.Seats, status)
 	return err
 }
 
-func (ac *ApiConn) UpdateGWU(g *apptype.GWU, act string) error {
+func (uc *UsuallConn) UpdateGWU(g *apptype.GWU, act string) error {
 	var request string
 	producer.InterLogs("Start function Settings.UpdateGWU()",
 		fmt.Sprintf("g (*apptype.GWU): %v, act (string): %s", g, act))
@@ -207,18 +198,14 @@ func (ac *ApiConn) UpdateGWU(g *apptype.GWU, act string) error {
 	} else if act == "change" {
 		request = "UPDATE GamesWithUsers SET id = $1, userId = $2, gameId = $3, seats = $4, payment = $5, statuspayment = $6, status = $7 WHERE gameId = $3"
 	}
-	_, err := ac.DB.Exec("BEGIN ISOLATION LEVEL REPEATABLE READ")
-	if err == nil {
-		_, err = ac.DB.Exec(request, g.Id, g.UserId, g.GameId, g.Seats, g.Payment, g.Statpay, g.Status)
-	}
-	defer endOfTransaction(err, ac.DB, func(err error) { log.Print(err) })
+	_, err := uc.DB.Exec(request, g.Id, g.UserId, g.GameId, g.Seats, g.Payment, g.Statpay, g.Status)
 	return err
 }
 
-func (ac *ApiConn) UpdateUsers(userId int, lang string, custlang bool) error {
+func (uc *UsuallConn) UpdateUsers(userId int, lang string, custlang bool) error {
 	producer.InterLogs("Start function Settings.UpdateUsers()",
 		fmt.Sprintf("userId (int): %d, lang (string): %s, custlang (bool): %v", userId, lang, custlang))
-	_, err := ac.DB.Exec("INSERT INTO Users (userId, language, customlanguage) VALUES ($1, $2, $3)", userId, lang, custlang)
+	_, err := uc.DB.Exec("INSERT INTO Users (userId, language, customlanguage) VALUES ($1, $2, $3)", userId, lang, custlang)
 	return err
 }
 

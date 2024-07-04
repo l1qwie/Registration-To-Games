@@ -128,17 +128,17 @@ func unAndUp(res *apptype.Response, fm *formatter.Formatter, dict map[string]str
 }
 
 // The first function of the act
-func chooseDirection(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+func chooseDirection(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, con *Conn) {
 	producer.InterLogs("Start function Media.chooseDirection()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", res.ChatID, res, fm))
-	if findAnyMGames(fm.Error) {
-		ungames, upgames := findEveryGames(fm.Error)
+	if con.findAnyMGames(fm.Error) {
+		ungames, upgames := con.findEveryGames(fm.Error)
 		if (ungames != 0) && (upgames != 0) {
 			unAndUp(res, fm, dict.Dictionary[req.Language])
 		} else if (ungames != 0) && (upgames == 0) {
-			prepareToUn(res, fm, dict.Dictionary[req.Language], req.Limit, dict.Dictionary[req.Language]["UnloadGames"])
+			prepareToUn(res, fm, con, dict.Dictionary[req.Language], req.Limit, dict.Dictionary[req.Language]["UnloadGames"])
 		} else if (ungames == 0) && (upgames != 0) {
-			prepareToUp(res, fm, dict.Dictionary[req.Language], req.Limit, dict.Dictionary[req.Language]["UploadGames"])
+			prepareToUp(res, fm, con, dict.Dictionary[req.Language], req.Limit, dict.Dictionary[req.Language]["UploadGames"])
 		}
 	} else {
 		goToMainMenu(res, fm, dict.Dictionary[req.Language], fmt.Sprint(dict.Dictionary[req.Language]["NoMGames"], dict.Dictionary[req.Language]["MainMenu"]))
@@ -166,43 +166,43 @@ func schKb(fm *formatter.Formatter, sch []*apptype.Game, dict map[string]string,
 }
 
 // Does a few changes and redirect to response builder
-func prepareToUn(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, limit int, text string) {
+func prepareToUn(res *apptype.Response, fm *formatter.Formatter, con *Conn, dict map[string]string, limit int, text string) {
 	producer.InterLogs("Start function Media.prepareToUn()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, limit (int): %d, text (string): %s", res.ChatID, res, fm, limit, text))
 	res.Level = 3
 	res.MediaDir = "unload"
-	sch := selectGamesInf(limit, res.LaunchPoint, true, fm.Error)
+	sch := con.selectGamesInf(limit, res.LaunchPoint, true, fm.Error)
 	schKb(fm, sch, dict, text)
 }
 
 // Does a few changes and redirect to response builder
-func prepareToUp(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, limit int, text string) {
+func prepareToUp(res *apptype.Response, fm *formatter.Formatter, con *Conn, dict map[string]string, limit int, text string) {
 	producer.InterLogs("Start function Media.prepareToUp()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, limit (int): %d, text (string): %s", res.ChatID, res, fm, limit, text))
 	res.Level = 2
 	res.MediaDir = "upload"
-	sch := selectGamesInf(limit, res.LaunchPoint, false, fm.Error)
+	sch := con.selectGamesInf(limit, res.LaunchPoint, false, fm.Error)
 	schKb(fm, sch, dict, text)
 }
 
 // Redirects the request depending on the input data
-func chooseMediaGame(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+func chooseMediaGame(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, con *Conn) {
 	producer.InterLogs("Start function Media.chooseMediaGame()",
 		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Req == "unload" {
-		prepareToUn(res, fm, dict.Dictionary[req.Language], req.Limit, "")
+		prepareToUn(res, fm, con, dict.Dictionary[req.Language], req.Limit, "")
 	} else if req.Req == "upload" {
-		prepareToUp(res, fm, dict.Dictionary[req.Language], req.Limit, "")
+		prepareToUp(res, fm, con, dict.Dictionary[req.Language], req.Limit, "")
 	} else {
 		unAndUp(res, fm, dict.Dictionary[req.Language])
 	}
 }
 
 // Makes a body for a response
-func waitBody(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, gameId int) {
+func waitBody(res *apptype.Response, fm *formatter.Formatter, con *Conn, dict map[string]string, gameId int) {
 	producer.InterLogs("Start function Media.waitBody()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, gameId (int): %d", res.ChatID, res, fm, gameId))
-	space, ok := howMuchSpace(gameId, fm.Error)
+	space, ok := con.howMuchSpace(gameId, fm.Error)
 	if ok {
 		res.Level = 3
 		res.GameId = gameId
@@ -215,34 +215,34 @@ func waitBody(res *apptype.Response, fm *formatter.Formatter, dict map[string]st
 }
 
 // Checks a few moments and redirects to a function that make response-body
-func waitingYourMedia(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+func waitingYourMedia(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, con *Conn) {
 	producer.InterLogs("Start function Media.waitingYourMedia()",
 		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	det, num := intCheck(req.Req)
 	if det {
-		if findMediaGame(num, fm.Error) {
-			waitBody(res, fm, dict.Dictionary[req.Language], num)
+		if con.findMediaGame(num, fm.Error) {
+			waitBody(res, fm, con, dict.Dictionary[req.Language], num)
 		} else {
-			prepareToUp(res, fm, dict.Dictionary[req.Language], req.Limit, "")
+			prepareToUp(res, fm, con, dict.Dictionary[req.Language], req.Limit, "")
 		}
 	} else {
 		res.LaunchPoint = increaseLaunchPoit(req.Req)
-		prepareToUp(res, fm, dict.Dictionary[req.Language], req.Limit, "")
+		prepareToUp(res, fm, con, dict.Dictionary[req.Language], req.Limit, "")
 	}
 }
 
 // Finds out what media files are there and chooses the path to transfer them to the variable
-func whichWillbeShowed(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, gameId int) {
+func whichWillbeShowed(res *apptype.Response, fm *formatter.Formatter, con *Conn, dict map[string]string, gameId int) {
 	producer.InterLogs("Start function Media.whichWillbeShowed()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, gameId (int): %d", res.ChatID, res, fm, gameId))
 	res.Level = 4
 	res.GameId = gameId
 	res.Status = true
-	quan := selectQuantity(gameId, fm.Error)
+	quan := con.selectQuantity(gameId, fm.Error)
 	if quan > 1 {
-		fm.AddMapOfMedia(selectArrOrMedia(gameId, quan, fm.Error))
+		fm.AddMapOfMedia(con.selectArrOrMedia(gameId, quan, fm.Error))
 	} else {
-		fid, ty := selectOneMedia(gameId, fm.Error)
+		fid, ty := con.selectOneMedia(gameId, fm.Error)
 		if ty == "photo" {
 			fm.AddPhotoFromTG(fid)
 		} else if ty == "video" {
@@ -255,35 +255,35 @@ func whichWillbeShowed(res *apptype.Response, fm *formatter.Formatter, dict map[
 }
 
 // Unload function, checks a little and redicrect to bodybuilder
-func unload(res *apptype.Response, fm *formatter.Formatter, dict map[string]string, phrase string, limit int) {
+func unload(res *apptype.Response, fm *formatter.Formatter, con *Conn, dict map[string]string, phrase string, limit int) {
 	producer.InterLogs("Start function Media.unload()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, fm (*formatter.Formatter): %v, phrase (string): %s, limit (int): %d", res.ChatID, res, fm, phrase, limit))
 	det, num := intCheck(phrase)
 	if det {
-		if findMediaGame(num, fm.Error) {
-			whichWillbeShowed(res, fm, dict, num)
+		if con.findMediaGame(num, fm.Error) {
+			whichWillbeShowed(res, fm, con, dict, num)
 		} else {
-			prepareToUn(res, fm, dict, limit, "")
+			prepareToUn(res, fm, con, dict, limit, "")
 		}
 	} else {
 		res.LaunchPoint = increaseLaunchPoit(phrase)
-		prepareToUn(res, fm, dict, limit, "")
+		prepareToUn(res, fm, con, dict, limit, "")
 	}
 }
 
 // Saves the media, checks which way would it be
-func saveMedia(res *apptype.Response, req *apptype.Request, fm *formatter.Formatter, dict map[string]string) {
+func saveMedia(res *apptype.Response, req *apptype.Request, fm *formatter.Formatter, con *Conn, dict map[string]string) {
 	var mes string
 	producer.InterLogs("Start function Media.saveMedia()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, req (*apptype.Request): %v, fm (*formatter.Formatter): %v", req.Id, res, req, fm))
-	space, ok := howMuchSpace(res.GameId, fm.Error)
+	space, ok := con.howMuchSpace(res.GameId, fm.Error)
 	if ok && (space > req.MediaCounter) {
 		res.Level = 4
 		res.Status = true
 		if req.MediaCounter > 1 {
-			ok = insertAfewNewMedia(req.Media, req.GameId, req.Id, fm.Error)
+			ok = con.insertAfewNewMedia(req.Media, req.GameId, req.Id, fm.Error)
 		} else {
-			ok = insertOneNewMedia(req.FileId, req.TypeOffile, req.GameId, req.Id, fm.Error)
+			ok = con.insertOneNewMedia(req.FileId, req.TypeOffile, req.GameId, req.Id, fm.Error)
 		}
 		setKb(fm, []int{1}, []string{dict["MainMenu"]}, []string{"MainMenu"})
 		if ok {
@@ -294,34 +294,34 @@ func saveMedia(res *apptype.Response, req *apptype.Request, fm *formatter.Format
 		fm.WriteString(mes)
 		producer.ActLogs("User has completed media action", res.ChatID)
 	} else {
-		waitBody(res, fm, dict, res.GameId)
+		waitBody(res, fm, con, dict, res.GameId)
 	}
 }
 
 // Checks if there is enough data and redirect to function which save the media
-func upload(res *apptype.Response, req *apptype.Request, fm *formatter.Formatter, dict map[string]string) {
+func upload(res *apptype.Response, req *apptype.Request, fm *formatter.Formatter, con *Conn, dict map[string]string) {
 	producer.InterLogs("Start function Media.upload()",
 		fmt.Sprintf("UserId: %d, res (*apptype.Response): %v, req (*apptype.Request): %v, fm (*formatter.Formatter): %v", req.Id, res, req, fm))
 	if ((req.FileId != "") && (req.TypeOffile != "")) || (req.Media != nil) {
-		saveMedia(res, req, fm, dict)
+		saveMedia(res, req, fm, con, dict)
 	} else {
-		waitBody(res, fm, dict, res.GameId)
+		waitBody(res, fm, con, dict, res.GameId)
 	}
 }
 
 // Directs to unload function or upload
-func unloadAndUpload(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+func unloadAndUpload(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, con *Conn) {
 	producer.InterLogs("Start function Media.unloadAndUnload()",
 		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.MediaDir == "unload" {
-		unload(res, fm, dict.Dictionary[req.Language], req.Req, req.Limit)
+		unload(res, fm, con, dict.Dictionary[req.Language], req.Req, req.Limit)
 	} else if req.MediaDir == "upload" {
-		upload(res, req, fm, dict.Dictionary[req.Language])
+		upload(res, req, fm, con, dict.Dictionary[req.Language])
 	}
 }
 
 // Not the main directioner, but also.
-func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
+func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter, con *Conn) {
 	producer.InterLogs("Start function Media.MediaAct()",
 		fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v, fm (*formatter.Formatter): %v", req.Id, req, res, fm))
 	if req.Level == START {
@@ -329,13 +329,13 @@ func dir(req *apptype.Request, res *apptype.Response, fm *formatter.Formatter) {
 			producer.ActLogs("The user has started media action", req.Id)
 			res.Status = false
 		}
-		chooseDirection(req, res, fm)
+		chooseDirection(req, res, fm, con)
 	} else if req.Level == LEVEL1 {
-		chooseMediaGame(req, res, fm)
+		chooseMediaGame(req, res, fm, con)
 	} else if req.Level == LEVEL2 {
-		waitingYourMedia(req, res, fm)
+		waitingYourMedia(req, res, fm, con)
 	} else if req.Level == LEVEL3 {
-		unloadAndUpload(req, res, fm)
+		unloadAndUpload(req, res, fm, con)
 	} else if req.Level == LEVEL4 {
 		goToMainMenu(res, fm, dict.Dictionary[req.Language], dict.Dictionary[req.Language]["MainMenu"])
 	}
@@ -363,14 +363,15 @@ func media(res *apptype.Response, fm *formatter.Formatter) {
 func MediaAct(req *apptype.Request, res *apptype.Response) {
 	producer.InterLogs("Start function Media.MediaAct()", fmt.Sprintf("UserId: %d, req (*apptype.Request): %v, res (*apptype.Response): %v", req.Id, req, res))
 	fm := new(formatter.Formatter)
-	apptype.Db = apptype.ConnectToDatabase()
+	con := new(Conn)
+	con.Db = apptype.ConnectToDatabase()
 	res.Level = req.Level
 	res.LaunchPoint = req.LaunchPoint
 	res.Act = req.Act
 	res.MediaDir = req.MediaDir
 	res.GameId = req.GameId
 	res.Status = req.Status
-	dir(req, res, fm)
+	dir(req, res, fm, con)
 	fm.ReadyKB()
 	res.Keyboard = fm.Message.ReplyMarkup
 	res.Message = fm.Message.Text

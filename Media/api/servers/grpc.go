@@ -28,8 +28,9 @@ func (s *server) UpdMediaSch(ctx context.Context, req *pb.MediaServRequestSch) (
 	stat := int(req.GetStatus())
 	g.Id = int(req.GetGameid())
 	g.Sport = req.GetSport()
-	apptype.Db = apptype.ConnectToDatabase()
-	err := handler.UpdateTheSchedule(date, time, stat, g, act)
+	con := new(handler.Conn)
+	con.Db = apptype.ConnectToDatabase()
+	err := con.UpdateTheSchedule(date, time, stat, g, act)
 	log.Print("The server UpdMediaSch:50055 ended its job")
 	return nil, err
 }
