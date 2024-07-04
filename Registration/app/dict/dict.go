@@ -31,7 +31,7 @@ func ru(dict map[string]string) {
 	или же удалить ее в Главном Меню нажав на <b>"Настройки | Мои игры"</b>***\n\n
 	
 	❤️❤️❤️Ждем вас по адресу: %s\n
-	https://www.google.com/maps?q=%f,%f`
+	%s`
 	dict["SeatsAreFull"] = "Упс! Похоже, места, на которые вы рассчитывали, уже заняты! Мне очень жаль. У нас осталось мест: %s.\n"
 	dict["Review"] = "Хотите пересмотреть свои планы?"
 	dict["go-ahead"] = "Да, хочу"
@@ -73,7 +73,7 @@ func en(dict map[string]string) {
 	or delete it in the Main Menu by clicking <b>"Settings | My games"</b>\n\n
 	
 	❤️❤️❤️We look forward to seeing you at: %s\n
-	https://www.google.com/maps?q=%s,%s`
+	%s`
 	dict["SeatsAreFull"] = "Oops! It seems the seats you were counting on are already taken! I'm sorry. We have seats left: %s.\n"
 	dict["Review"] = "Would you like to reconsider your plans?"
 	dict["go-ahead"] = "Yes, I want"
@@ -114,8 +114,8 @@ func tur(dict map[string]string) {
 	Kaydınızın bazı detaylarını değiştirebilirsiniz\n
 	veya <b>"Ayarlar | Oyunlarım"</b> seçeneğine tıklayarak silebilirsiniz\n\n
 	
-	❤️❤️❤️Sizi bekliyoruz: %s
-	\nhttps://www.google.com/maps?q=%s,%s`
+	❤️❤️❤️Sizi bekliyoruz: %s\n
+	%s`
 	dict["SeatsAreFull"] = "Hoop! Hesapladığınız koltuklar maalesef zaten dolu! Üzgünüm. Kalan yerlerimiz: %s.\n"
 	dict["Review"] = "Planlarınızı tekrar düşünmek ister misiniz?"
 	dict["go-ahead"] = "Evet, istiyorum"

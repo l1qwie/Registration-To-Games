@@ -66,6 +66,8 @@ github.com/l1qwie/Fmtogram v0.0.0-20240626194834-08f13cb63b72 h1:V8k7kKi3IxA6mIi
 github.com/l1qwie/Fmtogram v0.0.0-20240626194834-08f13cb63b72/go.mod h1:9ctUXx+IMRNaeyftS6r5nQ37jzDt9G7iJ/RGHzfVQdM=
 github.com/l1qwie/Proto-RTG v0.0.0-20240626180234-d5ed1056087f h1:8UZdfuvgtYdHx3D+lc4GTUKDtcD+3caxZLTiP82sIKM=
 github.com/l1qwie/Proto-RTG v0.0.0-20240626180234-d5ed1056087f/go.mod h1:5x+e3MrfdjJvMcl8w4fuV/eyUJSvD7crfZ416LySRk0=
+github.com/l1qwie/Proto-RTG v0.0.0-20240704211425-b69e59e644f9 h1:ui5m++46hbW0dAR3sh9uBDn22fYLrlNYf0//5fAX0QY=
+github.com/l1qwie/Proto-RTG v0.0.0-20240704211425-b69e59e644f9/go.mod h1:5x+e3MrfdjJvMcl8w4fuV/eyUJSvD7crfZ416LySRk0=
 github.com/leodido/go-urn v1.4.0 h1:WT9HwE9SGECu3lg4d/dIA+jxlljEa1/ffXKmRjqdmIQ=
 github.com/leodido/go-urn v1.4.0/go.mod h1:bvxc+MVxLKB4z00jd1z+Dvzr47oO32F/QSNjSBOlFxI=
 github.com/lib/pq v1.10.9 h1:YXG7RB+JIjhP29X+OtkiDnYaXQwpS4JEWq7dtCCRUEw=

@@ -328,7 +328,7 @@ func wishUGoodLuck(req *apptype.Request, res *apptype.Response, fm *formatter.Fo
 	details := con.selectDetailOfGame(req.GameId, req.Language, fm.Error)
 	cost := details.Price * req.Seats
 	setKb(fm, []int{1, 1, 1, 1}, []string{dict["first"], dict["second"], dict["third"], dict["fourth"]}, []string{"Looking Schedule", "Reg to games", "Photo&Video", "My records"})
-	result := fmt.Sprintf(dict["RegistrationCompleted"], details.Sport, details.Date, details.Time, req.Seats, req.Payment, cost, details.Currency, details.Address, details.Lattitude, details.Longitude)
+	result := fmt.Sprintf(dict["RegistrationCompleted"], details.Sport, details.Date, details.Time, req.Seats, req.Payment, cost, details.Currency, details.Address, details.Link)
 	fm.WriteString(result)
 	fm.WriteParseMode(types.HTML)
 }

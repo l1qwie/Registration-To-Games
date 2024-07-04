@@ -9,7 +9,7 @@ CREATE TABLE gameswithusers
     userid bigint ,
     gameid integer,
     seats integer,
-    payment text,
+    payment varchar,
     statuspayment integer DEFAULT 0,
     status integer DEFAULT 0
 );
@@ -17,14 +17,13 @@ CREATE TABLE gameswithusers
 CREATE TABLE schedule
 (
     gameid integer NOT NULL DEFAULT 0 PRIMARY KEY,
-    sport text ,
+    sport varchar ,
     date integer,
     "time" integer,
     seats integer,
-    latitude double precision,
-    longitude double precision,
-    address text ,
+    link varchar,
+    address varchar ,
     price integer,
-    currency text ,
+    currency varchar ,
     status integer DEFAULT 0
 );

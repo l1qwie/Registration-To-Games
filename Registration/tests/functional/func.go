@@ -139,7 +139,7 @@ func bestWishes(ch *check) {
 	или же удалить ее в Главном Меню нажав на <b>"Настройки | Мои игры"</b>***\n\n
 	
 	❤️❤️❤️Ждем вас по адресу: Кладбище в Анталии\n
-	https://www.google.com/maps?q=36.893444,30.709591`
+	https://www.google.com/maps/place/31%C2%B051'47.5%22N+34%C2%B051'50.8%22E/@31.863181,34.8626321,17`
 	ch.kb = `{"inline_keyboard":[[{"text":"Просмотр расписания","callback_data":"Looking Schedule","url":""}],[{"text":"Регистрация на игру","callback_data":"Reg to games","url":""}],[{"text":"Наши фото и видео","callback_data":"Photo\u0026Video","url":""}],[{"text":"Настройки | Мои игры","callback_data":"My records","url":""}]]}`
 	ch.level = 3
 	ch.payment = "card"

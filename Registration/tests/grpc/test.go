@@ -5,7 +5,6 @@ import (
 	"context"
 	"log"
 
-	"github.com/l1qwie/Fmtogram/types"
 	pb "github.com/l1qwie/Proto-RTG/result"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -21,6 +20,8 @@ func new(client pb.RegistrationClient, ctx context.Context) {
 		Seats:    34,
 		Price:    100,
 		Currency: "USDT",
+		Address:  "New Zeland",
+		Link:     "https://www.google.com/maps/@30.1111727,31.5916288,14z?entry=ttu",
 		Status:   1,
 		Action:   "new",
 	}
@@ -57,8 +58,8 @@ func upd(client pb.RegistrationClient, ctx context.Context) {
 }
 
 func testServer() {
-	types.Db = apptype.ConnectToDatabase()
-	conn, err := grpc.NewClient("localhost:50050", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	apptype.Db = apptype.ConnectToDatabase()
+	conn, err := grpc.NewClient("localhost:50054", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		panic(err)
 	}

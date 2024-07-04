@@ -61,8 +61,8 @@ func DeleteGame() {
 
 // Creates only one game in the table "Schedule" in the database
 func CreateGame() {
-	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, latitude, longitude, address, price, currency, status) 
-		VALUES ($1, 'volleyball', 20250212, 1200, 55, 36.893445, 30.709591, 'Кладбище в Анталии', 100, 'USD', 1)`, 2)
+	_, err := apptype.Db.Exec(`INSERT INTO Schedule (gameId, sport, date, time, seats, link, address, price, currency, status) 
+		VALUES ($1, 'volleyball', 20250212, 1200, 55, 'https://www.google.com/maps/place/31%C2%B051''47.5%22N+34%C2%B051''50.8%22E/@31.863181,34.8626321,17', 'Кладбище в Анталии', 100, 'USD', 1)`, 2)
 	if err != nil {
 		panic(err)
 	}

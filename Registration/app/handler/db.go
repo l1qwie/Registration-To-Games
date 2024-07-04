@@ -136,8 +136,8 @@ func (c *Conn) selectDetailOfGame(gameId int, language string, f func(error)) *a
 	producer.InterLogs("Start function Registration.selectDetailOfGame()",
 		fmt.Sprintf("gameId (int): %d, language (string): %s, f (func(error)): %T", gameId, language, f))
 	details := new(apptype.Game)
-	request := `SELECT gameId, sport, date, time, seats, latitude, longitude, address, price, currency FROM Schedule WHERE gameId = $1`
-	err := c.Db.QueryRow(request, gameId).Scan(&details.Id, &details.Sport, &date, &time, &details.Seats, &details.Lattitude, &details.Longitude, &details.Address, &details.Price, &details.Currency)
+	request := `SELECT gameId, sport, date, time, seats, link, address, price, currency FROM Schedule WHERE gameId = $1`
+	err := c.Db.QueryRow(request, gameId).Scan(&details.Id, &details.Sport, &date, &time, &details.Seats, &details.Link, &details.Address, &details.Price, &details.Currency)
 	if err != nil {
 		f(err)
 	}
@@ -147,18 +147,29 @@ func (c *Conn) selectDetailOfGame(gameId int, language string, f func(error)) *a
 	return details
 }
 
-func (c *Conn) UpdateTheSchedule(date, time, status int, g *apptype.Game, act string) error {
-	var request string
+func (c *Conn) UpdateTheSchedule(date, time, status int, g *apptype.Game) error {
 	producer.InterLogs("Start function Registration.UpdateTheSchedule()",
-		fmt.Sprintf("date (int): %d, time (int): %d, status (int): %d, g (*apptype.Game): %v, act (string): %s", date, time, status, g, act))
-	if act == "new" {
-		request = `INSERT INTO Schedule (gameId, sport, date, time, seats, price, currency, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
-	} else if act == "change" || act == "del" {
-		request = `UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, seats = $5, price = $6, currency = $7, status = $8 WHERE gameId = $1`
-	}
-	_, err := c.Db.Exec(request, g.Id, g.Sport, date, time, g.Seats, g.Price, g.Currency, status)
+		fmt.Sprintf("date (int): %d, time (int): %d, status (int): %d, g (*apptype.Game): %v", date, time, status, g))
+	_, err := c.Db.Exec(`
+			UPDATE Schedule SET 
+			gameId = $1, sport = $2, date = $3, time = $4, seats = $5, price = $6, 
+			currency = $7, status = $8 WHERE gameId = $1`,
+		g.Id, g.Sport, date, time, g.Seats, g.Price, g.Currency, status)
 	if err != nil {
-		panic(err)
+		log.Print(err)
+	}
+	return err
+}
+
+func (c *Conn) AddNewGame(date, time, status int, g *apptype.Game) error {
+	_, err := c.Db.Exec(`
+			INSERT INTO Schedule 
+			(gameId, sport, date, time, seats, price, currency, address, link, status) 
+			VALUES 
+			($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+		g.Id, g.Sport, date, time, g.Seats, g.Price, g.Currency, g.Address, g.Link, status)
+	if err != nil {
+		log.Print(err)
 	}
 	return err
 }

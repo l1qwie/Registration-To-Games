@@ -32,7 +32,7 @@ require (
 	github.com/klauspost/compress v1.17.8 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.7 // indirect
 	github.com/l1qwie/Fmtogram v0.0.0-20240626194834-08f13cb63b72 // indirect
-	github.com/l1qwie/Proto-RTG v0.0.0-20240626180234-d5ed1056087f // indirect
+	github.com/l1qwie/Proto-RTG v0.0.0-20240704211425-b69e59e644f9 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect

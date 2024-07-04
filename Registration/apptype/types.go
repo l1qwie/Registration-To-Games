@@ -49,8 +49,7 @@ type Game struct {
 	Price         int
 	Currency      string
 	Address       string
-	Lattitude     float64
-	Longitude     float64
+	Link          string
 	Payment       string
 	StatusPayment string
 }
