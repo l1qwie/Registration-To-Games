@@ -2,12 +2,12 @@ package main
 
 import (
 	"Registration/api/servers"
-	"Registration/tests/grpc"
+	"Registration/tests"
 )
 
 func main() {
 	go servers.Registration()
 	go servers.Start()
-	//tests.Head()
-	grpc.Start()
+	tests.Head()
+	//grpc.Start()
 }

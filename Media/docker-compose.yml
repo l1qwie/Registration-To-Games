@@ -5,7 +5,7 @@ networks:
 
 services:
 
-  postgresql:
+  media-postgresql:
     restart: always
     image: postgres:14
     command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
@@ -22,7 +22,7 @@ services:
     networks:
       - media-net
 
-  app:
+  media-app:
     build: .
     ports:
       - 8086:8080
@@ -30,5 +30,5 @@ services:
       - reg-to-games
       - media-net
     depends_on:
-      - postgresql
-    command: ["wait-for-it.sh", "postgresql:5432", "--", "/app/bin"]
+      - media-postgresql
+    command: ["wait-for-it.sh", "media-postgresql:5432", "--", "/app/bin"]

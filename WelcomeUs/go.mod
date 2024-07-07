@@ -6,8 +6,8 @@ require (
 	github.com/IBM/sarama v1.43.2
 	github.com/gin-gonic/gin v1.10.0
 	github.com/l1qwie/Fmtogram v0.0.0-20240626194834-08f13cb63b72
-	github.com/l1qwie/Proto-RTG v0.0.0-20240626180234-d5ed1056087f
-	google.golang.org/grpc v1.64.0
+	github.com/l1qwie/Proto-RTG v0.0.0-20240704211425-b69e59e644f9
+	google.golang.org/grpc v1.65.0
 )
 
 require (
@@ -50,11 +50,11 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	golang.org/x/arch v0.8.0 // indirect
-	golang.org/x/crypto v0.23.0 // indirect
-	golang.org/x/net v0.25.0 // indirect
-	golang.org/x/sys v0.20.0 // indirect
-	golang.org/x/text v0.15.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240318140521-94a12d6c2237 // indirect
+	golang.org/x/crypto v0.25.0 // indirect
+	golang.org/x/net v0.27.0 // indirect
+	golang.org/x/sys v0.22.0 // indirect
+	golang.org/x/text v0.16.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240701130421-f6361c86f094 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

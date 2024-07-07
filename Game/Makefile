@@ -5,4 +5,4 @@ rm:
 up:
 	docker compose -f docker-compose.yml up --force-recreate
 rb:
-	docker build . -t game-app
+	docker build . -t game-games-app

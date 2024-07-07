@@ -18,7 +18,7 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
 
-  postgresql:
+  logs-postgresql:
     restart: always
     image: postgres:14
     command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
@@ -35,12 +35,12 @@ services:
     networks:
       - log-net
 
-  app:
+  logs-app:
     build: .
     networks:
       - reg-to-games
       - log-net
     depends_on:
       - kafka
-      - postgresql
-    command: ["wait-for-it.sh", "postgresql:5432", "kafka:9092", "--", "/app/bin"]
+      - logs-postgresql
+    command: ["wait-for-it.sh", "logs-postgresql:5432", "kafka:9092", "--", "/app/bin"]

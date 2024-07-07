@@ -144,7 +144,7 @@ func bestWishes(ch *check) {
 	ch.level = 3
 	ch.payment = "card"
 	ch.lp = 0
-	ch.gameId = 0 //0 because when switching actions GameID is no longer updated
+	ch.gameId = 2
 	ch.seats = 2
 	ch.act = "divarication"
 	ch.parseMode = "HTML"

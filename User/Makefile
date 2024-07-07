@@ -11,7 +11,7 @@ up:
 	docker compose -f docker-compose.yml up --force-recreate
 
 rb:
-	docker build . -t user-app
+	docker build . -t user-user-app
 r: 
 	docker compose stop \
 	&& docker compose rm \

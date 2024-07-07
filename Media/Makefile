@@ -9,7 +9,7 @@ rm:
 up:
 	docker compose -f docker-compose.yml up --force-recreate
 rb:
-	docker build . -t media-app
+	docker build . -t media-media-app
 
 r:
 	docker compose stop \

@@ -9,7 +9,7 @@ rm:
 up:
 	docker compose -f docker-compose.yml up --force-recreate
 rb:
-	docker build . -t registration-app
+	docker build . -t registration-reg-app
 r:
 	docker compose stop \
 	&& docker compose rm \

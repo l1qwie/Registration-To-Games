@@ -9,7 +9,7 @@ rm:
 up:
 	docker compose -f docker-compose.yml up --force-recreate
 rb:
-	docker build . -t schedule-app
+	docker build . -t schedule-schedule-app
 r:
 	docker compose stop \
 	&& docker compose rm \

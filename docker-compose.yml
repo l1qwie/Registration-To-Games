@@ -1,0 +1,228 @@
+networks:
+  reg-to-games:
+    external: true
+  game-net:
+  log-net:
+  media-net:
+  reg-net:
+  schedule-net:
+  settings-net:
+
+
+services:
+  common-postgresql:
+    restart: always
+    image: postgres:14
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./User/pgdata:/var/lib/postgresql/data
+      - ./User/postgreSQL/create.sql:/docker-entrypoint-initdb.d/create.sql
+      - ./User/postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
+    ports:
+      - 5431:5432
+    networks:
+      - reg-to-games
+
+  user-app:
+    build: User/Dockerfile
+    ports:
+      - 8080:8081
+    networks:
+      - reg-to-games
+    depends_on:
+      - common-postgresql
+    command: ["wait-for-it.sh", "common-postgresql:5432", "--", "/app/bin"]
+
+  wel-ad-app:
+    build: WelcomeAd/Dockerfile
+    ports:
+      - 8022:8020
+    networks:
+      - reg-to-games
+    command: ["/app/bin"]
+  
+  wel-us-app:
+    build: WelcomeUs/Dockerfile
+    ports:
+      - 8087:8080
+    networks:
+      - reg-to-games
+    command: ["/app/bin"]
+
+  settings-postgresql:
+    restart: always
+    image: postgres:14
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./Settings/pgdata:/var/lib/postgresql/data
+      - ./Settings/postgreSQL/create.sql:/docker-entrypoint-initdb.d/create.sql
+      #- ./Settings/postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
+    ports:
+      - 5433:5432
+    networks:
+      - settings-net
+
+  settings-app:
+    build: Settings/Dockerfile
+    ports:
+      - 8081:8080
+    networks:
+      - reg-to-games
+      - settings-net
+    depends_on:
+      - settings-postgresql
+    command: ["wait-for-it.sh", "settings-postgresql:5432", "--", "/app/bin"]
+  
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - schedule-net
+  
+  schedule-app:
+    build:
+      context: ./Schedule
+      dockerfile: Schedule/Dockerfile
+    ports:
+      - "8082:8080"
+    networks:
+      - reg-to-games
+      - schedule-net
+    depends_on:
+      - redis
+    command: ["wait-for-it.sh", "redis:6379", "--", "/app/bin"]
+  
+  reg-postgresql:
+    restart: always
+    image: postgres:14
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./Registration/pgdata:/var/lib/postgresql/data
+      - ./Registration/postgreSQL/create.sql:/docker-entrypoint-initdb.d/create.sql
+      #- ./Registration/postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
+    ports:
+      - 5434:5432
+    networks:
+      - reg-net
+  
+  reg-app:
+    build: Registration/Dockerfile
+    ports:
+      - 8085:8080
+    networks:
+      - reg-to-games
+      - reg-net
+    depends_on:
+      - reg-postgresql
+    command: ["wait-for-it.sh", "reg-postgresql:5432", "--", "/app/bin"]
+  
+  media-postgresql:
+    restart: always
+    image: postgres:14
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./Media/pgdata:/var/lib/postgresql/data
+      - ./Media/postgreSQL/create.sql:/docker-entrypoint-initdb.d/create.sql
+      #- ./Media/postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
+    ports:
+      - 5435:5432
+    networks:
+      - media-net
+  
+  media-app:
+    build: Media/Dockerfile
+    ports:
+      - 8086:8080
+    networks:
+      - reg-to-games
+      - media-net
+    depends_on:
+      - media-postgresql
+    command: ["wait-for-it.sh", "media-postgresql:5432", "--", "/app/bin"]
+  
+  kafka:
+    image: bitnami/kafka:3.7
+    networks:
+      - reg-to-games
+    #volumes:
+      #- /kafkadata:/bitnami/kafka
+    environment:
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+
+  logs-postgresql:
+    restart: always
+    image: postgres:14
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./Logs/pgdata:/var/lib/postgresql/data
+      - ./Logs/postgreSQL/create.sql:/docker-entrypoint-initdb.d/create.sql
+      - ./Logs/postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
+    ports:
+      - 5499:5432
+    networks:
+      - log-net
+
+  logs-app:
+    build: Logs/Dockerfile
+    networks:
+      - reg-to-games
+      - log-net
+    depends_on:
+      - kafka
+      - logs-postgresql
+    command: ["wait-for-it.sh", "logs-postgresql:5432", "kafka:9092", "--", "/app/bin"]
+
+  game-postgresql:
+    restart: always
+    image: postgres:14
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./Game/pgdata:/var/lib/postgresql/data
+      - ./Game/postgreSQL/create.sql:/docker-entrypoint-initdb.d/create.sql
+      #- ./Game/postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
+    ports:
+      - 5491:5432
+    networks:
+      - game-net
+
+  game-app:
+    build: .
+    ports:
+      - 8022:8080
+    networks:
+      - reg-to-games
+      - game-net
+    depends_on:
+      - game-postgresql
+    command: ["wait-for-it.sh", "game-postgresql:5432", "--", "/app/bin"]

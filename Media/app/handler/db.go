@@ -254,6 +254,6 @@ func (c *Conn) UpdateTheSchedule(date, time, status int, g *apptype.Game, act st
 	} else if act == "change" {
 		request = "UPDATE Schedule SET gameId = $1, sport = $2, date = $3, time = $4, status = $5 WHERE gameId = $1"
 	}
-	_, err := apptype.Db.Exec(request, g.Id, g.Sport, date, time, status)
+	_, err := c.Db.Exec(request, g.Id, g.Sport, date, time, status)
 	return err
 }

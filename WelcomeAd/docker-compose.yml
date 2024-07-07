@@ -3,10 +3,10 @@ networks:
     external: true
 
 services:
-  app:
+  wel-ad-app:
     build: .
     ports:
-      - 8022:8020
+      - 8199:8020
     networks:
       - reg-to-games
     command: ["/app/bin"]

@@ -1,7 +1,7 @@
 package apptype
 
 const (
-	docHost     = "postgresql"
+	docHost     = "media-postgresql"
 	docPort     = "5432"
 	docUsername = "postgres"
 	docPass     = "postgres"

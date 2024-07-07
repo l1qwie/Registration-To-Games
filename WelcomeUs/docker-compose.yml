@@ -3,7 +3,7 @@ networks:
     external: true
 
 services:
-  app:
+  wel-us-app:
     build: .
     ports:
       - 8087:8080

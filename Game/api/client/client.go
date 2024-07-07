@@ -106,6 +106,8 @@ func (u *Upd) media() error {
 			Price:    int64(u.Price),
 			Currency: u.Currency,
 			Status:   int64(u.Status),
+			Address:  u.Address,
+			Link:     u.Link,
 			Action:   u.Action,
 		}
 		log.Print(`Called UpdReg:50054 from "Game"`)
@@ -126,14 +128,12 @@ func (u *Upd) registration() error {
 		client := pb.NewMediaClient(conn)
 		ctx := context.Background()
 		request := &pb.MediaServRequestSch{
-			Gameid:  int64(u.GameId),
-			Sport:   u.Sport,
-			Date:    int64(u.Date),
-			Time:    int64(u.Time),
-			Status:  int64(u.Status),
-			Address: u.Address,
-			Link:    u.Link,
-			Action:  u.Action,
+			Gameid: int64(u.GameId),
+			Sport:  u.Sport,
+			Date:   int64(u.Date),
+			Time:   int64(u.Time),
+			Status: int64(u.Status),
+			Action: u.Action,
 		}
 		log.Print(`Called UpdMediaSch:50055 from "Game"`)
 		_, err = client.UpdMediaSch(ctx, request)

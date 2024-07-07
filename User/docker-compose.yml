@@ -4,7 +4,7 @@ networks:
 
 services:
 
-  postgresql:
+  common-postgresql:
     restart: always
     image: postgres:14
     command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr, csvlog"]
@@ -15,18 +15,18 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
       - ./postgreSQL/create.sql:/docker-entrypoint-initdb.d/create.sql
-      - ./postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
+      #- ./postgreSQL/set.sql:/docker-entrypoint-initdb.d/set.sql
     ports:
       - 5431:5432
     networks:
       - reg-to-games
 
-  app:
+  user-app:
     build: .
     ports:
       - 8080:8081
     networks:
       - reg-to-games
     depends_on:
-      - postgresql
-    command: ["wait-for-it.sh", "postgresql:5432", "--", "/app/bin"]
+      - common-postgresql
+    command: ["wait-for-it.sh", "common-postgresql:5432", "--", "/app/bin"]

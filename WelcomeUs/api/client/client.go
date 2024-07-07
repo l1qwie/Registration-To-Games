@@ -11,7 +11,7 @@ import (
 )
 
 func Update(userId int, language string) error {
-	conn, err := grpc.Dial("settings-app-1:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("settings-app-1:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {

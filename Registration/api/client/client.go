@@ -33,7 +33,7 @@ type Upd struct {
 }
 
 func (u *Upd) schedule() error {
-	conn, err := grpc.NewClient("schedule-app-1:50053", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("schedule-schedule-app-1:50053", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
@@ -60,7 +60,7 @@ func (u *Upd) schedule() error {
 }
 
 func (u *Upd) setSchedule() error {
-	conn, err := grpc.NewClient("settings-app-1:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("settings-settings-app-1:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
@@ -88,7 +88,7 @@ func (u *Upd) setSchedule() error {
 }
 
 func (u *Upd) setGWU() error {
-	conn, err := grpc.NewClient("settings-app-1:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("settings-settings-app-1:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {
@@ -123,7 +123,7 @@ func (u *Upd) settings() error {
 }
 
 func (u *Upd) media() error {
-	conn, err := grpc.NewClient("media-app-1:50055", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("media-media-app-1:50055", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Could not connect: %v", err)
 	} else {

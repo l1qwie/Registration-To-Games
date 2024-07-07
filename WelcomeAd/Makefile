@@ -9,7 +9,7 @@ rm:
 up:
 	docker compose -f docker-compose.yml up
 rb:
-	docker build . -t welcomead-app
+	docker build . -t welcomead-wel-ad-app
 r:
 	docker compose stop \
 	&& docker compose rm \

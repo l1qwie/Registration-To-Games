@@ -9,7 +9,7 @@ rm:
 up:
 	docker compose -f docker-compose.yml up
 rb:
-	docker build . -t welcomeus-app
+	docker build . -t welcomeus-wel-us-app
 r:
 	docker compose stop \
 	&& docker compose rm \

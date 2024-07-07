@@ -13,7 +13,7 @@ services:
     networks:
       - schedule-net
 
-  app:
+  schedule-app:
     build:
       context: .
       dockerfile: Dockerfile
