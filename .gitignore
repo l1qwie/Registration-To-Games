@@ -1,2 +1,5 @@
 pgdata
 User/apptype/data.go
+server.csr
+server.key
+server.crt

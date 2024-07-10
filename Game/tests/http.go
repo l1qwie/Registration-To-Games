@@ -4,24 +4,128 @@ import (
 	"Game/apptype"
 	"Game/tests/functional"
 	"bytes"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/sha256"
+	"crypto/tls"
+	"crypto/x509"
+	"encoding/base64"
 	"encoding/json"
+	"encoding/pem"
+	"io"
 	"log"
 	"net/http"
+	"os"
 )
 
-func callgame(body []byte) *apptype.Response {
-	result := new(apptype.Response)
-	resp, err := http.Post("http://localhost:8099/Game", "application/json", bytes.NewBuffer(body))
+// Gegerates a symmetrick key and loads the public server's key
+func generateAndLoad() ([]byte, *rsa.PublicKey, error) {
+	//AES-256
+	symkey := make([]byte, 32)
+	_, err := rand.Read(symkey)
 	if err != nil {
-		log.Println("Ошибка при выполнении запроса:", err)
-	} else {
-		defer resp.Body.Close()
-		err = json.NewDecoder(resp.Body).Decode(&result)
-		if err != nil {
-			panic(err)
-		}
+		panic(err)
 	}
-	return result
+	pubKeyPEM, err := os.ReadFile("server.crt")
+	if err != nil {
+		log.Fatal("Failed to read public key: ", err)
+	}
+	block, _ := pem.Decode(pubKeyPEM)
+	if block == nil {
+		log.Fatal("Failed to decode PEM block containing public key")
+	}
+	cert, err := x509.ParseCertificate(block.Bytes)
+	if err != nil {
+		log.Fatal("Failed to parse public key: ", err)
+	}
+	pubkey := cert.PublicKey.(*rsa.PublicKey)
+	return symkey, pubkey, err
+}
+
+// Creates HTTPS client with settings
+func createClient() *http.Client {
+	client := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: true, // only for testing
+			},
+		},
+	}
+	return client
+}
+
+func encryptSymKey(symKey []byte, pubKey *rsa.PublicKey) ([]byte, error) {
+	encryptedKey, err := rsa.EncryptOAEP(sha256.New(), rand.Reader, pubKey, symKey, nil)
+	return encryptedKey, err
+}
+
+func decryptData(ciphertext, key []byte) ([]byte, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		panic(err)
+	}
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		panic(err)
+	}
+	nonceSize := gcm.NonceSize()
+	nonce, ciphertext := ciphertext[:nonceSize], ciphertext[nonceSize:]
+	return gcm.Open(nil, nonce, ciphertext, nil)
+}
+
+func callgame(body []byte) *apptype.Response {
+	symkey, pubkey, _ := generateAndLoad()
+	encryptedsymkey, err := encryptSymKey(symkey, pubkey)
+	if err != nil {
+		log.Fatal("Failed to encrypt symmetric key: ", err)
+	}
+	client := createClient()
+	req, err := http.NewRequest("POST", "https://localhost:8443/hello", bytes.NewBuffer(body))
+	if err != nil {
+		log.Fatal("Failed to create request: ", err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-Symmetric-Key", base64.StdEncoding.EncodeToString(encryptedsymkey))
+
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal("Failed to do request: ", err)
+	}
+	defer resp.Body.Close()
+
+	respbody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal("Failed to read response: ", err)
+	}
+
+	// Расшифровка ответа сервера
+	res := new(apptype.Response)
+	err = json.Unmarshal(respbody, &res)
+	if err != nil {
+		log.Fatal("Failed to unmarshal response: ", err)
+	}
+
+	// Декодирование зашифрованного сообщения из base64
+	encryptedMessage, err := base64.StdEncoding.DecodeString(res.Message)
+	if err != nil {
+		log.Fatal("Failed to decode response message: ", err)
+	}
+
+	// Расшифровка данных
+	decryptedMessage, err := decryptData(encryptedMessage, symkey)
+	if err != nil {
+		log.Fatal("Failed to decrypt response message: ", err)
+	}
+
+	// Замена зашифрованного сообщения на расшифрованное в структуре
+	res.Message = string(decryptedMessage)
+
+	// Вывод расшифрованного сообщения
+	log.Print("Response:", res)
+	return res
 }
 
 func createGame() {

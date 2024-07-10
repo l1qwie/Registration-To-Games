@@ -54,6 +54,12 @@ type Response struct {
 	Status      bool   `json:"status"`
 }
 
+type KeyResponse struct {
+	Status  bool   `json:"status"`
+	Message string `json:"message"`
+	Err     error  `json:"err"`
+}
+
 type Internal struct {
 	Timestamp time.Time `json:"timestamp"`
 	Message   string    `json:"message"`

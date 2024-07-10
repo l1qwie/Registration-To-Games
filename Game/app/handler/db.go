@@ -2,8 +2,13 @@ package handler
 
 import (
 	"Game/apptype"
+	"database/sql"
 	"fmt"
 )
+
+type Conn struct {
+	Db *sql.DB
+}
 
 func isThereAnyGame(f func(error)) bool {
 	var count int
@@ -104,4 +109,15 @@ func deleteGameDB(gameid int, f func(error)) {
 	if err != nil {
 		f(err)
 	}
+}
+
+func (c *Conn) SaveTheKey(key []byte, ip string) error {
+	_, err := c.Db.Exec("INSERT INTO SymKeys (key, ip) VALUES ($1, $2)", key)
+	return err
+}
+
+func (c *Conn) GetTheKey(ip string) ([]byte, error) {
+	var key []byte
+	err := c.Db.QueryRow("SELECT key FROM SymKeys WHERE ip = $1", ip).Scan(&key)
+	return key, err
 }

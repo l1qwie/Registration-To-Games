@@ -14,8 +14,6 @@ type Update struct {
 	Level, UserId int
 }
 
-var onetime bool
-var twotimes int
 var unverifiable bool
 
 // TestStuct stuct is for all tests. The main thought is you can use it anywhere

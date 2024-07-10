@@ -10,3 +10,8 @@ CREATE TABLE Schedule (
     address text DEFAULT '',
     status integer DEFAULT 0
 );
+
+CREATE TABLE SymKeys (
+    id serial PRIMARY KEY,
+    key BYTEA,
+)

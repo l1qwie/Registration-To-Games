@@ -120,26 +120,6 @@ func chtrashprice8() *apptype.Request {
 	return req
 }
 
-func chtrashcurrency8() *apptype.Request {
-	req := mainReq()
-	req.Direction = "change"
-	req.GameId = 6667
-	req.Changeable = "currency"
-	req.Req = "я хочу питсы"
-	req.Level = 4
-	return req
-}
-
-func chtrashcurrency9() *apptype.Request {
-	req := mainReq()
-	req.Direction = "change"
-	req.GameId = 6667
-	req.Changeable = "currency"
-	req.Req = "я хочу питсы"
-	req.Level = 4
-	return req
-}
-
 func chtrashdate9() *apptype.Request {
 	req := mainReq()
 	req.Direction = "change"
@@ -383,6 +363,7 @@ func trash2() *apptype.Request {
 	req.Level = 2
 	return req
 }
+
 func trash3() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -390,6 +371,7 @@ func trash3() *apptype.Request {
 	req.Level = 2
 	return req
 }
+
 func trash4() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -398,6 +380,7 @@ func trash4() *apptype.Request {
 	req.Sport = "volleyball"
 	return req
 }
+
 func trash5() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -406,6 +389,7 @@ func trash5() *apptype.Request {
 	req.Sport = "volleyball"
 	return req
 }
+
 func trash6() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -415,6 +399,7 @@ func trash6() *apptype.Request {
 	req.Date = 20241209
 	return req
 }
+
 func trash7() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -424,6 +409,7 @@ func trash7() *apptype.Request {
 	req.Date = 20241209
 	return req
 }
+
 func trash8() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -434,6 +420,7 @@ func trash8() *apptype.Request {
 	req.Time = 1900
 	return req
 }
+
 func trash9() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -444,6 +431,7 @@ func trash9() *apptype.Request {
 	req.Time = 1900
 	return req
 }
+
 func trash10() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -455,6 +443,7 @@ func trash10() *apptype.Request {
 	req.Seats = 15
 	return req
 }
+
 func trash11() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -466,78 +455,7 @@ func trash11() *apptype.Request {
 	req.Seats = 15
 	return req
 }
-func trash12() *apptype.Request {
-	req := mainReq()
-	req.Req = "я хочу питсы"
-	req.Level = 7
-	req.Sport = "volleyball"
-	req.Date = 20241209
-	req.Time = 1900
-	req.Seats = 15
-	req.Price = 1000
-	return req
-}
-func trash13() *apptype.Request {
-	req := mainReq()
-	req.Req = "я хочу питсы"
-	req.Level = 7
-	req.Sport = "volleyball"
-	req.Date = 20241209
-	req.Time = 1900
-	req.Seats = 15
-	req.Price = 1000
-	return req
-}
-func trash14() *apptype.Request {
-	req := mainReq()
-	req.Req = "я хочу питсы"
-	req.Level = 8
-	req.Sport = "volleyball"
-	req.Date = 20241209
-	req.Time = 1900
-	req.Seats = 15
-	req.Price = 1000
-	req.Currency = "RUB"
-	return req
-}
-func trash15() *apptype.Request {
-	req := mainReq()
-	req.Req = "я хочу питсы"
-	req.Level = 8
-	req.Sport = "volleyball"
-	req.Date = 20241209
-	req.Time = 1900
-	req.Seats = 15
-	req.Price = 1000
-	req.Currency = "RUB"
-	return req
-}
-func trash16() *apptype.Request {
-	req := mainReq()
-	req.Req = "я хочу питсы"
-	req.Level = 9
-	req.Sport = "volleyball"
-	req.Date = 20241209
-	req.Time = 1900
-	req.Seats = 15
-	req.Price = 1000
-	req.Currency = "RUB"
-	req.Link = "https://www.google.com/maps?q=36.893445,30.709591"
-	return req
-}
-func trash17() *apptype.Request {
-	req := mainReq()
-	req.Req = "я хочу питсы"
-	req.Level = 9
-	req.Sport = "volleyball"
-	req.Date = 20241209
-	req.Time = 1900
-	req.Seats = 15
-	req.Price = 1000
-	req.Currency = "RUB"
-	req.Link = "https://www.google.com/maps?q=36.893445,30.709591"
-	return req
-}
+
 func trash18() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
@@ -553,6 +471,7 @@ func trash18() *apptype.Request {
 	req.Address = "Игровая Площадка"
 	return req
 }
+
 func trash19() *apptype.Request {
 	req := mainReq()
 	req.Direction = "create"
